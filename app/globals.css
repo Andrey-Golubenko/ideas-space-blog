@@ -31,3 +31,13 @@ body {
     text-wrap: balance;
   }
 }
+
+@layer components {
+  .container {
+    @apply max-w-4xl px-8 my-0 mx-auto
+  }
+}
+
+.header-link {
+  @apply text-white no-underline transition-all duration-300 py-0 px-1 hover:underline-offset-4 border-b-2 border-transparent hover:border-white
+}
