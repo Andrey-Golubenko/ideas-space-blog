@@ -29,3 +29,10 @@ body {
 .header-link {
   @apply border-b-2 border-transparent px-1 py-0 text-white no-underline transition-all duration-300 hover:border-white hover:underline-offset-4;
 }
+
+
+  @layer components {
+    .header-link-active {
+      @apply header-link hover:border-sky-500 !text-sky-500;
+    }
+  }
