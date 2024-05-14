@@ -16,7 +16,7 @@ const Posts: React.FC = () => {
   }, [getAllPosts])
 
   return (
-    <ul className="list-disc">
+    <ul className="mb-16 list-disc">
       {isLoading ? (
         <h3 className="text-center text-2xl">Loading...</h3>
       ) : (

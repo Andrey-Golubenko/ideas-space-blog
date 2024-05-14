@@ -1,23 +1,11 @@
 import { Metadata } from 'next'
-import { IPost } from '~/app/blog/page'
+import { getSinglePost } from '~/services/getPosts'
+import { IPost } from '~/types'
 
 interface PostProps {
   params: {
     slug: string
   }
-}
-
-async function getSinglePost(slug: string) {
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${slug}`,
-    {
-      next: {
-        revalidate: 60 // sec
-      }
-    }
-  )
-
-  return response.json()
 }
 
 export async function generateMetadata({
