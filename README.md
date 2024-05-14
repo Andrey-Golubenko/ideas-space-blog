@@ -1,90 +1,26 @@
-## Handlers API
+# Next 13
 
-To create API-routes inside the `/app` directory, as a rule, a nested directory `/api` is created with its own folders, inside which a file named `route.ts` is created.
+## Server and client components
 
-If the file is found by the path `/app/api/posts/`, then the request address will be `/api/posts'.
+![React components](/public/example-1.webp)
 
-The `route.ts` itself should export an object with functions by the names of HTTP methods: `GET`, `POST`, `DELETE` and so on.
+### Attachment Rules
 
-For example:
+- you cannot import a server component inside a client component
+- you can drop server components into client components as `children`
 
-```typescript
-export async function GET(req: Request) {
-  return NextResponse.json(currentPosts);
-}
-```
+![Sample page](/public/example-2.avif)
 
-### Rules for using API handlers and pages
+Use client components when:
 
-| Page               | Route            | Result      |
-| ------------------ | ---------------- | ----------- |
-| app/page.js        | app/route.js     | 💥 Conflict |
-| app/page.js        | app/api/route.js | 👌 Valid    |
-| app/[user]/page.js | app/api/route.js | 👌 Valid    |
+- it is necessary to use hooks
+- when event handlers are needed for user actions
+- when using the browser API
+- when the class component is used
 
-### Data extraction
+Use server components when:
 
-```typescript
-// getting query-params
-
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-
-  const query = searchParams.get("q");
-
-  // some logic
-
-  return NextResponse.json(currentPosts);
-}
-```
-
-```typescript
-// getting the request body
-
-export async function POST(req: Request) {
-  const body = await req.json();
-
-  console.log(body);
-
-  return NextResponse.json({ message: "done" });
-}
-```
-
-```typescript
-// getting URL parameters
-
-export async function DELETE(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const id = params?.id;
-
-  // some logic for delete post by id
-
-  return NextResponse.json({ id });
-}
-```
-
-### Built-in functions
-
-```typescript
-import { headers, cookies } from "next/headers";
-
-export async function GET(req: Request) {
-  const headersList = headers();
-  const cookiesList = cookies();
-
-  const type = headersList.get("Content-Type");
-  const Cookie_1 = cookiesList.get("Cookie_1")?.value;
-
-  return NextResponse.json({});
-}
-```
-
-```typescript
-import { redirect } from "next/navigation";
-
-export async function GET(request: Request) {
-  redirect("https://nextjs.org/");
-}
-```
+- you receive data through the server API
+- when you need direct access to backend resources
+- when sensitive information is used (API keys, tokens, etc.)
+- when heavy dependencies are used
