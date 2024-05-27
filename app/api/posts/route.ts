@@ -1,15 +1,15 @@
 import { NextResponse } from 'next/server'
-import posts from '~/app/api/posts/posts'
+import { mockPosts } from '~/mockData'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request?.url)
 
   const query = searchParams.get('q')
 
-  let currentPosts = posts
+  let currentPosts = mockPosts
 
   if (query) {
-    currentPosts = posts.filter((post) =>
+    currentPosts = mockPosts.filter((post) =>
       post.title.toLowerCase().includes(query.toLowerCase())
     )
   }

@@ -4,7 +4,7 @@ import { createWithEqualityFn } from 'zustand/traditional'
 import { getAllPosts, getPostBySearch } from '~/services/getPosts'
 import { IPost } from '~/types'
 
-interface UsePosts {
+interface IUsePosts {
   posts: IPost[]
   isLoading: boolean
   getAllPosts: () => Promise<void>
@@ -12,8 +12,8 @@ interface UsePosts {
 }
 
 const usePosts = createWithEqualityFn<
-  UsePosts,
-  [['zustand/devtools', never], ['zustand/persist', UsePosts]]
+  IUsePosts,
+  [['zustand/devtools', never], ['zustand/persist', IUsePosts]]
 >(
   devtools(
     persist(

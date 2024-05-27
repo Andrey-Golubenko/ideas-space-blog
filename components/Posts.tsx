@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect } from 'react'
+import { PATHS } from '~/constants'
 import usePosts from '~/store'
 
 const Posts: React.FC = () => {
@@ -23,7 +24,7 @@ const Posts: React.FC = () => {
         posts?.length &&
         posts?.map((post) => (
           <li key={post?.id}>
-            <Link href={`/blog/${post?.id}`}>{post.title}</Link>
+            <Link href={`${PATHS.blog}/${post?.id}`}>{post.title}</Link>
           </li>
         ))
       )}

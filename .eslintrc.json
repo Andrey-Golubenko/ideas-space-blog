@@ -38,9 +38,16 @@
     }
   },
   "rules": {
+    "jsx-a11y/anchor-is-valid": "off",
     "import/prefer-default-export": "off",
     "react-hooks/exhaustive-deps": "warn",
     "react/require-default-props": "off",
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        "assert": "either"
+      }
+    ],
     "react/function-component-definition": [
       2,
       {

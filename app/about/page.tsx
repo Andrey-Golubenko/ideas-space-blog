@@ -6,8 +6,8 @@ export const metadata: Metadata = {
 
 export default function About() {
   return (
-    <div className="flex items-center justify-center">
-      <h1 className="my-4 text-2xl font-medium">Select subitem</h1>
+    <div className="page-wrapper">
+      <h1 className="page-heading">Select subitem</h1>
     </div>
   )
 }

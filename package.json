@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "postinstall": "husky install | chmod ug+x .husky/*",
+    "postinstall": "husky init | chmod ug+x .husky/*",
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "next": "14.2.3",
+    "next-auth": "^5.0.0-beta.18",
     "react": "^18",
     "react-dom": "^18",
     "zustand": "^4.5.2"

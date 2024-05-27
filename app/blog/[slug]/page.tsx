@@ -26,12 +26,10 @@ export default async function Post({ params: { slug } }: PostProps) {
     .concat(singlePost?.title.slice(1))
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="page-heading">
       {singlePost && (
         <>
-          <h1 className="py-4 text-center text-xl font-semibold">
-            {singlePostTitle}
-          </h1>
+          <h1 className="page-heading">{singlePostTitle}</h1>
           <p className="py-4 text-center text-lg font-normal">
             {singlePost?.body}
           </p>

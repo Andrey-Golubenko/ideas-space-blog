@@ -1,8 +1,10 @@
 'use client'
 
+import { useSession, signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { INavLink } from '~/links'
+import { PATHS } from '~/constants'
+import { INavLink } from '~/types'
 
 interface NavigationProps {
   navLinks: INavLink[]
@@ -10,22 +12,52 @@ interface NavigationProps {
 
 const Navigation: React.FC<NavigationProps> = ({ navLinks }) => {
   const pathName = usePathname()
+  const session = useSession()
+  const isActive = (href: string): boolean => pathName === href
 
   return (
     <>
-      {navLinks.map(({ label, href }) => {
-        const isActive = pathName === href
+      {navLinks.map(({ label, href }) => (
+        // const isActive = pathName === href
 
-        return (
-          <Link
-            key={label}
-            href={href}
-            className={isActive ? 'header-link-active' : 'header-link'}
-          >
-            {label}
-          </Link>
-        )
-      })}
+        <Link
+          key={label}
+          href={href}
+          className={isActive(href) ? 'header-link-active' : 'header-link'}
+        >
+          {label}
+        </Link>
+      ))}
+      {session?.data && (
+        <Link
+          href={PATHS.profile}
+          className={
+            isActive(PATHS.profile) ? 'header-link-active' : 'header-link'
+          }
+        >
+          Profile
+        </Link>
+      )}
+      {session?.data ? (
+        <Link
+          href="#"
+          onClick={() => signOut({ callbackUrl: PATHS.home })}
+          className={isActive('') ? 'header-link-active' : 'header-link'}
+        >
+          Sign Out
+        </Link>
+      ) : (
+        <Link
+          href={PATHS.customSignIn}
+          className={
+            isActive(PATHS.customSignIn)
+              ? 'header-link-active'
+              : 'header-link'
+          }
+        >
+          Sign In
+        </Link>
+      )}
     </>
   )
 }
