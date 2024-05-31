@@ -6,9 +6,9 @@ export const PATHS = {
   about: '/about',
   profile: '/profile',
   signIn: '/auth',
-  customSignIn: '/auth/login',
   logIn: '/auth/login',
-  autoSignIn: '/api/auth/signin'
+  libSignIn: '/api/auth/signin',
+  register: '/auth/register'
 }
 
 export const NAV_LINKS: INavLink[] = [

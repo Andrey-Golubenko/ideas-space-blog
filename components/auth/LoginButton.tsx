@@ -17,7 +17,7 @@ const LoginButton: React.FC<ILoginbuttonProps> = ({
   const router = useRouter()
 
   const handleClick = () => {
-    router.push(PATHS.customSignIn)
+    router.push(PATHS.logIn)
     console.log('LOGIN BUTTON CLICKED :>> ')
   }
 
