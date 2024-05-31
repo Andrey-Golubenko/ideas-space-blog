@@ -48,14 +48,12 @@ const Navigation: React.FC<NavigationProps> = ({ navLinks }) => {
         </Link>
       ) : (
         <Link
-          href={PATHS.customSignIn}
+          href={PATHS.signIn}
           className={
-            isActive(PATHS.customSignIn)
-              ? 'header-link-active'
-              : 'header-link'
+            isActive(PATHS.signIn) ? 'header-link-active' : 'header-link'
           }
         >
-          Sign In
+          Log in
         </Link>
       )}
     </>

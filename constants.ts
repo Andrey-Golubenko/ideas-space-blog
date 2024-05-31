@@ -4,9 +4,11 @@ export const PATHS = {
   home: '/',
   blog: '/blog',
   about: '/about',
-  signIn: '/api/auth/signin',
-  customSignIn: '/signIn',
-  profile: '/profile'
+  profile: '/profile',
+  signIn: '/auth',
+  customSignIn: '/auth/login',
+  logIn: '/auth/login',
+  autoSignIn: '/api/auth/signin'
 }
 
 export const NAV_LINKS: INavLink[] = [

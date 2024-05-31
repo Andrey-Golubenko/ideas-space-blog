@@ -1,7 +1,7 @@
 import GoogleButton from '~/components/GoogleButton'
 import SignInForm from '~/components/SignInForm'
 
-function SigIn() {
+function LogIn() {
   return (
     <div className="flex flex-col items-center justify-center">
       <h1 className="my-4 text-2xl font-bold">Sign In</h1>
@@ -18,4 +18,4 @@ function SigIn() {
   )
 }
 
-export default SigIn
+export default LogIn
