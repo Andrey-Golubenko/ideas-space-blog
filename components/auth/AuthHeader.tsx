@@ -11,8 +11,6 @@ interface IAuthHeaderProps {
 }
 
 const AuthHeader = ({ label }: IAuthHeaderProps) => (
-  // ddd
-
   <div className="flex w-full flex-col items-center justify-center gap-y-4">
     <h1 className={cn('text-3xl font-semibold', font.className)}>
       🔐 Auth

@@ -30,9 +30,11 @@ const CardWrapper = ({
       <AuthHeader label={headerLabel} />
     </CardHeader>
     <CardContent>{children}</CardContent>
-    <CardFooter>
-      <Social />
-    </CardFooter>
+    {showSocial && (
+      <CardFooter>
+        <Social />
+      </CardFooter>
+    )}
     <CardFooter>
       <BackButton label={backButtonLabel} href={backButtonHref} />
     </CardFooter>
