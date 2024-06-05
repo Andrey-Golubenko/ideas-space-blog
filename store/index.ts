@@ -2,7 +2,7 @@ import { persist, devtools } from 'zustand/middleware'
 import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
 import { getAllPosts, getPostBySearch } from '~/services/getPosts'
-import { IPost } from '~/types'
+import { IPost } from '~/types/types'
 
 interface IUsePosts {
   posts: IPost[]

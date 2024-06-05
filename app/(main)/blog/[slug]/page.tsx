@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { getSinglePost } from '~/services/getPosts'
-import { IPost } from '~/types'
+import { IPost } from '~/types/types'
 
 interface PostProps {
   params: {

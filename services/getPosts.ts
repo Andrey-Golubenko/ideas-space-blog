@@ -1,4 +1,4 @@
-import { IPost } from '~/types'
+import { IPost } from '~/types/types'
 
 export const getAllPosts = async (): Promise<IPost[]> => {
   // const response = await fetch(

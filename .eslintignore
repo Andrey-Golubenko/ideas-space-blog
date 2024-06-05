@@ -3,7 +3,6 @@
 *.css
 /node_modules
 /build
-vite.config.ts
 jest.setup.ts
 jest.config.js
 /test/__mocks__/fileMock.js

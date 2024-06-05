@@ -1,4 +1,4 @@
-import { INavLink } from './types'
+import { INavLink } from './types/types'
 
 export const PATHS = {
   home: '/',

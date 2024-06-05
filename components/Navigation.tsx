@@ -4,7 +4,7 @@ import { useSession, signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { PATHS } from '~/constants'
-import { INavLink } from '~/types'
+import { INavLink } from '~/types/types'
 
 interface NavigationProps {
   navLinks: INavLink[]
