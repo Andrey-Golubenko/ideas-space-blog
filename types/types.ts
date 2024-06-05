@@ -9,3 +9,14 @@ export interface INavLink {
   label: string
   href: string
 }
+
+export interface UserDTO {
+  id: string
+  name: string | null
+  email: string
+  emailVerified?: Date | null
+  image?: string | null
+  password: string
+  createdAt?: Date
+  updatedAt?: Date
+}

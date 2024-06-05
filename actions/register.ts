@@ -1,25 +1,38 @@
 'use server'
 
 import * as z from 'zod'
+import bcrypt from 'bcrypt'
 import { RegisterSchema } from '~/schemas'
 
-import { signIn } from '~/lib/auth'
+import { UserDTO } from '~/types/types'
+import { db } from '~/lib/db'
+import { getUserByEmail } from '~/services/user'
 
-// interface ILogInArgs {
-//   // provider: string
-//   provider?: string
-//   redirect?: string
-// }
-
-// export async function providerLogIn({ provider, redirect }: ILogInArgs) {
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
-  // await signIn(provider, { redirectTo: redirect })
-
   const validatedFields = RegisterSchema.safeParse(values)
 
   if (!validatedFields.success) {
     return { error: 'Invalid fields!' }
   }
+  const { name, email, password } = validatedFields.data as UserDTO
 
-  return { success: 'Email sent!' }
+  const hashedPassword = await bcrypt.hash(password, 10)
+
+  const existingUser = await getUserByEmail(email)
+
+  if (existingUser) {
+    return { error: 'Email already in use!' }
+  }
+
+  await db.user.create({
+    data: {
+      name,
+      email,
+      password: hashedPassword
+    }
+  })
+
+  // TODO: Sent verification token Email
+
+  return { success: 'User has been created!' }
 }
