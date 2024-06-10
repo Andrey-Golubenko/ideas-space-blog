@@ -1,4 +1,4 @@
-import { NAV_LINKS } from '~/constants'
+import { NAV_LINKS } from '~/constants/constants'
 import Navigation from './Navigation'
 
 export default function Header() {

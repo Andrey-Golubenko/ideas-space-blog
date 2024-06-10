@@ -20,7 +20,7 @@ import PasswordIcon from '~/components/auth/PasswordIcon'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import { LogInSchema } from '~/schemas'
-import { PATHS } from '~/constants'
+import { PATHS } from '~/constants/constants'
 import { logIn } from '~/actions/login'
 
 const LoginForm = () => {
@@ -60,7 +60,10 @@ const LoginForm = () => {
       showSocial
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-6"
+        >
           <div className="space-y-4">
             <FormField
               control={form.control}
@@ -107,7 +110,11 @@ const LoginForm = () => {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button type="submit" disabled={isPending} className="w-full">
+          <Button
+            type="submit"
+            disabled={isPending}
+            className="w-full"
+          >
             Log In
           </Button>
         </form>

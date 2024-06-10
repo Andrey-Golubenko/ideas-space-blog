@@ -1,14 +1,20 @@
-import { INavLink } from './types/types'
+import { INavLink } from '~/types/types'
 
 export const PATHS = {
   home: '/',
   blog: '/blog',
+  posts: '/api/posts',
   about: '/about',
-  profile: '/profile',
+  constacts: '/about/contacts',
+  team: '/about/team',
   signIn: '/auth',
+  authActionsPref: '/api/auth',
   logIn: '/auth/login',
-  libSignIn: '/api/auth/signin',
-  register: '/auth/register'
+  register: '/auth/register',
+  profile: '/profile',
+  settings: '/settings',
+
+  libSignIn: '/api/auth/signin'
 }
 
 export const NAV_LINKS: INavLink[] = [

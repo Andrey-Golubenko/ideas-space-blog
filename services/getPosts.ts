@@ -26,6 +26,19 @@ export const getAllPosts = async (): Promise<IPost[]> => {
   return response.json()
 }
 
+export async function getSinglePost(slug: string) {
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/posts/${slug}`,
+    {
+      next: {
+        revalidate: 50 // sec
+      }
+    }
+  )
+
+  return response.json()
+}
+
 export const getPostBySearch = async (
   search: string
 ): Promise<IPost[]> => {
@@ -38,19 +51,6 @@ export const getPostBySearch = async (
 
   if (!response.ok)
     throw new Error('Unable fetch posts! An unexpected error has occured!')
-
-  return response.json()
-}
-
-export async function getSinglePost(slug: string) {
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${slug}`,
-    {
-      next: {
-        revalidate: 60 // sec
-      }
-    }
-  )
 
   return response.json()
 }

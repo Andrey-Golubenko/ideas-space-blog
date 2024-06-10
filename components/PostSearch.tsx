@@ -15,7 +15,10 @@ const PostSearch: React.FC = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="mb-10 mt-5">
+      <form
+        onSubmit={handleSubmit}
+        className="mb-10 mt-5"
+      >
         <input
           type="search"
           placeholder="search"

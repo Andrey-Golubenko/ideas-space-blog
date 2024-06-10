@@ -21,7 +21,10 @@ const Auth = () => (
     <p className="text-lg text-white">A simple authentication</p>
     <div>
       <LoginButton>
-        <Button variant="secondary" size="lg">
+        <Button
+          variant="secondary"
+          size="lg"
+        >
           Sign in
         </Button>
       </LoginButton>

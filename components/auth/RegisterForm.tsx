@@ -20,8 +20,8 @@ import PasswordIcon from '~/components/auth/PasswordIcon'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import { RegisterSchema } from '~/schemas'
-import { PATHS } from '~/constants'
 import { register } from '~/actions/register'
+import { PATHS } from '~/constants/constants'
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -61,7 +61,10 @@ const RegisterForm = () => {
       showSocial
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-6"
+        >
           <div className="space-y-4">
             <FormField
               control={form.control}
@@ -126,7 +129,11 @@ const RegisterForm = () => {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button type="submit" disabled={isPending} className="w-full">
+          <Button
+            type="submit"
+            disabled={isPending}
+            className="w-full"
+          >
             Create an account
           </Button>
         </form>

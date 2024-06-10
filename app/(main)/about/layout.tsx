@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { PATHS } from '~/constants/constants'
 
 export default function AboutLayout({
   children
@@ -8,10 +9,10 @@ export default function AboutLayout({
       <h1 className="my-4 text-center text-2xl font-bold">About us</h1>
       <ul className="list-disc">
         <li>
-          <Link href="/about/contacts">Contacts</Link>
+          <Link href={PATHS.constacts}>Contacts</Link>
         </li>
         <li>
-          <Link href="/about/team">Team</Link>
+          <Link href={PATHS.team}>Team</Link>
         </li>
       </ul>
       {children}

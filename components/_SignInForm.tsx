@@ -4,7 +4,7 @@ import { AuthError } from 'next-auth'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { FormEventHandler, useState } from 'react'
-import { PATHS } from '~/constants'
+import { PATHS } from '~/constants/constants'
 
 const SignInForm = () => {
   const [authError, setAuthError] = useState<AuthError>()
@@ -31,9 +31,15 @@ const SignInForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="text-center">
+    <form
+      onSubmit={handleSubmit}
+      className="text-center"
+    >
       <div className="text-center">
-        <label htmlFor="email" className="label-signin-input">
+        <label
+          htmlFor="email"
+          className="label-signin-input"
+        >
           Email
         </label>
         <input
@@ -46,7 +52,10 @@ const SignInForm = () => {
       </div>
 
       <div className="text-center">
-        <label htmlFor="password" className="label-signin-input">
+        <label
+          htmlFor="password"
+          className="label-signin-input"
+        >
           Password
         </label>
         <input
