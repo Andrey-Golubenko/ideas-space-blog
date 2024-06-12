@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth'
 
-import authConfig from '~/lib/auth/auth.config'
+import authConfig from '~/libs/auth/auth.config'
 import {
   AUTH_ROUTES,
   API_AUTH_PREFIX,

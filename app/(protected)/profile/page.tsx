@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { auth } from '~/lib/auth/auth'
+import { auth } from '~/libs/auth/auth'
 
 async function Profile() {
   const session = await auth()

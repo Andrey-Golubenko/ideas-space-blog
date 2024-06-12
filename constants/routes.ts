@@ -7,7 +7,7 @@ import { PATHS } from '~/constants/constants'
  * @type {string []}
  */
 export const PUBLIC_ROUTES = [
-  PATHS.home, 
+  PATHS.home,
   PATHS.blog,
   PATHS.posts,
   PATHS.about,
@@ -18,7 +18,7 @@ export const PUBLIC_ROUTES = [
 
 /**
  * An array of routes that are used for authentication.
- * These routes will redirect logges in ussers to '/settings'. 
+ * These routes will redirect logged in ussers to '/settings'.
  * @type {string []}
  */
 export const AUTH_ROUTES = [
@@ -30,7 +30,7 @@ export const AUTH_ROUTES = [
 
 /**
  * The prefix for API authentication routes.
- * Routes that start with this prefix are used for API authentication purposes. 
+ * Routes that start with this prefix are used for API authentication purposes.
  * @type {string}
  */
 export const API_AUTH_PREFIX = PATHS.authActionsPref

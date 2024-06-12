@@ -16,6 +16,7 @@ const usePosts = createWithEqualityFn<
   [['zustand/devtools', never], ['zustand/persist', IUsePosts]]
 >(
   devtools(
+    // persist() - to enable state persistence across page reloads or browser sessions
     persist(
       (set) => ({
         posts: [],

@@ -1,4 +1,4 @@
-import { auth } from '~/lib/auth/auth'
+import { auth } from '~/libs/auth/auth'
 
 const Settings = async () => {
   const session = await auth()
