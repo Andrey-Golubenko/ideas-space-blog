@@ -1,4 +1,4 @@
-import { PUBLIC_ROUTES } from '~/constants/routes'
+import { PUBLIC_ROUTES } from '~/utils/constants/routes'
 
 export const isPublicRoute = (pathname: string): boolean => {
   const urlSlug = /\/\d+$/

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect } from 'react'
-import { PATHS } from '~/constants/constants'
+import { PATHS } from '~/utils/constants/constants'
 import usePosts from '~/store'
 
 const Posts: React.FC = () => {

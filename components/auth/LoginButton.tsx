@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { PATHS } from '~/constants/constants'
+import { PATHS } from '~/utils/constants/constants'
 
 interface ILoginbuttonProps {
   children: React.ReactNode

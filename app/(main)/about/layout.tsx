@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { PATHS } from '~/constants/constants'
+import { PATHS } from '~/utils/constants/constants'
 
 export default function AboutLayout({
   children

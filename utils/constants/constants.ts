@@ -22,3 +22,8 @@ export const NAV_LINKS: INavLink[] = [
   { label: 'Blog', href: PATHS.blog },
   { label: 'About', href: PATHS.about }
 ]
+
+export const PRIVATE_NAV_LINKS: INavLink[] = [
+  { label: 'Profile', href: PATHS.profile },
+  { label: 'Settings', href: PATHS.settings }
+]

@@ -20,7 +20,7 @@ import PasswordIcon from '~/components/auth/PasswordIcon'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import { LogInSchema } from '~/schemas'
-import { PATHS } from '~/constants/constants'
+import { PATHS } from '~/utils/constants/constants'
 import { logIn } from '~/actions/login'
 
 const LoginForm = () => {
