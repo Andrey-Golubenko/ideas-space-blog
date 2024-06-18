@@ -3,8 +3,58 @@ import { PrismaAdapter } from '@auth/prisma-adapter'
 
 import { db } from '~/libs/db'
 import authConfig from '~/libs/auth/auth.config'
+import { getUserById } from '~/services/user'
+import { UserRole } from '@prisma/client'
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  callbacks: {
+    async signIn({ user }) {
+      const existingUser = await getUserById(user.id as string)
+
+      // if (!existingUser || !existingUser.emailVerified) {
+      // a temporary option to try this feature
+      if (!existingUser && !existingUser!.emailVerified) {
+        return false
+      }
+
+      return true
+    },
+    async session({ token, session }) {
+      if (token.sub && session.user) {
+        /**
+         * (session.user as AdapterUser &
+            User & { customField: string | unknown }
+            ).customField = token.customField
+         */
+
+        session.user.id = token.sub
+      }
+
+      if (token.role && session.user) {
+        session.user.role = token.role as UserRole
+      }
+
+      return session
+    },
+    async jwt({ token }) {
+      /** How to add an additional field to 'session.user':
+       * we can do it by adding this field to 'token'
+       *
+       * like this -  token.customField = 'test'
+       *
+       * and then, add this field to 'session.user', as it shown above in - async session({ token, session }) {}
+       */
+      if (!token.sub) return token
+
+      const existingUser = await getUserById(token.sub)
+
+      if (!existingUser) return token
+
+      token.role = existingUser.role
+
+      return token
+    }
+  },
   adapter: PrismaAdapter(db),
   session: { strategy: 'jwt' },
 

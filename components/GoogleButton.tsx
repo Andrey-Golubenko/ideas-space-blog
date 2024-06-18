@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { logIn } from '~/actions/login'
 import * as google from '~/public/google.svg'
-import { PATHS } from '~/constants/constants'
+import { PATHS } from '~/utils/constants/constants'
 
 const GoogleButton = () => (
   <button

@@ -1,3 +1,5 @@
+import { UserRole } from '@prisma/client'
+
 export interface IPost {
   userId: number
   id: number
@@ -17,6 +19,7 @@ export interface UserDTO {
   emailVerified?: Date | null
   image?: string | null
   password: string
+  role?: UserRole
   createdAt?: Date
   updatedAt?: Date
 }

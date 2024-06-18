@@ -21,7 +21,7 @@ import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import { RegisterSchema } from '~/schemas'
 import { register } from '~/actions/register'
-import { PATHS } from '~/constants/constants'
+import { PATHS } from '~/utils/constants/constants'
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)

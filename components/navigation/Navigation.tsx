@@ -1,6 +1,4 @@
-import { auth, signOut } from '~/libs/auth/auth'
-import Link from 'next/link'
-import { PATHS } from '~/utils/constants/constants'
+import { auth } from '~/libs/auth/auth'
 import NavMenu from '~/components/navigation/NavMenu'
 import PrivateNavMenu from './PrivateNavMenu'
 

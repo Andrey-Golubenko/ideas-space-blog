@@ -38,6 +38,7 @@
     }
   },
   "rules": {
+    "no-param-reassign": "warn",
     "no-var": 0,
     "vars-on-top": 0,
     "jsx-a11y/anchor-is-valid": "off",

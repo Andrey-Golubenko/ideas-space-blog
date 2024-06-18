@@ -4,7 +4,7 @@ import { AuthError } from 'next-auth'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { FormEventHandler, useState } from 'react'
-import { PATHS } from '~/constants/constants'
+import { PATHS } from '~/utils/constants/constants'
 
 const SignInForm = () => {
   const [authError, setAuthError] = useState<AuthError>()
