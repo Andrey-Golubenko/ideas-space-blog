@@ -20,10 +20,17 @@ import PasswordIcon from '~/components/auth/PasswordIcon'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import { LogInSchema } from '~/schemas'
-import { PATHS } from '~/utils/constants/constants'
+import { AUTH_ERRORS, PATHS } from '~/utils/constants/constants'
 import { logIn } from '~/actions/login'
+import { useSearchParams } from 'next/navigation'
 
 const LoginForm = () => {
+  const searchParams = useSearchParams()
+  const urlError =
+    searchParams.get('error') === AUTH_ERRORS.duplicateCred
+      ? 'Email already in use with different provider!'
+      : ''
+
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
@@ -47,7 +54,8 @@ const LoginForm = () => {
     startTransition(() => {
       logIn(values).then((data) => {
         setError(data?.error)
-        setSuccess(data?.success)
+        // TODO: An whrn we add 2FA
+        // setSuccess(data?.success)
       })
     })
   }
@@ -108,7 +116,7 @@ const LoginForm = () => {
               )}
             />
           </div>
-          <FormError message={error} />
+          <FormError message={error || urlError} />
           <FormSuccess message={success} />
           <Button
             type="submit"

@@ -13,6 +13,7 @@ export const PATHS = {
   register: '/auth/register',
   profile: '/profile',
   settings: '/settings',
+  error: '/auth/error',
 
   libSignIn: '/api/auth/signin'
 }
@@ -27,3 +28,7 @@ export const PRIVATE_NAV_LINKS: INavLink[] = [
   { label: 'Profile', href: PATHS.profile },
   { label: 'Settings', href: PATHS.settings }
 ]
+
+export const AUTH_ERRORS = {
+  duplicateCred: 'OAuthAccountNotLinked'
+}

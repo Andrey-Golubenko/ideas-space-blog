@@ -24,6 +24,7 @@ export const PUBLIC_ROUTES = [
 export const AUTH_ROUTES = [
   PATHS.logIn,
   PATHS.register,
+  PATHS.error,
 
   PATHS.libSignIn
 ]

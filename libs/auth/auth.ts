@@ -5,20 +5,36 @@ import { db } from '~/libs/db'
 import authConfig from '~/libs/auth/auth.config'
 import { getUserById } from '~/services/user'
 import { UserRole } from '@prisma/client'
+import { PATHS } from '~/utils/constants/constants'
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  pages: {
+    signIn: PATHS.logIn,
+    error: PATHS.error
+  },
+  events: {
+    async linkAccount({ user }) {
+      await db.user.update({
+        where: { id: user.id },
+        data: { emailVerified: new Date() }
+      })
+    }
+  },
   callbacks: {
-    async signIn({ user }) {
+    /**
+     * An exapmle for signIn-callback - 
+     * 
+     * async signIn({ user }) {
       const existingUser = await getUserById(user.id as string)
 
-      // if (!existingUser || !existingUser.emailVerified) {
-      // a temporary option to try this feature
-      if (!existingUser && !existingUser!.emailVerified) {
+      if (!existingUser || !existingUser.emailVerified) {
         return false
       }
 
       return true
     },
+     */
+
     async session({ token, session }) {
       if (token.sub && session.user) {
         /**
