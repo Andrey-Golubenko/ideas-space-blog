@@ -6,6 +6,8 @@ import { RegisterSchema } from '~/schemas'
 
 import { UserDTO } from '~/types/types'
 import { db } from '~/libs/db'
+import { generateVerificationToken } from '~/libs/tokens'
+import { sendVerificationEmail } from '~/libs/mail'
 import { getUserByEmail } from '~/services/user'
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
@@ -32,7 +34,12 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     }
   })
 
-  // TODO: Sent verification token Email
+  const verificationToken = await generateVerificationToken(email)
 
-  return { success: 'User has been created!' }
+  await sendVerificationEmail(
+    verificationToken.email,
+    verificationToken.token
+  )
+
+  return { success: 'Confirmation Email has been sent!' }
 }

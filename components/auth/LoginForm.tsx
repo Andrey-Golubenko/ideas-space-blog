@@ -54,8 +54,7 @@ const LoginForm = () => {
     startTransition(() => {
       logIn(values).then((data) => {
         setError(data?.error)
-        // TODO: An whrn we add 2FA
-        // setSuccess(data?.success)
+        setSuccess(data?.success)
       })
     })
   }

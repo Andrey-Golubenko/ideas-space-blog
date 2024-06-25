@@ -21,28 +21,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }
   },
   callbacks: {
-    /**
-     * An exapmle for signIn-callback - 
-     * 
-     * async signIn({ user }) {
+    async signIn({ user, account }) {
+      // Allow OAuth without email verification
+      if (account?.provider !== 'credentials') return true
+
       const existingUser = await getUserById(user.id as string)
 
-      if (!existingUser || !existingUser.emailVerified) {
-        return false
-      }
+      // Prevent signIn without Email verification
+      if (!existingUser?.emailVerified) return false
+
+      // TODO: Add 2FA check
 
       return true
     },
-     */
 
     async session({ token, session }) {
       if (token.sub && session.user) {
-        /**
-         * (session.user as AdapterUser &
-            User & { customField: string | unknown }
-            ).customField = token.customField
-         */
-
         session.user.id = token.sub
       }
 
@@ -53,13 +47,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session
     },
     async jwt({ token }) {
-      /** How to add an additional field to 'session.user':
-       * we can do it by adding this field to 'token'
-       *
-       * like this -  token.customField = 'test'
-       *
-       * and then, add this field to 'session.user', as it shown above in - async session({ token, session }) {}
-       */
       if (!token.sub) return token
 
       const existingUser = await getUserById(token.sub)
@@ -76,34 +63,3 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
   ...authConfig
 })
-
-// export const { handlers, signIn, signOut, auth } = NextAuth({
-//   providers: [
-//     Google,
-//     Credentials({
-//       credentials: {
-//         email: { label: 'Email', type: 'email', required: true },
-//         password: { label: 'Password', type: 'password', required: true }
-//       },
-//       async authorize(credentials) {
-//         if (!credentials?.email || !credentials?.password) return null
-
-//         const currentUser = mockUsers.find(
-//           (user) => credentials?.email === user?.email
-//         )
-
-//         if (
-//           currentUser &&
-//           currentUser?.password === credentials?.password
-//         ) {
-//           const { password, ...userWithoutPass } = currentUser
-
-//           return userWithoutPass
-//         }
-//         return null
-//       }
-//     })
-//   ],
-//   secret: process.env.AUTH_SECRET,
-//   pages: { signIn: PATHS.logIn }
-// })

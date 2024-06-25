@@ -32,3 +32,5 @@ export const PRIVATE_NAV_LINKS: INavLink[] = [
 export const AUTH_ERRORS = {
   duplicateCred: 'OAuthAccountNotLinked'
 }
+
+export const ONE_HOUR_EXPIRE = new Date(new Date().getTime() + 3600 * 1000)
