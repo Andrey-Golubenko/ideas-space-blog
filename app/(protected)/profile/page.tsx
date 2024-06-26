@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { auth } from '~/libs/auth/auth'
 
-async function Profile() {
+const ProfilePage = async () => {
   const session = await auth()
 
   return (
@@ -20,4 +20,4 @@ async function Profile() {
   )
 }
 
-export default Profile
+export default ProfilePage

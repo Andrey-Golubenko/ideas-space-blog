@@ -18,7 +18,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function Post({ params: { slug } }: PostProps) {
+const SinglePostPage = async ({ params: { slug } }: PostProps) => {
   const singlePost: IPost = await getSinglePost(slug)
   const singlePostTitle: string = singlePost?.title
     .charAt(0)
@@ -38,3 +38,5 @@ export default async function Post({ params: { slug } }: PostProps) {
     </div>
   )
 }
+
+export default SinglePostPage

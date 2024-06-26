@@ -8,7 +8,7 @@ const font = Poppins({
   weight: ['600']
 })
 
-const Auth = () => (
+const AuthPage = () => (
   <div className="space-y-6 text-center">
     <h1
       className={cn(
@@ -32,4 +32,4 @@ const Auth = () => (
   </div>
 )
 
-export default Auth
+export default AuthPage

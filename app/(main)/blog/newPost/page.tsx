@@ -1,3 +1,3 @@
-export default function NewPost() {
-  return <div>Create New Post</div>
-}
+const NewPostPage = () => <div>Create New Post</div>
+
+export default NewPostPage

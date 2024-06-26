@@ -26,9 +26,9 @@ export const AUTH_ROUTES = [
   PATHS.logIn,
   PATHS.register,
   PATHS.error,
-  
+
   // route for automatically generated (by next-auth library) login-form
-  PATHS.libSignIn  
+  PATHS.libSignIn
 ]
 
 /**

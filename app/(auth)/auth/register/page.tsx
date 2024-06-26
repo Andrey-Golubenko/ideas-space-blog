@@ -1,6 +1,6 @@
 import RegisterForm from '~/components/auth/RegisterForm'
 
-function Register() {
+function RegisterPage() {
   return (
     <div className="flex flex-col items-center justify-center">
       <RegisterForm />
@@ -8,4 +8,4 @@ function Register() {
   )
 }
 
-export default Register
+export default RegisterPage

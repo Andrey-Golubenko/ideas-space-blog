@@ -1,6 +1,6 @@
 import LoginForm from '~/components/auth/LoginForm'
 
-function LogIn() {
+function LogInPage() {
   return (
     <div className="flex flex-col items-center justify-center">
       <LoginForm />
@@ -8,4 +8,4 @@ function LogIn() {
   )
 }
 
-export default LogIn
+export default LogInPage
