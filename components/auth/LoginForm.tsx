@@ -4,6 +4,9 @@ import { useState, useTransition } from 'react'
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useSearchParams } from 'next/navigation'
+import Link from 'next/link'
+
 import {
   Form,
   FormControl,
@@ -13,7 +16,6 @@ import {
   FormMessage
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-
 import { Button } from '~/components/ui/button'
 import CardWrapper from '~/components/auth/CardWrapper'
 import PasswordIcon from '~/components/auth/PasswordIcon'
@@ -22,7 +24,6 @@ import FormSuccess from '~/components/FormSuccess'
 import { LogInSchema } from '~/schemas'
 import { AUTH_ERRORS, PATHS } from '~/utils/constants/constants'
 import { logIn } from '~/actions/login'
-import { useSearchParams } from 'next/navigation'
 
 const LoginForm = () => {
   const searchParams = useSearchParams()
@@ -110,6 +111,16 @@ const LoginForm = () => {
                       }
                     />
                   </FormControl>
+                  <Button
+                    variant="link"
+                    size="sm"
+                    asChild
+                    className="px-0 font-normal"
+                  >
+                    <Link href={PATHS.resetPassword}>
+                      Forgot password?
+                    </Link>
+                  </Button>
                   <FormMessage />
                 </FormItem>
               )}

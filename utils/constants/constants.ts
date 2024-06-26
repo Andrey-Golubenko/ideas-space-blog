@@ -13,6 +13,8 @@ export const PATHS = {
   logIn: '/auth/login',
   register: '/auth/register',
   newVerification: '/auth/new-verification',
+  resetPassword: '/auth/reset-password',
+  newPassword: '/auth/new-password',
   error: '/auth/error',
 
   authActionsPref: '/api/auth',

@@ -14,7 +14,8 @@ export const PUBLIC_ROUTES = [
   PATHS.constacts,
   PATHS.team,
   PATHS.signIn,
-  PATHS.newVerification
+  PATHS.newVerification,
+  PATHS.newPassword
 ]
 
 /**
@@ -25,6 +26,7 @@ export const PUBLIC_ROUTES = [
 export const AUTH_ROUTES = [
   PATHS.logIn,
   PATHS.register,
+  PATHS.resetPassword,
   PATHS.error,
 
   // route for automatically generated (by next-auth library) login-form
