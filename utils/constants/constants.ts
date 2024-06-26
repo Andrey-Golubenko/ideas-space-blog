@@ -7,13 +7,15 @@ export const PATHS = {
   about: '/about',
   constacts: '/about/contacts',
   team: '/about/team',
-  signIn: '/auth',
-  authActionsPref: '/api/auth',
-  logIn: '/auth/login',
-  register: '/auth/register',
   profile: '/profile',
   settings: '/settings',
+  signIn: '/auth',
+  logIn: '/auth/login',
+  register: '/auth/register',
+  newVerification: '/auth/new-verification',
   error: '/auth/error',
+
+  authActionsPref: '/api/auth',
 
   libSignIn: '/api/auth/signin'
 }
