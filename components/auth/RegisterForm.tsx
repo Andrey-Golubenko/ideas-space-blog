@@ -16,15 +16,15 @@ import { Input } from '~/components/ui/input'
 
 import { Button } from '~/components/ui/button'
 import CardWrapper from '~/components/auth/CardWrapper'
-import PasswordIcon from '~/components/auth/PasswordIcon'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
+import PasswordField from '~/components/shared/passwordField'
+import EmailField from '~/components/shared/emailField'
 import { RegisterSchema } from '~/schemas'
 import { register } from '~/actions/register'
 import { PATHS } from '~/utils/constants/constants'
 
 const RegisterForm = () => {
-  const [showPassword, setShowPassword] = useState<boolean>(false)
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
 
@@ -38,8 +38,6 @@ const RegisterForm = () => {
       password: ''
     }
   })
-
-  const handleIconClick = () => setShowPassword((previous) => !previous)
 
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     setError('')
@@ -84,47 +82,13 @@ const RegisterForm = () => {
                 </FormItem>
               )}
             />
-            <FormField
+            <EmailField
               control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="email@example.com"
-                      type="email"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              isPending={isPending}
             />
-            <FormField
+            <PasswordField
               control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="*****"
-                      type={showPassword ? 'text' : 'password'}
-                      inputAdornment={
-                        <PasswordIcon
-                          showPassword={showPassword}
-                          iconClick={handleIconClick}
-                        />
-                      }
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              isPending={isPending}
             />
           </div>
           <FormError message={error} />

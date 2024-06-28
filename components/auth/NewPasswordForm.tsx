@@ -12,37 +12,32 @@ import CardWrapper from '~/components/auth/CardWrapper'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import PasswordField from '~/components/shared/passwordField'
-import EmailField from '~/components/shared/emailField'
-import { LogInSchema } from '~/schemas'
-import { AUTH_ERRORS, PATHS } from '~/utils/constants/constants'
-import { logIn } from '~/actions/login'
+import { newPassword } from '~/actions/new-password'
+import { NewPasswordSchema } from '~/schemas'
+import { PATHS } from '~/utils/constants/constants'
 
-const LoginForm = () => {
+const NewPasswordForm = () => {
   const searchParams = useSearchParams()
-  const urlError =
-    searchParams.get('error') === AUTH_ERRORS.duplicateCred
-      ? 'Email already in use with different provider!'
-      : ''
+  const token = searchParams.get('token')
 
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
 
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<z.infer<typeof LogInSchema>>({
-    resolver: zodResolver(LogInSchema),
+  const form = useForm<z.infer<typeof NewPasswordSchema>>({
+    resolver: zodResolver(NewPasswordSchema),
     defaultValues: {
-      email: '',
       password: ''
     }
   })
 
-  const onSubmit = (values: z.infer<typeof LogInSchema>) => {
+  const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
     setError('')
     setSuccess('')
 
     startTransition(() => {
-      logIn(values).then((data) => {
+      newPassword(values, token!).then((data) => {
         setError(data?.error)
         setSuccess(data?.success)
       })
@@ -51,10 +46,9 @@ const LoginForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Welcome back"
-      backButtonLabel="Don't have an account?"
-      backButtonHref={PATHS.register}
-      showSocial
+      headerLabel="Enter a new password!"
+      backButtonLabel="Go back to login?"
+      backButtonHref={PATHS.logIn}
     >
       <Form {...form}>
         <form
@@ -62,29 +56,23 @@ const LoginForm = () => {
           className="space-y-6"
         >
           <div className="space-y-4">
-            <EmailField
-              control={form.control}
-              isPending={isPending}
-            />
             <PasswordField
               control={form.control}
               isPending={isPending}
-              withLink
             />
           </div>
-          <FormError message={error || urlError} />
+          <FormError message={error} />
           <FormSuccess message={success} />
           <Button
             type="submit"
             disabled={isPending}
             className="w-full"
           >
-            Log In
+            Reset password
           </Button>
         </form>
       </Form>
     </CardWrapper>
   )
 }
-
-export default LoginForm
+export default NewPasswordForm

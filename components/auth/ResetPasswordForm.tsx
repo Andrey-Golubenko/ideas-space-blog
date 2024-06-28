@@ -5,15 +5,7 @@ import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from '~/components/ui/form'
-import { Input } from '~/components/ui/input'
+import { Form } from '~/components/ui/form'
 import { Button } from '~/components/ui/button'
 import CardWrapper from '~/components/auth/CardWrapper'
 import FormError from '~/components/FormError'
@@ -21,6 +13,7 @@ import FormSuccess from '~/components/FormSuccess'
 import { ResetSchema } from '~/schemas'
 import { PATHS } from '~/utils/constants/constants'
 import { passwordReset } from '~/actions/reset-password'
+import EmailField from '~/components/shared/emailField'
 
 const ResetPasswordForm = () => {
   const [error, setError] = useState<string | undefined>('')
@@ -59,23 +52,9 @@ const ResetPasswordForm = () => {
           className="space-y-6"
         >
           <div className="space-y-4">
-            <FormField
+            <EmailField
               control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="email@example.com"
-                      type="email"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              isPending={isPending}
             />
           </div>
           <FormError message={error} />
