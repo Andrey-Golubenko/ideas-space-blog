@@ -6,7 +6,8 @@ export const LogInSchema = z.object({
       message: 'Value must be a string!'
     })
     .email({ message: 'Email is required field!' }),
-  password: z.string().min(1, { message: 'Password is required field!' })
+  password: z.string().min(1, { message: 'Password is required field!' }),
+  code: z.optional(z.string())
 })
 
 export const ResetSchema = z.object({

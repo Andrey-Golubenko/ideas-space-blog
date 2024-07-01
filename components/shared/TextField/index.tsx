@@ -7,27 +7,32 @@ import {
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
 
-interface IEmailFieldProps {
+interface ITextFieldProps {
+  name: string
+  label: string
+  placeholder?: string
   control: any
   isPending: boolean
 }
 
-const EmailField: React.FC<IEmailFieldProps> = ({
+const TextField: React.FC<ITextFieldProps> = ({
+  name,
+  label,
+  placeholder,
   control,
   isPending
 }) => (
   <FormField
     control={control}
-    name="email"
+    name={name}
     render={({ field }) => (
       <FormItem>
-        <FormLabel>Email</FormLabel>
+        <FormLabel>{label}</FormLabel>
         <FormControl>
           <Input
             {...field}
             disabled={isPending}
-            placeholder="email@example.com"
-            type="email"
+            placeholder={placeholder}
           />
         </FormControl>
         <FormMessage />
@@ -36,4 +41,4 @@ const EmailField: React.FC<IEmailFieldProps> = ({
   />
 )
 
-export default EmailField
+export default TextField

@@ -37,4 +37,6 @@ export const AUTH_ERRORS = {
   duplicateCred: 'OAuthAccountNotLinked'
 }
 
-export const ONE_HOUR_EXPIRE = new Date(new Date().getTime() + 3600 * 1000)
+export const ONE_HOUR = new Date(new Date().getTime() + 3600 * 1000)
+
+export const FIFTEEN_MINUTES = new Date(new Date().getTime() + 900 * 1000)

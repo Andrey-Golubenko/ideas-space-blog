@@ -13,6 +13,7 @@ import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import PasswordField from '~/components/shared/passwordField'
 import EmailField from '~/components/shared/emailField'
+import TextField from '~/components/shared/TextField'
 import { LogInSchema } from '~/schemas'
 import { AUTH_ERRORS, PATHS } from '~/utils/constants/constants'
 import { logIn } from '~/actions/login'
@@ -24,6 +25,7 @@ const LoginForm = () => {
       ? 'Email already in use with different provider!'
       : ''
 
+  const [showTwoFactor, setShowTwoFactor] = useState<boolean>(false)
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
 
@@ -33,7 +35,8 @@ const LoginForm = () => {
     resolver: zodResolver(LogInSchema),
     defaultValues: {
       email: '',
-      password: ''
+      password: '',
+      code: ''
     }
   })
 
@@ -42,10 +45,23 @@ const LoginForm = () => {
     setSuccess('')
 
     startTransition(() => {
-      logIn(values).then((data) => {
-        setError(data?.error)
-        setSuccess(data?.success)
-      })
+      logIn(values)
+        .then((data) => {
+          if (data?.error) {
+            form.reset()
+            setError(data?.error)
+          }
+
+          if (data?.success) {
+            form.reset()
+            setSuccess(data?.success)
+          }
+
+          if (data?.twoFactor) {
+            setShowTwoFactor(true)
+          }
+        })
+        .catch(() => setError('Somthing went wrong!'))
     })
   }
 
@@ -62,15 +78,29 @@ const LoginForm = () => {
           className="space-y-6"
         >
           <div className="space-y-4">
-            <EmailField
-              control={form.control}
-              isPending={isPending}
-            />
-            <PasswordField
-              control={form.control}
-              isPending={isPending}
-              withLink
-            />
+            {showTwoFactor && (
+              <TextField
+                name="code"
+                label="Two Factor Code"
+                placeholder="123456"
+                control={form.control}
+                isPending={isPending}
+              />
+            )}
+
+            {!showTwoFactor && (
+              <>
+                <EmailField
+                  control={form.control}
+                  isPending={isPending}
+                />
+                <PasswordField
+                  control={form.control}
+                  isPending={isPending}
+                  withLink
+                />
+              </>
+            )}
           </div>
           <FormError message={error || urlError} />
           <FormSuccess message={success} />
@@ -79,7 +109,7 @@ const LoginForm = () => {
             disabled={isPending}
             className="w-full"
           >
-            Log In
+            {showTwoFactor ? 'Confirm' : 'Login'}
           </Button>
         </form>
       </Form>
