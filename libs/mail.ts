@@ -21,7 +21,7 @@ export const sendVerificationEmail = async (
   email: string,
   token: string
 ) => {
-  const confirmLink = `http://localhost:3000${PATHS.newVerification}?token=${token}`
+  const confirmLink = `http://localhost:3000${PATHS.emailVerification}?token=${token}`
 
   await resend.emails.send({
     from: 'onboarding@resend.dev',

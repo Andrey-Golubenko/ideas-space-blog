@@ -6,11 +6,11 @@ import { useSearchParams } from 'next/navigation'
 import { BeatLoader } from 'react-spinners'
 import CardWrapper from '~/components/auth/CardWrapper'
 import { PATHS } from '~/utils/constants/constants'
-import { newVerification } from '~/actions/new-verification'
+import { emailVerification } from '~/actions/email-verification'
 import FormSuccess from '~/components/FormSuccess'
 import FormError from '~/components/FormError'
 
-const NewVerificationForm = () => {
+const EmailVerificationForm = () => {
   const [error, setError] = useState<string | undefined>()
   const [success, setSuccess] = useState<string | undefined>()
 
@@ -23,7 +23,7 @@ const NewVerificationForm = () => {
       return
     }
 
-    newVerification(token)
+    emailVerification(token)
       .then((data) => {
         setSuccess(data.success)
         setError(data.error)
@@ -50,4 +50,4 @@ const NewVerificationForm = () => {
   )
 }
 
-export default NewVerificationForm
+export default EmailVerificationForm

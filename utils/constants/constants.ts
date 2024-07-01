@@ -12,7 +12,7 @@ export const PATHS = {
   signIn: '/auth',
   logIn: '/auth/login',
   register: '/auth/register',
-  newVerification: '/auth/new-verification',
+  emailVerification: '/auth/email-verification',
   resetPassword: '/auth/reset-password',
   newPassword: '/auth/new-password',
   error: '/auth/error',
