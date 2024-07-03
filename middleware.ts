@@ -7,7 +7,7 @@ import {
   DEFAULT_LOGIN_REDIRECT
 } from '~/utils/constants/routes'
 import { PATHS } from '~/utils/constants/constants'
-import { isPublicRoute } from '~/utils/helpers/server.helpers'
+import { isPublicRoute } from '~/utils/helpers/helpers'
 
 const { auth } = NextAuth(authConfig)
 

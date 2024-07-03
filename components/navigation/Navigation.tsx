@@ -1,14 +1,14 @@
-import { auth } from '~/libs/auth/auth'
 import NavMenu from '~/components/navigation/NavMenu'
+import { getCurrentUser } from '~/utils/helpers/server.helpers'
 import PrivateNavMenu from './PrivateNavMenu'
 
 const Navigation = async () => {
-  const session = await auth()
+  const user = await getCurrentUser()
 
   return (
     <>
-      <NavMenu isLoggedIn={!!session?.user} />
-      {session?.user && <PrivateNavMenu />}
+      <NavMenu isLoggedIn={!!user} />
+      {user && <PrivateNavMenu />}
     </>
   )
 }

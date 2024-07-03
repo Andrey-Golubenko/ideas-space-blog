@@ -1,14 +1,10 @@
-import { PUBLIC_ROUTES } from '~/utils/constants/routes'
+'use server'
 
-export const isPublicRoute = (pathname: string): boolean => {
-  const urlSlug = /\/\d+$/
-  const urlWithSlug = urlSlug.test(pathname)
+import { auth } from '~/libs/auth/auth'
 
-  if (urlWithSlug) {
-    return PUBLIC_ROUTES.some(
-      (route) => pathname.startsWith(route) && urlWithSlug
-    )
-  }
+export const getCurrentUser = async () => {
+  const session = await auth()
+  const currentUser = session?.user
 
-  return PUBLIC_ROUTES.includes(pathname)
+  return currentUser
 }

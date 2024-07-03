@@ -3,13 +3,13 @@
 import { useRouter } from 'next/navigation'
 import { PATHS } from '~/utils/constants/constants'
 
-interface ILoginbuttonProps {
+interface ILoginButtonProps {
   children: React.ReactNode
   mode?: 'modal' | 'redirect'
   asChild?: boolean
 }
 
-const LoginButton: React.FC<ILoginbuttonProps> = ({
+const LoginButton: React.FC<ILoginButtonProps> = ({
   children,
   mode = 'redirect',
   asChild
