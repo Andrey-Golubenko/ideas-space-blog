@@ -9,15 +9,19 @@ const NavMenu = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
 
   return (
     <>
-      {NAV_LINKS.map(({ label, href }) => (
-        <Link
-          key={label}
-          href={href}
-          className={isActive(href) ? 'header-link-active' : 'header-link'}
-        >
-          {label}
-        </Link>
-      ))}
+      {NAV_LINKS.map(({ label, href }) => {
+        return (
+          <Link
+            key={label}
+            href={href}
+            className={
+              isActive(href) ? 'header-link-active' : 'header-link'
+            }
+          >
+            {label}
+          </Link>
+        )
+      })}
       {!isLoggedIn && (
         <Link
           href={PATHS.signIn}

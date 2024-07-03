@@ -15,25 +15,29 @@ interface IEmailFieldProps {
 const EmailField: React.FC<IEmailFieldProps> = ({
   control,
   isPending
-}) => (
-  <FormField
-    control={control}
-    name="email"
-    render={({ field }) => (
-      <FormItem>
-        <FormLabel>Email</FormLabel>
-        <FormControl>
-          <Input
-            {...field}
-            disabled={isPending}
-            placeholder="email@example.com"
-            type="email"
-          />
-        </FormControl>
-        <FormMessage />
-      </FormItem>
-    )}
-  />
-)
+}) => {
+  return (
+    <FormField
+      control={control}
+      name="email"
+      render={({ field }) => {
+        return (
+          <FormItem>
+            <FormLabel>Email</FormLabel>
+            <FormControl>
+              <Input
+                {...field}
+                disabled={isPending}
+                placeholder="email@example.com"
+                type="email"
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )
+      }}
+    />
+  )
+}
 
 export default EmailField

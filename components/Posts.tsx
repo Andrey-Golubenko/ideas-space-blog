@@ -6,11 +6,9 @@ import { PATHS } from '~/utils/constants/constants'
 import usePosts from '~/store'
 
 const Posts: React.FC = () => {
-  const [posts, isLoading, getAllPosts] = usePosts((state) => [
-    state.posts,
-    state.isLoading,
-    state.getAllPosts
-  ])
+  const [posts, isLoading, getAllPosts] = usePosts((state) => {
+    return [state.posts, state.isLoading, state.getAllPosts]
+  })
 
   useEffect(() => {
     getAllPosts()
@@ -22,11 +20,13 @@ const Posts: React.FC = () => {
         <h3 className="text-center text-2xl">Loading...</h3>
       ) : (
         posts?.length &&
-        posts?.map((post) => (
-          <li key={post?.id}>
-            <Link href={`${PATHS.blog}/${post?.id}`}>{post.title}</Link>
-          </li>
-        ))
+        posts?.map((post) => {
+          return (
+            <li key={post?.id}>
+              <Link href={`${PATHS.blog}/${post?.id}`}>{post.title}</Link>
+            </li>
+          )
+        })
       )}
     </ul>
   )

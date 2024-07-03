@@ -28,7 +28,9 @@ const EmailVerificationForm = () => {
         setSuccess(data.success)
         setError(data.error)
       })
-      .catch(() => setError('Somthing went wrong!'))
+      .catch(() => {
+        return setError('Somthing went wrong!')
+      })
   }, [token])
 
   useEffect(() => {

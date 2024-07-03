@@ -24,24 +24,26 @@ const CardWrapper = ({
   backButtonLabel,
   backButtonHref,
   showSocial
-}: ICardWrapper) => (
-  <Card className="w-[400px] shadow-md">
-    <CardHeader>
-      <AuthHeader label={headerLabel} />
-    </CardHeader>
-    <CardContent>{children}</CardContent>
-    {showSocial && (
+}: ICardWrapper) => {
+  return (
+    <Card className="w-[400px] shadow-md">
+      <CardHeader>
+        <AuthHeader label={headerLabel} />
+      </CardHeader>
+      <CardContent>{children}</CardContent>
+      {showSocial && (
+        <CardFooter>
+          <Social />
+        </CardFooter>
+      )}
       <CardFooter>
-        <Social />
+        <BackButton
+          label={backButtonLabel}
+          href={backButtonHref}
+        />
       </CardFooter>
-    )}
-    <CardFooter>
-      <BackButton
-        label={backButtonLabel}
-        href={backButtonHref}
-      />
-    </CardFooter>
-  </Card>
-)
+    </Card>
+  )
+}
 
 export default CardWrapper

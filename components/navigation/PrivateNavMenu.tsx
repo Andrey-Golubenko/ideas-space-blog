@@ -10,19 +10,25 @@ const PrivateNavMenu = () => {
 
   return (
     <>
-      {PRIVATE_NAV_LINKS.map(({ label, href }) => (
-        <Link
-          key={label}
-          href={href}
-          className={isActive(href) ? 'header-link-active' : 'header-link'}
-        >
-          {label}
-        </Link>
-      ))}
+      {PRIVATE_NAV_LINKS.map(({ label, href }) => {
+        return (
+          <Link
+            key={label}
+            href={href}
+            className={
+              isActive(href) ? 'header-link-active' : 'header-link'
+            }
+          >
+            {label}
+          </Link>
+        )
+      })}
 
       <Link
         href="#"
-        onClick={() => signOut({ callbackUrl: PATHS.home })}
+        onClick={() => {
+          return signOut({ callbackUrl: PATHS.home })
+        }}
         className="header-link"
       >
         Log out

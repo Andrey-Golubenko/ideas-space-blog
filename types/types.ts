@@ -20,6 +20,7 @@ export interface UserDTO {
   image?: string | null
   password: string
   role?: UserRole
+  isTwoFactorEnabled: boolean
   createdAt?: Date
   updatedAt?: Date
 }

@@ -26,42 +26,48 @@ const PasswordField: React.FC<IPasswordFieldProps> = ({
 }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
-  const handleIconClick = () => setShowPassword((previous) => !previous)
+  const handleIconClick = () => {
+    return setShowPassword((previous) => {
+      return !previous
+    })
+  }
 
   return (
     <FormField
       control={control}
       name="password"
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>Password</FormLabel>
-          <FormControl>
-            <Input
-              {...field}
-              disabled={isPending}
-              placeholder="*****"
-              type={showPassword ? 'text' : 'password'}
-              inputAdornment={
-                <PasswordIcon
-                  showPassword={showPassword}
-                  iconClick={handleIconClick}
-                />
-              }
-            />
-          </FormControl>
-          {withLink && (
-            <Button
-              variant="link"
-              size="sm"
-              asChild
-              className="px-0 font-normal"
-            >
-              <Link href={PATHS.resetPassword}>Forgot password?</Link>
-            </Button>
-          )}
-          <FormMessage />
-        </FormItem>
-      )}
+      render={({ field }) => {
+        return (
+          <FormItem>
+            <FormLabel>Password</FormLabel>
+            <FormControl>
+              <Input
+                {...field}
+                disabled={isPending}
+                placeholder="*****"
+                type={showPassword ? 'text' : 'password'}
+                inputAdornment={
+                  <PasswordIcon
+                    showPassword={showPassword}
+                    iconClick={handleIconClick}
+                  />
+                }
+              />
+            </FormControl>
+            {withLink && (
+              <Button
+                variant="link"
+                size="sm"
+                asChild
+                className="px-0 font-normal"
+              >
+                <Link href={PATHS.resetPassword}>Forgot password?</Link>
+              </Button>
+            )}
+            <FormMessage />
+          </FormItem>
+        )
+      }}
     />
   )
 }

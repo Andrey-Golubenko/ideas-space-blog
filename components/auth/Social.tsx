@@ -19,7 +19,9 @@ const Social = () => {
         size="lg"
         variant="outline"
         className="w-full"
-        onClick={() => handleClick('google')}
+        onClick={() => {
+          return handleClick('google')
+        }}
       >
         <FcGoogle className="h-5 w-5" />
       </Button>
@@ -27,7 +29,9 @@ const Social = () => {
         size="lg"
         variant="outline"
         className="w-full"
-        onClick={() => handleClick('github')}
+        onClick={() => {
+          return handleClick('github')
+        }}
       >
         <FaGithub className="h-5 w-5" />
       </Button>

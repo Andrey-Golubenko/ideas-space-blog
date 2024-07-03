@@ -9,9 +9,9 @@ export async function GET(request: Request) {
   let currentPosts = mockPosts
 
   if (query) {
-    currentPosts = mockPosts.filter((post) =>
-      post.title.toLowerCase().includes(query.toLowerCase())
-    )
+    currentPosts = mockPosts.filter((post) => {
+      return post.title.toLowerCase().includes(query.toLowerCase())
+    })
   }
 
   return NextResponse.json(currentPosts)

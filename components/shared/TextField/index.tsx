@@ -21,24 +21,28 @@ const TextField: React.FC<ITextFieldProps> = ({
   placeholder,
   control,
   isPending
-}) => (
-  <FormField
-    control={control}
-    name={name}
-    render={({ field }) => (
-      <FormItem>
-        <FormLabel>{label}</FormLabel>
-        <FormControl>
-          <Input
-            {...field}
-            disabled={isPending}
-            placeholder={placeholder}
-          />
-        </FormControl>
-        <FormMessage />
-      </FormItem>
-    )}
-  />
-)
+}) => {
+  return (
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => {
+        return (
+          <FormItem>
+            <FormLabel>{label}</FormLabel>
+            <FormControl>
+              <Input
+                {...field}
+                disabled={isPending}
+                placeholder={placeholder}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )
+      }}
+    />
+  )
+}
 
 export default TextField

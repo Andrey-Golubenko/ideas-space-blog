@@ -32,7 +32,9 @@ const FormField = <
 >({
   ...props
 }: ControllerProps<TFieldValues, TName>) => {
-  const memorizedName = React.useMemo(() => ({ name: props?.name }), [])
+  const memorizedName = React.useMemo(() => {
+    return { name: props?.name }
+  }, [])
 
   return (
     <FormFieldContext.Provider value={memorizedName}>
@@ -77,12 +79,11 @@ const FormItem = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
   const id = React.useId()
-  const memorizedId = React.useMemo(
-    () => ({
+  const memorizedId = React.useMemo(() => {
+    return {
       id
-    }),
-    []
-  )
+    }
+  }, [])
 
   return (
     <FormItemContext.Provider value={memorizedId}>

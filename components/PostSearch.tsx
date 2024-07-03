@@ -5,7 +5,9 @@ import usePosts from '~/store'
 
 const PostSearch: React.FC = () => {
   const [search, setSearch] = useState<string>('')
-  const getPostsBySearch = usePosts((state) => state.getPostsBySearch)
+  const getPostsBySearch = usePosts((state) => {
+    return state.getPostsBySearch
+  })
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -23,9 +25,9 @@ const PostSearch: React.FC = () => {
           type="search"
           placeholder="search"
           value={search}
-          onChange={(event) =>
-            setSearch((event?.target as HTMLInputElement)?.value)
-          }
+          onChange={(event) => {
+            return setSearch((event?.target as HTMLInputElement)?.value)
+          }}
           className="rounded-l-md border border-black px-2 py-1"
         />
         <button

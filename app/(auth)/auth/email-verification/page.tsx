@@ -1,9 +1,11 @@
 import EmailVerificationForm from '~/components/auth/EmailVerificationForm'
 
-const EmailVerificationPage = () => (
-  <div>
-    <EmailVerificationForm />
-  </div>
-)
+const EmailVerificationPage = () => {
+  return (
+    <div>
+      <EmailVerificationForm />
+    </div>
+  )
+}
 
 export default EmailVerificationPage
