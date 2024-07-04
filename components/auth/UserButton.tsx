@@ -1,8 +1,5 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { type Session } from 'next-auth'
-import { getSession } from 'next-auth/react'
 import { FaUser } from 'react-icons/fa'
 import { ExitIcon } from '@radix-ui/react-icons'
 import {
@@ -16,18 +13,11 @@ import {
   AvatarImage,
   AvatarFallback
 } from '~/components/ui/avatar'
+import { useCurrentUser } from '~/hooks/useCurrentUser'
 import LogoutButton from './LogoutButton'
 
 const UserButton = () => {
-  const [user, setUser] = useState<Session['user'] | undefined>()
-
-  useEffect(() => {
-    const getSessionData = async () => {
-      const sessionData = await getSession()
-      setUser(sessionData?.user)
-    }
-    getSessionData()
-  }, [])
+  const user = useCurrentUser()
 
   return (
     <DropdownMenu>

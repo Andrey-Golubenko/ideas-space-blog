@@ -9,6 +9,8 @@ export const PATHS = {
   team: '/about/team',
   profile: '/profile',
   settings: '/settings',
+  admin: '/admin',
+
   signIn: '/auth',
   logIn: '/auth/login',
   register: '/auth/register',
@@ -18,6 +20,8 @@ export const PATHS = {
   error: '/auth/error',
 
   authActionsPref: '/api/auth',
+
+  apiAdmin: '/api/admin',
 
   libSignIn: '/api/auth/signin'
 }

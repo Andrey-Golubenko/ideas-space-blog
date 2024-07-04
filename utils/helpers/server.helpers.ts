@@ -8,3 +8,10 @@ export const getCurrentUser = async () => {
 
   return currentUser
 }
+
+export const getUserRole = async () => {
+  const session = await auth()
+  const userRole = session?.user?.role
+
+  return userRole
+}

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { Toaster } from '~/components/ui/sonner'
 import Header from '~/components/Header'
 import Footer from '~/components/Footer'
 import Providers from '~/components/Providers'
@@ -23,6 +24,7 @@ export default function RootLayout({
         <Providers>
           <div className="flex h-screen flex-col">
             <Header />
+            <Toaster position="top-right" />
             {children}
             <Footer />
           </div>
