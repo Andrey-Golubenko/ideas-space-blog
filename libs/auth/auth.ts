@@ -7,8 +7,14 @@ import authConfig from '~/libs/auth/auth.config'
 import { getUserById } from '~/services/user'
 import { getTwoFactorConfirmationByUserId } from '~/services/twoFactorConfirmation'
 import { PATHS } from '~/utils/constants/constants'
+import { getAccountByUserId } from '~/services/account'
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+export const {
+  handlers: { GET, POST },
+  auth,
+  signIn,
+  signOut
+} = NextAuth({
   pages: {
     signIn: PATHS.logIn,
     error: PATHS.error
@@ -31,7 +37,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       // Prevent signIn without Email verification
       if (!existingUser?.emailVerified) return false
 
-      if (existingUser.isTwoFackorEnabled) {
+      if (existingUser.isTwoFactorEnabled) {
         const twoFactorConfirmation =
           await getTwoFactorConfirmationByUserId(existingUser.id)
 
@@ -57,7 +63,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       if (session.user) {
         session.user.isTwoFactorEnabled =
-          token.isTwoFcatorEnabled as boolean
+          token.isTwoFactorEnabled as boolean
+      }
+
+      if (session.user) {
+        session.user.name = token.name as string | null
+        session.user.email = token.email as string
+        session.user.isOAuth = token.isOAuth as boolean
       }
 
       return session
@@ -69,8 +81,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       if (!existingUser) return token
 
+      const existingAccount = await getAccountByUserId(existingUser.id)
+
+      token.isOAuth = Boolean(existingAccount)
+      token.name = existingUser.name
+      token.email = existingUser.email
       token.role = existingUser.role
-      token.isTwoFcatorEnabled = existingUser.isTwoFackorEnabled
+      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled
 
       return token
     }

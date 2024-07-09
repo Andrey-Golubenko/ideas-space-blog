@@ -11,8 +11,7 @@ import { Button } from '~/components/ui/button'
 import CardWrapper from '~/components/auth/CardWrapper'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
-import PasswordField from '~/components/shared/passwordField'
-import EmailField from '~/components/shared/emailField'
+import PasswordField from '~/components/shared/PasswordField'
 import TextField from '~/components/shared/TextField'
 import { LogInSchema } from '~/schemas'
 import { AUTH_ERRORS, PATHS } from '~/utils/constants/constants'
@@ -92,11 +91,17 @@ const LoginForm = () => {
 
             {!showTwoFactor && (
               <>
-                <EmailField
+                <TextField
+                  name="email"
+                  type="email"
+                  placeholder="email@example.com"
+                  label="Email"
                   control={form.control}
                   isPending={isPending}
                 />
                 <PasswordField
+                  name="password"
+                  label="Password"
                   control={form.control}
                   isPending={isPending}
                   withLink

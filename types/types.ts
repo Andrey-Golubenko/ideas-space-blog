@@ -21,6 +21,8 @@ export interface UserDTO {
   password: string
   role?: UserRole
   isTwoFactorEnabled: boolean
+  isOAuth: boolean
+
   createdAt?: Date
   updatedAt?: Date
 }

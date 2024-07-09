@@ -4,22 +4,14 @@ import { useState, useTransition } from 'react'
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from '~/components/ui/form'
-import { Input } from '~/components/ui/input'
 
+import { Form } from '~/components/ui/form'
 import { Button } from '~/components/ui/button'
 import CardWrapper from '~/components/auth/CardWrapper'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
-import PasswordField from '~/components/shared/passwordField'
-import EmailField from '~/components/shared/emailField'
+import TextField from '~/components/shared/TextField'
+import PasswordField from '~/components/shared/PasswordField'
 import { RegisterSchema } from '~/schemas'
 import { register } from '~/actions/register'
 import { PATHS } from '~/utils/constants/constants'
@@ -64,31 +56,24 @@ const RegisterForm = () => {
           className="space-y-6"
         >
           <div className="space-y-4">
-            <FormField
-              control={form.control}
+            <TextField
               name="name"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        disabled={isPending}
-                        placeholder="John Doe"
-                        type="text"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )
-              }}
+              placeholder="John Doe"
+              label="Name"
+              control={form.control}
+              isPending={isPending}
             />
-            <EmailField
+            <TextField
+              name="email"
+              type="email"
+              placeholder="email@example.com"
+              label="Email"
               control={form.control}
               isPending={isPending}
             />
             <PasswordField
+              name="password"
+              label="Password"
               control={form.control}
               isPending={isPending}
             />

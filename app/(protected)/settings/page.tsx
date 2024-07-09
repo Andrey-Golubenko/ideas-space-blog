@@ -1,8 +1,7 @@
-import { auth } from '~/libs/auth/auth'
+import SettingsCard from '~/components/auth/SettingsCard'
 
 const SettingsPage = async () => {
-  const session = await auth()
-  return <div>{JSON.stringify(session)}</div>
+  return <SettingsCard />
 }
 
 export default SettingsPage

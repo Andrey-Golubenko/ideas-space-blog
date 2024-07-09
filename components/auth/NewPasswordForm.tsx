@@ -11,7 +11,7 @@ import { Button } from '~/components/ui/button'
 import CardWrapper from '~/components/auth/CardWrapper'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
-import PasswordField from '~/components/shared/passwordField'
+import PasswordField from '~/components/shared/PasswordField'
 import { newPassword } from '~/actions/new-password'
 import { NewPasswordSchema } from '~/schemas'
 import { PATHS } from '~/utils/constants/constants'
@@ -57,6 +57,8 @@ const NewPasswordForm = () => {
         >
           <div className="space-y-4">
             <PasswordField
+              name="password"
+              label="Password"
               control={form.control}
               isPending={isPending}
             />

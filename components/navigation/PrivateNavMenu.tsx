@@ -27,7 +27,7 @@ const PrivateNavMenu = () => {
       <Link
         href="#"
         onClick={() => {
-          return signOut({ callbackUrl: PATHS.home })
+          return signOut({ callbackUrl: PATHS.logIn })
         }}
         className="header-link"
       >

@@ -1,9 +1,9 @@
 'use client'
 
-import { SessionProvider } from 'next-auth/react'
+import { SessionDataProvider } from '~/libs/custom-providers/SessionDataProvider'
 
 const Providers = ({ children }: React.PropsWithChildren) => {
-  return <SessionProvider>{children}</SessionProvider>
+  return <SessionDataProvider>{children}</SessionDataProvider>
 }
 
 export default Providers

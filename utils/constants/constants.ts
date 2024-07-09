@@ -23,6 +23,7 @@ export const PATHS = {
 
   apiAdmin: '/api/admin',
 
+  libSession: '/api/auth/session',
   libSignIn: '/api/auth/signin'
 }
 

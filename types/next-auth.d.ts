@@ -1,4 +1,4 @@
-import { type DefaultSession } from 'next-auth'
+import type { DefaultSession } from 'next-auth'
 import { UserDTO, UserRole } from '~/types/types'
 
 declare module 'next-auth/jwt' {
@@ -21,4 +21,9 @@ declare module 'next-auth' {
      * you need to add them back into the newly declared interface.
      */
   }
+}
+
+// Make the getCsrfToken accessible outside of next-auth package
+declare module 'next-auth/react' {
+  function getCsrfToken(): Promise<string>
 }

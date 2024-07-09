@@ -46,7 +46,7 @@ export const logIn = async (values: z.infer<typeof LogInSchema>) => {
     return { success: 'Confirmation Email has been sent!' }
   }
 
-  if (existingUser.isTwoFackorEnabled && existingUser.email) {
+  if (existingUser.isTwoFactorEnabled && existingUser.email) {
     if (code) {
       const twoFactorToken = await getTwoFactorTokenByEmail(
         existingUser.email

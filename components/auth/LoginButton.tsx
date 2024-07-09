@@ -18,7 +18,6 @@ const LoginButton: React.FC<ILoginButtonProps> = ({
 
   const handleClick = () => {
     router.push(PATHS.logIn)
-    console.log('LOGIN BUTTON CLICKED :>> ')
   }
 
   if (mode === 'modal') {

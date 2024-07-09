@@ -10,16 +10,20 @@ import {
   FormMessage
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import PasswordIcon from '~/components/shared/passwordField/PasswordIcon'
+import PasswordIcon from '~/components/shared/PasswordField/PasswordIcon'
 import { Button } from '~/components/ui/button'
 
 interface IPasswordFieldProps {
+  name: string
+  label: string
   control: any
   isPending: boolean
   withLink?: boolean
 }
 
 const PasswordField: React.FC<IPasswordFieldProps> = ({
+  name,
+  label,
   control,
   isPending,
   withLink
@@ -35,16 +39,16 @@ const PasswordField: React.FC<IPasswordFieldProps> = ({
   return (
     <FormField
       control={control}
-      name="password"
+      name={name}
       render={({ field }) => {
         return (
           <FormItem>
-            <FormLabel>Password</FormLabel>
+            <FormLabel>{label}</FormLabel>
             <FormControl>
               <Input
                 {...field}
                 disabled={isPending}
-                placeholder="*****"
+                placeholder="* * * * * *"
                 type={showPassword ? 'text' : 'password'}
                 inputAdornment={
                   <PasswordIcon

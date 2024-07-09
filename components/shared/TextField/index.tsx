@@ -9,6 +9,7 @@ import { Input } from '~/components/ui/input'
 
 interface ITextFieldProps {
   name: string
+  type?: string
   label: string
   placeholder?: string
   control: any

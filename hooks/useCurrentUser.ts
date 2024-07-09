@@ -1,17 +1,9 @@
-import { type Session } from 'next-auth'
-import { getSession } from 'next-auth/react'
-import { useEffect, useState } from 'react'
+import { useSessionData } from '~/hooks/useSessionData'
 
 export const useCurrentUser = () => {
-  const [user, setUser] = useState<Session['user'] | undefined>()
+  const { data } = useSessionData()
 
-  useEffect(() => {
-    const getSessionData = async () => {
-      const sessionData = await getSession()
-      setUser(sessionData?.user)
-    }
-    getSessionData()
-  }, [])
+  const user = data?.user
 
   return user
 }

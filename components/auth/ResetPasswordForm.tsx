@@ -10,10 +10,10 @@ import { Button } from '~/components/ui/button'
 import CardWrapper from '~/components/auth/CardWrapper'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
+import TextField from '~/components/shared/TextField'
 import { ResetSchema } from '~/schemas'
 import { PATHS } from '~/utils/constants/constants'
 import { passwordReset } from '~/actions/reset-password'
-import EmailField from '~/components/shared/emailField'
 
 const ResetPasswordForm = () => {
   const [error, setError] = useState<string | undefined>('')
@@ -52,7 +52,11 @@ const ResetPasswordForm = () => {
           className="space-y-6"
         >
           <div className="space-y-4">
-            <EmailField
+            <TextField
+              name="email"
+              type="email"
+              placeholder="email@example.com"
+              label="Email"
               control={form.control}
               isPending={isPending}
             />
