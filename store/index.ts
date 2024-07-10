@@ -1,7 +1,7 @@
 import { persist, devtools } from 'zustand/middleware'
 import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
-import { getAllPosts, getPostBySearch } from '~/services/getPosts'
+import { getPosts, getPostBySearching } from '~/services/posts'
 import { IPost } from '~/types/types'
 
 interface IUsePosts {
@@ -17,25 +17,32 @@ const usePosts = createWithEqualityFn<
 >(
   devtools(
     // persist() - to enable state persistence across page reloads or browser sessions
-    persist(
-      (set) => ({
+    persist((set) => {
+      return {
         posts: [],
         isLoading: false,
         getAllPosts: async () => {
-          set((state) => ({ ...state, isLoading: true }))
+          set((state) => {
+            return { ...state, isLoading: true }
+          })
 
-          const posts = await getAllPosts()
-          set((state) => ({ ...state, posts, isLoading: false }))
+          const posts = await getPosts()
+          set((state) => {
+            return { ...state, posts, isLoading: false }
+          })
         },
         getPostsBySearch: async (search: string) => {
-          set((state) => ({ ...state, isLoading: true }))
+          set((state) => {
+            return { ...state, isLoading: true }
+          })
 
-          const posts = await getPostBySearch(search)
-          set((state) => ({ ...state, posts, isLoading: false }))
+          const posts = await getPostBySearching(search)
+          set((state) => {
+            return { ...state, posts, isLoading: false }
+          })
         }
-      }),
-      shallow
-    )
+      }
+    }, shallow)
   )
 )
 

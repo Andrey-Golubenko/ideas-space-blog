@@ -54,7 +54,7 @@ export const generateVerificationToken = async (email: string) => {
 
 export const generatePasswordResetToken = async (email: string) => {
   const token = uuidv4()
-  const expires = ONE_HOUR
+  const expires = FIFTEEN_MINUTES
 
   const existingToken = await getPasswordResetTokenByEmail(email)
 

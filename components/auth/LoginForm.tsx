@@ -19,6 +19,7 @@ import { logIn } from '~/actions/login'
 
 const LoginForm = () => {
   const searchParams = useSearchParams()
+  const callbackUrl = searchParams.get('callbackUrl')
   const urlError =
     searchParams.get('error') === AUTH_ERRORS.duplicateCred
       ? 'Email already in use with different provider!'
@@ -44,7 +45,7 @@ const LoginForm = () => {
     setSuccess('')
 
     startTransition(() => {
-      logIn(values)
+      logIn(values, callbackUrl)
         .then((data) => {
           if (data?.error) {
             form.reset()

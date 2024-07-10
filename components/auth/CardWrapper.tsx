@@ -26,7 +26,7 @@ const CardWrapper = ({
   showSocial
 }: ICardWrapper) => {
   return (
-    <Card className="w-[400px] shadow-md">
+    <Card className="shadow-md">
       <CardHeader>
         <AuthHeader label={headerLabel} />
       </CardHeader>

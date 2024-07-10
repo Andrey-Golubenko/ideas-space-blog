@@ -34,7 +34,7 @@ const AdminCard = () => {
   }
 
   return (
-    <Card className="w-[600px]">
+    <Card>
       <CardHeader>
         <p className="text-center text-2xl font-semibold">🔑 Admin</p>
       </CardHeader>

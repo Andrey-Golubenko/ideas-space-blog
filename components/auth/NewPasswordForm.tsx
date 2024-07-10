@@ -58,7 +58,7 @@ const NewPasswordForm = () => {
           <div className="space-y-4">
             <PasswordField
               name="password"
-              label="Password"
+              label="New password"
               control={form.control}
               isPending={isPending}
             />

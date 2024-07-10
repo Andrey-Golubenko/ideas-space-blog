@@ -1,6 +1,13 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle
+} from '~/components/ui/dialog'
+import LoginForm from '~/components/auth/LoginForm'
 import { PATHS } from '~/utils/constants/constants'
 
 interface ILoginButtonProps {
@@ -21,7 +28,15 @@ const LoginButton: React.FC<ILoginButtonProps> = ({
   }
 
   if (mode === 'modal') {
-    return <span>TODO: Implement modal</span>
+    return (
+      <Dialog>
+        <DialogTrigger asChild={asChild}>{children}</DialogTrigger>
+        <DialogContent className="border-none bg-transparent p-0 xs:w-[85%] sm:w-[60%] md:w-[45%] lg:w-[30%]">
+          <DialogTitle hidden>Sign in</DialogTitle>
+          <LoginForm />
+        </DialogContent>
+      </Dialog>
+    )
   }
   return (
     <span

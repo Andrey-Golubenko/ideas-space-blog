@@ -14,8 +14,7 @@ export const PUBLIC_ROUTES = [
   PATHS.constacts,
   PATHS.team,
   PATHS.signIn,
-  PATHS.emailVerification,
-  PATHS.admin
+  PATHS.emailVerification
 ]
 
 /**

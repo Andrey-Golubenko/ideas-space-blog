@@ -10,7 +10,7 @@ interface IProfileProps {
 
 const ProfileInfo = ({ user, label }: IProfileProps) => {
   return (
-    <Card className="rouded-xl w-[600px] shadow-md">
+    <Card className="rouded-xl shadow-md">
       <CardHeader>
         <p className="text-center text-2xl font-semibold">{label}</p>
       </CardHeader>

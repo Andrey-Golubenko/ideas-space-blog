@@ -3,6 +3,8 @@ import { PATHS } from '~/utils/constants/constants'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+const domain = process.env.NEXT_PUBLIC_APP_URL
+
 export const sendTwoFactorTokenEmail = async (
   email: string,
   token: string
@@ -19,7 +21,7 @@ export const sendPasswordResetEmail = async (
   email: string,
   token: string
 ) => {
-  const resetLink = `http://localhost:3000/${PATHS.newPassword}?token=${token}`
+  const resetLink = `${domain}${PATHS.newPassword}?token=${token}`
 
   await resend.emails.send({
     from: 'onboarding@resend.dev',
@@ -33,7 +35,7 @@ export const sendVerificationEmail = async (
   email: string,
   token: string
 ) => {
-  const confirmLink = `http://localhost:3000${PATHS.emailVerification}?token=${token}`
+  const confirmLink = `${domain}${PATHS.emailVerification}?token=${token}`
 
   await resend.emails.send({
     from: 'onboarding@resend.dev',

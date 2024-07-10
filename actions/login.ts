@@ -20,7 +20,10 @@ import { getTwoFactorTokenByEmail } from '~/services/twoFactorToken'
 import { getUserByEmail } from '~/services/user'
 import { getTwoFactorConfirmationByUserId } from '~/services/twoFactorConfirmation'
 
-export const logIn = async (values: z.infer<typeof LogInSchema>) => {
+export const logIn = async (
+  values: z.infer<typeof LogInSchema>,
+  callbackUrl?: string | null
+) => {
   const validatedFields = LogInSchema.safeParse(values)
 
   if (!validatedFields.success) {
@@ -102,7 +105,7 @@ export const logIn = async (values: z.infer<typeof LogInSchema>) => {
     await signIn('credentials', {
       email,
       password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT
+      redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT
     })
   } catch (error) {
     if (error instanceof AuthError) {
@@ -115,7 +118,6 @@ export const logIn = async (values: z.infer<typeof LogInSchema>) => {
     }
 
     throw error
-    // TODO
   }
 
   return null

@@ -13,7 +13,8 @@ const { auth } = NextAuth(authConfig)
 
 // Our Middleware
 export default auth((request) => {
-  const { pathname } = request.nextUrl
+  const { nextUrl } = request
+  const { pathname } = nextUrl
   const isLoggedIn = !!request?.auth
 
   const isApiAuthRoute = pathname.startsWith(API_AUTH_PREFIX)
@@ -25,15 +26,23 @@ export default auth((request) => {
 
   if (isAuthRoute) {
     if (isLoggedIn) {
-      return Response.redirect(
-        new URL(DEFAULT_LOGIN_REDIRECT, request.nextUrl)
-      )
+      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl))
     }
     return undefined
   }
 
   if (!isLoggedIn && !isPublicRoute(pathname)) {
-    return Response.redirect(new URL(PATHS.logIn, request.nextUrl))
+    let callbackUrl = pathname
+
+    if (nextUrl.search) {
+      callbackUrl += nextUrl.search
+    }
+
+    const encodedCallbackUrl = encodeURIComponent(callbackUrl)
+
+    return Response.redirect(
+      new URL(`${PATHS.logIn}?callbackUrl=${encodedCallbackUrl}`, nextUrl)
+    )
   }
 
   return undefined

@@ -1,6 +1,6 @@
 import { IPost } from '~/types/types'
 
-export const getAllPosts = async (): Promise<IPost[]> => {
+export const getPosts = async (): Promise<IPost[]> => {
   // const response = await fetch(
   //   // imitation of an error,
   //   // 'https://jsonplaceholder.typicode.com/posts222222222'
@@ -39,7 +39,7 @@ export async function getSinglePost(slug: string) {
   return response.json()
 }
 
-export const getPostBySearch = async (
+export const getPostBySearching = async (
   search: string
 ): Promise<IPost[]> => {
   // const response = await fetch(

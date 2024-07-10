@@ -45,3 +45,5 @@ export const AUTH_ERRORS = {
 export const ONE_HOUR = new Date(new Date().getTime() + 3600 * 1000)
 
 export const FIFTEEN_MINUTES = new Date(new Date().getTime() + 900 * 1000)
+
+export const FIVE_MINUTES = new Date(new Date().getTime() + 300 * 1000)

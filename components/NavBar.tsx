@@ -10,9 +10,10 @@ const NavBar = () => {
   const pathname = usePathname()
 
   return (
-    <nav className="mb-8 flex w-[600px] items-center justify-between rounded-xl bg-secondary p-4 shadow-sm">
-      <div className="flex gap-x-2">
+    <nav className="mb-8 flex flex-wrap items-center justify-around gap-x-2 gap-y-3 rounded-xl bg-secondary p-4 shadow-sm">
+      <div className="flex flex-wrap justify-around gap-2">
         <Button
+          className="w-[88px]"
           asChild
           variant={pathname === PATHS.profile ? 'default' : 'outline'}
         >
@@ -20,13 +21,15 @@ const NavBar = () => {
         </Button>
 
         <Button
+          className="w-[88px]"
           asChild
-          variant={pathname === '/admin' ? 'default' : 'outline'}
+          variant={pathname === PATHS.admin ? 'default' : 'outline'}
         >
           <Link href="/admin">Admin</Link>
         </Button>
 
         <Button
+          className="w-[88px]"
           asChild
           variant={pathname === PATHS.settings ? 'default' : 'outline'}
         >

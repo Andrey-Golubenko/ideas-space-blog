@@ -1,4 +1,4 @@
-import ProfileInfo from '~/components/ProfileInfo'
+import ProfileInfo from '~/components/profileInfo'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
 
 const ProfilePage = async () => {
