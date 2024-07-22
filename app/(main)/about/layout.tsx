@@ -5,9 +5,13 @@ export default function AboutLayout({
   children
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div>
-      <h1 className="my-4 text-center text-2xl font-bold">About us</h1>
-      <ul className="list-disc">
+    <div className="flex flex-col items-center justify-center xs:w-[80%] sm:w-[50%]">
+      <h1 className="my-4 text-center text-2xl font-bold">
+        About us page
+      </h1>
+      {children}
+
+      <ul className="w-full list-disc">
         <li>
           <Link href={PATHS.constacts}>Contacts</Link>
         </li>
@@ -15,7 +19,6 @@ export default function AboutLayout({
           <Link href={PATHS.team}>Team</Link>
         </li>
       </ul>
-      {children}
     </div>
   )
 }

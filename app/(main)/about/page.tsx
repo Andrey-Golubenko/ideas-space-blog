@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 const AboutPage = () => {
   return (
     <div className="page-wrapper">
-      <h1 className="page-heading">Select subitem</h1>
+      <h1 className="page-heading">Select subitem :</h1>
     </div>
   )
 }

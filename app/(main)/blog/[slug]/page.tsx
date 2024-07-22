@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
-import { getSinglePost } from '~/services/getPosts'
 import { IPost } from '~/types/types'
+import { getSinglePost } from '~/services/posts'
 
 interface PostProps {
   params: {
@@ -26,13 +26,23 @@ const SinglePostPage = async ({ params: { slug } }: PostProps) => {
     .concat(singlePost?.title.slice(1))
 
   return (
-    <div className="page-heading">
+    <div className="page-heading flex flex-col items-center justify-center">
       {singlePost && (
         <>
-          <h1 className="page-heading">{singlePostTitle}</h1>
-          <p className="py-4 text-center text-lg font-normal">
+          <h1 className="page-heading text-justify">
+            <span className="float-start">
+              <span className="mr-1 underline">Title</span>
+              <span className="mr-3">:</span>
+            </span>
+            {singlePostTitle}
+          </h1>
+          <div className="py-4 text-justify text-lg font-normal">
+            <span className="float-start">
+              <span className="mr-1 underline">Content</span>
+              <span className="mr-3">:</span>
+            </span>
             {singlePost?.body}
-          </p>
+          </div>
         </>
       )}
     </div>
