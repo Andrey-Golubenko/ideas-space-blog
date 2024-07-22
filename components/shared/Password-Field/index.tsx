@@ -10,7 +10,7 @@ import {
   FormMessage
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import PasswordIcon from '~/components/shared/PasswordField/PasswordIcon'
+import PasswordIcon from '~/components/shared/Password-Field/PasswordIcon'
 import { Button } from '~/components/ui/button'
 
 interface IPasswordFieldProps {

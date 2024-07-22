@@ -22,7 +22,7 @@ body {
 
 @layer components {
   .container {
-    @apply mx-auto my-0 max-w-4xl px-8 flex flex-col justify-center items-center;
+    @apply mx-auto my-0 flex max-w-4xl flex-col items-center justify-center px-8;
   }
 }
 
