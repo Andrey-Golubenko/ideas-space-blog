@@ -6,7 +6,7 @@ const SettingsCard = async () => {
   const session = await auth()
 
   return (
-    <Card>
+    <Card className="flex min-h-[420px] flex-col">
       <CardHeader>
         <p className="text-center text-2xl font-semibold">⚙️ Settings</p>
       </CardHeader>

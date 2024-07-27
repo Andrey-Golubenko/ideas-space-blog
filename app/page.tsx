@@ -1,8 +1,8 @@
 const HomePage = () => {
   return (
-    <div className="page-wrapper">
+    <main className="page-wrapper">
       <h1 className="page-heading">Home Page</h1>
-    </div>
+    </main>
   )
 }
 

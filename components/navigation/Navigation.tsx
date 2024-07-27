@@ -1,15 +1,31 @@
-import NavMenu from '~/components/navigation/NavMenu'
+import { headers } from 'next/headers'
+
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
-import PrivateNavMenu from './PrivateNavMenu'
+import DesktopNavMenu from '~/components/navigation/DesktopNavMenu'
+import MobileNavMenu from '~/components/navigation/MobileNavMenu'
 
 const Navigation = async () => {
   const user = await getCurrentUser()
 
+  const headersList = headers()
+  const deviceType = headersList.get('x-device-type')
+  const isMobile = deviceType === 'mobile'
+  // const isMobile = true
+
   return (
-    <>
-      <NavMenu isLoggedIn={!!user} />
-      {user && <PrivateNavMenu />}
-    </>
+    <div className="flex w-full">
+      {isMobile ? (
+        <MobileNavMenu
+          isLoggedIn={!!user}
+          isMobile={isMobile}
+        />
+      ) : (
+        <DesktopNavMenu
+          isLoggedIn={!!user}
+          isMobile={isMobile}
+        />
+      )}
+    </div>
   )
 }
 

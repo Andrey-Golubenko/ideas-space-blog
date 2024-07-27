@@ -34,11 +34,11 @@ const AdminCard = () => {
   }
 
   return (
-    <Card>
+    <Card className="flex min-h-[420px] flex-col">
       <CardHeader>
         <p className="text-center text-2xl font-semibold">🔑 Admin</p>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="flex flex-grow flex-col justify-evenly space-y-4">
         <RoleGate allowedRole={UserRole.ADMIN}>
           <FormSuccess message="You are allowed to see this content!" />
         </RoleGate>

@@ -5,8 +5,8 @@
   "scripts": {
     "prepare": "husky install",
     "dev": "next dev --turbo",
-    "build": "next build",
-    "start": "next start",
+    "build": "next build --turbo",
+    "start": "next start --turbo",
     "lint": "next lint",
     "format": "prettier \"./**/*.{js,jsx,ts,tsx,css,scss}\" --write"
   },

@@ -1,4 +1,6 @@
 import NextAuth from 'next-auth'
+import { type NextRequest, NextResponse } from 'next/server'
+import { userAgent } from 'next/server'
 
 import authConfig from '~/libs/auth/auth.config'
 import {
@@ -47,6 +49,19 @@ export default auth((request) => {
 
   return undefined
 })
+
+// Main middleware function that is exported
+export function middleware(request: NextRequest) {
+  const ua = userAgent(request)
+
+  const isMobile = ua.device.type === 'mobile'
+
+  const response = NextResponse.next()
+
+  response.headers.set('x-device-type', isMobile ? 'mobile' : 'desktop')
+
+  return response
+}
 
 // And Invoke Middleware for all routes and path
 export const config = {

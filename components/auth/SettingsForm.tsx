@@ -67,7 +67,7 @@ const SettingsForm = ({ session }: ISettingsFormProps) => {
   return (
     <Form {...form}>
       <form
-        className="space-y-6"
+        className="flex flex-grow flex-col justify-evenly space-y-6"
         onSubmit={form.handleSubmit(onHandleSubmit)}
       >
         <div className="space-y-4">

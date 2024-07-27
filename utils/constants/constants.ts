@@ -35,6 +35,7 @@ export const NAV_LINKS: INavLink[] = [
 
 export const PRIVATE_NAV_LINKS: INavLink[] = [
   { label: 'Profile', href: PATHS.profile },
+  { label: 'Admin', href: PATHS.admin },
   { label: 'Settings', href: PATHS.settings }
 ]
 
