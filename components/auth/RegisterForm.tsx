@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Form } from '~/components/ui/form'
 import { Button } from '~/components/ui/button'
-import CardWrapper from '~/components/auth/CardWrapper'
+import AuthCardWrapper from '~/components/shared/CardWrapper/AuthCardWrapper'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import TextField from '~/components/shared/TextField'
@@ -44,7 +44,7 @@ const RegisterForm = () => {
   }
 
   return (
-    <CardWrapper
+    <AuthCardWrapper
       headerLabel="Create an account"
       backButtonLabel="Already have an account?"
       backButtonHref={PATHS.logIn}
@@ -78,8 +78,10 @@ const RegisterForm = () => {
               isPending={isPending}
             />
           </div>
+
           <FormError message={error} />
           <FormSuccess message={success} />
+
           <Button
             type="submit"
             disabled={isPending}
@@ -89,7 +91,7 @@ const RegisterForm = () => {
           </Button>
         </form>
       </Form>
-    </CardWrapper>
+    </AuthCardWrapper>
   )
 }
 

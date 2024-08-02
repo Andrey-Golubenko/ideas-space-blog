@@ -1,26 +1,36 @@
 import { Metadata } from 'next'
-import { IPost } from '~/types/types'
-import { getSinglePost } from '~/services/posts'
+import { getPosts, getSinglePost } from '~/services/posts'
 
-interface PostProps {
+interface ISinglePostProps {
   params: {
     slug: string
   }
 }
 
+// export async function generateStaticParams() {
+//   const posts = await getPosts()
+
+//   return posts.map((post) => {
+//     return {
+//       slug: String(post?.id)
+//     }
+//   })
+// }
+
 export async function generateMetadata({
   params: { slug }
-}: PostProps): Promise<Metadata> {
-  const singlePost: IPost = await getSinglePost(slug)
+}: ISinglePostProps): Promise<Metadata> {
+  const singlePost = await getSinglePost(slug)
 
   return {
     title: singlePost?.title
   }
 }
 
-const SinglePostPage = async ({ params: { slug } }: PostProps) => {
-  const singlePost: IPost = await getSinglePost(slug)
-  const singlePostTitle: string = singlePost?.title
+const SinglePostPage = async ({ params: { slug } }: ISinglePostProps) => {
+  const singlePost = await getSinglePost(slug)
+
+  const singlePostTitle: string | undefined = singlePost?.title
     .charAt(0)
     .toUpperCase()
     .concat(singlePost?.title.slice(1))
@@ -41,7 +51,7 @@ const SinglePostPage = async ({ params: { slug } }: PostProps) => {
               <span className="mr-1 underline">Content</span>
               <span className="mr-3">:</span>
             </span>
-            {singlePost?.body}
+            {singlePost?.content}
           </div>
         </>
       )}

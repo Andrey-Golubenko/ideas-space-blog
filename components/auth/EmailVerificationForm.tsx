@@ -4,11 +4,11 @@ import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 
 import { BeatLoader } from 'react-spinners'
-import CardWrapper from '~/components/auth/CardWrapper'
 import { PATHS } from '~/utils/constants/constants'
 import { emailVerification } from '~/actions/email-verification'
 import FormSuccess from '~/components/FormSuccess'
 import FormError from '~/components/FormError'
+import AuthCardWrapper from '~/components/shared/CardWrapper/AuthCardWrapper'
 
 const EmailVerificationForm = () => {
   const [error, setError] = useState<string | undefined>()
@@ -38,7 +38,7 @@ const EmailVerificationForm = () => {
   }, [onSubmit])
 
   return (
-    <CardWrapper
+    <AuthCardWrapper
       headerLabel="Confirming your verification"
       backButtonLabel="Back to login!"
       backButtonHref={PATHS.logIn}
@@ -48,7 +48,7 @@ const EmailVerificationForm = () => {
         <FormSuccess message={success} />
         <FormError message={error} />
       </div>
-    </CardWrapper>
+    </AuthCardWrapper>
   )
 }
 

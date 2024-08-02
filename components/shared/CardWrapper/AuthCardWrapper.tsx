@@ -6,11 +6,11 @@ import {
   CardFooter,
   CardContent
 } from '~/components/ui/card'
-import AuthHeader from '~/components/auth/AuthHeader'
+import CardHeaderContent from '~/components/shared/CardWrapper/CardHeaderContent'
 import Social from '~/components/auth/Social'
 import BackButton from '~/components/auth/BackButton'
 
-interface ICardWrapper {
+interface ICardWrapperProps {
   children: React.ReactNode
   headerLabel: string
   backButtonLabel: string
@@ -18,17 +18,20 @@ interface ICardWrapper {
   showSocial?: boolean
 }
 
-const CardWrapper = ({
+const AuthCardWrapper = ({
   children,
   headerLabel,
   backButtonLabel,
   backButtonHref,
   showSocial
-}: ICardWrapper) => {
+}: ICardWrapperProps) => {
   return (
     <Card className="shadow-md">
       <CardHeader>
-        <AuthHeader label={headerLabel} />
+        <CardHeaderContent
+          title="🔐 Auth"
+          label={headerLabel}
+        />
       </CardHeader>
       <CardContent>{children}</CardContent>
       {showSocial && (
@@ -46,4 +49,4 @@ const CardWrapper = ({
   )
 }
 
-export default CardWrapper
+export default AuthCardWrapper

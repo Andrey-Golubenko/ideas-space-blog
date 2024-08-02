@@ -8,7 +8,7 @@ import { useSearchParams } from 'next/navigation'
 
 import { Form } from '~/components/ui/form'
 import { Button } from '~/components/ui/button'
-import CardWrapper from '~/components/auth/CardWrapper'
+import AuthCardWrapper from '~/components/shared/CardWrapper/AuthCardWrapper'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import PasswordField from '~/components/shared/PasswordField'
@@ -45,7 +45,7 @@ const NewPasswordForm = () => {
   }
 
   return (
-    <CardWrapper
+    <AuthCardWrapper
       headerLabel="Enter a new password!"
       backButtonLabel="Go back to login?"
       backButtonHref={PATHS.logIn}
@@ -74,7 +74,7 @@ const NewPasswordForm = () => {
           </Button>
         </form>
       </Form>
-    </CardWrapper>
+    </AuthCardWrapper>
   )
 }
 export default NewPasswordForm

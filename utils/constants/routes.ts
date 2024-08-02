@@ -9,6 +9,7 @@ import { PATHS } from '~/utils/constants/constants'
 export const PUBLIC_ROUTES = [
   PATHS.home,
   PATHS.blog,
+  PATHS.singlePost,
   PATHS.posts,
   PATHS.about,
   PATHS.constacts,

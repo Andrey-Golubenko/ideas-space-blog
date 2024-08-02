@@ -1,16 +1,15 @@
 import { PUBLIC_ROUTES } from '~/utils/constants/routes'
 
 export const isPublicRoute = (pathname: string): boolean => {
-  const urlSlug = /\/\d+$/
-  const urlWithSlug = urlSlug.test(pathname)
-
-  if (urlWithSlug) {
-    return PUBLIC_ROUTES.some((route) => {
-      return pathname.startsWith(route) && urlWithSlug
-    })
-  }
-
-  return PUBLIC_ROUTES.includes(pathname)
+  return PUBLIC_ROUTES.some((route) => {
+    // If the route contains a dynamic part
+    if (route.includes('[') && route.includes(']')) {
+      // The route is converted to a regular expression
+      const regex = new RegExp(`^${route.replace(/\[.*?\]/g, '[^/]+')}$`)
+      return regex.test(pathname)
+    }
+    return route === pathname
+  })
 }
 
 export const emptyStringToUndefined = (

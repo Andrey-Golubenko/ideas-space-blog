@@ -1,6 +1,5 @@
 import NextAuth from 'next-auth'
-import { type NextRequest, NextResponse } from 'next/server'
-import { userAgent } from 'next/server'
+import { NextResponse, userAgent } from 'next/server'
 
 import authConfig from '~/libs/auth/auth.config'
 import {
@@ -15,6 +14,11 @@ const { auth } = NextAuth(authConfig)
 
 // Our Middleware
 export default auth((request) => {
+  // User agent detection
+  const ua = userAgent(request)
+  const isMobile = ua.device.type === 'mobile'
+
+  // Authentication logic
   const { nextUrl } = request
   const { pathname } = nextUrl
   const isLoggedIn = !!request?.auth
@@ -22,15 +26,26 @@ export default auth((request) => {
   const isApiAuthRoute = pathname.startsWith(API_AUTH_PREFIX)
   const isAuthRoute = AUTH_ROUTES.includes(pathname)
 
+  let response = NextResponse.next()
+  response.headers.set('x-device-type', isMobile ? 'mobile' : 'desktop')
+
   if (isApiAuthRoute) {
-    return undefined
+    return response
   }
 
   if (isAuthRoute) {
     if (isLoggedIn) {
-      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl))
+      response = NextResponse.redirect(
+        new URL(DEFAULT_LOGIN_REDIRECT, nextUrl)
+      )
+      response.headers.set(
+        'x-device-type',
+        isMobile ? 'mobile' : 'desktop'
+      )
+
+      return response
     }
-    return undefined
+    return response
   }
 
   if (!isLoggedIn && !isPublicRoute(pathname)) {
@@ -42,28 +57,17 @@ export default auth((request) => {
 
     const encodedCallbackUrl = encodeURIComponent(callbackUrl)
 
-    return Response.redirect(
+    response = NextResponse.redirect(
       new URL(`${PATHS.logIn}?callbackUrl=${encodedCallbackUrl}`, nextUrl)
     )
+    response.headers.set('x-device-type', isMobile ? 'mobile' : 'desktop')
+
+    return response
   }
 
-  return undefined
+  return response
 })
 
-// Main middleware function that is exported
-export function middleware(request: NextRequest) {
-  const ua = userAgent(request)
-
-  const isMobile = ua.device.type === 'mobile'
-
-  const response = NextResponse.next()
-
-  response.headers.set('x-device-type', isMobile ? 'mobile' : 'desktop')
-
-  return response
-}
-
-// And Invoke Middleware for all routes and path
 export const config = {
   matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)']
 }

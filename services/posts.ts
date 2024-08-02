@@ -1,56 +1,63 @@
-import { IPost } from '~/types/types'
+import { Post } from '@prisma/client'
+import { db } from '~/libs/db'
 
-export const getPosts = async (): Promise<IPost[]> => {
-  // const response = await fetch(
-  //   // imitation of an error,
-  //   // 'https://jsonplaceholder.typicode.com/posts222222222'
-  //   'https://jsonplaceholder.typicode.com/posts',
-  //   {
-  //     next: {
-  //       // revalidate date every minutes
-  //       revalidate: 50 // sec
-  //     }
-  //   }
-  // )
+// export async function getSinglePost(slug: string) {
+//   const response = await fetch(
+//     `https://jsonplaceholder.typicode.com/posts/${slug}`,
+//     {
+//       next: {
+//         revalidate: 50 // sec
+//       }
+//     }
+//   )
 
-  // own API-service
-  const response = await fetch('/api/posts', {
+//   return response.json()
+// }
+
+// export const getPostBySearching = async (
+//   search: string
+// ): Promise<IPost[]> => {
+// const response = await fetch(
+//   `https://jsonplaceholder.typicode.com/posts?q=${search}`
+// )
+
+// own API-service
+//   const response = await fetch(`/api/posts?q=${search}`)
+
+//   if (!response.ok)
+//     throw new Error('Unable fetch posts! An unexpected error has occured!')
+
+//   return response.json()
+// }
+
+export const getPosts = async (): Promise<Post[]> => {
+  const response = await fetch('http://localhost:3000/api/posts', {
     next: {
       revalidate: 50 // sec
     }
   })
 
-  if (!response.ok)
-    throw new Error('Unable fetch posts! An unexpected error has occured!')
+  if (!response.ok) {
+    throw new Error('Unable fetch posts!')
+  }
 
   return response.json()
 }
 
-export async function getSinglePost(slug: string) {
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${slug}`,
-    {
-      next: {
-        revalidate: 50 // sec
-      }
-    }
-  )
+export const getSinglePost = async (
+  slug: string
+): Promise<Post | null> => {
+  try {
+    const post = await db.post.findFirst({
+      where: { id: slug }
+    })
 
-  return response.json()
+    return post
+  } catch {
+    return null
+  }
 }
 
-export const getPostBySearching = async (
-  search: string
-): Promise<IPost[]> => {
-  // const response = await fetch(
-  //   `https://jsonplaceholder.typicode.com/posts?q=${search}`
-  // )
+export const getPostBySearching = () => {}
 
-  // own API-service
-  const response = await fetch(`/api/posts?q=${search}`)
-
-  if (!response.ok)
-    throw new Error('Unable fetch posts! An unexpected error has occured!')
-
-  return response.json()
-}
+export const getPostsByUserId = () => {}

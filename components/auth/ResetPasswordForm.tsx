@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Form } from '~/components/ui/form'
 import { Button } from '~/components/ui/button'
-import CardWrapper from '~/components/auth/CardWrapper'
+import AuthCardWrapper from '~/components/shared/CardWrapper/AuthCardWrapper'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import TextField from '~/components/shared/TextField'
@@ -41,7 +41,7 @@ const ResetPasswordForm = () => {
   }
 
   return (
-    <CardWrapper
+    <AuthCardWrapper
       headerLabel="Forgot your password?"
       backButtonLabel="Go back to login?"
       backButtonHref={PATHS.logIn}
@@ -72,7 +72,7 @@ const ResetPasswordForm = () => {
           </Button>
         </form>
       </Form>
-    </CardWrapper>
+    </AuthCardWrapper>
   )
 }
 

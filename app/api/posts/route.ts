@@ -1,24 +1,43 @@
-import { NextResponse } from 'next/server'
-import { mockPosts } from '~/mockData'
+import { NextRequest, NextResponse } from 'next/server'
+import { db } from '~/libs/db'
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request?.url)
 
   const query = searchParams.get('q')
 
-  let currentPosts = mockPosts
+  let posts
 
   if (query) {
-    currentPosts = mockPosts.filter((post) => {
-      return post.title.toLowerCase().includes(query.toLowerCase())
-    })
+    try {
+      posts = await db.post.findMany({
+        where: {
+          OR: [
+            {
+              content: {
+                contains: query
+              }
+            },
+            {
+              title: {
+                contains: query
+              }
+            }
+          ]
+        }
+      })
+    } catch {
+      throw new Error('Somthing went wrong!')
+    }
+  } else {
+    try {
+      posts = await db.post.findMany({
+        take: 9
+      })
+    } catch {
+      throw new Error('Somthing went wrong!')
+    }
   }
 
-  return NextResponse.json(currentPosts)
-}
-
-export async function POST(request: Request) {
-  const body = await request.json()
-
-  return NextResponse.json({ body })
+  return NextResponse.json(posts)
 }

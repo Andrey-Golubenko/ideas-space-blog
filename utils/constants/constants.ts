@@ -3,6 +3,8 @@ import { INavLink } from '~/types/types'
 export const PATHS = {
   home: '/',
   blog: '/blog',
+  singlePost: '/blog/[slug]',
+  newPost: '/blog/new-post',
   posts: '/api/posts',
   about: '/about',
   constacts: '/about/contacts',

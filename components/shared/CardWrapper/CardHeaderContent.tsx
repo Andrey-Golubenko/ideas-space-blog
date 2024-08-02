@@ -7,18 +7,19 @@ const font = Poppins({
 })
 
 interface IAuthHeaderProps {
+  title: string
   label: string
 }
 
-const AuthHeader = ({ label }: IAuthHeaderProps) => {
+const CardHeaderContent = ({ title, label }: IAuthHeaderProps) => {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-4">
       <h1 className={cn('text-3xl font-semibold', font.className)}>
-        🔐 Auth
+        {title}
       </h1>
       <p className="text-sm text-muted-foreground">{label}</p>
     </div>
   )
 }
 
-export default AuthHeader
+export default CardHeaderContent

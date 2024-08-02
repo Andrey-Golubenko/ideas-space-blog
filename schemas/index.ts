@@ -1,6 +1,11 @@
 import * as z from 'zod'
 import { UserRole } from '@prisma/client'
 
+export const CreatePostSchema = z.object({
+  title: z.string(),
+  content: z.string()
+})
+
 export const SettingsSchema = z
   .object({
     name: z.optional(z.string()),
