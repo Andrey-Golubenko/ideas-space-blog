@@ -35,12 +35,13 @@ export default auth((request) => {
 
   if (isAuthRoute) {
     if (isLoggedIn) {
-      response = NextResponse.redirect(
-        new URL(DEFAULT_LOGIN_REDIRECT, nextUrl)
-      )
       response.headers.set(
         'x-device-type',
         isMobile ? 'mobile' : 'desktop'
+      )
+
+      response = NextResponse.redirect(
+        new URL(DEFAULT_LOGIN_REDIRECT, nextUrl)
       )
 
       return response
@@ -57,10 +58,11 @@ export default auth((request) => {
 
     const encodedCallbackUrl = encodeURIComponent(callbackUrl)
 
+    response.headers.set('x-device-type', isMobile ? 'mobile' : 'desktop')
+
     response = NextResponse.redirect(
       new URL(`${PATHS.logIn}?callbackUrl=${encodedCallbackUrl}`, nextUrl)
     )
-    response.headers.set('x-device-type', isMobile ? 'mobile' : 'desktop')
 
     return response
   }

@@ -36,6 +36,7 @@ const TextAreaField: React.FC<ITextAreaFieldProps> = ({
                 {...field}
                 disabled={isPending}
                 placeholder={placeholder}
+                rows={7}
               />
             </FormControl>
             <FormMessage />

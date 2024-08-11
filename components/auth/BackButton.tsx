@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { Button } from '~/components/ui/button'
 
 interface IBackButtonProps {
-  label: string
-  href: string
+  label?: string
+  href?: string
 }
 
 const BackButton = ({ label, href }: IBackButtonProps) => {
@@ -16,7 +16,7 @@ const BackButton = ({ label, href }: IBackButtonProps) => {
       size="sm"
       asChild
     >
-      <Link href={href}>{label}</Link>
+      <Link href={href!}>{label!}</Link>
     </Button>
   )
 }

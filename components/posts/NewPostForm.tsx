@@ -12,7 +12,6 @@ import TextField from '~/components/shared/TextField'
 import TextAreaField from '~/components/shared/TextAreaField'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
-import { PATHS } from '~/utils/constants/constants'
 import { newPost } from '~/actions/new-post'
 import { CreatePostSchema } from '~/schemas'
 
@@ -52,8 +51,6 @@ const NewPostForm = ({ isLogged }: INewPostFormProps) => {
     <AppCardWrapper
       headerTitle="📄 Post"
       headerLabel="Create a new post"
-      backButtonLabel="To create a new post, you need to sign in"
-      backButtonHref={PATHS.logIn}
     >
       <Form {...form}>
         <form

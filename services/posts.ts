@@ -1,18 +1,5 @@
-import { Post } from '@prisma/client'
+import { type Post } from '@prisma/client'
 import { db } from '~/libs/db'
-
-// export async function getSinglePost(slug: string) {
-//   const response = await fetch(
-//     `https://jsonplaceholder.typicode.com/posts/${slug}`,
-//     {
-//       next: {
-//         revalidate: 50 // sec
-//       }
-//     }
-//   )
-
-//   return response.json()
-// }
 
 // export const getPostBySearching = async (
 //   search: string

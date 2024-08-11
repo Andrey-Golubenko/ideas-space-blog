@@ -1,15 +1,22 @@
-import { PUBLIC_ROUTES } from '~/utils/constants/routes'
+import {
+  PUBLIC_ROUTES,
+  PUBLIC_ROUTES_EXCEPTIONS,
+  PUBLIC_ROUTES_WITH_DYNAMIC_SEGMENT
+} from '~/utils/constants/routes'
 
 export const isPublicRoute = (pathname: string): boolean => {
-  return PUBLIC_ROUTES.some((route) => {
-    // If the route contains a dynamic part
-    if (route.includes('[') && route.includes(']')) {
-      // The route is converted to a regular expression
-      const regex = new RegExp(`^${route.replace(/\[.*?\]/g, '[^/]+')}$`)
-      return regex.test(pathname)
-    }
-    return route === pathname
-  })
+  const isDynamicRoute =
+    PUBLIC_ROUTES_WITH_DYNAMIC_SEGMENT.some((route) => {
+      return pathname.startsWith(route)
+    }) &&
+    PUBLIC_ROUTES_EXCEPTIONS.some((route) => {
+      return pathname !== route
+    })
+
+  const isPublic: boolean =
+    PUBLIC_ROUTES.includes(pathname) || isDynamicRoute
+
+  return isPublic
 }
 
 export const emptyStringToUndefined = (
@@ -36,4 +43,33 @@ export const emptyStringToUndefined = (
   )
 
   return preparedValues
+}
+
+export const toUpperCaseFirstChar = (
+  string?: string
+): string | undefined => {
+  if (string) {
+    const processedString = string
+      .charAt(0)
+      .toUpperCase()
+      .concat(string.slice(1))
+
+    return processedString
+  }
+
+  return undefined
+}
+
+export const titleFormatting = (string?: string): string | undefined => {
+  if (string) {
+    const processedString = string
+      .toLowerCase()
+      .charAt(0)
+      .toUpperCase()
+      .concat(string.slice(1))
+
+    return processedString
+  }
+
+  return undefined
 }

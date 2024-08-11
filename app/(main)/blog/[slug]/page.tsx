@@ -1,21 +1,12 @@
 import { Metadata } from 'next'
-import { getPosts, getSinglePost } from '~/services/posts'
+import { getSinglePost } from '~/services/posts'
+import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
 
 interface ISinglePostProps {
   params: {
     slug: string
   }
 }
-
-// export async function generateStaticParams() {
-//   const posts = await getPosts()
-
-//   return posts.map((post) => {
-//     return {
-//       slug: String(post?.id)
-//     }
-//   })
-// }
 
 export async function generateMetadata({
   params: { slug }
@@ -30,10 +21,9 @@ export async function generateMetadata({
 const SinglePostPage = async ({ params: { slug } }: ISinglePostProps) => {
   const singlePost = await getSinglePost(slug)
 
-  const singlePostTitle: string | undefined = singlePost?.title
-    .charAt(0)
-    .toUpperCase()
-    .concat(singlePost?.title.slice(1))
+  const singlePostTitle: string | undefined = toUpperCaseFirstChar(
+    singlePost?.title
+  )
 
   return (
     <div className="page-heading flex flex-col items-center justify-center">

@@ -1,12 +1,12 @@
-import PostSearch from '~/components/PostSearch'
-import Posts from '~/components/Posts'
+import PostSearch from '~/components/posts/PostSearch'
+import PostsList from '~/components/posts/PostsList'
 
 const BlogPage = () => {
   return (
-    <div className="page-wrapper">
+    <div className="page-wrapper w-full">
       <h1 className="page-heading">Blog Page</h1>
       <PostSearch />
-      <Posts />
+      <PostsList />
     </div>
   )
 }

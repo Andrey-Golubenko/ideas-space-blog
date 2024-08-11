@@ -7,8 +7,8 @@ const font = Poppins({
 })
 
 interface IAuthHeaderProps {
-  title: string
-  label: string
+  title?: string
+  label?: string
 }
 
 const CardHeaderContent = ({ title, label }: IAuthHeaderProps) => {

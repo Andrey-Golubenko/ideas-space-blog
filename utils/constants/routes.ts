@@ -9,7 +9,6 @@ import { PATHS } from '~/utils/constants/constants'
 export const PUBLIC_ROUTES = [
   PATHS.home,
   PATHS.blog,
-  PATHS.singlePost,
   PATHS.posts,
   PATHS.about,
   PATHS.constacts,
@@ -17,6 +16,19 @@ export const PUBLIC_ROUTES = [
   PATHS.signIn,
   PATHS.emailVerification
 ]
+
+/**
+ * An array of routes that have additional segment because of which are NOT accessible to the public.
+ * These routes require authentication.
+ * @type {string []}
+ */
+export const PUBLIC_ROUTES_EXCEPTIONS = [PATHS.newPost]
+
+/**
+ * An array of routes that can have additional segment.
+ * @type {string []}
+ */
+export const PUBLIC_ROUTES_WITH_DYNAMIC_SEGMENT = [PATHS.blog]
 
 /**
  * An array of routes that are used for authentication.

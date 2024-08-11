@@ -13,8 +13,8 @@ interface ICardWrapperProps {
   children: React.ReactNode
   headerLabel: string
   headerTitle: string
-  backButtonLabel: string
-  backButtonHref: string
+  backButtonLabel?: string
+  backButtonHref?: string
 }
 
 const AppCardWrapper = ({
@@ -33,12 +33,14 @@ const AppCardWrapper = ({
         />
       </CardHeader>
       <CardContent>{children}</CardContent>
-      <CardFooter>
-        <BackButton
-          label={backButtonLabel}
-          href={backButtonHref}
-        />
-      </CardFooter>
+      {backButtonHref && (
+        <CardFooter>
+          <BackButton
+            label={backButtonLabel}
+            href={backButtonHref}
+          />
+        </CardFooter>
+      )}
     </Card>
   )
 }
