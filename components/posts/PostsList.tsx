@@ -37,7 +37,6 @@ const PostsLists: React.FC = () => {
             <PostCard
               key={post?.id}
               post={post}
-              isLoading={isLoading}
             />
           )
         })}

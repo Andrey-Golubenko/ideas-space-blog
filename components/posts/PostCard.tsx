@@ -17,7 +17,6 @@ import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
 
 interface IpostCardProps {
   post: Post
-  isLoading: boolean
 }
 
 const font = Poppins({
@@ -25,20 +24,13 @@ const font = Poppins({
   weight: ['300', '400', '500', '600', '700']
 })
 
-const PostCard = ({ post, isLoading }: IpostCardProps) => {
+const PostCard = ({ post }: IpostCardProps) => {
   const postTitle = toUpperCaseFirstChar(post?.title)
 
   const postContent = `${toUpperCaseFirstChar(post?.content.slice(0, 120))}...`
 
   return (
-    <Card
-      className={cn(
-        'flex transform flex-col rounded-md shadow-md transition-all delay-500 duration-1000 ease-in-out',
-        isLoading && !post
-          ? 'translate-y-18 opacity-0 '
-          : 'translate-y-0 opacity-100'
-      )}
-    >
+    <Card className="flex flex-col rounded-md shadow-md">
       <CardHeader className="pb-2">
         <div className="flex w-full items-center justify-start">
           <Link href={`${PATHS.blog}/${post?.id}`}>
