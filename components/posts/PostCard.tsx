@@ -1,7 +1,6 @@
 'use client'
 
 import { type Post } from '@prisma/client'
-import { Poppins } from 'next/font/google'
 import Link from 'next/link'
 
 import {
@@ -13,28 +12,32 @@ import {
 import { Button } from '~/components/ui/button'
 import { cn } from '~/libs/utils'
 import { PATHS } from '~/utils/constants/constants'
-import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
+import { fontPoppins } from '~/utils/constants/fonts'
+import {
+  titleFormatting,
+  toUpperCaseFirstChar
+} from '~/utils/helpers/helpers'
 
 interface IpostCardProps {
   post: Post
 }
 
-const font = Poppins({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700']
-})
-
 const PostCard = ({ post }: IpostCardProps) => {
-  const postTitle = toUpperCaseFirstChar(post?.title)
+  const postTitle = titleFormatting(post?.title)
 
   const postContent = `${toUpperCaseFirstChar(post?.content.slice(0, 120))}...`
 
   return (
-    <Card className="flex flex-col rounded-md shadow-md">
+    <Card className="flex min-h-[290px] flex-col rounded-md shadow-md">
       <CardHeader className="pb-2">
         <div className="flex w-full items-center justify-start">
           <Link href={`${PATHS.blog}/${post?.id}`}>
-            <h2 className={cn('text-2xl font-semibold', font.className)}>
+            <h2
+              className={cn(
+                'text-2xl font-semibold',
+                fontPoppins.className
+              )}
+            >
               {postTitle}
             </h2>
           </Link>

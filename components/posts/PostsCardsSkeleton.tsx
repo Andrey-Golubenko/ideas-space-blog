@@ -2,7 +2,6 @@
 
 import { type Post } from '@prisma/client'
 import Link from 'next/link'
-import { Poppins } from 'next/font/google'
 
 import {
   Card,
@@ -14,6 +13,7 @@ import { Skeleton } from '~/components/ui/skeleton'
 import { Button } from '~/components/ui/button'
 import { cn } from '~/libs/utils'
 import { PATHS } from '~/utils/constants/constants'
+import { fontPoppins } from '~/utils/constants/fonts'
 import {
   titleFormatting,
   toUpperCaseFirstChar
@@ -24,11 +24,6 @@ interface IPostsCardsSkeletonProps {
   isLoading: boolean
 }
 
-const font = Poppins({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700']
-})
-
 const PostsCardsSkeleton = ({
   post,
   isLoading
@@ -38,12 +33,17 @@ const PostsCardsSkeleton = ({
   const postContent = `${toUpperCaseFirstChar(post?.content.slice(0, 120))}...`
 
   return (
-    <Card className="flex min-h-64 flex-col rounded-md shadow-md">
+    <Card className="flex min-h-[290px] flex-col rounded-md shadow-md">
       {hasContent ? (
         <CardHeader className="pb-2">
           <div className="flex w-full items-center justify-start">
             <Link href={`${PATHS.blog}/${post?.id}`}>
-              <h2 className={cn('text-2xl font-semibold', font.className)}>
+              <h2
+                className={cn(
+                  'text-2xl font-semibold',
+                  fontPoppins.className
+                )}
+              >
                 {postTitle}
               </h2>
             </Link>

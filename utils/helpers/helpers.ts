@@ -45,9 +45,7 @@ export const emptyStringToUndefined = (
   return preparedValues
 }
 
-export const toUpperCaseFirstChar = (
-  string?: string
-): string | undefined => {
+export const toUpperCaseFirstChar = (string?: string): string | '' => {
   if (string) {
     const processedString = string
       .charAt(0)
@@ -57,19 +55,20 @@ export const toUpperCaseFirstChar = (
     return processedString
   }
 
-  return undefined
+  return ''
 }
 
-export const titleFormatting = (string?: string): string | undefined => {
+export const titleFormatting = (string?: string): string | '' => {
   if (string) {
-    const processedString = string
-      .toLowerCase()
+    const lowerCaseString = string.toLowerCase()
+
+    const processedString = lowerCaseString
       .charAt(0)
       .toUpperCase()
-      .concat(string.slice(1))
+      .concat(lowerCaseString.slice(1))
 
     return processedString
   }
 
-  return undefined
+  return ''
 }
