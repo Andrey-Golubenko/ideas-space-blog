@@ -57,18 +57,3 @@ export const toUpperCaseFirstChar = (string?: string): string | '' => {
 
   return ''
 }
-
-export const titleFormatting = (string?: string): string | '' => {
-  if (string) {
-    const lowerCaseString = string.toLowerCase()
-
-    const processedString = lowerCaseString
-      .charAt(0)
-      .toUpperCase()
-      .concat(lowerCaseString.slice(1))
-
-    return processedString
-  }
-
-  return ''
-}

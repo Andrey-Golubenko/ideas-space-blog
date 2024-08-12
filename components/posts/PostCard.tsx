@@ -13,17 +13,14 @@ import { Button } from '~/components/ui/button'
 import { cn } from '~/libs/utils'
 import { PATHS } from '~/utils/constants/constants'
 import { fontPoppins } from '~/utils/constants/fonts'
-import {
-  titleFormatting,
-  toUpperCaseFirstChar
-} from '~/utils/helpers/helpers'
+import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
 
 interface IpostCardProps {
   post: Post
 }
 
 const PostCard = ({ post }: IpostCardProps) => {
-  const postTitle = titleFormatting(post?.title)
+  const postTitle = toUpperCaseFirstChar(post?.title)
 
   const postContent = `${toUpperCaseFirstChar(post?.content.slice(0, 120))}...`
 

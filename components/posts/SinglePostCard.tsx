@@ -7,14 +7,14 @@ import {
   CardFooter
 } from '~/components/ui/card'
 import { Button } from '~/components/ui/button'
-import { titleFormatting } from '~/utils/helpers/helpers'
+import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
 
 interface ISinglePostCardProps {
   post: Post | null
 }
 
 const SinglePostCard = ({ post }: ISinglePostCardProps) => {
-  const singlePostTitle: string | '' = titleFormatting(post?.title)
+  const singlePostTitle: string | '' = toUpperCaseFirstChar(post?.title)
 
   return (
     <Card className="flex flex-col items-center justify-between rounded-md shadow-md">
