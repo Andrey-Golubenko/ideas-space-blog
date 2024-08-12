@@ -1,4 +1,4 @@
-import { Post } from '@prisma/client'
+import { type Post } from '@prisma/client'
 
 import {
   Card,
@@ -6,27 +6,27 @@ import {
   CardContent,
   CardFooter
 } from '~/components/ui/card'
-import { Button } from '~/components/ui/button'
+import PostDeleteButton from '~/components/posts/PostDeleteButto'
 import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
+import { getCurrentUser } from '~/utils/helpers/server.helpers'
 
 interface ISinglePostCardProps {
   post: Post | null
 }
 
-const SinglePostCard = ({ post }: ISinglePostCardProps) => {
+const SinglePostCard = async ({ post }: ISinglePostCardProps) => {
   const singlePostTitle: string | '' = toUpperCaseFirstChar(post?.title)
+
+  const user = await getCurrentUser()
 
   return (
     <Card className="flex flex-col items-center justify-between rounded-md shadow-md">
-      <CardHeader>{singlePostTitle}</CardHeader>
+      <CardHeader className="text-2xl font-semibold">
+        {singlePostTitle}
+      </CardHeader>
       <CardContent>{post?.content}</CardContent>
       <CardFooter>
-        <Button
-          variant="destructive"
-          size="sm"
-        >
-          Delete post
-        </Button>
+        {!!user && <PostDeleteButton postId={post?.id} />}
       </CardFooter>
     </Card>
   )
