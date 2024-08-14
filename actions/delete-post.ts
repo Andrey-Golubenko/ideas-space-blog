@@ -15,13 +15,17 @@ export const deletePost = async (postId: string) => {
   const dbUser = await getUserById(user?.id)
 
   if (!dbUser) {
-    return { error: 'Unauthjrized!' }
+    return { error: 'Unauthorized!' }
   }
 
   const post = await getSinglePost(postId)
 
   if (!post) {
     return { error: 'There are no posts for deleting!' }
+  }
+
+  if (post.authorId !== user.id) {
+    return { error: 'You have no permission to delete this post!' }
   }
 
   try {

@@ -26,12 +26,15 @@ const PostCard = ({ post }: IpostCardProps) => {
 
   return (
     <Card className="flex min-h-[290px] flex-col rounded-md shadow-md">
-      <CardHeader className="pb-2">
+      <CardHeader className="pb-4">
         <div className="flex w-full items-center justify-start">
-          <Link href={`${PATHS.blog}/${post?.id}`}>
+          <Link
+            href={`${PATHS.blog}/${post?.id}`}
+            className="w-full"
+          >
             <h2
               className={cn(
-                'text-2xl font-semibold',
+                'w-full truncate text-2xl font-semibold',
                 fontPoppins.className
               )}
             >

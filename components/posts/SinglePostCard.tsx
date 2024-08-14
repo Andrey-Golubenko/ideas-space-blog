@@ -1,3 +1,5 @@
+'use client'
+
 import { type Post } from '@prisma/client'
 
 import {
@@ -6,18 +8,33 @@ import {
   CardContent,
   CardFooter
 } from '~/components/ui/card'
-import PostDeleteButton from '~/components/posts/PostDeleteButto'
+import EditPostButton from '~/components/posts/EditPostButton'
+import DeletePostButton from '~/components/posts/DeletePostButton'
 import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
-import { getCurrentUser } from '~/utils/helpers/server.helpers'
+import { useCurrentUser } from '~/hooks/useCurrentUser'
+import { useEffect } from 'react'
+import usePosts from '~/store'
 
 interface ISinglePostCardProps {
   post: Post | null
 }
 
-const SinglePostCard = async ({ post }: ISinglePostCardProps) => {
-  const singlePostTitle: string | '' = toUpperCaseFirstChar(post?.title)
+const SinglePostCard = ({ post }: ISinglePostCardProps) => {
+  const user = useCurrentUser()
 
-  const user = await getCurrentUser()
+  const [setEditablePost] = usePosts((state) => {
+    return [state.setEditablePost]
+  })
+
+  const isManageablePost = post?.authorId === user?.id
+
+  useEffect(() => {
+    if (user && post && isManageablePost) {
+      setEditablePost(post)
+    }
+  }, [user, post])
+
+  const singlePostTitle: string | '' = toUpperCaseFirstChar(post?.title)
 
   return (
     <Card className="flex flex-col items-center justify-between rounded-md shadow-md">
@@ -26,7 +43,15 @@ const SinglePostCard = async ({ post }: ISinglePostCardProps) => {
       </CardHeader>
       <CardContent>{post?.content}</CardContent>
       <CardFooter>
-        {!!user && <PostDeleteButton postId={post?.id} />}
+        {isManageablePost && (
+          <div className="flex flex-row items-center justify-center gap-x-6">
+            <EditPostButton postId={post?.id} />
+            <DeletePostButton
+              postId={post?.id}
+              isManageablePost={isManageablePost}
+            />
+          </div>
+        )}
       </CardFooter>
     </Card>
   )

@@ -1,13 +1,16 @@
 'use server'
 
 import * as z from 'zod'
-import { getCurrentUser } from '~/utils/helpers/server.helpers'
-import { ManagePostSchema } from '~/schemas'
-import { getUserById } from '~/services/user'
 import { db } from '~/libs/db'
 
-export const newPost = async (
-  values: z.infer<typeof ManagePostSchema>
+import { ManagePostSchema } from '~/schemas'
+import { getSinglePost } from '~/services/posts'
+import { getUserById } from '~/services/user'
+import { getCurrentUser } from '~/utils/helpers/server.helpers'
+
+export const editPost = async (
+  values: z.infer<typeof ManagePostSchema>,
+  postId: string
 ) => {
   const validatedFields = ManagePostSchema.safeParse(values)
 
@@ -27,19 +30,29 @@ export const newPost = async (
     return { error: 'Unauthorized!' }
   }
 
+  const editablePost = await getSinglePost(postId)
+
+  if (!editablePost) {
+    return { error: 'The post you are trying to edit does not exist' }
+  }
+
+  if (editablePost.authorId !== user.id) {
+    return { error: 'You have no permission to edit this post!' }
+  }
+
   const { title, content, published } = validatedFields.data
 
   try {
-    await db.post.create({
+    await db.post.update({
+      where: { id: postId },
       data: {
         title,
         content,
-        published,
-        authorId: dbUser?.id
+        published
       }
     })
 
-    return { success: 'Post has been successfully created!' }
+    return { success: 'Post has been successfully edited!' }
   } catch {
     return { error: 'Something went wrong!' }
   }

@@ -1,13 +1,15 @@
 import { persist, devtools } from 'zustand/middleware'
 import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
-import { getPosts, getPostBySearching } from '~/services/posts'
 import { type Post } from '@prisma/client'
+import { getPosts, getPostBySearching } from '~/services/posts'
 
 interface IUsePosts {
   posts: Post[]
   isLoading: boolean
+  editablePost: Post | {}
   getAllPosts: () => Promise<void>
+  setEditablePost: (post: Post | {}) => void
   // getPostsBySearch: (search: string) => Promise<void>
 }
 
@@ -21,6 +23,7 @@ const usePosts = createWithEqualityFn<
       return {
         posts: [],
         isLoading: false,
+        editablePost: {},
         getAllPosts: async () => {
           set((state) => {
             return { ...state, isLoading: true }
@@ -29,6 +32,11 @@ const usePosts = createWithEqualityFn<
           const posts = await getPosts()
           set((state) => {
             return { ...state, posts, isLoading: false }
+          })
+        },
+        setEditablePost: (post: Post | {}) => {
+          set((state) => {
+            return { ...state, editablePost: post }
           })
         }
         // getPostsBySearch: async (search: string) => {

@@ -114,6 +114,7 @@ const SettingsForm = ({ session }: ISettingsFormProps) => {
             <SwitchField
               name="isTwoFactorEnabled"
               label="Two Factor Authentication"
+              description="Enabled two factor authentication for your account"
               control={form.control}
               isPending={isPending}
             />

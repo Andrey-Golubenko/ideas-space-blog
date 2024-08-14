@@ -63,7 +63,7 @@ export const logIn = async (
         return { error: 'Invalid code!' }
       }
 
-      const hasExpired = new Date(twoFactorToken.expires) < new Date()
+      const hasExpired = new Date(`${twoFactorToken.expires}`) < new Date()
 
       if (hasExpired) {
         return { error: 'Code is expired!' }

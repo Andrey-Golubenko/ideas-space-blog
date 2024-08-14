@@ -11,7 +11,7 @@ export const emailVerification = async (token: string) => {
     return { error: 'The token does not exist!' }
   }
 
-  const hasExpired = new Date(existingToken.expires) < new Date()
+  const hasExpired = new Date(`${existingToken.expires}`) < new Date()
 
   if (hasExpired) {
     return { error: 'The token has expired!' }

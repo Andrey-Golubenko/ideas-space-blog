@@ -1,9 +1,10 @@
 import * as z from 'zod'
 import { UserRole } from '@prisma/client'
 
-export const CreatePostSchema = z.object({
+export const ManagePostSchema = z.object({
   title: z.string(),
-  content: z.string()
+  content: z.string(),
+  published: z.boolean()
 })
 
 export const SettingsSchema = z

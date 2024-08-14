@@ -11,6 +11,7 @@ import { Switch } from '~/components/ui/switch'
 interface ISwitchFieldProps {
   name: string
   label: string
+  description: string
   control: any
   isPending: boolean
 }
@@ -18,6 +19,7 @@ interface ISwitchFieldProps {
 const SwitchField = ({
   name,
   label,
+  description,
   control,
   isPending
 }: ISwitchFieldProps) => {
@@ -30,9 +32,7 @@ const SwitchField = ({
           <FormItem className="flex flex-row items-center justify-between rounded-lg p-3 shadow-sm">
             <div className="space-y-0.5">
               <FormLabel>{label}</FormLabel>
-              <FormDescription>
-                Enabled two factor authentication for your account
-              </FormDescription>
+              <FormDescription>{description}</FormDescription>
             </div>
             <FormControl>
               <Switch

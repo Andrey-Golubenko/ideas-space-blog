@@ -4,6 +4,7 @@ export const PATHS = {
   home: '/',
   blog: '/blog',
   newPost: '/blog/new-post',
+  editPost: '/edit-post',
   posts: '/api/posts',
   about: '/about',
   constacts: '/about/contacts',
