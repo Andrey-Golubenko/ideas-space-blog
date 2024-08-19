@@ -1,3 +1,5 @@
+import { type FormHTMLAttributes } from 'react'
+
 import {
   FormControl,
   FormField,
@@ -16,26 +18,28 @@ interface ITextFieldProps {
   isPending: boolean
 }
 
-const TextField: React.FC<ITextFieldProps> = ({
+const TextField = ({
   name,
   label,
   placeholder,
   control,
-  isPending
-}) => {
+  isPending,
+  ...props
+}: ITextFieldProps & FormHTMLAttributes<HTMLInputElement>) => {
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => {
         return (
-          <FormItem>
+          <FormItem className="w-full">
             <FormLabel>{label}</FormLabel>
             <FormControl>
               <Input
                 {...field}
                 disabled={isPending}
                 placeholder={placeholder}
+                {...props}
               />
             </FormControl>
             <FormMessage />

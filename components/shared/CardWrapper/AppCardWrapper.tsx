@@ -1,5 +1,7 @@
 'use client'
 
+import { type HTMLAttributes } from 'react'
+
 import {
   Card,
   CardHeader,
@@ -22,10 +24,14 @@ const AppCardWrapper = ({
   headerTitle,
   headerLabel,
   backButtonLabel,
-  backButtonHref
-}: ICardWrapperProps) => {
+  backButtonHref,
+  ...props
+}: ICardWrapperProps & HTMLAttributes<HTMLDivElement>) => {
   return (
-    <Card className="shadow-md">
+    <Card
+      className="my-16 shadow-md"
+      {...props}
+    >
       <CardHeader>
         <CardHeaderContent
           title={headerTitle}

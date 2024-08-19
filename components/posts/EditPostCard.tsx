@@ -82,12 +82,12 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
   return (
     <AppCardWrapper
       headerTitle="📄 Post"
-      headerLabel={`Edit post ${title || ''}`}
+      headerLabel={`Edit post - ${title || ''}`}
     >
       <PostManageForm
         form={form}
         handleOnSubmit={handleOnSubmit}
-        label={`Edit post ${title || ''}`}
+        label={`Edit post - ${title || ''}`}
         isDisabled={isDisabled}
         success={success}
         error={error}

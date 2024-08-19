@@ -44,17 +44,21 @@ const PostCard = ({ post }: IpostCardProps) => {
         </div>
       </CardHeader>
       <CardContent className="pb-4 text-justify">
-        {postContent}
+        <div className="rounded-xl bg-slate-100 px-4 py-2">
+          {postContent}
+        </div>
       </CardContent>
       <CardFooter className="mt-auto justify-end">
         <Button
           variant="link"
-          className="font-narmal"
+          className="font-normal"
           size="sm"
           asChild
         >
           <Link href={`${PATHS.blog}/${post?.id}`}>
-            <span>Read more . . .</span>
+            <span className="rounded-lg bg-slate-100 px-2 py-2">
+              Read more . . .
+            </span>
           </Link>
         </Button>
       </CardFooter>

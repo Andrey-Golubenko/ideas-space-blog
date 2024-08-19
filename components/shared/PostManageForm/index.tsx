@@ -1,3 +1,5 @@
+import { type FormHTMLAttributes } from 'react'
+
 import { Form } from '~/components/ui/form'
 import { Button } from '~/components/ui/button'
 import TextField from '~/components/shared/TextField'
@@ -21,13 +23,15 @@ const PostManageForm = ({
   label,
   isDisabled,
   success,
-  error
-}: IPostManageFormProps) => {
+  error,
+  ...props
+}: IPostManageFormProps & FormHTMLAttributes<HTMLFormElement>) => {
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleOnSubmit)}
         className="space-y-8"
+        {...props}
       >
         <div className="space-y-6">
           <TextField
@@ -45,10 +49,10 @@ const PostManageForm = ({
           />
 
           <SwitchField
-            name="isPublished"
+            control={form.control}
+            name="published"
             label="Publish the post?"
             description="Enabled the ability for all users to view your post."
-            control={form.control}
             isPending={isDisabled}
           />
         </div>

@@ -1,4 +1,5 @@
 import { Session } from 'next-auth'
+
 import { Card, CardContent, CardHeader } from '~/components/ui/card'
 import { Badge } from '~/components/ui/badge'
 import ProfileInfoItem from './ProfileInfoItem'
@@ -8,9 +9,9 @@ interface IProfileProps {
   label: string
 }
 
-const ProfileInfo = ({ user, label }: IProfileProps) => {
+const ProfileCard = ({ user, label }: IProfileProps) => {
   return (
-    <Card className="rouded-xl shadow-md">
+    <Card className="rouded-xl pb-20 shadow-md">
       <CardHeader>
         <p className="text-center text-2xl font-semibold">{label}</p>
       </CardHeader>
@@ -48,4 +49,4 @@ const ProfileInfo = ({ user, label }: IProfileProps) => {
   )
 }
 
-export default ProfileInfo
+export default ProfileCard

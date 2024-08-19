@@ -1,4 +1,4 @@
-import PostSearch from '~/components/posts/PostSearch'
+import PostSearch from '~/components/posts/PostSearchForm'
 import PostsList from '~/components/posts/PostsList'
 
 const BlogPage = () => {

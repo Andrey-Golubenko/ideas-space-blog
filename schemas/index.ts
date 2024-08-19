@@ -7,6 +7,10 @@ export const ManagePostSchema = z.object({
   published: z.boolean()
 })
 
+export const SearchPostSchema = z.object({
+  search: z.string()
+})
+
 export const SettingsSchema = z
   .object({
     name: z.optional(z.string()),

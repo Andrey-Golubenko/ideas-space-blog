@@ -11,6 +11,7 @@ export async function GET(request: NextRequest) {
   if (query) {
     try {
       posts = await db.post.findMany({
+        take: 9,
         where: {
           OR: [
             {

@@ -26,7 +26,9 @@ const PostsCardsSkeleton = ({
   isLoading
 }: IPostsCardsSkeletonProps) => {
   const hasContent = post && !isLoading
+
   const postTitle = toUpperCaseFirstChar(post?.title)
+
   const postContent = `${toUpperCaseFirstChar(post?.content.slice(0, 120))}...`
 
   return (
@@ -50,13 +52,15 @@ const PostsCardsSkeleton = ({
           </div>
         </CardHeader>
       ) : (
-        <CardHeader className="pb-4">
+        <CardHeader className="pb-8">
           <Skeleton className="h-7 w-full" />
         </CardHeader>
       )}
       {hasContent ? (
         <CardContent className="pb-4 text-justify">
-          {postContent}
+          <div className="rounded-xl bg-slate-100 px-4 py-2">
+            {postContent}
+          </div>
         </CardContent>
       ) : (
         <CardContent className="space-y-2 pb-4 text-justify">
@@ -70,12 +74,14 @@ const PostsCardsSkeleton = ({
         {hasContent ? (
           <Button
             variant="link"
-            className="font-narmal"
+            className="font-normal"
             size="sm"
             asChild
           >
             <Link href={`${PATHS.blog}/${post?.id}`}>
-              <span>Read more . . .</span>
+              <span className="rounded-lg bg-slate-100 px-2 py-2">
+                Read more . . .
+              </span>
             </Link>
           </Button>
         ) : (

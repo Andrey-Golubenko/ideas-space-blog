@@ -1,3 +1,6 @@
+import { type FormHTMLAttributes } from 'react'
+import { type SwitchProps } from '@radix-ui/react-switch'
+
 import {
   FormField,
   FormItem,
@@ -21,8 +24,11 @@ const SwitchField = ({
   label,
   description,
   control,
-  isPending
-}: ISwitchFieldProps) => {
+  isPending,
+  ...props
+}: ISwitchFieldProps &
+  FormHTMLAttributes<HTMLInputElement> &
+  SwitchProps) => {
   return (
     <FormField
       control={control}
@@ -39,6 +45,7 @@ const SwitchField = ({
                 disabled={isPending}
                 checked={field.value}
                 onCheckedChange={field.onChange}
+                {...props}
               />
             </FormControl>
             <FormMessage />

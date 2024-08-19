@@ -1,5 +1,7 @@
 'use client'
 
+import { type HTMLAttributes } from 'react'
+
 import {
   Card,
   CardHeader,
@@ -23,10 +25,14 @@ const AuthCardWrapper = ({
   headerLabel,
   backButtonLabel,
   backButtonHref,
-  showSocial
-}: ICardWrapperProps) => {
+  showSocial,
+  ...props
+}: ICardWrapperProps & HTMLAttributes<HTMLDivElement>) => {
   return (
-    <Card className="shadow-md">
+    <Card
+      className="shadow-md"
+      {...props}
+    >
       <CardHeader>
         <CardHeaderContent
           title="🔐 Auth"

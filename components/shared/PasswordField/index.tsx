@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { type FormHTMLAttributes, useState } from 'react'
 import Link from 'next/link'
 
 import { PATHS } from '~/utils/constants/constants'
@@ -21,13 +21,14 @@ interface IPasswordFieldProps {
   withLink?: boolean
 }
 
-const PasswordField: React.FC<IPasswordFieldProps> = ({
+const PasswordField = ({
   name,
   label,
   control,
   isPending,
-  withLink
-}) => {
+  withLink,
+  ...props
+}: IPasswordFieldProps & FormHTMLAttributes<HTMLInputElement>) => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const handleIconClick = () => {
@@ -56,6 +57,7 @@ const PasswordField: React.FC<IPasswordFieldProps> = ({
                     iconClick={handleIconClick}
                   />
                 }
+                {...props}
               />
             </FormControl>
             {withLink && (

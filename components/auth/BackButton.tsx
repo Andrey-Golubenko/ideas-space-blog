@@ -12,7 +12,7 @@ const BackButton = ({ label, href }: IBackButtonProps) => {
   return (
     <Button
       variant="link"
-      className="font-narmal w-full"
+      className="w-full font-normal"
       size="sm"
       asChild
     >

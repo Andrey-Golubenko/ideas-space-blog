@@ -1,3 +1,5 @@
+import { type SelectProps } from '@radix-ui/react-select'
+import { type FormHTMLAttributes } from 'react'
 import { UserRole } from '@prisma/client'
 import {
   FormField,
@@ -27,8 +29,11 @@ const SelectField = ({
   label,
   placeholder,
   control,
-  isPending
-}: ISelectFieldProps) => {
+  isPending,
+  ...props
+}: ISelectFieldProps &
+  FormHTMLAttributes<HTMLSelectElement> &
+  SelectProps) => {
   return (
     <FormField
       control={control}
@@ -41,6 +46,7 @@ const SelectField = ({
               disabled={isPending}
               onValueChange={field.onChange}
               defaultValue={field.value}
+              {...props}
             >
               <FormControl>
                 <SelectTrigger>

@@ -14,11 +14,17 @@ const AdminCard = () => {
   const onServerActionClick = () => {
     admin().then((data) => {
       if (data.success) {
-        toast.success(data.success)
+        toast.success(data.success, {
+          richColors: true,
+          closeButton: true
+        })
       }
 
       if (data.error) {
-        toast.error(data.error)
+        toast.error(data.error, {
+          richColors: true,
+          closeButton: true
+        })
       }
     })
   }
@@ -26,9 +32,15 @@ const AdminCard = () => {
   const onApiRouteClick = () => {
     fetch(PATHS.apiAdmin).then((response) => {
       if (response.ok) {
-        toast.success('Allowed API Route!')
+        toast.success('Allowed API Route!', {
+          richColors: true,
+          closeButton: true
+        })
       } else {
-        toast.error('Forbidden API Route!')
+        toast.error('Forbidden API Route!', {
+          richColors: true,
+          closeButton: true
+        })
       }
     })
   }
