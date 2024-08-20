@@ -2,10 +2,12 @@ import { persist, devtools, createJSONStorage } from 'zustand/middleware'
 import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
 import { type Post } from '@prisma/client'
-import { getPosts, getPostBySearching } from '~/services/posts'
+
+import { getPosts, getPostsBySearching } from '~/services/posts'
 
 interface IUsePosts {
   posts: Post[]
+  postsCount: number | null
   isLoading: boolean
   editablePost: Post | {}
   getAllPosts: () => Promise<void>
@@ -23,6 +25,7 @@ const usePosts = createWithEqualityFn<
       (set) => {
         return {
           posts: [],
+          postsCount: null,
           isLoading: false,
           editablePost: {},
           getAllPosts: async () => {
@@ -30,10 +33,11 @@ const usePosts = createWithEqualityFn<
               return { ...state, isLoading: true }
             })
 
-            const posts = await getPosts()
+            const data = await getPosts()
+            const { posts, postsCount } = data
 
             set((state) => {
-              return { ...state, posts, isLoading: false }
+              return { ...state, posts, postsCount, isLoading: false }
             })
           },
           setEditablePost: (post: Post | {}) => {
@@ -46,10 +50,11 @@ const usePosts = createWithEqualityFn<
               return { ...state, isLoading: true }
             })
 
-            const posts = await getPostBySearching(search)
+            const data = await getPostsBySearching(search)
+            const { posts, postsCount } = data
 
             set((state) => {
-              return { ...state, posts, isLoading: false }
+              return { ...state, posts, postsCount, isLoading: false }
             })
           }
         }

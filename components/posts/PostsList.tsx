@@ -6,8 +6,8 @@ import { type User } from 'next-auth'
 
 import usePosts from '~/store'
 import PostCard from '~/components/posts/PostCard'
-import PostsCardsSkeleton from '~/components/posts/PostsCardsSkeleton'
-import { Card, CardContent } from '~/components/ui/card'
+import NoPostsCard from '~/components/posts/NoPostsCard'
+import PostsSkeletonList from '~/components/posts/PostsSkeletonList'
 import { PATHS } from '~/utils/constants/constants'
 
 interface IPostListProps {
@@ -17,15 +17,18 @@ interface IPostListProps {
 const PostsLists = ({ currentUser }: IPostListProps) => {
   const pathName = usePathname()
 
-  const [posts, isLoading, getAllPosts] = usePosts((state) => {
-    return [state.posts, state.isLoading, state.getAllPosts]
+  const [posts, postsCount, isLoading, getAllPosts] = usePosts((state) => {
+    return [
+      state.posts,
+      state.postsCount,
+      state.isLoading,
+      state.getAllPosts
+    ]
   })
 
   useEffect(() => {
     getAllPosts()
   }, [getAllPosts])
-
-  const isBlog = pathName === PATHS.blog
 
   const publishedPosts =
     posts.filter((post) => {
@@ -37,43 +40,28 @@ const PostsLists = ({ currentUser }: IPostListProps) => {
       return post.authorId === currentUser?.id
     }) || []
 
+  const isBlog = pathName === PATHS.blog
+
   const exhibitablePost = isBlog ? publishedPosts : userPosts
 
   const [firstPost, secondPost, thirdPost, ...restPosts] = exhibitablePost
 
+  const skeletonPosts = { firstPost, secondPost, thirdPost }
+
+  const noPosts = typeof postsCount === 'number' && postsCount === 0
+
   return (
-    <>
-      {!isBlog && (
-        <Card className="mb-7 flex w-full flex-row items-center justify-center">
-          <CardContent className="py-4 text-2xl font-semibold">
-            User posts
-          </CardContent>
-        </Card>
-      )}
-      <section className="mb-8 grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
-        <PostsCardsSkeleton
-          post={firstPost}
+    <section className="mb-8 w-full">
+      {!noPosts ? (
+        <PostsSkeletonList
+          skeletonPosts={skeletonPosts}
           isLoading={isLoading}
         />
+      ) : (
+        <NoPostsCard />
+      )}
 
-        {firstPost && !secondPost ? (
-          ''
-        ) : (
-          <PostsCardsSkeleton
-            post={secondPost}
-            isLoading={isLoading}
-          />
-        )}
-
-        {firstPost && !thirdPost ? (
-          ''
-        ) : (
-          <PostsCardsSkeleton
-            post={thirdPost}
-            isLoading={isLoading}
-          />
-        )}
-
+      <div className="mb-5 grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
         {!isLoading &&
           restPosts?.map((post) => {
             return (
@@ -83,8 +71,8 @@ const PostsLists = ({ currentUser }: IPostListProps) => {
               />
             )
           })}
-      </section>
-    </>
+      </div>
+    </section>
   )
 }
 

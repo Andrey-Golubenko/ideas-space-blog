@@ -1,5 +1,6 @@
 import PostsLists from '~/components/posts/PostsList'
 import ProfileCard from '~/components/profileInfo'
+import PostsHeaderCard from '~/components/profileInfo/PostsHeaderCard'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
 
 const ProfilePage = async () => {
@@ -14,6 +15,7 @@ const ProfilePage = async () => {
         />
       </div>
       <div className="justify-centerpy-10 flex flex-col items-center xs:w-[90%]">
+        <PostsHeaderCard />
         <PostsLists currentUser={currentUser} />
       </div>
     </>

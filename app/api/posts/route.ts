@@ -40,5 +40,7 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  return NextResponse.json(posts)
+  const data = { posts, postsCount: posts.length }
+
+  return NextResponse.json(data)
 }

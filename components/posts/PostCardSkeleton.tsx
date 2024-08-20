@@ -16,15 +16,12 @@ import { PATHS } from '~/utils/constants/constants'
 import { fontPoppins } from '~/utils/constants/fonts'
 import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
 
-interface IPostsCardsSkeletonProps {
-  post: Post
+interface IPostCardSkeletonProps {
+  post?: Post
   isLoading: boolean
 }
 
-const PostsCardsSkeleton = ({
-  post,
-  isLoading
-}: IPostsCardsSkeletonProps) => {
+const PostCardSkeleton = ({ post, isLoading }: IPostCardSkeletonProps) => {
   const hasContent = post && !isLoading
 
   const postTitle = toUpperCaseFirstChar(post?.title)
@@ -92,4 +89,4 @@ const PostsCardsSkeleton = ({
   )
 }
 
-export default PostsCardsSkeleton
+export default PostCardSkeleton

@@ -35,7 +35,7 @@ const PostSearchForm: React.FC = () => {
   return (
     <AppCardWrapper
       headerTitle="🔍 Find a post"
-      headerLabel="To find a post inter one or more words and press the button"
+      headerLabel="To find a post - inter one or more words and press the button"
     >
       <Form {...form}>
         <form
@@ -45,7 +45,7 @@ const PostSearchForm: React.FC = () => {
           <TextField
             name="search"
             control={form.control}
-            label="Search post"
+            label="Search a post"
             isPending={isPending}
             className="rounded-r-none"
           />

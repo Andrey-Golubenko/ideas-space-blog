@@ -41,7 +41,11 @@ const SinglePostCard = ({ post }: ISinglePostCardProps) => {
       <CardHeader className="text-2xl font-semibold">
         {singlePostTitle}
       </CardHeader>
-      <CardContent>{post?.content}</CardContent>
+      <CardContent>
+        <div className="rounded-lg bg-slate-100 px-2 text-justify">
+          {post?.content}
+        </div>
+      </CardContent>
       <CardFooter>
         {isManageablePost && (
           <div className="flex flex-row items-center justify-center gap-x-6">
