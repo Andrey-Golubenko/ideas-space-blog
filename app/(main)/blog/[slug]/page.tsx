@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 
 import SinglePostCard from '~/components/posts/SinglePostCard'
-import { getSinglePost } from '~/services/posts'
+import { getSinglePost } from '~/services/posts/posts.server'
 
 interface ISinglePostProps {
   params: {

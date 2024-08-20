@@ -1,7 +1,6 @@
 import { type Post } from '@prisma/client'
-import { db } from '~/libs/db'
 
-export const getPosts = async (): Promise<{
+export const fetchPosts = async (): Promise<{
   posts: Post[]
   postsCount: number
 }> => {
@@ -18,21 +17,7 @@ export const getPosts = async (): Promise<{
   return response.json()
 }
 
-export const getSinglePost = async (
-  slug: string
-): Promise<Post | null> => {
-  try {
-    const post = await db.post.findFirst({
-      where: { id: slug }
-    })
-
-    return post
-  } catch {
-    return null
-  }
-}
-
-export const getPostsBySearching = async (
+export const fetchPostsBySearch = async (
   search: string
 ): Promise<{
   posts: Post[]
@@ -46,4 +31,17 @@ export const getPostsBySearching = async (
   return response.json()
 }
 
-export const getPostsByUserId = () => {}
+export const fetchPostsByUserId = async (
+  userId: string
+): Promise<{
+  posts: Post[]
+  postsCount: number
+}> => {
+  const respons = await fetch(`/api/profile?q=${userId}`)
+
+  if (!respons.ok) {
+    throw new Error('Unable fetch posts! An unexpected error has occured!')
+  }
+
+  return respons.json()
+}

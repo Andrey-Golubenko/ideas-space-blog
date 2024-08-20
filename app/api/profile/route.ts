@@ -5,36 +5,16 @@ import { db } from '~/libs/db'
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request?.url)
 
-  const query = searchParams.get('q')
+  const userId = searchParams.get('q')
 
   let posts: Post[] = []
 
-  if (query) {
+  if (userId) {
     try {
       posts = await db.post.findMany({
-        take: 9,
         where: {
-          OR: [
-            {
-              content: {
-                contains: query
-              }
-            },
-            {
-              title: {
-                contains: query
-              }
-            }
-          ]
+          authorId: userId
         }
-      })
-    } catch {
-      throw new Error('Somthing went wrong!')
-    }
-  } else {
-    try {
-      posts = await db.post.findMany({
-        take: 9
       })
     } catch {
       throw new Error('Somthing went wrong!')

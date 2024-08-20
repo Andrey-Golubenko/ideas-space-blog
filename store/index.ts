@@ -3,7 +3,11 @@ import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
 import { type Post } from '@prisma/client'
 
-import { getPosts, getPostsBySearching } from '~/services/posts'
+import {
+  fetchPosts,
+  fetchPostsBySearch,
+  fetchPostsByUserId
+} from '~/services/posts/posts.client'
 
 interface IUsePosts {
   posts: Post[]
@@ -12,6 +16,7 @@ interface IUsePosts {
   editablePost: Post | {}
   getAllPosts: () => Promise<void>
   getPostsBySearch: (search: string) => Promise<void>
+  getPostsByUserId: (userId: string) => Promise<void>
   setEditablePost: (post: Post | {}) => void
 }
 
@@ -28,33 +33,50 @@ const usePosts = createWithEqualityFn<
           postsCount: null,
           isLoading: false,
           editablePost: {},
+
           getAllPosts: async () => {
             set((state) => {
               return { ...state, isLoading: true }
             })
 
-            const data = await getPosts()
+            const data = await fetchPosts()
             const { posts, postsCount } = data
 
             set((state) => {
               return { ...state, posts, postsCount, isLoading: false }
             })
           },
-          setEditablePost: (post: Post | {}) => {
-            set((state) => {
-              return { ...state, editablePost: post }
-            })
-          },
+
           getPostsBySearch: async (search: string) => {
             set((state) => {
               return { ...state, isLoading: true }
             })
 
-            const data = await getPostsBySearching(search)
+            const data = await fetchPostsBySearch(search)
             const { posts, postsCount } = data
 
             set((state) => {
               return { ...state, posts, postsCount, isLoading: false }
+            })
+          },
+
+          getPostsByUserId: async (userId: string) => {
+            set((state) => {
+              return { ...state, isLoading: true }
+            })
+
+            const data = await fetchPostsByUserId(userId)
+
+            const { posts, postsCount } = data
+
+            set((state) => {
+              return { ...state, posts, postsCount, isLoading: false }
+            })
+          },
+
+          setEditablePost: (post: Post | {}) => {
+            set((state) => {
+              return { ...state, editablePost: post }
             })
           }
         }

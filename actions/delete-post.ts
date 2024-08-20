@@ -1,7 +1,7 @@
 'use server'
 
 import { db } from '~/libs/db'
-import { getSinglePost } from '~/services/posts'
+import { getSinglePost } from '~/services/posts/posts.server'
 import { getUserById } from '~/services/user'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
 

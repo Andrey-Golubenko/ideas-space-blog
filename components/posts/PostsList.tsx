@@ -1,50 +1,23 @@
 'use client'
 
-import { useEffect } from 'react'
-import { usePathname } from 'next/navigation'
-import { type User } from 'next-auth'
-
-import usePosts from '~/store'
+import { type Post } from '@prisma/client'
 import PostCard from '~/components/posts/PostCard'
 import NoPostsCard from '~/components/posts/NoPostsCard'
 import PostsSkeletonList from '~/components/posts/PostsSkeletonList'
-import { PATHS } from '~/utils/constants/constants'
 
 interface IPostListProps {
-  currentUser?: UserDTO & User
+  posts: Post[]
+  postsCount: number | null
+  isLoading: boolean
 }
 
-const PostsLists = ({ currentUser }: IPostListProps) => {
-  const pathName = usePathname()
-
-  const [posts, postsCount, isLoading, getAllPosts] = usePosts((state) => {
-    return [
-      state.posts,
-      state.postsCount,
-      state.isLoading,
-      state.getAllPosts
-    ]
-  })
-
-  useEffect(() => {
-    getAllPosts()
-  }, [getAllPosts])
-
+const PostsList = ({ posts, postsCount, isLoading }: IPostListProps) => {
   const publishedPosts =
     posts.filter((post) => {
       return post.published
     }) || []
 
-  const userPosts =
-    posts.filter((post) => {
-      return post.authorId === currentUser?.id
-    }) || []
-
-  const isBlog = pathName === PATHS.blog
-
-  const exhibitablePost = isBlog ? publishedPosts : userPosts
-
-  const [firstPost, secondPost, thirdPost, ...restPosts] = exhibitablePost
+  const [firstPost, secondPost, thirdPost, ...restPosts] = publishedPosts
 
   const skeletonPosts = { firstPost, secondPost, thirdPost }
 
@@ -76,4 +49,4 @@ const PostsLists = ({ currentUser }: IPostListProps) => {
   )
 }
 
-export default PostsLists
+export default PostsList
