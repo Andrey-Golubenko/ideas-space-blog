@@ -2,7 +2,6 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
@@ -12,6 +11,7 @@ import PostManageForm from '~/components/shared/PostManageForm'
 import { newPost } from '~/actions/new-post'
 import { PATHS } from '~/utils/constants/constants'
 import { ManagePostSchema } from '~/schemas'
+import { TManagePostForm } from '~/types/types'
 
 interface INewPostFormProps {
   isLogged: boolean
@@ -23,10 +23,11 @@ const NewPostCard = ({ isLogged }: INewPostFormProps) => {
 
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<z.infer<typeof ManagePostSchema>>({
+  const form = useForm<TManagePostForm>({
     defaultValues: {
       title: '',
       content: '',
+      files: [],
       published: false
     },
     resolver: zodResolver(ManagePostSchema)
@@ -34,7 +35,7 @@ const NewPostCard = ({ isLogged }: INewPostFormProps) => {
 
   const router = useRouter()
 
-  const handleOnSubmit = (values: z.infer<typeof ManagePostSchema>) => {
+  const handleOnSubmit = (values: TManagePostForm) => {
     setError('')
     setSuccess('')
 

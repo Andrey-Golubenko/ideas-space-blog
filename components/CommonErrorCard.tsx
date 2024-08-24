@@ -1,5 +1,6 @@
 'use client'
 
+import { ExclamationTriangleIcon } from '@radix-ui/react-icons'
 import { useRouter } from 'next/navigation'
 
 import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
@@ -13,11 +14,16 @@ const CommonErrorCard = ({
 
   return (
     <AppCardWrapper
+      className="xs:w-[80%] sm:w-[50%] lg:w-[40%]"
       headerTitle="🚨 Error"
       headerLabel="An error has occurred!"
     >
       <div className="flex flex-col items-center justify-center">
-        <h1 className="py-8 text-center text-2xl">{error?.message}</h1>
+        <ExclamationTriangleIcon
+          className="mb-5 text-destructive"
+          width={20}
+          height={20}
+        />
         <Button
           size="sm"
           onClick={() => {

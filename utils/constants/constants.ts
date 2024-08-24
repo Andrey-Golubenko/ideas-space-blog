@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-cycle
 import { INavLink } from '~/types/types'
 
 export const PATHS = {
@@ -50,3 +51,7 @@ export const ONE_HOUR = new Date(new Date().getTime() + 3600 * 1000)
 export const FIFTEEN_MINUTES = new Date(new Date().getTime() + 900 * 1000)
 
 export const FIVE_MINUTES = new Date(new Date().getTime() + 300 * 1000)
+
+export const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5 MB
+
+export const MAX_FILES_COUNT = 5

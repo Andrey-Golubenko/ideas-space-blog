@@ -25,7 +25,7 @@ const PostCard = ({ post }: IpostCardProps) => {
   const postContent = `${toUpperCaseFirstChar(post?.content.slice(0, 120))}...`
 
   return (
-    <Card className="flex min-h-[290px] flex-col rounded-md shadow-md">
+    <Card className="flex min-h-max flex-col rounded-md shadow-md">
       <CardHeader className="pb-4">
         <div className="flex w-full items-center justify-start">
           <Link
@@ -43,7 +43,7 @@ const PostCard = ({ post }: IpostCardProps) => {
           </Link>
         </div>
       </CardHeader>
-      <CardContent className="pb-4 text-justify">
+      <CardContent className="pb-10 text-justify">
         <div className="rounded-xl bg-slate-100 px-4 py-2">
           {postContent}
         </div>

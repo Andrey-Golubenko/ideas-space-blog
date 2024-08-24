@@ -29,7 +29,9 @@ const PostCardSkeleton = ({ post, isLoading }: IPostCardSkeletonProps) => {
   const postContent = `${toUpperCaseFirstChar(post?.content.slice(0, 120))}...`
 
   return (
-    <Card className="flex min-h-[290px] flex-col rounded-md shadow-md">
+    <Card
+      className={`flex flex-col rounded-md shadow-md sm:last:col-span-2 md:last:col-span-1 ${post ? 'min-h-max' : 'min-h-[290px]'}`}
+    >
       {hasContent ? (
         <CardHeader className="pb-4">
           <div className="flex w-full items-center justify-start">
@@ -54,7 +56,7 @@ const PostCardSkeleton = ({ post, isLoading }: IPostCardSkeletonProps) => {
         </CardHeader>
       )}
       {hasContent ? (
-        <CardContent className="pb-4 text-justify">
+        <CardContent className="pb-10 text-justify">
           <div className="rounded-xl bg-slate-100 px-4 py-2">
             {postContent}
           </div>

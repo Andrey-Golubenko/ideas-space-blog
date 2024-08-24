@@ -1,11 +1,44 @@
 import * as z from 'zod'
 import { UserRole } from '@prisma/client'
 
+// eslint-disable-next-line import/no-cycle
+import {
+  MAX_FILES_COUNT,
+  MAX_FILE_SIZE
+} from '~/utils/constants/constants'
+
 export const ManagePostSchema = z.object({
-  title: z.string(),
-  content: z.string(),
-  published: z.boolean()
+  title: z.string({
+    message: 'Value must be a string!'
+  }),
+  content: z.string({
+    message: 'Value must be a string!'
+  }),
+  published: z.boolean(),
+  files: z
+    .array(
+      z.instanceof(File).refine(
+        (file) => {
+          return file.size <= MAX_FILE_SIZE
+        },
+        {
+          message: `The file size should be no more than ${MAX_FILE_SIZE / 1024 / 1024} MB`
+        }
+      )
+    )
+    .max(MAX_FILES_COUNT, {
+      message: `You can upload up to ${MAX_FILES_COUNT} files.`
+    })
 })
+
+export const SingleFileSchema = z.instanceof(File).refine(
+  (file) => {
+    return file.size <= MAX_FILE_SIZE
+  },
+  {
+    message: `file should be no more than ${MAX_FILE_SIZE / 1024 / 1024} MB`
+  }
+)
 
 export const SearchPostSchema = z.object({
   search: z.string()
