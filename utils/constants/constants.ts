@@ -30,6 +30,10 @@ export const PATHS = {
   libSignIn: '/api/auth/signin'
 }
 
+export const IMAGES_PATHS = {
+  noImages: '/images/image-placeholder.svg'
+}
+
 export const NAV_LINKS: INavLink[] = [
   { label: 'Home', href: PATHS.home },
   { label: 'Blog', href: PATHS.blog },
@@ -52,6 +56,6 @@ export const FIFTEEN_MINUTES = new Date(new Date().getTime() + 900 * 1000)
 
 export const FIVE_MINUTES = new Date(new Date().getTime() + 300 * 1000)
 
-export const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5 MB
+export const MAX_FILE_SIZE = 2 * 1024 * 1024 // 2 MB
 
 export const MAX_FILES_COUNT = 5

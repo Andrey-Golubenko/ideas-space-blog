@@ -7,7 +7,9 @@ import { getUserById } from '~/services/user'
 import { db } from '~/libs/db'
 
 export const newPost = async (
-  values: z.infer<typeof ManagePostSchema>
+  values: Omit<z.infer<typeof ManagePostSchema>, 'files'> & {
+    imageUrls: string[]
+  }
 ) => {
   const validatedFields = ManagePostSchema.safeParse(values)
 
@@ -27,13 +29,14 @@ export const newPost = async (
     return { error: 'Unauthorized!' }
   }
 
-  const { title, content, published } = validatedFields.data
+  const { title, content, imageUrls, published } = validatedFields.data
 
   try {
     await db.post.create({
       data: {
         title,
         content,
+        imageUrls,
         published,
         authorId: dbUser?.id
       }

@@ -15,20 +15,23 @@ export const ManagePostSchema = z.object({
     message: 'Value must be a string!'
   }),
   published: z.boolean(),
-  files: z
-    .array(
-      z.instanceof(File).refine(
-        (file) => {
-          return file.size <= MAX_FILE_SIZE
-        },
-        {
-          message: `The file size should be no more than ${MAX_FILE_SIZE / 1024 / 1024} MB`
-        }
+  files: z.optional(
+    z
+      .array(
+        z.instanceof(File).refine(
+          (file) => {
+            return file.size <= MAX_FILE_SIZE
+          },
+          {
+            message: `The file size should be no more than ${MAX_FILE_SIZE / 1024 / 1024} MB`
+          }
+        )
       )
-    )
-    .max(MAX_FILES_COUNT, {
-      message: `You can upload up to ${MAX_FILES_COUNT} files.`
-    })
+      .max(MAX_FILES_COUNT, {
+        message: `You can upload up to ${MAX_FILES_COUNT} files.`
+      })
+  ),
+  imageUrls: z.optional(z.array(z.string()))
 })
 
 export const SingleFileSchema = z.instanceof(File).refine(

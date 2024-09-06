@@ -10,6 +10,7 @@ import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
 import PostManageForm from '~/components/shared/PostManageForm'
 import { newPost } from '~/actions/new-post'
 import { PATHS } from '~/utils/constants/constants'
+import { uploadImageToCloudinary } from '~/services/images'
 import { ManagePostSchema } from '~/schemas'
 import { TManagePostForm } from '~/types/types'
 
@@ -39,8 +40,38 @@ const NewPostCard = ({ isLogged }: INewPostFormProps) => {
     setError('')
     setSuccess('')
 
-    startTransition(() => {
-      newPost(values)
+    startTransition(async () => {
+      const imageUrls: string[] = []
+
+      if (values?.files?.length) {
+        const uploadPromises = values?.files?.map((file: File) => {
+          const formData = new FormData()
+
+          formData.append('file', file)
+
+          return uploadImageToCloudinary(formData)
+        })
+
+        const uploadResults = await Promise.all(uploadPromises)
+
+        uploadResults.forEach((result) => {
+          if (result.error) {
+            setError(result.error)
+
+            return null
+          }
+
+          return imageUrls.push(result.url!)
+        })
+
+        if (error) return
+      }
+
+      const { files, ...restValues } = values
+
+      const newPostValues = { ...restValues, imageUrls }
+
+      newPost(newPostValues)
         .then((data) => {
           setError(data.error)
           setSuccess(data.success)

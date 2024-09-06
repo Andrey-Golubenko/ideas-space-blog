@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 import type { Config } from 'tailwindcss'
 
 const config = {
@@ -80,7 +81,6 @@ const config = {
       }
     }
   },
-  // eslint-disable-next-line global-require
   plugins: [require('tailwindcss-animate')]
 } satisfies Config
 

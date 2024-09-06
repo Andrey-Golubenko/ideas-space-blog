@@ -75,9 +75,11 @@ const FilesField = ({
 
   const onDrop = useCallback<OnDropType & Function>(
     (droppedFiles: File[] = []) => {
+      setFilesErrors([])
+
       const validFiles: File[] = []
       const errors: TFileError[] = []
-      const filesCount = files.length + droppedFiles.length
+      const filesCount = files ? files.length + droppedFiles.length : 0
 
       if (filesCount > MAX_FILES_COUNT) {
         errors.push({
@@ -85,19 +87,23 @@ const FilesField = ({
         })
       } else {
         droppedFiles.forEach((file) => {
-          const result = SingleFileSchema.safeParse(file)
-          if (result.success) {
+          const validationResult = SingleFileSchema.safeParse(file)
+          if (validationResult.success) {
             validFiles.push(file)
           } else {
             errors.push({
               fileName: file.name,
-              message: result.error.issues[0].message
+              message: validationResult.error.issues[0].message
             })
+
+            setFilesErrors(errors)
           }
         })
       }
 
-      setFilesErrors(errors)
+      if (errors.length) {
+        return
+      }
 
       const filesNames = files?.map((file) => {
         return file.name
@@ -128,10 +134,14 @@ const FilesField = ({
   )
 
   const handleOnDelete = (fileName: string) => {
-    const newFiles = files.filter((file) => {
-      return file?.name !== fileName
-    })
-    setValue(name as 'files', newFiles)
+    if (files?.length) {
+      const newFiles = files.filter((file) => {
+        return file?.name !== fileName
+      })
+      setValue(name as 'files', newFiles)
+    }
+
+    return null
   }
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop })

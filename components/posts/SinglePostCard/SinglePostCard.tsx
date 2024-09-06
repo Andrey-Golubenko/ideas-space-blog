@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { type Post } from '@prisma/client'
 
 import {
@@ -10,9 +11,9 @@ import {
 } from '~/components/ui/card'
 import EditPostButton from '~/components/posts/EditPostButton'
 import DeletePostButton from '~/components/posts/DeletePostButton'
+import SinglePostSlider from '~/components/posts/SinglePostCard/SinglePostSlider'
 import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
 import { useCurrentUser } from '~/hooks/useCurrentUser'
-import { useEffect } from 'react'
 import usePosts from '~/store'
 
 interface ISinglePostCardProps {
@@ -37,15 +38,19 @@ const SinglePostCard = ({ post }: ISinglePostCardProps) => {
   const singlePostTitle: string | '' = toUpperCaseFirstChar(post?.title)
 
   return (
-    <Card className="flex flex-col items-center justify-between rounded-md shadow-md">
+    <Card className="my-12 flex w-full flex-col items-center justify-between rounded-md shadow-md">
+      <SinglePostSlider imageUrls={post?.imageUrls || []} />
+
       <CardHeader className="text-2xl font-semibold">
         {singlePostTitle}
       </CardHeader>
+
       <CardContent>
         <div className="rounded-lg bg-slate-100 px-2 text-justify">
           {post?.content}
         </div>
       </CardContent>
+
       <CardFooter>
         {isManageablePost && (
           <div className="flex flex-row items-center justify-center gap-x-6">

@@ -1,6 +1,6 @@
 import { type Post } from '@prisma/client'
 
-import PostCardSkeleton from '~/components/posts/PostCardSkeleton'
+import PostCardSkeleton from '~/components/posts/PostCard/PostCardSkeleton'
 
 interface IPostsSkeletonListProps {
   skeletonPosts: {

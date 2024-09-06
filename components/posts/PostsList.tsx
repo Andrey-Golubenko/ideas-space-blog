@@ -1,7 +1,7 @@
 'use client'
 
 import { type Post } from '@prisma/client'
-import PostCard from '~/components/posts/PostCard'
+import PostCard from '~/components/posts/PostCard/PostCard'
 import NoPostsCard from '~/components/posts/NoPostsCard'
 import PostsSkeletonList from '~/components/posts/PostsSkeletonList'
 

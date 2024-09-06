@@ -20,12 +20,6 @@ body {
   color: rgb(var(--foreground-rgb));
 }
 
-@layer components {
-  .container {
-    @apply mx-auto my-0 flex max-w-4xl flex-col items-center justify-center px-8;
-  }
-}
-
 .header-link {
   @apply border-b-2 border-transparent px-1 py-0 text-white no-underline transition-all duration-300 hover:border-white hover:underline-offset-4;
 }
@@ -44,23 +38,24 @@ body {
   @apply my-4 text-xl font-semibold;
 }
 
-/* SigIn section */
-
-.card {
-  @apply rounded-2xl border border-gray-200 px-5 py-8  xs:my-4 xs:w-[343px] sm:mx-0 sm:my-8 sm:w-[368px];
+/* Swiper - overwritten styles */ 
+ 
+.swiper-button-next, .swiper-button-prev {
+  @apply bg-[url('/images/slider-arrow.svg')] bg-no-repeat bg-[length:120%_auto] bg-center !w-[50px] !h-[50px] !block border border-[#837d7d] rounded-full
 }
 
-.label-signin-input {
-  @apply mb-1 block text-left font-medium;
+.swiper-button-prev {
+  @apply rotate-180
 }
 
-.signin-input {
-  @apply mb-2 block w-full rounded-lg border border-[#bbb] bg-[#f2f2f2] px-4 py-2;
+.swiper-button-next::after, .swiper-button-prev::after {
+  @apply hidden
 }
 
-.signin-input-error {
-  @apply signin-input !border-red-600 focus:outline-1;
+.swiper-slide-thumb-active {
+  @apply filter grayscale-0
 }
+
 
 /* shadcs/ui */
 
