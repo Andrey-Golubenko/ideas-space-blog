@@ -47,7 +47,7 @@ const NewPostCard = ({ isLogged }: INewPostFormProps) => {
         const uploadPromises = values?.files?.map((file: File) => {
           const formData = new FormData()
 
-          formData.append('file', file)
+          formData.append('file', file, file?.name)
 
           return uploadImageToCloudinary(formData)
         })

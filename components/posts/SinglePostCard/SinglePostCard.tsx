@@ -9,9 +9,9 @@ import {
   CardContent,
   CardFooter
 } from '~/components/ui/card'
-import EditPostButton from '~/components/posts/EditPostButton'
-import DeletePostButton from '~/components/posts/DeletePostButton'
 import SinglePostSlider from '~/components/posts/SinglePostCard/SinglePostSlider'
+import EditPostButton from '~/components/posts/SinglePostCard/EditPostButton'
+import DeletePostButton from '~/components/posts/SinglePostCard/DeletePostButton'
 import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
 import { useCurrentUser } from '~/hooks/useCurrentUser'
 import usePosts from '~/store'
@@ -33,13 +33,15 @@ const SinglePostCard = ({ post }: ISinglePostCardProps) => {
     if (user && post && isManageablePost) {
       setEditablePost(post)
     }
-  }, [user, post])
+  }, [user, post, isManageablePost, setEditablePost])
 
   const singlePostTitle: string | '' = toUpperCaseFirstChar(post?.title)
 
+  const { imageUrls = [] } = post as Post
+
   return (
     <Card className="my-12 flex w-full flex-col items-center justify-between rounded-md shadow-md">
-      <SinglePostSlider imageUrls={post?.imageUrls || []} />
+      <SinglePostSlider imageUrls={imageUrls} />
 
       <CardHeader className="text-2xl font-semibold">
         {singlePostTitle}
@@ -57,6 +59,7 @@ const SinglePostCard = ({ post }: ISinglePostCardProps) => {
             <EditPostButton postId={post?.id} />
             <DeletePostButton
               postId={post?.id}
+              imageUrls={imageUrls}
               isManageablePost={isManageablePost}
             />
           </div>

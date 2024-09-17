@@ -5,18 +5,19 @@ import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import type { Session } from 'next-auth'
 import { zodResolver } from '@hookform/resolvers/zod'
+
 import { Form } from '~/components/ui/form'
-import { SettingsSchema } from '~/schemas'
-import { settings } from '~/actions/settings'
-import { useSessionData } from '~/hooks/useSessionData'
-import { Button } from '~/components/ui/button'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import TextField from '~/components/shared/TextField'
 import PasswordField from '~/components/shared/PasswordField'
 import SelectField from '~/components/shared/SelectField'
 import SwitchField from '~/components/shared/SwitchField'
+import LoadableButton from '~/components/shared/LoadableButton'
+import { settings } from '~/actions/settings'
+import { useSessionData } from '~/hooks/useSessionData'
 import { emptyStringToUndefined } from '~/utils/helpers/helpers'
+import { SettingsSchema } from '~/schemas'
 
 interface ISettingsFormProps {
   session: Session | null
@@ -79,6 +80,7 @@ const SettingsForm = ({ session }: ISettingsFormProps) => {
             control={form.control}
             isPending={isPending}
           />
+
           {!user?.isOAuth && (
             <>
               <TextField
@@ -89,12 +91,14 @@ const SettingsForm = ({ session }: ISettingsFormProps) => {
                 control={form.control}
                 isPending={isPending}
               />
+
               <PasswordField
                 name="password"
                 label="Password"
                 control={form.control}
                 isPending={isPending}
               />
+
               <PasswordField
                 name="newPassword"
                 label="New password"
@@ -103,6 +107,7 @@ const SettingsForm = ({ session }: ISettingsFormProps) => {
               />
             </>
           )}
+
           <SelectField
             name="role"
             label="Role"
@@ -110,6 +115,7 @@ const SettingsForm = ({ session }: ISettingsFormProps) => {
             control={form.control}
             isPending={isPending}
           />
+
           {!user?.isOAuth && (
             <SwitchField
               name="isTwoFactorEnabled"
@@ -120,14 +126,15 @@ const SettingsForm = ({ session }: ISettingsFormProps) => {
             />
           )}
         </div>
+
         <FormError message={error} />
         <FormSuccess message={success} />
-        <Button
+
+        <LoadableButton
           type="submit"
-          disabled={isPending}
-        >
-          Save
-        </Button>
+          isDisabled={isPending}
+          label="Save"
+        />
       </form>
     </Form>
   )

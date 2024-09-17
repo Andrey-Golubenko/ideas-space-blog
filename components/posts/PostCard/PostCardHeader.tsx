@@ -1,9 +1,12 @@
 'use client'
 
-import { CardHeader } from '~/components/ui/card'
+import Link from 'next/link'
+
 import { cn } from '~/libs/utils'
+import { CardHeader } from '~/components/ui/card'
+import LoadableImage from '~/components/shared/LoadableImage'
 import { fontPoppins } from '~/utils/constants/fonts'
-import LoadableImage from './LoadableImage'
+import { PATHS } from '~/utils/constants/constants'
 
 interface IPostCardHeaderProps {
   postImage: string
@@ -18,10 +21,20 @@ const PostCardHeader = ({
 }: IPostCardHeaderProps) => {
   return (
     <>
-      <LoadableImage
-        postImage={postImage}
-        postId={postId}
-      />
+      <Link
+        href={`${PATHS.blog}/${postId}`}
+        className="w-full duration-500 hover:scale-105"
+      >
+        <LoadableImage
+          src={postImage}
+          alt="Post image"
+          width={130}
+          height={100}
+          priority
+          imageClassNames="aspect-[5/4] h-full w-full rounded-t-md object-cover duration-500 hover:rounded-b-md"
+          containerClassNames="rounded-t-md hover:rounded-b-md"
+        />
+      </Link>
 
       <CardHeader className="pb-4">
         <h2

@@ -45,6 +45,7 @@ const PasswordField = ({
         return (
           <FormItem>
             <FormLabel>{label}</FormLabel>
+
             <FormControl>
               <Input
                 {...field}
@@ -60,6 +61,7 @@ const PasswordField = ({
                 {...props}
               />
             </FormControl>
+
             {withLink && (
               <Button
                 variant="link"
@@ -70,6 +72,7 @@ const PasswordField = ({
                 <Link href={PATHS.resetPassword}>Forgot password?</Link>
               </Button>
             )}
+
             <FormMessage />
           </FormItem>
         )

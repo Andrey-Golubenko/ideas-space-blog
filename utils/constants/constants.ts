@@ -56,6 +56,21 @@ export const FIFTEEN_MINUTES = new Date(new Date().getTime() + 900 * 1000)
 
 export const FIVE_MINUTES = new Date(new Date().getTime() + 300 * 1000)
 
+export const ECCEPTED_IMAGES_EXTENTIONS = [
+  '.jpeg',
+  '.jpg',
+  '.png',
+  '.heic',
+  '.heif',
+  '.webp'
+]
+
 export const MAX_FILE_SIZE = 2 * 1024 * 1024 // 2 MB
 
-export const MAX_FILES_COUNT = 5
+export const MAX_FILES_COUNT = 8
+
+export const CLOUDINARY_IMAGE_FOLDER = 'nextjs-blog'
+
+export const SCREEN_SM = 480
+
+export const SCREEN_MD = 768

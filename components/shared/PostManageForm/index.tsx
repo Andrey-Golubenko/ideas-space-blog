@@ -2,13 +2,13 @@ import { useState, type FormHTMLAttributes } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 
 import { Form } from '~/components/ui/form'
-import { Button } from '~/components/ui/button'
 import TextField from '~/components/shared/TextField'
 import TextAreaField from '~/components/shared/TextAreaField'
 import SwitchField from '~/components/shared/SwitchField'
 import FilesField from '~/components/shared/FilesField'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
+import LoadableButton from '~/components/shared/LoadableButton'
 import { type TManagePostForm } from '~/types/types'
 
 interface IPostManageFormProps {
@@ -49,9 +49,6 @@ const PostManageForm = ({
 
           <FilesField
             name="files"
-            register={form.register}
-            watch={form.watch}
-            setValue={form.setValue}
             filesDuplicates={filesDuplicates}
             setFilesDuplicate={setFilesDuplicate}
             validateErrors={form.formState.errors.files}
@@ -77,13 +74,11 @@ const PostManageForm = ({
         <FormError message={error} />
         <FormSuccess message={success} />
 
-        <Button
+        <LoadableButton
           type="submit"
-          disabled={isDisabled}
-          className="w-full"
-        >
-          {label}
-        </Button>
+          isDisabled={isDisabled}
+          label={label}
+        />
       </form>
     </Form>
   )

@@ -7,12 +7,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useSearchParams } from 'next/navigation'
 
 import { Form } from '~/components/ui/form'
-import { Button } from '~/components/ui/button'
 import AuthCardWrapper from '~/components/shared/CardWrapper/AuthCardWrapper'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import PasswordField from '~/components/shared/PasswordField'
 import TextField from '~/components/shared/TextField'
+import LoadableButton from '~/components/shared/LoadableButton'
 import { LogInSchema } from '~/schemas'
 import { AUTH_ERRORS, PATHS } from '~/utils/constants/constants'
 import { logIn } from '~/actions/login'
@@ -112,13 +112,12 @@ const LoginForm = () => {
           </div>
           <FormError message={error || urlError} />
           <FormSuccess message={success} />
-          <Button
+
+          <LoadableButton
             type="submit"
-            disabled={isPending}
-            className="w-full"
-          >
-            {showTwoFactor ? 'Confirm' : 'Login'}
-          </Button>
+            isDisabled={isPending}
+            label={showTwoFactor ? 'Confirm' : 'Login'}
+          />
         </form>
       </Form>
     </AuthCardWrapper>

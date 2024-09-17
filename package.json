@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.2.0",
+    "@formkit/auto-animate": "^0.8.2",
     "@hookform/resolvers": "^3.4.2",
     "@prisma/client": "^5.14.0",
     "@radix-ui/react-avatar": "^1.1.0",

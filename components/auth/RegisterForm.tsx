@@ -6,12 +6,12 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Form } from '~/components/ui/form'
-import { Button } from '~/components/ui/button'
 import AuthCardWrapper from '~/components/shared/CardWrapper/AuthCardWrapper'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import TextField from '~/components/shared/TextField'
 import PasswordField from '~/components/shared/PasswordField'
+import LoadableButton from '~/components/shared/LoadableButton'
 import { RegisterSchema } from '~/schemas'
 import { register } from '~/actions/register'
 import { PATHS } from '~/utils/constants/constants'
@@ -82,13 +82,11 @@ const RegisterForm = () => {
           <FormError message={error} />
           <FormSuccess message={success} />
 
-          <Button
+          <LoadableButton
             type="submit"
-            disabled={isPending}
-            className="w-full"
-          >
-            Create an account
-          </Button>
+            isDisabled={isPending}
+            label="Create an account"
+          />
         </form>
       </Form>
     </AuthCardWrapper>

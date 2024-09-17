@@ -22,11 +22,11 @@ export const isPublicRoute = (pathname: string): boolean => {
 export const emptyStringToUndefined = (
   values: Record<string, unknown>
 ): Record<string, unknown> | Record<string, 'ADMIN' | 'USER'> => {
-  const valuesFields = Object.entries(values)
+  const fieldsValues = Object.entries(values)
 
   const preparedValues:
     | Record<string, unknown>
-    | Record<string, 'ADMIN' | 'USER'> = valuesFields.reduce(
+    | Record<string, 'ADMIN' | 'USER'> = fieldsValues.reduce(
     (
       acc: Record<string, unknown> | Record<string, 'ADMIN' | 'USER'>,
       [key, value]
@@ -56,4 +56,29 @@ export const toUpperCaseFirstChar = (string?: string): string | '' => {
   }
 
   return ''
+}
+
+export const urlToFile = async (url: string, filename: string) => {
+  try {
+    const response = await fetch(url)
+    const blob = await response.blob()
+    const mimeType = blob.type
+
+    return { success: new File([blob], filename, { type: mimeType }) }
+  } catch (error) {
+    return { error: `Failed to load image: ${(error as Error).message}` }
+  }
+}
+
+export const getImageNameFromUrl = (url: string) => {
+  return url?.split('/').pop()?.split('.')?.shift()
+}
+
+export const getImageNames = (imageUrls: string[]) => {
+  const existingImageNames =
+    imageUrls?.map((url) => {
+      return getImageNameFromUrl(url)
+    }) || []
+
+  return existingImageNames
 }

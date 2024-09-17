@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules'
 
@@ -10,6 +9,8 @@ import 'swiper/css/free-mode'
 import 'swiper/css/navigation'
 import 'swiper/css/thumbs'
 
+import LoadableImage from '~/components/shared/LoadableImage'
+
 interface ISinglePostAliderProps {
   imageUrls: string[]
 }
@@ -17,8 +18,8 @@ interface ISinglePostAliderProps {
 const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
 
-  const perView: number = 3
-  const isLoop: boolean = perView > imageUrls.length
+  const thumbnailsPerView = 3
+  const isThumbnailsInLoop = (imageUrls?.length || 0) >= thumbnailsPerView
 
   return (
     <div className="min-w-0 xs:max-w-full lg:max-w-[80%] lg:pt-10">
@@ -27,40 +28,47 @@ const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
           // @ts-ignore
           '--swiper-pagination-color': '#fff'
         }}
+        navigation
         loop
         spaceBetween={10}
-        navigation
         thumbs={{ swiper: thumbsSwiper }}
         modules={[FreeMode, Navigation, Thumbs]}
-        className="mx-auto w-full !pb-8"
+        className={`mx-auto !mb-8 ${imageUrls?.length ? 'h-[500px]' : ''}  w-full`}
       >
         {!!imageUrls.length &&
-          imageUrls.map((url) => {
+          imageUrls.map((url, index) => {
             return (
               <SwiperSlide
                 key={url}
                 className="flex items-center justify-center bg-white bg-cover bg-center text-center text-lg"
               >
-                <Image
+                <LoadableImage
                   src={url}
                   alt="Photo of the post"
                   width={700}
                   height={500}
-                  className="block h-[500px] w-full rounded-md object-cover"
+                  priority={index === 0}
+                  imageClassNames="block h-[500px] w-full rounded-md object-cover"
                 />
               </SwiperSlide>
             )
           })}
       </Swiper>
+
       <Swiper
+        style={{
+          // @ts-ignore
+          '--swiper-pagination-color': '#fff'
+        }}
+        navigation={isThumbnailsInLoop}
         onSwiper={setThumbsSwiper as (swiper: unknown) => void}
-        loop={isLoop}
+        loop={isThumbnailsInLoop}
         spaceBetween={10}
-        slidesPerView={perView}
+        slidesPerView={thumbnailsPerView}
         freeMode
         watchSlidesProgress
         modules={[FreeMode, Navigation, Thumbs]}
-        className="box-border w-3/4 px-3 py-0"
+        className="box-border w-[75%] px-3 py-0"
       >
         {!!imageUrls.length &&
           imageUrls.map((url, index) => {
@@ -69,13 +77,14 @@ const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
                 key={url}
                 className="flex w-1/4 cursor-pointer items-center justify-center bg-white bg-cover bg-center text-center text-lg grayscale"
               >
-                <Image
+                <LoadableImage
                   src={url}
-                  alt="Photo of the post"
+                  alt="Thumbnail of the post"
                   width={150}
-                  priority={index === 0}
                   height={150}
-                  className="block h-[120px] w-[200px] rounded-md object-cover"
+                  priority={index === 0}
+                  imageClassNames="block h-[120px] w-full rounded-md object-cover"
+                  containerClassNames="w-auto"
                 />
               </SwiperSlide>
             )

@@ -6,11 +6,11 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Form } from '~/components/ui/form'
-import { Button } from '~/components/ui/button'
 import AuthCardWrapper from '~/components/shared/CardWrapper/AuthCardWrapper'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import TextField from '~/components/shared/TextField'
+import LoadableButton from '~/components/shared/LoadableButton'
 import { ResetSchema } from '~/schemas'
 import { PATHS } from '~/utils/constants/constants'
 import { passwordReset } from '~/actions/reset-password'
@@ -61,15 +61,15 @@ const ResetPasswordForm = () => {
               isPending={isPending}
             />
           </div>
+
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button
+
+          <LoadableButton
             type="submit"
-            disabled={isPending}
-            className="w-full"
-          >
-            Send reset email
-          </Button>
+            isDisabled={isPending}
+            label="Send reset email"
+          />
         </form>
       </Form>
     </AuthCardWrapper>

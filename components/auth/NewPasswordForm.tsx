@@ -7,11 +7,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useSearchParams } from 'next/navigation'
 
 import { Form } from '~/components/ui/form'
-import { Button } from '~/components/ui/button'
 import AuthCardWrapper from '~/components/shared/CardWrapper/AuthCardWrapper'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import PasswordField from '~/components/shared/PasswordField'
+import LoadableButton from '~/components/shared/LoadableButton'
 import { newPassword } from '~/actions/new-password'
 import { NewPasswordSchema } from '~/schemas'
 import { PATHS } from '~/utils/constants/constants'
@@ -65,13 +65,12 @@ const NewPasswordForm = () => {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button
+
+          <LoadableButton
             type="submit"
-            disabled={isPending}
-            className="w-full"
-          >
-            Reset password
-          </Button>
+            isDisabled={isPending}
+            label="Reset password"
+          />
         </form>
       </Form>
     </AuthCardWrapper>

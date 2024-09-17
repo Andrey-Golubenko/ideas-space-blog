@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
@@ -14,6 +13,7 @@ import PostManageForm from '~/components/shared/PostManageForm'
 import { editPost } from '~/actions/edit-post'
 import { PATHS } from '~/utils/constants/constants'
 import { ManagePostSchema } from '~/schemas'
+import { TManagePostForm } from '~/types/types'
 
 interface IEditPostCardProps {
   isLogged: boolean
@@ -31,14 +31,22 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
 
   const router = useRouter()
 
-  const { id: postId, title, content, published } = editablePost as Post
+  const {
+    id: postId,
+    title,
+    content,
+    imageUrls,
+    published
+  } = editablePost as Post
 
   const isDisabled = isPending || !isLogged
 
-  const form = useForm<z.infer<typeof ManagePostSchema>>({
+  const form = useForm<TManagePostForm>({
     defaultValues: {
       title: title || '',
       content: content || '',
+      files: [],
+      imageUrls: imageUrls || [],
       published: published || false
     },
     resolver: zodResolver(ManagePostSchema)
@@ -46,16 +54,17 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
 
   // To prevent empty form values after the page is reloaded
   useEffect(() => {
-    if (editablePost) {
+    if (Object.values(editablePost)?.length) {
       form.reset({
         title,
         content,
+        imageUrls,
         published: published || false
       })
     }
   }, [editablePost, form])
 
-  const handleOnSubmit = (values: z.infer<typeof ManagePostSchema>) => {
+  const handleOnSubmit = (values: TManagePostForm) => {
     setError('')
     setSuccess('')
 
@@ -87,7 +96,7 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
       <PostManageForm
         form={form}
         handleOnSubmit={handleOnSubmit}
-        label={`Edit post - ${title || ''}`}
+        label="Edit post"
         isDisabled={isDisabled}
         success={success}
         error={error}

@@ -1,9 +1,11 @@
 'use client'
 
 import { type Post } from '@prisma/client'
+
 import PostCard from '~/components/posts/PostCard/PostCard'
 import NoPostsCard from '~/components/posts/NoPostsCard'
 import PostsSkeletonList from '~/components/posts/PostsSkeletonList'
+import { useTablet } from '~/hooks/useTablet'
 
 interface IPostListProps {
   posts: Post[]
@@ -12,6 +14,8 @@ interface IPostListProps {
 }
 
 const PostsList = ({ posts, postsCount, isLoading }: IPostListProps) => {
+  const isTablet = useTablet()
+
   const publishedPosts =
     posts.filter((post) => {
       return post.published
@@ -19,7 +23,17 @@ const PostsList = ({ posts, postsCount, isLoading }: IPostListProps) => {
 
   const [firstPost, secondPost, thirdPost, ...restPosts] = publishedPosts
 
-  const skeletonPosts = { firstPost, secondPost, thirdPost }
+  const thirdPostPlace = !isTablet && postsCount! > 3
+
+  const isThirdPostInSkeleton = thirdPostPlace ? thirdPost : undefined
+
+  const isThirdPostInList = !thirdPostPlace ? thirdPost : undefined
+
+  const skeletonPosts = {
+    firstPost,
+    secondPost,
+    thirdPost: isThirdPostInSkeleton
+  }
 
   const noPosts = typeof postsCount === 'number' && postsCount === 0
 
@@ -36,13 +50,17 @@ const PostsList = ({ posts, postsCount, isLoading }: IPostListProps) => {
 
       <div className="mb-5 grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
         {!isLoading &&
-          restPosts?.map((post) => {
-            return (
-              <PostCard
-                key={post?.id}
-                post={post}
-              />
-            )
+          [...restPosts, isThirdPostInList]?.map((post) => {
+            if (post) {
+              return (
+                <PostCard
+                  key={post?.id}
+                  post={post}
+                />
+              )
+            }
+
+            return undefined
           })}
       </div>
     </section>

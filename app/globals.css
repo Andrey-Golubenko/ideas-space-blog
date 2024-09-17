@@ -38,24 +38,25 @@ body {
   @apply my-4 text-xl font-semibold;
 }
 
-/* Swiper - overwritten styles */ 
- 
-.swiper-button-next, .swiper-button-prev {
-  @apply bg-[url('/images/slider-arrow.svg')] bg-no-repeat bg-[length:120%_auto] bg-center !w-[50px] !h-[50px] !block border border-[#837d7d] rounded-full
+/* Swiper - overwritten styles */
+
+.swiper-button-next,
+.swiper-button-prev {
+  @apply !block !h-[50px] !w-[50px] rounded-full border border-[#837d7d] bg-[url('/images/slider-arrow.svg')] bg-[length:120%_auto] bg-center bg-no-repeat;
 }
 
 .swiper-button-prev {
-  @apply rotate-180
+  @apply rotate-180;
 }
 
-.swiper-button-next::after, .swiper-button-prev::after {
-  @apply hidden
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  @apply hidden;
 }
 
 .swiper-slide-thumb-active {
-  @apply filter grayscale-0
+  @apply grayscale-0 filter;
 }
-
 
 /* shadcs/ui */
 

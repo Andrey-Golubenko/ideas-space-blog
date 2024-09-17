@@ -40,6 +40,7 @@ const SwitchField = ({
               <FormLabel>{label}</FormLabel>
               <FormDescription>{description}</FormDescription>
             </div>
+
             <FormControl>
               <Switch
                 disabled={isPending}
@@ -48,6 +49,7 @@ const SwitchField = ({
                 {...props}
               />
             </FormControl>
+
             <FormMessage />
           </FormItem>
         )

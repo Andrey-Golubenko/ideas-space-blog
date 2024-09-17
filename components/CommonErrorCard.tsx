@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 
 import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
 import { Button } from '~/components/ui/button'
+import { PATHS } from '~/utils/constants/constants'
 import { ICommonErrorCardProps } from '~/types/types'
 
 const CommonErrorCard = ({
@@ -26,11 +27,12 @@ const CommonErrorCard = ({
         />
         <Button
           size="sm"
+          variant="outline"
           onClick={() => {
-            return router.back()
+            return router.push(PATHS.home)
           }}
         >
-          Go back
+          Go Home
         </Button>
       </div>
     </AppCardWrapper>

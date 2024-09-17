@@ -32,7 +32,7 @@ const PostCardSkeleton = ({ post, isLoading }: IPostCardSkeletonProps) => {
   const postContent = `${toUpperCaseFirstChar(post?.content.slice(0, 120))}...`
 
   return (
-    <Card className="flex min-h-[290px] flex-col rounded-md shadow-md sm:last:col-span-2 md:last:col-span-1">
+    <Card className="flex min-h-[290px] flex-col rounded-md shadow-md">
       {hasContent ? (
         <PostCardHeader
           postImage={postImage}

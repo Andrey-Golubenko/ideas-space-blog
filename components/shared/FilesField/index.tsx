@@ -2,42 +2,34 @@
 
 import {
   useState,
-  useCallback,
   useEffect,
   type Dispatch,
   type SetStateAction,
   type FormHTMLAttributes
 } from 'react'
-import { useDropzone } from 'react-dropzone'
+import { useDropzone, type FileRejection } from 'react-dropzone'
 import {
   type Merge,
   type FieldError,
-  type UseFormRegister,
-  type UseFormSetValue,
-  type UseFormWatch
+  useFormContext,
+  useWatch
 } from 'react-hook-form'
 import { v4 as uuidv4 } from 'uuid'
 
+import usePosts from '~/store'
 import FormError from '~/components/FormError'
-import FilesList from '~/components/shared/FilesField/FilesList'
 import DuplicatesFilesList from '~/components/shared/FilesField/DuplicatesFilesList'
+import FilesList from '~/components/shared/FilesField/FilesList'
 import {
-  MAX_FILES_COUNT,
+  ECCEPTED_IMAGES_EXTENTIONS,
   MAX_FILE_SIZE
 } from '~/utils/constants/constants'
-import {
-  type TFileError,
-  type OnDropType,
-  type TManagePostForm
-} from '~/types/types'
-import { SingleFileSchema } from '~/schemas'
+import { useOnDrop } from '~/hooks/useOnDrop'
+import { TFileError, type TManagePostForm } from '~/types/types'
 
 interface IFilesFieldProps {
   name: string
   type?: string
-  register: UseFormRegister<TManagePostForm>
-  watch: UseFormWatch<TManagePostForm>
-  setValue: UseFormSetValue<TManagePostForm>
   filesDuplicates: string[]
   setFilesDuplicate: Dispatch<SetStateAction<[] | string[]>>
   validateErrors?: Merge<FieldError, (FieldError | undefined)[]>
@@ -46,9 +38,6 @@ interface IFilesFieldProps {
 
 const FilesField = ({
   name,
-  register,
-  watch,
-  setValue,
   filesDuplicates,
   setFilesDuplicate,
   validateErrors,
@@ -57,11 +46,34 @@ const FilesField = ({
 }: IFilesFieldProps & FormHTMLAttributes<HTMLInputElement>) => {
   const [filesErrors, setFilesErrors] = useState<TFileError[]>([])
 
-  const files = watch(name as 'files')
+  const [editablePost, setEditablePost] = usePosts((state) => {
+    return [state.editablePost, state.setEditablePost]
+  })
+
+  const { register, unregister, setValue } =
+    useFormContext<TManagePostForm>()
+
+  const files = useWatch<TManagePostForm, 'files'>({ name: 'files' })
+  const imageUrls =
+    useWatch<TManagePostForm, 'imageUrls'>({
+      name: 'imageUrls'
+    }) || []
+
+  const { onDrop } = useOnDrop({
+    fieldName: name,
+    files,
+    imageUrls,
+    setFilesErrors,
+    setFilesDuplicate,
+    setValue
+  })
 
   useEffect(() => {
     register(name as 'files')
-  }, [register, name])
+    return () => {
+      unregister(name as 'files')
+    }
+  }, [register, unregister, name])
 
   useEffect(() => {
     if (Array.isArray(validateErrors) && validateErrors?.length) {
@@ -71,80 +83,44 @@ const FilesField = ({
         })
       })
     }
-  }, [validateErrors])
+  }, [validateErrors, setFilesErrors])
 
-  const onDrop = useCallback<OnDropType & Function>(
-    (droppedFiles: File[] = []) => {
-      setFilesErrors([])
-
-      const validFiles: File[] = []
-      const errors: TFileError[] = []
-      const filesCount = files ? files.length + droppedFiles.length : 0
-
-      if (filesCount > MAX_FILES_COUNT) {
-        errors.push({
-          message: `You can upload up to ${MAX_FILES_COUNT} files only`
-        })
-      } else {
-        droppedFiles.forEach((file) => {
-          const validationResult = SingleFileSchema.safeParse(file)
-          if (validationResult.success) {
-            validFiles.push(file)
-          } else {
-            errors.push({
-              fileName: file.name,
-              message: validationResult.error.issues[0].message
-            })
-
-            setFilesErrors(errors)
-          }
-        })
-      }
-
-      if (errors.length) {
-        return
-      }
-
-      const filesNames = files?.map((file) => {
-        return file.name
-      })
-
-      const duplicatedFiles = validFiles
-        .filter((file) => {
-          return filesNames?.includes(file?.name)
-        })
-        .map((file) => {
-          return file?.name
-        })
-
-      const uniqueFiles = validFiles.filter((file) => {
-        return !filesNames?.includes(file?.name)
-      })
-
-      setFilesDuplicate(duplicatedFiles)
-
-      if (uniqueFiles.length) {
-        const newFiles =
-          (!!files?.length && [...files].concat(uniqueFiles)) ||
-          uniqueFiles
-        setValue(name as 'files', newFiles)
-      }
-    },
-    [files, setValue, name, setFilesDuplicate]
-  )
-
-  const handleOnDelete = (fileName: string) => {
-    if (files?.length) {
-      const newFiles = files.filter((file) => {
-        return file?.name !== fileName
-      })
-      setValue(name as 'files', newFiles)
-    }
-
-    return null
+  const handleOnFileDelete = (fileName: string): void => {
+    const newFiles = files?.filter((file) => {
+      return file?.name !== fileName
+    })
+    setValue(name as 'files', newFiles)
   }
 
-  const { getRootProps, getInputProps } = useDropzone({ onDrop })
+  const handleOnImageUrlDelete = (fileName: string): void => {
+    const newImageUrls = imageUrls.filter((url) => {
+      return !url.includes(fileName)
+    })
+
+    setEditablePost({ ...editablePost, imageUrls: newImageUrls })
+  }
+
+  const handleDropRejected = (fileRejections: FileRejection[]) => {
+    const rejectedFilesNames = fileRejections
+      ?.map(({ file }) => {
+        return file?.name
+      })
+      .join(', ')
+
+    const message = `You can't upload images: "${rejectedFilesNames}" with such extensions. Please try to upload images with other extensions.`
+
+    setFilesErrors((prev) => {
+      return [...prev, { message }]
+    })
+  }
+
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: {
+      'image/*': ECCEPTED_IMAGES_EXTENTIONS
+    },
+    onDrop,
+    onDropRejected: handleDropRejected
+  })
 
   const { onChange } = register(name as 'files')
 
@@ -158,17 +134,30 @@ const FilesField = ({
           name={name}
           type="file"
           multiple
-          accept="image/*"
+          accept="image/jpeg, image/png, image/heic, image/heif"
           disabled={isPending}
           {...getInputProps({ onChange })}
           {...props}
         />
-        <p className="text-center text-base font-light leading-7">
+
+        <p className="mb-4 text-center text-base font-light leading-7">
           Drag and drop your images here, or click to select files.
         </p>
-        <p className="text-center text-base font-light leading-7">
-          The file size should be no more than{' '}
-          {(MAX_FILE_SIZE / 1024 / 1024)?.toFixed() || 0} Mb.
+
+        <p className="mb-4 text-center text-base font-light italic leading-7">
+          The image size should be no more than{' '}
+          <span className="text-red-700">
+            {(MAX_FILE_SIZE / 1024 / 1024)?.toFixed() || 0} Mb
+          </span>
+          .
+        </p>
+
+        <p className="mb-4 text-center text-base font-light italic leading-7">
+          The image extention should be only{' '}
+          <span className="text-red-700">
+            &quot;{ECCEPTED_IMAGES_EXTENTIONS.join(', ')}&ldquo;
+          </span>
+          .
         </p>
       </div>
 
@@ -192,10 +181,12 @@ const FilesField = ({
         <DuplicatesFilesList filesDuplicates={filesDuplicates} />
       )}
 
-      {!!files?.length && (
+      {(!!files?.length || !!imageUrls?.length) && (
         <FilesList
           files={files}
-          handleOnDelete={handleOnDelete}
+          imageUrls={imageUrls}
+          handleOnFileDelete={handleOnFileDelete}
+          handleOnImageUrlDelete={handleOnImageUrlDelete}
         />
       )}
     </>
