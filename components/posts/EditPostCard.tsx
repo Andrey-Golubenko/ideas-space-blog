@@ -11,6 +11,10 @@ import usePosts from '~/store'
 import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
 import PostManageForm from '~/components/shared/PostManageForm'
 import { editPost } from '~/actions/edit-post'
+import {
+  destroyImagesInCloudinary,
+  saveImagesToCloudinary
+} from '~/services/posts/imagesProcessing.client'
 import { PATHS } from '~/utils/constants/constants'
 import { ManagePostSchema } from '~/schemas'
 import { TManagePostForm } from '~/types/types'
@@ -23,9 +27,14 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
   const [success, setSuccess] = useState<string | undefined>('')
   const [error, setError] = useState<string | undefined>('')
 
-  const [editablePost, setEditablePost] = usePosts((state) => {
-    return [state.editablePost, state.setEditablePost]
+  const [posts, editablePost, setEditablePost] = usePosts((state) => {
+    return [state.posts, state.editablePost, state.setEditablePost]
   })
+
+  const initialPost =
+    posts?.find((post) => {
+      return post?.id === (editablePost as Post)?.id
+    }) || {}
 
   const [isPending, startTransition] = useTransition()
 
@@ -53,6 +62,8 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
   })
 
   // To prevent empty form values after the page is reloaded
+  const { imageUrls: editablePostImageUrls, ...restEditablePost } =
+    editablePost as Post
   useEffect(() => {
     if (Object.values(editablePost)?.length) {
       form.reset({
@@ -62,14 +73,56 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
         published: published || false
       })
     }
-  }, [editablePost, form])
+  }, [restEditablePost, form])
 
   const handleOnSubmit = (values: TManagePostForm) => {
     setError('')
     setSuccess('')
 
-    startTransition(() => {
-      editPost(values, postId).then((data) => {
+    startTransition(async () => {
+      const newImageUrls = values?.imageUrls || []
+      const initialPostImageUrls = (initialPost as Post)?.imageUrls || []
+
+      const isImageUrlsChanged =
+        (initialPostImageUrls?.length || 0) > (newImageUrls?.length || 0)
+
+      if (isImageUrlsChanged) {
+        const deletedImageUrls = initialPostImageUrls?.filter((url) => {
+          return !newImageUrls?.includes(url)
+        })
+
+        try {
+          await destroyImagesInCloudinary(deletedImageUrls)
+        } catch {
+          return
+        }
+      }
+
+      const uploadedFiles = values?.files || []
+
+      let newImageUrlsFromFiles: string[] | null = []
+
+      if (uploadedFiles?.length) {
+        newImageUrlsFromFiles = await saveImagesToCloudinary(
+          uploadedFiles,
+          setError
+        )
+
+        if (!newImageUrlsFromFiles) {
+          return
+        }
+
+        if (error) return
+      }
+
+      const { files, ...restValues } = values
+
+      const newPostValues = {
+        ...restValues,
+        imageUrls: [...newImageUrlsFromFiles, ...newImageUrls]
+      }
+
+      editPost(newPostValues, postId).then((data) => {
         setError(data.error)
         setSuccess(data.success)
 

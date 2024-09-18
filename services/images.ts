@@ -50,10 +50,10 @@ export const deleteImagesFromCloudinary = async (
 ): Promise<
   | {
       error: string
-      result?: undefined
+      success?: undefined
     }
   | {
-      result: string
+      success: string
       error?: undefined
     }
 > => {
@@ -61,6 +61,7 @@ export const deleteImagesFromCloudinary = async (
     const deleteResult = await cloudinary.uploader.destroy(
       `${CLOUDINARY_IMAGE_FOLDER}/${imageName}`,
       {
+        invalidate: true,
         resource_type: 'image'
       }
     )
@@ -71,7 +72,7 @@ export const deleteImagesFromCloudinary = async (
       }
     }
 
-    return { result: 'Images was successfully deleted' }
+    return { success: 'Images was successfully deleted' }
   } catch (error) {
     return {
       error: `Failed to delete image: ${(error as Error).message}`

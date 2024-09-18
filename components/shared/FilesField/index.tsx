@@ -3,18 +3,20 @@
 import {
   useState,
   useEffect,
+  useCallback,
   type Dispatch,
   type SetStateAction,
   type FormHTMLAttributes
 } from 'react'
 import { useDropzone, type FileRejection } from 'react-dropzone'
 import {
-  type Merge,
-  type FieldError,
   useFormContext,
-  useWatch
+  useWatch,
+  type Merge,
+  type FieldError
 } from 'react-hook-form'
 import { v4 as uuidv4 } from 'uuid'
+import { type Post } from '@prisma/client'
 
 import usePosts from '~/store'
 import FormError from '~/components/FormError'
@@ -25,7 +27,7 @@ import {
   MAX_FILE_SIZE
 } from '~/utils/constants/constants'
 import { useOnDrop } from '~/hooks/useOnDrop'
-import { TFileError, type TManagePostForm } from '~/types/types'
+import { type TFileError, type TManagePostForm } from '~/types/types'
 
 interface IFilesFieldProps {
   name: string
@@ -46,8 +48,8 @@ const FilesField = ({
 }: IFilesFieldProps & FormHTMLAttributes<HTMLInputElement>) => {
   const [filesErrors, setFilesErrors] = useState<TFileError[]>([])
 
-  const [editablePost, setEditablePost] = usePosts((state) => {
-    return [state.editablePost, state.setEditablePost]
+  const [setEditablePost] = usePosts((state) => {
+    return [state.setEditablePost]
   })
 
   const { register, unregister, setValue } =
@@ -85,20 +87,31 @@ const FilesField = ({
     }
   }, [validateErrors, setFilesErrors])
 
-  const handleOnFileDelete = (fileName: string): void => {
-    const newFiles = files?.filter((file) => {
-      return file?.name !== fileName
-    })
-    setValue(name as 'files', newFiles)
-  }
+  const handleOnFileDelete = useCallback(
+    (fileName: string): void => {
+      const newFiles = files?.filter((file) => {
+        return file?.name !== fileName
+      })
+      setValue(name as 'files', newFiles)
+    },
+    [files, name, setValue]
+  )
 
-  const handleOnImageUrlDelete = (fileName: string): void => {
-    const newImageUrls = imageUrls.filter((url) => {
-      return !url.includes(fileName)
-    })
+  const handleOnImageUrlDelete = useCallback(
+    (fileName: string): void => {
+      const newImageUrls = imageUrls.filter((url) => {
+        return !url.includes(fileName)
+      })
 
-    setEditablePost({ ...editablePost, imageUrls: newImageUrls })
-  }
+      setEditablePost((prevEditablePost: Post) => {
+        return {
+          ...prevEditablePost,
+          imageUrls: newImageUrls
+        }
+      })
+    },
+    [imageUrls, setEditablePost]
+  )
 
   const handleDropRejected = (fileRejections: FileRejection[]) => {
     const rejectedFilesNames = fileRejections
@@ -127,14 +140,15 @@ const FilesField = ({
   return (
     <>
       <div
-        className="cursor-pointer rounded-md bg-slate-100 px-5 py-7"
-        {...getRootProps()}
+        className={`rounded-md bg-slate-100 px-5 py-7 
+          ${isPending ? 'cursor-default' : 'cursor-pointer'}`}
+        {...(isPending ? undefined : getRootProps())}
       >
         <input
           name={name}
           type="file"
           multiple
-          accept="image/jpeg, image/png, image/heic, image/heif"
+          accept={`image/*,${ECCEPTED_IMAGES_EXTENTIONS.join(',')}`}
           disabled={isPending}
           {...getInputProps({ onChange })}
           {...props}
@@ -146,7 +160,7 @@ const FilesField = ({
 
         <p className="mb-4 text-center text-base font-light italic leading-7">
           The image size should be no more than{' '}
-          <span className="text-red-700">
+          <span className="whitespace-nowrap text-red-700">
             {(MAX_FILE_SIZE / 1024 / 1024)?.toFixed() || 0} Mb
           </span>
           .
@@ -187,6 +201,7 @@ const FilesField = ({
           imageUrls={imageUrls}
           handleOnFileDelete={handleOnFileDelete}
           handleOnImageUrlDelete={handleOnImageUrlDelete}
+          isPending={isPending}
         />
       )}
     </>

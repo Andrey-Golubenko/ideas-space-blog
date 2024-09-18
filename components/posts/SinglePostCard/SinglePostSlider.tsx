@@ -18,8 +18,11 @@ interface ISinglePostAliderProps {
 const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
 
-  const thumbnailsPerView = 3
-  const isThumbnailsInLoop = (imageUrls?.length || 0) >= thumbnailsPerView
+  const thumbsPerView = Math.min(imageUrls?.length || 0, 3)
+  const isThumbsInLoop = (imageUrls?.length || 0) > thumbsPerView
+
+  const imagesPerView = Math.min(imageUrls?.length || 0, 1)
+  const isImagesInLoop = (imageUrls?.length || 0) > imagesPerView
 
   return (
     <div className="min-w-0 xs:max-w-full lg:max-w-[80%] lg:pt-10">
@@ -29,7 +32,8 @@ const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
           '--swiper-pagination-color': '#fff'
         }}
         navigation
-        loop
+        slidesPerView={imagesPerView}
+        loop={isImagesInLoop}
         spaceBetween={10}
         thumbs={{ swiper: thumbsSwiper }}
         modules={[FreeMode, Navigation, Thumbs]}
@@ -40,7 +44,7 @@ const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
             return (
               <SwiperSlide
                 key={url}
-                className="flex items-center justify-center bg-white bg-cover bg-center text-center text-lg"
+                className="flex items-center justify-center bg-cover bg-center text-center text-lg"
               >
                 <LoadableImage
                   src={url}
@@ -48,7 +52,7 @@ const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
                   width={700}
                   height={500}
                   priority={index === 0}
-                  imageClassNames="block h-[500px] w-full rounded-md object-cover"
+                  imageClassNames="block h-[500px] w-full rounded-t-md object-cover"
                 />
               </SwiperSlide>
             )
@@ -60,11 +64,12 @@ const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
           // @ts-ignore
           '--swiper-pagination-color': '#fff'
         }}
-        navigation={isThumbnailsInLoop}
         onSwiper={setThumbsSwiper as (swiper: unknown) => void}
-        loop={isThumbnailsInLoop}
+        slidesPerGroup={thumbsPerView}
+        navigation={isThumbsInLoop}
+        loop={isThumbsInLoop}
         spaceBetween={10}
-        slidesPerView={thumbnailsPerView}
+        slidesPerView={thumbsPerView}
         freeMode
         watchSlidesProgress
         modules={[FreeMode, Navigation, Thumbs]}

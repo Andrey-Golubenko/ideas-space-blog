@@ -1,3 +1,5 @@
+'use server'
+
 import { db } from '~/libs/db'
 
 export const getPasswordResetTokenByToken = async (token: string) => {

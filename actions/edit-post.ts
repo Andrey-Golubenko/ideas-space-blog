@@ -1,15 +1,15 @@
 'use server'
 
-import * as z from 'zod'
 import { db } from '~/libs/db'
 
-import { ManagePostSchema } from '~/schemas'
 import { getSinglePost } from '~/services/posts/posts.server'
 import { getUserById } from '~/services/user'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
+import { ManagePostSchema } from '~/schemas'
+import { TManagePostForm } from '~/types/types'
 
 export const editPost = async (
-  values: z.infer<typeof ManagePostSchema>,
+  values: TManagePostForm,
   postId: string
 ) => {
   const validatedFields = ManagePostSchema.safeParse(values)
@@ -40,7 +40,7 @@ export const editPost = async (
     return { error: 'You have no permission to edit this post!' }
   }
 
-  const { title, content, published } = validatedFields.data
+  const { title, content, imageUrls, published } = validatedFields.data
 
   try {
     await db.post.update({
@@ -48,6 +48,7 @@ export const editPost = async (
       data: {
         title,
         content,
+        imageUrls,
         published
       }
     })

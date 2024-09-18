@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useTransition } from 'react'
 import { type Post } from '@prisma/client'
 
 import {
@@ -27,21 +27,23 @@ const SinglePostCard = ({ post }: ISinglePostCardProps) => {
     return [state.setEditablePost]
   })
 
-  const isManageablePost = post?.authorId === user?.id
+  const [isPending, startTransition] = useTransition()
+
+  const isPostManageable = post?.authorId === user?.id
 
   useEffect(() => {
-    if (user && post && isManageablePost) {
+    if (user && post && isPostManageable) {
       setEditablePost(post)
     }
-  }, [user, post, isManageablePost, setEditablePost])
+  }, [user, post, isPostManageable, setEditablePost])
 
   const singlePostTitle: string | '' = toUpperCaseFirstChar(post?.title)
 
   const { imageUrls = [] } = post as Post
 
   return (
-    <Card className="my-12 flex w-full flex-col items-center justify-between rounded-md shadow-md">
-      <SinglePostSlider imageUrls={imageUrls} />
+    <Card className="my-12 flex w-full flex-col items-center justify-between rounded-md border-none shadow-md">
+      {!!imageUrls?.length && <SinglePostSlider imageUrls={imageUrls} />}
 
       <CardHeader className="text-2xl font-semibold">
         {singlePostTitle}
@@ -54,13 +56,18 @@ const SinglePostCard = ({ post }: ISinglePostCardProps) => {
       </CardContent>
 
       <CardFooter>
-        {isManageablePost && (
+        {isPostManageable && (
           <div className="flex flex-row items-center justify-center gap-x-6">
-            <EditPostButton postId={post?.id} />
+            <EditPostButton
+              postId={post?.id}
+              isPending={isPending}
+            />
             <DeletePostButton
               postId={post?.id}
               imageUrls={imageUrls}
-              isManageablePost={isManageablePost}
+              isPostManageable={isPostManageable}
+              isPending={isPending}
+              startTransition={startTransition}
             />
           </div>
         )}

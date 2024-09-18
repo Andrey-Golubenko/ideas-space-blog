@@ -7,13 +7,15 @@ import { PATHS } from '~/utils/constants/constants'
 
 interface IChangePostButtonProps {
   postId?: string
+  isPending: boolean
 }
-const EditPostButton = ({ postId }: IChangePostButtonProps) => {
+const EditPostButton = ({ postId, isPending }: IChangePostButtonProps) => {
   return (
     <Button
       variant="outline"
       size="sm"
-      className="min-w-[90px] bg-blue-500 text-white hover:bg-blue-500/90 hover:text-white"
+      disabled={isPending}
+      className={`min-w-[90px]  text-white  ${!isPending ? 'bg-blue-500 hover:bg-blue-500/90 hover:text-white' : ''}`}
       asChild
     >
       <Link href={`${PATHS.blog}/${postId}${PATHS.editPost}`}>

@@ -12,13 +12,15 @@ interface IFilesListProps {
   imageUrls?: string[]
   handleOnFileDelete: (name: string) => void
   handleOnImageUrlDelete: (name: string) => void
+  isPending: boolean
 }
 
 const FilesList = ({
   files,
   imageUrls,
   handleOnFileDelete,
-  handleOnImageUrlDelete
+  handleOnImageUrlDelete,
+  isPending
 }: IFilesListProps) => {
   const [filesUrls, setFilesUrls] = useState<string[]>([])
 
@@ -42,7 +44,7 @@ const FilesList = ({
 
   return (
     <div
-      className={`grid grid-cols-4 gap-5 ${files && 'xs:min-h-[45px] sm:min-h-[65px] md:min-h-[140px]'}`}
+      className={`grid gap-5 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 ${files && 'xs:min-h-[130px] md:min-h-[145px]'}`}
       ref={autoAnimateRef}
     >
       {!!imageUrls?.length &&
@@ -59,14 +61,17 @@ const FilesList = ({
                 alt={imageName}
                 width={130}
                 height={130}
-                imageClassNames="aspect-square h-auto w-auto border object-cover"
+                imageClassNames={`aspect-square h-[130px] w-auto border object-cover ${isPending ? 'grayscale' : ''}`}
               />
-              <CrossCircledIcon
-                className="absolute  inset-0 h-6 w-6 -translate-x-2/4 -translate-y-2/4 cursor-pointer rounded-full bg-white"
-                onClick={() => {
-                  return handleOnImageUrlDelete(imageName)
-                }}
-              />
+              {!isPending && (
+                <CrossCircledIcon
+                  className={`absolute inset-0 h-6 w-6 -translate-x-2/4 -translate-y-2/4 rounded-full bg-white 
+                  ${isPending ? 'cursor-default' : 'cursor-pointer'}`}
+                  onClick={() => {
+                    return handleOnImageUrlDelete(imageName)
+                  }}
+                />
+              )}
             </div>
           )
         })}
@@ -86,17 +91,20 @@ const FilesList = ({
                 alt={fileName}
                 width={130}
                 height={130}
-                imageClassNames="aspect-square h-auto w-auto border object-cover"
+                imageClassNames={`aspect-square h-[130px] w-auto border object-cover ${isPending ? 'grayscale' : ''}`}
                 onLoad={() => {
                   return URL.revokeObjectURL(url)
                 }}
               />
-              <CrossCircledIcon
-                className="absolute  inset-0 h-6 w-6 -translate-x-2/4 -translate-y-2/4 cursor-pointer rounded-full bg-white"
-                onClick={() => {
-                  return handleOnFileDelete(fileName)
-                }}
-              />
+              {!isPending && (
+                <CrossCircledIcon
+                  className={`absolute inset-0 h-6 w-6 -translate-x-2/4 -translate-y-2/4 rounded-full bg-white 
+                  ${isPending ? 'cursor-default' : 'cursor-pointer'}`}
+                  onClick={() => {
+                    return handleOnFileDelete(fileName)
+                  }}
+                />
+              )}
             </div>
           )
         })}
