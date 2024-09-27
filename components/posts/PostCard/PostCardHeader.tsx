@@ -6,7 +6,7 @@ import { cn } from '~/libs/utils'
 import { CardHeader } from '~/components/ui/card'
 import LoadableImage from '~/components/shared/LoadableImage'
 import { fontPoppins } from '~/utils/constants/fonts'
-import { PATHS } from '~/utils/constants/constants'
+import { IMAGES_PATHS, PATHS } from '~/utils/constants/constants'
 
 interface IPostCardHeaderProps {
   postImage: string
@@ -30,7 +30,7 @@ const PostCardHeader = ({
           alt="Post image"
           width={130}
           height={100}
-          priority
+          priority={postImage === IMAGES_PATHS.noImages}
           imageClassNames="aspect-[5/4] h-full w-full rounded-t-md object-cover duration-500 hover:rounded-b-md"
           containerClassNames="rounded-t-md hover:rounded-b-md"
         />

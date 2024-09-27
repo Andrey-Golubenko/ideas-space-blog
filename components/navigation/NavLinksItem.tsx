@@ -22,7 +22,7 @@ const NavMenuItem = ({
 
   return (
     <li
-      className={`pb-2 pl-1.5${isMobile ? ' w-full border-b border-b-white' : ''}`}
+      className={`pl-1.5${isMobile ? ' w-full border-b border-b-white' : ''}`}
       key={href}
     >
       <Link

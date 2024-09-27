@@ -21,7 +21,7 @@ body {
 }
 
 .header-link {
-  @apply border-b-2 border-transparent px-1 py-0 text-white no-underline transition-all duration-300 hover:border-white hover:underline-offset-4;
+  @apply border-b-2 border-transparent px-1 py-0 pb-2 text-white no-underline transition-all duration-300 hover:border-white hover:underline-offset-4;
 }
 
 @layer components {
@@ -42,7 +42,7 @@ body {
 
 .swiper-button-next,
 .swiper-button-prev {
-  @apply !block !h-[50px] !w-[50px] rounded-full border border-[#837d7d] bg-[url('/images/slider-arrow.svg')] bg-[length:120%_auto] bg-center bg-no-repeat;
+  @apply !block !h-[50px] !w-[50px] rounded-full border border-[#837d7d] bg-[url('/icons/slider-arrow.svg')] bg-[length:120%_auto] bg-center bg-no-repeat;
 }
 
 .swiper-button-prev {
@@ -56,6 +56,17 @@ body {
 
 .swiper-slide-thumb-active {
   @apply grayscale-0 filter;
+}
+
+/* text-stroke untility */
+@layer utilities {
+  .text-outline {
+    text-shadow:
+      -1px -1px 0 black,
+      1px -1px 0 black,
+      -1px 1px 0 black,
+      1px 1px 0 black;
+  }
 }
 
 /* shadcs/ui */

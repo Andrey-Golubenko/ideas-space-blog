@@ -10,7 +10,6 @@ const Navigation = async () => {
   const headersList = headers()
   const deviceType = headersList.get('x-device-type')
   const isMobile = deviceType === 'mobile'
-  // const isMobile = true
 
   return (
     <div className="flex w-full">

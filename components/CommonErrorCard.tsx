@@ -26,7 +26,7 @@ const CommonErrorCard = ({
           height={20}
         />
         <Button
-          size="sm"
+          size="lg"
           variant="outline"
           onClick={() => {
             return router.push(PATHS.home)

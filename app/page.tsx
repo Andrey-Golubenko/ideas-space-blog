@@ -1,9 +1,11 @@
-const HomePage = () => {
+import HomePage from '~/Views/HomePage'
+
+const Home = () => {
   return (
     <main className="page-wrapper">
-      <h1 className="page-heading">Home Page</h1>
+      <HomePage />
     </main>
   )
 }
 
-export default HomePage
+export default Home

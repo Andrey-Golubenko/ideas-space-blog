@@ -1,6 +1,11 @@
+'use client'
+
 import { useEffect, type Dispatch, type SetStateAction } from 'react'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import { Button } from '~/components/ui/button'
+import IconOpen from '~/public/icons/icon-open.svg'
+import IconClose from '~/public/icons/icon-close.svg'
 
 interface IMobileNavMenuButtonProps {
   isOpen: boolean
@@ -10,6 +15,8 @@ const MobileNavMenuButton = ({
   isOpen,
   setIsOpen
 }: IMobileNavMenuButtonProps) => {
+  const [autoAnimateRef] = useAutoAnimate()
+
   const handleDocumentClick = (event: MouseEvent) => {
     const target = event.target as HTMLElement
     const navMenu = document.getElementById('nav-menu')
@@ -48,37 +55,12 @@ const MobileNavMenuButton = ({
       className="ml-4 p-0"
       variant="outline"
       onClick={handleClick}
+      ref={autoAnimateRef}
     >
       {isOpen ? (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="2.25"
-          stroke="currentColor"
-          className="h-8 w-8"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M5.5 5.5l13 13M5.5 18.5L18.5 5.5"
-          />
-        </svg>
+        <IconOpen className="h-8 w-8" />
       ) : (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="2"
-          stroke="currentColor"
-          className="h-8 w-8"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-          />
-        </svg>
+        <IconClose className="h-8 w-8" />
       )}
     </Button>
   )

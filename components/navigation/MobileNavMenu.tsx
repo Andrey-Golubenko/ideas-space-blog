@@ -4,16 +4,22 @@ import { useState } from 'react'
 
 import NavLinks from '~/components/navigation/NavLinks'
 import MobileNavMenuButton from '~/components/navigation/MobileNavMenuButton'
+import LogoItem from '~/components/navigation/LogoItem'
 
 const MobileNavMenu = ({ isLoggedIn, isMobile }: INavMenuProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   return (
     <div className="w-full">
-      <MobileNavMenuButton
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-      />
+      <div className="flex items-center">
+        <MobileNavMenuButton
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+        />
+        <div className="flex grow items-center justify-center">
+          <LogoItem />
+        </div>
+      </div>
 
       <nav
         id="nav-menu"

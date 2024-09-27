@@ -15,7 +15,8 @@ const LoadableImage = ({
   width,
   height,
   containerClassNames,
-  imageClassNames
+  imageClassNames,
+  ...props
 }: ILoadableImageProps) => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
 
@@ -27,9 +28,9 @@ const LoadableImage = ({
     <div
       ref={containerRef}
       className={`relative box-border h-full min-h-[${height}px] overflow-hidden bg-[linear-gradient(101.42deg,_#b7dbff_-0.04%,_rgba(223,_239,_255,_0.27)_94.2%)]
-        before:absolute before:left-[-110%] before:top-0 before:block before:h-full before:w-full before:animate-image-on-load before:bg-gradient-to-r before:from-transparent before:via-[#07629317] before:to-transparent before:content-['']
-        ${isLoaded ? 'before:animate-none before:bg-none bg-none' : ''}  
-        ${containerClassNames || ''}`}
+      before:absolute before:left-[-110%] before:top-0 before:block before:h-full before:w-full before:animate-image-on-load before:bg-gradient-to-r before:from-transparent before:via-[#07629317] before:to-transparent before:content-['']
+      ${isLoaded ? 'bg-none before:animate-none before:bg-none' : ''}  
+      ${containerClassNames || ''}`}
     >
       {(isVisible || isLoaded) && (
         <Image
@@ -43,6 +44,7 @@ const LoadableImage = ({
           className={`opacity-0 transition-opacity duration-500 ease-in-out 
             ${isLoaded ? '!opacity-100' : ''} 
             ${imageClassNames || ''}`}
+          {...props}
         />
       )}
     </div>

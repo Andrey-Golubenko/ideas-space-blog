@@ -31,7 +31,10 @@ export const PATHS = {
 }
 
 export const IMAGES_PATHS = {
-  noImages: '/images/image-placeholder.svg'
+  logo: '/images/logo.svg',
+  noImages: '/images/image-placeholder.svg',
+  heroBanner: '/images/hero-banner.webp'
+  // heroBanner: '/images/ai.webp'
 }
 
 export const NAV_LINKS: INavLink[] = [
