@@ -92,9 +92,6 @@ const FilesList = ({
                 width={130}
                 height={130}
                 imageClassNames={`aspect-square h-[130px] w-auto border object-cover ${isPending ? 'grayscale' : ''}`}
-                onLoad={() => {
-                  return URL.revokeObjectURL(url)
-                }}
               />
               {!isPending && (
                 <CrossCircledIcon
