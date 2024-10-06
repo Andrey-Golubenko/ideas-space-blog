@@ -19,7 +19,7 @@ const LogoItem = ({ logoClassNames }: ILogoItemProps) => {
         priority
         width={80}
         height={80}
-        className="h-12 w-36"
+        className="h-16 w-44"
       />
     </Link>
   )

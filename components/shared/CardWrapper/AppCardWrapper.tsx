@@ -13,8 +13,8 @@ import BackButton from '~/components/auth/BackButton'
 
 interface ICardWrapperProps {
   children: React.ReactNode
-  headerLabel: string
-  headerTitle: string
+  headerLabel?: string
+  headerTitle?: string
   backButtonLabel?: string
   backButtonHref?: string
 }

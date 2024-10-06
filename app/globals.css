@@ -26,7 +26,7 @@ body {
 
 @layer components {
   .header-link-active {
-    @apply header-link !text-sky-500 hover:border-sky-500;
+    @apply header-link !text-[rgb(57,213,255)] hover:border-[rgb(57,213,255)];
   }
 }
 
@@ -58,14 +58,29 @@ body {
   @apply grayscale-0 filter;
 }
 
-/* text-stroke untility */
+/* text-stroke black untility */
 @layer utilities {
-  .text-outline {
+  .text-outline-black {
     text-shadow:
       -1px -1px 0 black,
       1px -1px 0 black,
       -1px 1px 0 black,
       1px 1px 0 black;
+  }
+}
+
+/* text-stroke white untility */
+@layer utilities {
+  .text-outline-white {
+    -webkit-text-stroke: 1px rgba(255,255,255,0.2);
+    text-stroke: 1px rgba(255,255,255,0.2);
+  }
+}
+
+/* text-shadow black untility */
+@layer utilities {
+  .text-shadow-black {
+    text-shadow: 0 0 12px rgba(0,0,0,0.6)
   }
 }
 

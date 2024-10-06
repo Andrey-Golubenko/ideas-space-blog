@@ -23,7 +23,7 @@ const PostCardHeader = ({
     <>
       <Link
         href={`${PATHS.blog}/${postId}`}
-        className="w-full duration-500 hover:scale-105"
+        className="w-full overflow-hidden"
       >
         <LoadableImage
           src={postImage}
@@ -32,7 +32,7 @@ const PostCardHeader = ({
           height={100}
           priority={postImage === IMAGES_PATHS.noImages}
           imageClassNames="aspect-[5/4] h-full w-full rounded-t-md object-cover duration-500 hover:rounded-b-md"
-          containerClassNames="rounded-t-md hover:rounded-b-md"
+          containerClassNames="rounded-t-md duration-700 hover:scale-110"
         />
       </Link>
 
