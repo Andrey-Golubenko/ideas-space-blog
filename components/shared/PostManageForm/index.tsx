@@ -1,15 +1,23 @@
-import { useState, type FormHTMLAttributes } from 'react'
+'use client'
+
+import { useEffect, useState, type FormHTMLAttributes } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 
+import useStore from '~/store'
 import { Form } from '~/components/ui/form'
 import TextField from '~/components/shared/TextField'
 import TextAreaField from '~/components/shared/TextAreaField'
 import SwitchField from '~/components/shared/SwitchField'
 import FilesField from '~/components/shared/FilesField'
+import MultiSelectField from '~/components/shared/MultiSelectField'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import LoadableButton from '~/components/shared/LoadableButton'
-import { type TManagePostForm } from '~/types/types'
+import {
+  type IMultiSelectProps,
+  type TManagePostForm
+} from '~/types/types'
+import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
 
 interface IPostManageFormProps {
   form: UseFormReturn<TManagePostForm>
@@ -30,6 +38,21 @@ const PostManageForm = ({
   ...props
 }: IPostManageFormProps & FormHTMLAttributes<HTMLFormElement>) => {
   const [filesDuplicates, setFilesDuplicate] = useState<string[] | []>([])
+
+  const [categories, getAllCategories] = useStore((state) => {
+    return [state.categories, state.getAllCategories]
+  })
+
+  useEffect(() => {
+    getAllCategories()
+  }, [])
+
+  const multiOptions: IMultiSelectProps['options'] =
+    categories?.map((category) => {
+      const categoryName = toUpperCaseFirstChar(category?.name)
+
+      return { label: categoryName, value: categoryName }
+    }) || []
 
   return (
     <Form {...form}>
@@ -60,6 +83,15 @@ const PostManageForm = ({
             name="content"
             label="Post content"
             isPending={isDisabled}
+          />
+
+          <MultiSelectField
+            options={multiOptions}
+            control={form.control}
+            name="categories"
+            label="Post categories"
+            isPending={isDisabled}
+            placeholder="Select category or categories"
           />
 
           <SwitchField

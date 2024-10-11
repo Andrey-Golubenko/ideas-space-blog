@@ -18,7 +18,7 @@ import {
 import { v4 as uuidv4 } from 'uuid'
 import { type Post } from '@prisma/client'
 
-import usePosts from '~/store'
+import useStore from '~/store'
 import FormError from '~/components/FormError'
 import DuplicatesFilesList from '~/components/shared/FilesField/DuplicatesFilesList'
 import FilesList from '~/components/shared/FilesField/FilesList'
@@ -48,7 +48,7 @@ const FilesField = ({
 }: IFilesFieldProps & FormHTMLAttributes<HTMLInputElement>) => {
   const [filesErrors, setFilesErrors] = useState<TFileError[]>([])
 
-  const [setEditablePost] = usePosts((state) => {
+  const [setEditablePost] = useStore((state) => {
     return [state.setEditablePost]
   })
 
@@ -180,7 +180,7 @@ const FilesField = ({
           const key = fileName || uuidv4()
 
           const completeMessage = fileName
-            ? `The size of the ${fileName} ${message}`
+            ? `The size of the "${fileName}" ${message}`
             : message
 
           return (

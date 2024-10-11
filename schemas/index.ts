@@ -7,6 +7,11 @@ import {
   MAX_FILE_SIZE
 } from '~/utils/constants/constants'
 
+export const SingleCategorySchema = z.object({
+  id: z.string({ message: 'Id is required field!' }),
+  name: z.string({ message: 'Name is required field!' })
+})
+
 export const ManagePostSchema = z.object({
   title: z.string({
     message: 'Value must be a string!'
@@ -23,7 +28,7 @@ export const ManagePostSchema = z.object({
             return file.size <= MAX_FILE_SIZE
           },
           {
-            message: `The file size should be no more than ${MAX_FILE_SIZE / 1024 / 1024} MB`
+            message: `The file size should be no more than ${MAX_FILE_SIZE / 1024 / 1024} MB. Try again please.`
           }
         )
       )
@@ -31,7 +36,10 @@ export const ManagePostSchema = z.object({
         message: `You can upload up to ${MAX_FILES_COUNT} files.`
       })
   ),
-  imageUrls: z.optional(z.array(z.string()))
+  imageUrls: z.optional(z.array(z.string())),
+  categories: z.optional(
+    z.array(z.union([z.string(), SingleCategorySchema]))
+  )
 })
 
 export const SingleFileSchema = z.instanceof(File).refine(
@@ -39,7 +47,7 @@ export const SingleFileSchema = z.instanceof(File).refine(
     return file.size <= MAX_FILE_SIZE
   },
   {
-    message: `file should be no more than ${MAX_FILE_SIZE / 1024 / 1024} MB`
+    message: `file should be no more than ${MAX_FILE_SIZE / 1024 / 1024} MB. Try again please.`
   }
 )
 

@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import { type User } from 'next-auth'
 
-import usePosts from '~/store'
+import useStore from '~/store'
 import PostsList from '~/components/posts/PostsList'
 import PostsHeaderCard from '~/components/profileInfo/PostsHeaderCard'
 
@@ -12,7 +12,7 @@ interface IProfilePostsListProps {
 }
 
 const ProfilePostsList = ({ currentUser }: IProfilePostsListProps) => {
-  const [posts, postsCount, isLoading, getPostsByUserId] = usePosts(
+  const [posts, postsCount, isLoading, getPostsByUserId] = useStore(
     (state) => {
       return [
         state.posts,

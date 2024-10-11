@@ -32,7 +32,7 @@ const PostCardSkeleton = ({ post, isLoading }: IPostCardSkeletonProps) => {
   const postContent = `${toUpperCaseFirstChar(post?.content.slice(0, 120))}...`
 
   return (
-    <Card className="flex min-h-[290px] flex-col rounded-md shadow-md">
+    <Card className="flex min-h-[290px] flex-col rounded-md !border-0 shadow-md">
       {hasContent ? (
         <PostCardHeader
           postImage={postImage}
@@ -40,10 +40,14 @@ const PostCardSkeleton = ({ post, isLoading }: IPostCardSkeletonProps) => {
           postId={post?.id || ''}
         />
       ) : (
-        <CardHeader className="pb-8">
-          <Skeleton className="mb-4 h-[260px] w-full" />
-          <Skeleton className="h-7 w-full" />
-        </CardHeader>
+        <>
+          <CardHeader className="p-0">
+            <Skeleton className="mb-4 min-h-[260px] w-full" />
+          </CardHeader>
+          <CardHeader className="pb-8 pt-3">
+            <Skeleton className="h-7 w-full" />
+          </CardHeader>
+        </>
       )}
 
       {hasContent ? (

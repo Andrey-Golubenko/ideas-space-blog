@@ -3,6 +3,7 @@
 import { useEffect, useTransition } from 'react'
 import { type Post } from '@prisma/client'
 
+import useStore from '~/store'
 import {
   Card,
   CardHeader,
@@ -14,7 +15,6 @@ import EditPostButton from '~/components/posts/SinglePostCard/EditPostButton'
 import DeletePostButton from '~/components/posts/SinglePostCard/DeletePostButton'
 import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
 import { useCurrentUser } from '~/hooks/useCurrentUser'
-import usePosts from '~/store'
 
 interface ISinglePostCardProps {
   post: Post | null
@@ -23,7 +23,7 @@ interface ISinglePostCardProps {
 const SinglePostCard = ({ post }: ISinglePostCardProps) => {
   const user = useCurrentUser()
 
-  const [setEditablePost] = usePosts((state) => {
+  const [setEditablePost] = useStore((state) => {
     return [state.setEditablePost]
   })
 

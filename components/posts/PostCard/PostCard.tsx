@@ -23,7 +23,7 @@ const PostCard = ({ post }: IpostCardProps) => {
   const postContent = `${toUpperCaseFirstChar(post?.content.slice(0, 120))}...`
 
   return (
-    <Card className="flex min-h-max flex-col rounded-md border-0 shadow-md">
+    <Card className="flex min-h-max flex-col rounded-md !border-0 shadow-md hover:rounded-t-md">
       <PostCardHeader
         postImage={postImage}
         postTitle={postTitle}

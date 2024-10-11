@@ -29,7 +29,12 @@ export const newPost = async (
     return { error: 'Unauthorized!' }
   }
 
-  const { title, content, imageUrls, published } = validatedFields.data
+  const { title, content, imageUrls, published, categories } =
+    validatedFields.data
+
+  const categoryIds = categories?.map((category) => {
+    return (category as { id: string; name: string })?.id
+  })
 
   try {
     await db.post.create({
@@ -38,7 +43,16 @@ export const newPost = async (
         content,
         imageUrls,
         published,
-        authorId: dbUser?.id
+        authorId: dbUser?.id,
+        categories: {
+          create: categoryIds?.map((catId) => {
+            return {
+              category: {
+                connect: { id: catId }
+              }
+            }
+          })
+        }
       }
     })
 

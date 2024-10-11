@@ -1,28 +1,34 @@
 import { persist, devtools, createJSONStorage } from 'zustand/middleware'
 import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
-import { type Post } from '@prisma/client'
+import { type Categories, type Post } from '@prisma/client'
 
 import {
   fetchPosts,
   fetchPostsBySearch,
   fetchPostsByUserId
 } from '~/services/posts/posts.client'
+import { fetchAllCategories } from '~/services/categories'
 
-interface IUsePosts {
+interface IUseStore {
   posts: Post[]
   postsCount: number | null
   isLoading: boolean
   editablePost: Post | {}
+
+  categories: Categories[]
+
   getAllPosts: () => Promise<void>
   getPostsBySearch: (search: string) => Promise<void>
   getPostsByUserId: (userId: string) => Promise<void>
   setEditablePost: (post: Post | {}) => void
+
+  getAllCategories: () => Promise<void>
 }
 
-const usePosts = createWithEqualityFn<
-  IUsePosts,
-  [['zustand/devtools', never], ['zustand/persist', IUsePosts]]
+const useStore = createWithEqualityFn<
+  IUseStore,
+  [['zustand/devtools', never], ['zustand/persist', IUseStore]]
 >(
   devtools(
     // persist() - to enable state persistence across page reloads or browser sessions
@@ -33,6 +39,7 @@ const usePosts = createWithEqualityFn<
           postsCount: null,
           isLoading: false,
           editablePost: {},
+          categories: [],
 
           getAllPosts: async () => {
             set((state) => {
@@ -78,6 +85,18 @@ const usePosts = createWithEqualityFn<
             set((state) => {
               return { ...state, editablePost: post }
             })
+          },
+
+          getAllCategories: async () => {
+            set((state) => {
+              return { ...state, isLoading: true }
+            })
+
+            const fetchedCategories = await fetchAllCategories()
+
+            set((state) => {
+              return { ...state, categories: fetchedCategories }
+            })
           }
         }
       },
@@ -92,4 +111,4 @@ const usePosts = createWithEqualityFn<
   )
 )
 
-export default usePosts
+export default useStore

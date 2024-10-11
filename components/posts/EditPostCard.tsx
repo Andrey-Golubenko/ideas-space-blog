@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import { type Post } from '@prisma/client'
 
-import usePosts from '~/store'
+import useStore from '~/store'
 import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
 import PostManageForm from '~/components/shared/PostManageForm'
 import { editPost } from '~/actions/edit-post'
@@ -27,7 +27,7 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
   const [success, setSuccess] = useState<string | undefined>('')
   const [error, setError] = useState<string | undefined>('')
 
-  const [posts, editablePost, setEditablePost] = usePosts((state) => {
+  const [posts, editablePost, setEditablePost] = useStore((state) => {
     return [state.posts, state.editablePost, state.setEditablePost]
   })
 
@@ -64,6 +64,7 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
   // To prevent empty form values after the page is reloaded
   const { imageUrls: editablePostImageUrls, ...restEditablePost } =
     editablePost as Post
+
   useEffect(() => {
     if (Object.values(editablePost)?.length) {
       form.reset({

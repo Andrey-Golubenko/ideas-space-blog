@@ -4,10 +4,10 @@ import { type TransitionStartFunction } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
+import useStore from '~/store'
 import { deletePost } from '~/actions/delete-post'
 import { destroyImagesInCloudinary } from '~/services/posts/imagesProcessing.client'
 import { Button } from '~/components/ui/button'
-import usePosts from '~/store'
 import { PATHS } from '~/utils/constants/constants'
 
 interface IPostDeleteButtonProps {
@@ -24,7 +24,7 @@ const DeletePostButton = ({
   isPending,
   startTransition
 }: IPostDeleteButtonProps) => {
-  const [setEditablePost] = usePosts((state) => {
+  const [setEditablePost] = useStore((state) => {
     return [state.setEditablePost]
   })
 

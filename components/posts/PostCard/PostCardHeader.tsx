@@ -31,8 +31,8 @@ const PostCardHeader = ({
           width={130}
           height={100}
           priority={postImage === IMAGES_PATHS.noImages}
-          imageClassNames="aspect-[5/4] h-full w-full rounded-t-md object-cover duration-500 hover:rounded-b-md"
-          containerClassNames="rounded-t-md duration-700 hover:scale-110"
+          imageClassNames="aspect-[5/4] h-full w-full rounded-t-md object-cover duration-500 hover:rounded-md"
+          containerClassNames="rounded-t-md duration-700 hover:scale-110 hover:rounded-t-md"
         />
       </Link>
 

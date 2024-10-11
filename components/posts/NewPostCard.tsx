@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 
+import useStore from '~/store'
 import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
 import PostManageForm from '~/components/shared/PostManageForm'
 import { newPost } from '~/actions/new-post'
@@ -24,12 +25,17 @@ const NewPostCard = ({ isLogged }: INewPostFormProps) => {
 
   const [isPending, startTransition] = useTransition()
 
+  const [initCategories] = useStore((state) => {
+    return [state.categories]
+  })
+
   const form = useForm<TManagePostForm>({
     defaultValues: {
       title: '',
       content: '',
       files: [],
-      published: false
+      published: false,
+      categories: []
     },
     resolver: zodResolver(ManagePostSchema)
   })
@@ -53,9 +59,17 @@ const NewPostCard = ({ isLogged }: INewPostFormProps) => {
         }
       }
 
-      const { files, ...restValues } = values
+      const { files, categories, ...restValues } = values
 
-      const newPostValues = { ...restValues, imageUrls }
+      const categoriesWithId = initCategories?.filter((category) => {
+        return categories?.includes(category?.name)
+      })
+
+      const newPostValues = {
+        ...restValues,
+        imageUrls,
+        categories: categoriesWithId
+      }
 
       newPost(newPostValues)
         .then((data) => {
