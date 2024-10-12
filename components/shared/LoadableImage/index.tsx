@@ -5,6 +5,7 @@ import Image, { type ImageProps } from 'next/image'
 import { useOnScreen } from '~/hooks/useOnScreen'
 
 interface ILoadableImageProps extends ImageProps {
+  containerHeight: number
   containerClassNames?: string
   imageClassNames?: string
 }
@@ -12,8 +13,7 @@ interface ILoadableImageProps extends ImageProps {
 const LoadableImage = ({
   src,
   alt,
-  width,
-  height,
+  containerHeight,
   containerClassNames,
   imageClassNames,
   ...props
@@ -27,7 +27,12 @@ const LoadableImage = ({
   return (
     <div
       ref={containerRef}
-      className={`relative box-border h-full min-h-[${height}px] overflow-hidden bg-[linear-gradient(101.42deg,_#b7dbff_-0.04%,_rgba(223,_239,_255,_0.27)_94.2%)]
+      style={{
+        width: '100%',
+        height: `${containerHeight}px`,
+        position: 'relative'
+      }}
+      className={`box-border overflow-hidden bg-[linear-gradient(101.42deg,_#b7dbff_-0.04%,_rgba(223,_239,_255,_0.27)_94.2%)]
       before:absolute before:left-[-110%] before:top-0 before:block before:h-full before:w-full before:animate-image-on-load before:bg-gradient-to-r before:from-transparent before:via-[#07629317] before:to-transparent before:content-['']
       ${isLoaded ? 'bg-none before:animate-none before:bg-none' : ''}  
       ${containerClassNames || ''}`}
@@ -36,8 +41,8 @@ const LoadableImage = ({
         <Image
           src={src}
           alt={alt}
-          width={width}
-          height={height}
+          fill
+          sizes="100%"
           onLoad={() => {
             return setIsLoaded(true)
           }}

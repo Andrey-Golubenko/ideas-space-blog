@@ -44,6 +44,7 @@ const PostManageForm = ({
   })
 
   useEffect(() => {
+    // TODO: To explore the possibility to make request only when no cat exist
     getAllCategories()
   }, [])
 

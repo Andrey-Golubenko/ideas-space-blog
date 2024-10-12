@@ -59,9 +59,8 @@ const FilesList = ({
               <LoadableImage
                 src={url}
                 alt={imageName}
-                width={130}
-                height={130}
-                imageClassNames={`aspect-square h-[130px] w-auto border object-cover ${isPending ? 'grayscale' : ''}`}
+                containerHeight={130}
+                imageClassNames={`border object-cover ${isPending ? 'grayscale' : ''}`}
               />
               {!isPending && (
                 <CrossCircledIcon
@@ -89,9 +88,8 @@ const FilesList = ({
               <LoadableImage
                 src={url || URL.createObjectURL(file)}
                 alt={fileName}
-                width={130}
-                height={130}
-                imageClassNames={`aspect-square h-[130px] w-auto border object-cover ${isPending ? 'grayscale' : ''}`}
+                containerHeight={130}
+                imageClassNames={`border object-cover ${isPending ? 'grayscale' : ''}`}
               />
               {!isPending && (
                 <CrossCircledIcon

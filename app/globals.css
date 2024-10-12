@@ -72,15 +72,15 @@ body {
 /* text-stroke white untility */
 @layer utilities {
   .text-outline-white {
-    -webkit-text-stroke: 1px rgba(255,255,255,0.2);
-    text-stroke: 1px rgba(255,255,255,0.2);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+    text-stroke: 1px rgba(255, 255, 255, 0.2);
   }
 }
 
 /* text-shadow black untility */
 @layer utilities {
   .text-shadow-black {
-    text-shadow: 0 0 12px rgba(0,0,0,0.6)
+    text-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
   }
 }
 

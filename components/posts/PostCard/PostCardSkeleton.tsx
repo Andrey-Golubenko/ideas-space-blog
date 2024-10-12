@@ -38,6 +38,7 @@ const PostCardSkeleton = ({ post, isLoading }: IPostCardSkeletonProps) => {
           postImage={postImage}
           postTitle={postTitle}
           postId={post?.id || ''}
+          imagePriority
         />
       ) : (
         <>

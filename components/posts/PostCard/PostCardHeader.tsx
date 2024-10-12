@@ -6,18 +6,20 @@ import { cn } from '~/libs/utils'
 import { CardHeader } from '~/components/ui/card'
 import LoadableImage from '~/components/shared/LoadableImage'
 import { fontPoppins } from '~/utils/constants/fonts'
-import { IMAGES_PATHS, PATHS } from '~/utils/constants/constants'
+import { PATHS } from '~/utils/constants/constants'
 
 interface IPostCardHeaderProps {
   postImage: string
   postTitle: string
   postId: string
+  imagePriority?: boolean
 }
 
 const PostCardHeader = ({
   postImage,
   postTitle,
-  postId
+  postId,
+  imagePriority
 }: IPostCardHeaderProps) => {
   return (
     <>
@@ -28,11 +30,10 @@ const PostCardHeader = ({
         <LoadableImage
           src={postImage}
           alt="Post image"
-          width={130}
-          height={100}
-          priority={postImage === IMAGES_PATHS.noImages}
-          imageClassNames="aspect-[5/4] h-full w-full rounded-t-md object-cover duration-500 hover:rounded-md"
-          containerClassNames="rounded-t-md duration-700 hover:scale-110 hover:rounded-t-md"
+          containerHeight={220}
+          priority={imagePriority}
+          imageClassNames="rounded-t-md object-cover hover:rounded-md"
+          containerClassNames="rounded-t-md duration-700 hover:scale-110 hover:rounded-md"
         />
       </Link>
 
