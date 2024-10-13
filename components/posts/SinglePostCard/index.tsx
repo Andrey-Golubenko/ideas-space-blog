@@ -55,9 +55,9 @@ const SinglePostCard = ({ post }: ISinglePostCardProps) => {
         </div>
       </CardContent>
 
-      <CardFooter>
+      <CardFooter className="w-full sm:w-2/3">
         {isPostManageable && (
-          <div className="flex flex-row items-center justify-center gap-x-6">
+          <div className="flex w-full flex-row items-center justify-between gap-x-6">
             <EditPostButton
               postId={post?.id}
               isPending={isPending}

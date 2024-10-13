@@ -13,9 +13,8 @@ const EditPostButton = ({ postId, isPending }: IChangePostButtonProps) => {
   return (
     <Button
       variant="outline"
-      size="sm"
       disabled={isPending}
-      className={`min-w-[90px]  text-white  ${!isPending ? 'bg-blue-500 hover:bg-blue-500/90 hover:text-white' : ''}`}
+      className={`h-10 w-[40%] min-w-[90px] rounded-lg text-white md:w-[35%] lg:w-[25%] ${!isPending ? 'bg-blue-700 hover:bg-blue-700/90 hover:text-white' : ''}`}
       asChild
     >
       <Link href={`${PATHS.blog}/${postId}${PATHS.editPost}`}>

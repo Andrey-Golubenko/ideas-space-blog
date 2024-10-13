@@ -8,6 +8,15 @@ import useStore from '~/store'
 import { deletePost } from '~/actions/delete-post'
 import { destroyImagesInCloudinary } from '~/services/posts/imagesProcessing.client'
 import { Button } from '~/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from '~/components/ui/dialog'
 import { PATHS } from '~/utils/constants/constants'
 
 interface IPostDeleteButtonProps {
@@ -63,15 +72,36 @@ const DeletePostButton = ({
   }
 
   return (
-    <Button
-      variant={isPending ? 'outline' : 'destructive'}
-      size="sm"
-      disabled={isPending}
-      className="min-w-[90px]"
-      onClick={handleDelete}
-    >
-      Delete post
-    </Button>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button
+          disabled={isPending}
+          className={`h-10 w-[40%] min-w-[90px] rounded-lg bg-red-800 hover:bg-red-800/90 md:w-[35%] lg:w-[25%] ${isPending ? 'grayscale' : ''}`}
+        >
+          Delete post
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[430px]">
+        <DialogHeader>
+          <DialogTitle className="mb-4 text-center">
+            Delete post
+          </DialogTitle>
+          <DialogDescription className="!mb-4 text-base">
+            This action cannot be undone. This will permanently delete your
+            post and remove its data.
+          </DialogDescription>
+          <DialogFooter className="sm:justify-center">
+            <Button
+              type="submit"
+              onClick={handleDelete}
+              className="bg-red-800 hover:bg-red-700"
+            >
+              Permanently delete post
+            </Button>
+          </DialogFooter>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
   )
 }
 

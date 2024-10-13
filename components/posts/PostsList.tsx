@@ -5,7 +5,7 @@ import { type Post } from '@prisma/client'
 import PostCard from '~/components/posts/PostCard/PostCard'
 import NoPostsCard from '~/components/posts/NoPostsCard'
 import PostsSkeletonList from '~/components/posts/PostsSkeletonList'
-import { useTablet } from '~/hooks/useTablet'
+import { useIsMobile } from '~/hooks/useIsMobile'
 
 interface IPostListProps {
   posts: Post[]
@@ -14,7 +14,7 @@ interface IPostListProps {
 }
 
 const PostsList = ({ posts, postsCount, isLoading }: IPostListProps) => {
-  const isTablet = useTablet()
+  const isTablet = useIsMobile()
 
   const publishedPosts =
     posts.filter((post) => {

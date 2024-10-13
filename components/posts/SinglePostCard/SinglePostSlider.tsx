@@ -10,6 +10,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/thumbs'
 
 import LoadableImage from '~/components/shared/LoadableImage'
+import { useIsMobile } from '~/hooks/useIsMobile'
 
 interface ISinglePostAliderProps {
   imageUrls: string[]
@@ -17,8 +18,16 @@ interface ISinglePostAliderProps {
 
 const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
+  const isMobil = useIsMobile()
 
-  const thumbsPerView = Math.min(imageUrls?.length ?? 0, 3)
+  const multiThumbsPerView = isMobil ? 2.5 : 3
+
+  const thumbsPerView = Math.min(
+    imageUrls?.length ?? 0,
+    multiThumbsPerView
+  )
+
+  const thumbsHeight = isMobil ? 95 : 130
 
   return (
     <div className="xs:w-full lg:w-[80%] lg:pt-10">
@@ -47,7 +56,7 @@ const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
                   alt="Photo of the post"
                   containerHeight={500}
                   priority={index === 0}
-                  imageClassNames="block h-[500px] rounded-t-md object-cover"
+                  imageClassNames="block lg:rounded-b-md rounded-t-md object-cover"
                 />
               </SwiperSlide>
             )
@@ -60,14 +69,14 @@ const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
           '--swiper-pagination-color': '#fff'
         }}
         onSwiper={setThumbsSwiper as (swiper: unknown) => void}
-        navigation
+        navigation={!isMobil}
         loop
         spaceBetween={10}
         slidesPerView={thumbsPerView}
         freeMode
         watchSlidesProgress
         modules={[FreeMode, Navigation, Thumbs]}
-        className="box-border w-[75%] px-3 py-0"
+        className="box-border px-3 py-0 xs:w-[90%] sm:w-[82%] md:w-[75%]"
       >
         {!!imageUrls?.length &&
           imageUrls?.map((url, index) => {
@@ -79,9 +88,9 @@ const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
                 <LoadableImage
                   src={url}
                   alt="Thumbnail of the post"
-                  containerHeight={130}
+                  containerHeight={thumbsHeight}
                   priority={index === 0}
-                  imageClassNames="block h-[130px] w-full rounded-md object-cover"
+                  imageClassNames="block w-full rounded-md object-cover"
                 />
               </SwiperSlide>
             )

@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 
-import SinglePostCard from '~/components/posts/SinglePostCard/SinglePostCard'
+import SinglePostPageView from '~/views/SinglePostPageView'
 import { getSinglePost } from '~/services/posts/posts.server'
 
 interface ISinglePostProps {
@@ -19,10 +19,8 @@ export async function generateMetadata({
   }
 }
 
-const SinglePostPage = async ({ params: { slug } }: ISinglePostProps) => {
-  const singlePost = await getSinglePost(slug)
-
-  return <SinglePostCard post={singlePost} />
+const SinglePost = async ({ params: { slug } }: ISinglePostProps) => {
+  return <SinglePostPageView postId={slug} />
 }
 
-export default SinglePostPage
+export default SinglePost

@@ -42,7 +42,7 @@ body {
 
 .swiper-button-next,
 .swiper-button-prev {
-  @apply !block !h-[50px] !w-[50px] rounded-full border border-[#837d7d] bg-[url('/icons/slider-arrow.svg')] bg-[length:120%_auto] bg-center bg-no-repeat;
+  @apply !block !h-[30px] !w-[30px] rounded-full border border-[#837d7d] bg-[url('/icons/slider-arrow.svg')] bg-[length:100%_auto] bg-center bg-no-repeat !mt-0 -translate-y-1/2;
 }
 
 .swiper-button-prev {
