@@ -28,13 +28,13 @@ const FilesList = ({
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
-    if (files?.length) {
-      const urls = files?.map((file) => {
-        return URL.createObjectURL(file)
-      })
-      setFilesUrls(urls)
+    const urls = files?.map((file) => {
+      return URL.createObjectURL(file)
+    })
+    setFilesUrls(urls || [])
 
-      return () => {
+    return () => {
+      if (urls) {
         urls.forEach((url) => {
           return URL.revokeObjectURL(url)
         })

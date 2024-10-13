@@ -44,8 +44,7 @@ const PostManageForm = ({
   })
 
   useEffect(() => {
-    // TODO: To explore the possibility to make request only when no cat exist
-    getAllCategories()
+    if (!categories?.length) getAllCategories()
   }, [])
 
   const multiOptions: IMultiSelectProps['options'] =

@@ -16,9 +16,7 @@ import {
   type FieldError
 } from 'react-hook-form'
 import { v4 as uuidv4 } from 'uuid'
-import { type Post } from '@prisma/client'
 
-import useStore from '~/store'
 import FormError from '~/components/FormError'
 import DuplicatesFilesList from '~/components/shared/FilesField/DuplicatesFilesList'
 import FilesList from '~/components/shared/FilesField/FilesList'
@@ -48,14 +46,10 @@ const FilesField = ({
 }: IFilesFieldProps & FormHTMLAttributes<HTMLInputElement>) => {
   const [filesErrors, setFilesErrors] = useState<TFileError[]>([])
 
-  const [setEditablePost] = useStore((state) => {
-    return [state.setEditablePost]
-  })
-
   const { register, unregister, setValue } =
     useFormContext<TManagePostForm>()
 
-  const files = useWatch<TManagePostForm, 'files'>({ name: 'files' })
+  const files = useWatch<TManagePostForm, 'files'>({ name: 'files' }) || []
   const imageUrls =
     useWatch<TManagePostForm, 'imageUrls'>({
       name: 'imageUrls'
@@ -92,9 +86,10 @@ const FilesField = ({
       const newFiles = files?.filter((file) => {
         return file?.name !== fileName
       })
-      setValue(name as 'files', newFiles)
+
+      setValue('files', newFiles)
     },
-    [files, name, setValue]
+    [files, setValue]
   )
 
   const handleOnImageUrlDelete = useCallback(
@@ -103,14 +98,9 @@ const FilesField = ({
         return !url.includes(fileName)
       })
 
-      setEditablePost((prevEditablePost: Post) => {
-        return {
-          ...prevEditablePost,
-          imageUrls: newImageUrls
-        }
-      })
+      setValue('imageUrls', newImageUrls)
     },
-    [imageUrls, setEditablePost]
+    [imageUrls, setValue]
   )
 
   const handleDropRejected = (fileRejections: FileRejection[]) => {

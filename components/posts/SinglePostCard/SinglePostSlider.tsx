@@ -20,6 +20,7 @@ const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
   const isMobil = useIsMobile()
 
+  /** Count of the thumbnails to view for mobil and for desktop */
   const multiThumbsPerView = isMobil ? 2.5 : 3
 
   const thumbsPerView = Math.min(
@@ -27,6 +28,17 @@ const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
     multiThumbsPerView
   )
 
+  /** Set to true to enable continuous loop mode.
+   * It is taken into account that the sum of the parameters 'slidesPerView' and 'slidesPerGroup' (1 - by default) for thumbnails should be no more than 3 (parameter 'slidesPerView' for thumbnails)
+   */
+  const isThumsInLoop = thumbsPerView - 1 >= 3
+
+  /** Set to true to enable continuous loop mode.
+   * It is taken into account that the sum of the parameters 'slidesPerView' and 'slidesPerGroup' (1 - by default) for thumbnails should be no more than 1 (parameter 'slidesPerView' for images)
+   */
+  const isImageInLoop = imageUrls.length - 1 >= 1
+
+  /** The height of the slider container with thumbnails in pixels */
   const thumbsHeight = isMobil ? 95 : 130
 
   return (
@@ -38,7 +50,7 @@ const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
         }}
         navigation
         slidesPerView={1}
-        loop
+        loop={isImageInLoop}
         spaceBetween={10}
         thumbs={{ swiper: thumbsSwiper }}
         modules={[FreeMode, Navigation, Thumbs]}
@@ -70,7 +82,7 @@ const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
         }}
         onSwiper={setThumbsSwiper as (swiper: unknown) => void}
         navigation={!isMobil}
-        loop
+        loop={isThumsInLoop}
         spaceBetween={10}
         slidesPerView={thumbsPerView}
         freeMode

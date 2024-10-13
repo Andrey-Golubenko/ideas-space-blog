@@ -27,6 +27,10 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
   const [success, setSuccess] = useState<string | undefined>('')
   const [error, setError] = useState<string | undefined>('')
 
+  const [isPending, startTransition] = useTransition()
+
+  const router = useRouter()
+
   const [posts, editablePost, setEditablePost] = useStore((state) => {
     return [state.posts, state.editablePost, state.setEditablePost]
   })
@@ -35,10 +39,6 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
     posts?.find((post) => {
       return post?.id === (editablePost as Post)?.id
     }) || {}
-
-  const [isPending, startTransition] = useTransition()
-
-  const router = useRouter()
 
   const {
     id: postId,
@@ -52,18 +52,16 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
 
   const form = useForm<TManagePostForm>({
     defaultValues: {
-      title: title || '',
-      content: content || '',
+      title: '',
+      content: '',
       files: [],
-      imageUrls: imageUrls || [],
-      published: published || false
+      imageUrls: [],
+      published: false
     },
     resolver: zodResolver(ManagePostSchema)
   })
 
-  // To prevent empty form values after the page is reloaded
-  const { imageUrls: editablePostImageUrls, ...restEditablePost } =
-    editablePost as Post
+  const isEditablePostExist = !!Object.values(editablePost)?.length
 
   useEffect(() => {
     if (Object.values(editablePost)?.length) {
@@ -74,7 +72,7 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
         published: published || false
       })
     }
-  }, [restEditablePost, form])
+  }, [isEditablePostExist])
 
   const handleOnSubmit = (values: TManagePostForm) => {
     setError('')
