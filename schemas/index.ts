@@ -8,8 +8,21 @@ import {
 } from '~/utils/constants/constants'
 
 export const SingleCategorySchema = z.object({
-  id: z.string({ message: 'Id is required field!' }),
-  name: z.string({ message: 'Name is required field!' })
+  name: z.string({ message: 'Category name is required field!' }),
+  description: z.string({ message: 'Description is required field!' }),
+  imageUrl: z.optional(z.string()),
+  file: z.optional(
+    z.array(
+      z.instanceof(File).refine(
+        (file) => {
+          return file.size <= MAX_FILE_SIZE
+        },
+        {
+          message: `The file size should be no more than ${MAX_FILE_SIZE / 1024 / 1024} MB. Try again please.`
+        }
+      )
+    )
+  )
 })
 
 export const ManagePostSchema = z.object({

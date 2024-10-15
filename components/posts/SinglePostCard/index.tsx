@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useTransition } from 'react'
-import { type Post } from '@prisma/client'
+import { ClockIcon } from '@radix-ui/react-icons'
 
 import useStore from '~/store'
 import {
@@ -17,7 +17,7 @@ import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
 import { useCurrentUser } from '~/hooks/useCurrentUser'
 
 interface ISinglePostCardProps {
-  post: Post | null
+  post: PostDTO | null
 }
 
 const SinglePostCard = ({ post }: ISinglePostCardProps) => {
@@ -39,7 +39,11 @@ const SinglePostCard = ({ post }: ISinglePostCardProps) => {
 
   const singlePostTitle: string | '' = toUpperCaseFirstChar(post?.title)
 
-  const { imageUrls = [] } = post as Post
+  const { imageUrls = [] } = post as PostDTO
+
+  const postCategories = post?.categories?.map((categoriesItem) => {
+    return categoriesItem?.category?.name
+  })
 
   return (
     <Card className="my-12 flex w-full flex-col items-center justify-between rounded-md border-none shadow-md">
@@ -50,6 +54,34 @@ const SinglePostCard = ({ post }: ISinglePostCardProps) => {
       </CardHeader>
 
       <CardContent>
+        <div>
+          <p>
+            <span className="text-sm italic text-slate-500">
+              Categories:{' '}
+            </span>
+            {!!postCategories?.length &&
+              postCategories.map((categoryName, index) => {
+                return (
+                  // TODO: Change to <Link> to category pages
+                  <span
+                    className="text-yellow-600/90"
+                    key={categoryName}
+                  >
+                    {categoryName}
+                    {!(postCategories.length - 1 === index) && (
+                      <span className="text-black">, </span>
+                    )}
+                  </span>
+                )
+              })}
+          </p>
+          <p className="flex">
+            <ClockIcon className="mr-4" />
+            <span className="text-sm italic">
+              {post?.createdAt.toLocaleDateString()}
+            </span>
+          </p>
+        </div>
         <div className="rounded-lg bg-slate-100 px-2 text-justify">
           {post?.content}
         </div>

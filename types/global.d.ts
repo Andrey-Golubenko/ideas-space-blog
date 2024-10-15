@@ -1,4 +1,4 @@
-import { PrismaClient, UserRole } from '@prisma/client'
+import { Categories, Post, PrismaClient, UserRole } from '@prisma/client'
 
 declare global {
   var prisma: PrismaClient | undefined
@@ -25,6 +25,16 @@ declare global {
   interface INavMenuProps {
     isLoggedIn: boolean
     isMobile: boolean
+  }
+}
+
+declare global {
+  interface PostDTO extends Post {
+    categories: {
+      postId: string
+      categoryId: string
+      category: Categories
+    }[]
   }
 }
 

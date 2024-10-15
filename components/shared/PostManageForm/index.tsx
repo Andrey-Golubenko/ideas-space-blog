@@ -7,8 +7,8 @@ import useStore from '~/store'
 import { Form } from '~/components/ui/form'
 import TextField from '~/components/shared/TextField'
 import TextAreaField from '~/components/shared/TextAreaField'
-import SwitchField from '~/components/shared/SwitchField'
 import FilesField from '~/components/shared/FilesField'
+import SwitchField from '~/components/shared/SwitchField'
 import MultiSelectField from '~/components/shared/MultiSelectField'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
@@ -72,6 +72,8 @@ const PostManageForm = ({
 
           <FilesField
             name="files"
+            additionalName="imageUrls"
+            multiple
             filesDuplicates={filesDuplicates}
             setFilesDuplicate={setFilesDuplicate}
             validateErrors={form.formState.errors.files}

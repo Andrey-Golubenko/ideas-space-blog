@@ -19,8 +19,8 @@ export async function generateMetadata({
   }
 }
 
-const SinglePost = async ({ params: { slug } }: ISinglePostProps) => {
+const SinglePostPage = async ({ params: { slug } }: ISinglePostProps) => {
   return <SinglePostPageView postId={slug} />
 }
 
-export default SinglePost
+export default SinglePostPage

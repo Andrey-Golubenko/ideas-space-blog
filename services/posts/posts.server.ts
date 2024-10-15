@@ -1,14 +1,20 @@
 'use server'
 
-import { type Post } from '@prisma/client'
 import { db } from '~/libs/db'
 
 export const getSinglePost = async (
   slug: string
-): Promise<Post | null> => {
+): Promise<PostDTO | null> => {
   try {
     const post = await db.post.findUnique({
-      where: { id: slug }
+      where: { id: slug },
+      include: {
+        categories: {
+          include: {
+            category: true
+          }
+        }
+      }
     })
 
     return post

@@ -3,7 +3,7 @@ import { type FileRejection, type DropEvent } from 'react-dropzone'
 import { type VariantProps } from 'class-variance-authority'
 
 // eslint-disable-next-line import/no-cycle
-import { ManagePostSchema } from '~/schemas'
+import { ManagePostSchema, SingleCategorySchema } from '~/schemas'
 import { multiSelectVariants } from '~/components/ui/multi-select/multiSelectVariants'
 
 export interface INavLink {
@@ -16,6 +16,8 @@ export interface ICommonErrorCardProps {
 }
 
 export type TManagePostForm = z.infer<typeof ManagePostSchema>
+
+export type TManageCategoryForm = z.infer<typeof SingleCategorySchema>
 
 export type TFileError = {
   fileName?: string

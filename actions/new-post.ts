@@ -1,14 +1,17 @@
 'use server'
 
 import * as z from 'zod'
-import { getCurrentUser } from '~/utils/helpers/server.helpers'
-import { ManagePostSchema } from '~/schemas'
-import { getUserById } from '~/services/user'
+
 import { db } from '~/libs/db'
+import { getCurrentUser } from '~/utils/helpers/server.helpers'
+import { getUserById } from '~/services/user'
+import { Categories } from '@prisma/client'
+import { ManagePostSchema } from '~/schemas'
+import { TManagePostForm } from '~/types/types'
 
 export const newPost = async (
-  values: Omit<z.infer<typeof ManagePostSchema>, 'files'> & {
-    imageUrls: string[]
+  values: Omit<TManagePostForm, 'categories' | 'files'> & {
+    categories: Categories[]
   }
 ) => {
   const validatedFields = ManagePostSchema.safeParse(values)
@@ -33,7 +36,7 @@ export const newPost = async (
     validatedFields.data
 
   const categoryIds = categories?.map((category) => {
-    return (category as { id: string; name: string })?.id
+    return (category as Categories)?.id
   })
 
   try {

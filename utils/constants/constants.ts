@@ -13,6 +13,7 @@ export const PATHS = {
   profile: '/profile',
   settings: '/settings',
   admin: '/admin',
+  newCategory: '/admin/new-category',
 
   signIn: '/auth',
   logIn: '/auth/login',
@@ -76,3 +77,16 @@ export const CLOUDINARY_IMAGE_FOLDER = 'nextjs-blog'
 export const SCREEN_SM = 480
 
 export const SCREEN_MD = 768
+
+// TODO: For storage as an example
+enum InitCategoriesName {
+  Finance,
+  Travel,
+  Home_and_Garden,
+  Sports_and_Health,
+  Lifestyle,
+  Nature,
+  Technology,
+  Technic,
+  Economy
+}

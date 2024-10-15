@@ -1,16 +1,25 @@
 'use client'
 
-import { UserRole } from '@prisma/client'
+import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import { UserRole } from '@prisma/client'
 
-import FormSuccess from '~/components/FormSuccess'
 import { Card, CardHeader, CardContent } from '~/components/ui/card'
 import RoleGate from '~/components/auth/RoleGate'
-import AdminCardItem from '~/components/auth/AdminCardItem'
+
+import AdminCardItem from '~/components/admin/AdminCardItem'
+import FormSuccess from '~/components/FormSuccess'
+
 import { PATHS } from '~/utils/constants/constants'
 import { admin } from '~/actions/admin'
 
 const AdminCard = () => {
+  const router = useRouter()
+
+  const handleOnCreateCategory = () => {
+    router.push(PATHS.newCategory)
+  }
+
   const onServerActionClick = () => {
     admin().then((data) => {
       if (data.success) {
@@ -46,7 +55,7 @@ const AdminCard = () => {
   }
 
   return (
-    <Card className="flex min-h-[420px] flex-col">
+    <Card className="mb-12 flex min-h-[420px] flex-col">
       <CardHeader>
         <p className="text-center text-2xl font-semibold">🔑 Admin</p>
       </CardHeader>
@@ -56,11 +65,18 @@ const AdminCard = () => {
         </RoleGate>
         <AdminCardItem
           label="Admin-only API Route"
+          buttonLabel="Click to test"
           handleClick={onApiRouteClick}
         />
         <AdminCardItem
           label="Admin-only Server Action"
+          buttonLabel="Click to test"
           handleClick={onServerActionClick}
+        />
+        <AdminCardItem
+          label="Create a new post category"
+          buttonLabel="Click to create"
+          handleClick={handleOnCreateCategory}
         />
       </CardContent>
     </Card>

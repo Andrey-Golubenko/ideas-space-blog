@@ -1,26 +1,24 @@
 import { useCallback, type Dispatch, type SetStateAction } from 'react'
-import { type UseFormSetValue } from 'react-hook-form'
+import { type FieldValues, type UseFormSetValue } from 'react-hook-form'
 
 import { MAX_FILES_COUNT } from '~/utils/constants/constants'
 import { getImageNames } from '~/utils/helpers/helpers'
 import { SingleFileSchema } from '~/schemas'
-import {
-  type OnDropType,
-  type TFileError,
-  type TManagePostForm
-} from '~/types/types'
+import { type OnDropType, type TFileError } from '~/types/types'
 
 interface IuseOnDropProps {
   fieldName: string
+  multiple: boolean
   files?: File[]
   imageUrls: string[]
   setFilesErrors: Dispatch<SetStateAction<[] | TFileError[]>>
-  setFilesDuplicate: Dispatch<SetStateAction<[] | string[]>>
-  setValue: UseFormSetValue<TManagePostForm>
+  setFilesDuplicate?: Dispatch<SetStateAction<[] | string[]>>
+  setValue: UseFormSetValue<FieldValues>
 }
 
 export const useOnDrop = ({
   fieldName,
+  multiple,
   files,
   imageUrls,
   setFilesErrors,
@@ -34,10 +32,11 @@ export const useOnDrop = ({
       const validFiles: File[] = []
       const errors: TFileError[] = []
       const filesCount = (files?.length || 0) + (droppedFiles?.length || 0)
+      const maxFileCount = multiple ? MAX_FILES_COUNT : 1
 
-      if (filesCount > MAX_FILES_COUNT) {
+      if (filesCount > maxFileCount) {
         errors.push({
-          message: `You can upload up to ${MAX_FILES_COUNT} files only. Try again please.`
+          message: `You can upload up to ${maxFileCount} files only. Try again please.`
         })
       } else {
         droppedFiles.forEach((file) => {
@@ -67,19 +66,22 @@ export const useOnDrop = ({
         })
         .concat(existingImageNames as [])
 
-      const duplicatedFiles = validFiles
-        .filter((file) => {
-          return existingFilesNames?.includes(file?.name)
-        })
-        .map((file) => {
-          return file?.name
-        })
+      const duplicatedFiles =
+        validFiles
+          .filter((file) => {
+            return existingFilesNames?.includes(file?.name)
+          })
+          .map((file) => {
+            return file?.name
+          }) || []
 
       const uniqueFiles = validFiles.filter((file) => {
         return !existingFilesNames?.includes(file?.name)
       })
 
-      setFilesDuplicate(duplicatedFiles)
+      if (duplicatedFiles?.length && setFilesDuplicate) {
+        setFilesDuplicate(duplicatedFiles)
+      }
 
       if (uniqueFiles.length) {
         const newFiles =

@@ -25,19 +25,23 @@ import {
   MAX_FILE_SIZE
 } from '~/utils/constants/constants'
 import { useOnDrop } from '~/hooks/useOnDrop'
-import { type TFileError, type TManagePostForm } from '~/types/types'
+import { type TFileError } from '~/types/types'
 
 interface IFilesFieldProps {
   name: string
+  additionalName: string
+  multiple?: boolean
   type?: string
-  filesDuplicates: string[]
-  setFilesDuplicate: Dispatch<SetStateAction<[] | string[]>>
+  filesDuplicates?: string[]
+  setFilesDuplicate?: Dispatch<SetStateAction<[] | string[]>>
   validateErrors?: Merge<FieldError, (FieldError | undefined)[]>
   isPending: boolean
 }
 
 const FilesField = ({
   name,
+  additionalName,
+  multiple = false,
   filesDuplicates,
   setFilesDuplicate,
   validateErrors,
@@ -46,30 +50,16 @@ const FilesField = ({
 }: IFilesFieldProps & FormHTMLAttributes<HTMLInputElement>) => {
   const [filesErrors, setFilesErrors] = useState<TFileError[]>([])
 
-  const { register, unregister, setValue } =
-    useFormContext<TManagePostForm>()
-
-  const files = useWatch<TManagePostForm, 'files'>({ name: 'files' }) || []
-  const imageUrls =
-    useWatch<TManagePostForm, 'imageUrls'>({
-      name: 'imageUrls'
-    }) || []
-
-  const { onDrop } = useOnDrop({
-    fieldName: name,
-    files,
-    imageUrls,
-    setFilesErrors,
-    setFilesDuplicate,
-    setValue
-  })
+  const { register, unregister, setValue } = useFormContext()
 
   useEffect(() => {
-    register(name as 'files')
+    register(name)
+    register(additionalName)
     return () => {
-      unregister(name as 'files')
+      unregister(name)
+      unregister(additionalName)
     }
-  }, [register, unregister, name])
+  }, [register, unregister, name, additionalName])
 
   useEffect(() => {
     if (Array.isArray(validateErrors) && validateErrors?.length) {
@@ -80,6 +70,24 @@ const FilesField = ({
       })
     }
   }, [validateErrors, setFilesErrors])
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const files: File[] = useWatch({ name }) || []
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const imageUrls: string[] =
+    useWatch({
+      name: additionalName
+    }) || []
+
+  const { onDrop } = useOnDrop({
+    fieldName: name,
+    multiple,
+    files,
+    imageUrls,
+    setFilesErrors,
+    setFilesDuplicate,
+    setValue
+  })
 
   const handleOnFileDelete = useCallback(
     (fileName: string): void => {
@@ -122,7 +130,8 @@ const FilesField = ({
       'image/*': ECCEPTED_IMAGES_EXTENTIONS
     },
     onDrop,
-    onDropRejected: handleDropRejected
+    onDropRejected: handleDropRejected,
+    multiple
   })
 
   const { onChange } = register(name as 'files')
@@ -137,7 +146,7 @@ const FilesField = ({
         <input
           name={name}
           type="file"
-          multiple
+          multiple={multiple}
           accept={`image/*,${ECCEPTED_IMAGES_EXTENTIONS.join(',')}`}
           disabled={isPending}
           {...getInputProps({ onChange })}
@@ -181,7 +190,7 @@ const FilesField = ({
           )
         })}
 
-      {!!filesDuplicates.length && (
+      {!!filesDuplicates?.length && (
         <DuplicatesFilesList filesDuplicates={filesDuplicates} />
       )}
 
