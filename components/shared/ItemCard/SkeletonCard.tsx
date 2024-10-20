@@ -7,9 +7,9 @@ import {
   CardFooter
 } from '~/components/ui/card'
 import { Skeleton } from '~/components/ui/skeleton'
-import ItemCardHeader from '~/components/ItemCard/ItemCardHeader'
-import ItemCardContent from '~/components/ItemCard/ItemCardContent'
-import ItemCardFooter from '~/components/ItemCard/ItemCardFooter'
+import ItemCardHeader from '~/components/shared/ItemCard/ItemCardHeader'
+import ItemCardContent from '~/components/shared/ItemCard/ItemCardContent'
+import ItemCardFooter from '~/components/shared/ItemCard/ItemCardFooter'
 import { useItemProps } from '~/hooks/useItemProps'
 import { useItemType } from '~/hooks/useItemType'
 import { TListItem } from '~/types/types'
@@ -60,6 +60,7 @@ const SkeletonCard = ({ item, isLoading }: IPostCardSkeletonProps) => {
       {hasContent ? (
         <ItemCardFooter
           itemId={item?.id || ''}
+          itemName={itemTitle}
           itemType={{ isPost, isCategory }}
         />
       ) : (

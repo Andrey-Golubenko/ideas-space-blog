@@ -32,12 +32,13 @@ export const newCategory = async (
     return { error: 'Unauthorized!' }
   }
 
-  const { name, description, imageUrl } = validatedFields.data
+  const { name, slug, description, imageUrl } = validatedFields.data
 
   try {
     await db.categories.create({
       data: {
         name,
+        slug,
         description,
         imageUrl
       }
@@ -45,6 +46,6 @@ export const newCategory = async (
 
     return { success: 'The category was successfully created!' }
   } catch (error) {
-    return { error: 'Something went wrong!' }
+    return { error: 'Failed to create new category!' }
   }
 }

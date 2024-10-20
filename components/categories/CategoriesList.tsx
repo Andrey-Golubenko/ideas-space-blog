@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 
 import useStore from '~/store'
 import { useListItemsDistribution } from '~/hooks/useListItemsDistribution'
-import ItemCard from '~/components/ItemCard'
+import ItemCard from '~/components/shared/ItemCard'
 import NoPostsCard from '~/components/posts/NoPostsCard'
 import SkeletonsList from '~/components/posts/SkeletonsList'
 

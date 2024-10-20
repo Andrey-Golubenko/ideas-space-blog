@@ -7,11 +7,11 @@ import { Button } from '~/components/ui/button'
 import { PATHS } from '~/utils/constants/constants'
 
 interface IItemCardFooterProps {
-  itemId: string
+  itemSlug?: string
   itemType: { isPost: boolean; isCategory: boolean }
 }
 
-const PostCardFooter = ({ itemId, itemType }: IItemCardFooterProps) => {
+const PostCardFooter = ({ itemSlug, itemType }: IItemCardFooterProps) => {
   const { isPost, isCategory } = itemType
 
   return (
@@ -23,9 +23,11 @@ const PostCardFooter = ({ itemId, itemType }: IItemCardFooterProps) => {
         asChild
       >
         <Link
-          href={`${
-            (isPost && PATHS.blog) || (isCategory && PATHS.categories)
-          }/${itemId}`}
+          href={
+            (isPost && `${PATHS.blog}/${itemSlug}`) ||
+            (isCategory && `${PATHS.categories}/${itemSlug}`) ||
+            '#'
+          }
         >
           <span className="rounded-lg bg-slate-100 px-2 py-2">
             Read more . . .

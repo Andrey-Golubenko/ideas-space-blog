@@ -80,6 +80,8 @@ export const SCREEN_SM = 480
 
 export const SCREEN_MD = 768
 
+export const SLUG_MODEL = /^[a-z-]+$/
+
 // TODO: For storage as an example
 enum InitCategoriesName {
   Finance,

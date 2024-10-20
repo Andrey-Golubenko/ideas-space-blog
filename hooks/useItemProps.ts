@@ -10,6 +10,7 @@ export const useItemProps = (item?: TListItem) => {
   let itemImage = ''
   let itemTitle = ''
   let itemContent = ''
+  let itemSlug = ''
 
   if (isPost) {
     const post = item as Post
@@ -23,6 +24,8 @@ export const useItemProps = (item?: TListItem) => {
     itemContent = post?.content
       ? `${toUpperCaseFirstChar(post?.content.slice(0, 120))}...`
       : ''
+
+    itemSlug = post?.id
   }
 
   if (isCategory) {
@@ -37,11 +40,14 @@ export const useItemProps = (item?: TListItem) => {
     itemContent = category?.description
       ? `${toUpperCaseFirstChar(category?.description.slice(0, 120))}...`
       : ''
+
+    itemSlug = category?.slug
   }
 
   return {
     itemImage,
     itemTitle,
-    itemContent
+    itemContent,
+    itemSlug
   }
 }

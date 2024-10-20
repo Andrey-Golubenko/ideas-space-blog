@@ -4,13 +4,29 @@ import { UserRole } from '@prisma/client'
 // eslint-disable-next-line import/no-cycle
 import {
   MAX_FILES_COUNT,
-  MAX_FILE_SIZE
+  MAX_FILE_SIZE,
+  SLUG_MODEL
 } from '~/utils/constants/constants'
 
 export const SingleCategorySchema = z.object({
   id: z.optional(z.string()),
-  name: z.string({ message: 'Category name is required field!' }),
-  description: z.string({ message: 'Description is required field!' }),
+  name: z.string({ message: 'Category name is required field!' }).max(50, {
+    message: 'The name of the category should be up to 50 characters'
+  }),
+  slug: z
+    .string()
+    .regex(SLUG_MODEL, {
+      message:
+        'Category slug is required field and must contain only lowercase letters and dashes!'
+    })
+    .max(50, {
+      message: 'The slug of the category should be up to 50 characters'
+    }),
+  description: z
+    .string({ message: 'Description is required field!' })
+    .max(200, {
+      message: 'The description should be up to 200 characters'
+    }),
   imageUrl: z.optional(z.string()),
   file: z.optional(
     z.array(

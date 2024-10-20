@@ -1,15 +1,21 @@
+import SingleCategoryCard from '~/components/categories/SingleCategoryCard'
+import { fetchSingleCategoryByName } from '~/services/categories'
 import { getPostsByCategory } from '~/services/posts/posts.server'
 
 interface ISingleCategoryPageViewProps {
-  categoryId: string
+  categoryName: string
 }
+
 const SingleCategoryPageView = async ({
-  categoryId
+  categoryName
 }: ISingleCategoryPageViewProps) => {
   // TODO: Fetch posts by category
-  const postsByCategory = await getPostsByCategory(categoryId)
+  const singleCategory = await fetchSingleCategoryByName(categoryName)
 
-  return <div>SingleCategoryPageView</div>
+  const postsByCategory =
+    (await getPostsByCategory(singleCategory!?.id)) || []
+
+  return <SingleCategoryCard posts={postsByCategory} />
 }
 
 export default SingleCategoryPageView

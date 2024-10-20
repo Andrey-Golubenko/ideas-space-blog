@@ -1,7 +1,7 @@
 'use client'
 
 import { Post } from '@prisma/client'
-import ItemCard from '~/components/ItemCard'
+import ItemCard from '~/components/shared/ItemCard'
 import NoPostsCard from '~/components/posts/NoPostsCard'
 import SkeletonsList from '~/components/posts/SkeletonsList'
 import { useListItemsDistribution } from '~/hooks/useListItemsDistribution'

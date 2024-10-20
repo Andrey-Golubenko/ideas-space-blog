@@ -49,7 +49,7 @@ export const editPost = async (
     validatedFields.data
 
   try {
-    const post = await db.post.update({
+    await db.post.update({
       where: { id: postId },
       data: {
         title,

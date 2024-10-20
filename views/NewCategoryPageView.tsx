@@ -33,6 +33,7 @@ const NewCategoryPageView = () => {
   const form = useForm<TManageCategoryForm>({
     defaultValues: {
       name: '',
+      slug: '',
       description: '',
       file: [],
       imageUrl: ''
@@ -110,7 +111,16 @@ const NewCategoryPageView = () => {
                 <TextField
                   control={form.control}
                   name="name"
-                  label="Categoty name"
+                  label="Category name"
+                  placeholder="Unique name for the category"
+                  isPending={isPending}
+                />
+
+                <TextField
+                  control={form.control}
+                  name="slug"
+                  label="Category slug"
+                  placeholder="The URL of the category page, in lowercase only, separated by a dash"
                   isPending={isPending}
                 />
 
@@ -124,7 +134,8 @@ const NewCategoryPageView = () => {
                 <TextAreaField
                   control={form.control}
                   name="description"
-                  label="Post content"
+                  label="Category description"
+                  placeholder="A short description of the category"
                   isPending={isPending}
                 />
 
@@ -134,7 +145,7 @@ const NewCategoryPageView = () => {
                 <LoadableButton
                   type="submit"
                   isDisabled={isPending}
-                  label="Create a new post category"
+                  label="Create a new category"
                 />
               </div>
             </form>

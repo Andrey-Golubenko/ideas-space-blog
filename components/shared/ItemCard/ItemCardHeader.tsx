@@ -11,7 +11,7 @@ import { PATHS } from '~/utils/constants/constants'
 interface IItemCardHeaderProps {
   itemImage: string
   itemTitle: string
-  itemId: string
+  itemSlug: string
   itemType: { isPost: boolean; isCategory: boolean }
   imagePriority?: boolean
 }
@@ -19,7 +19,7 @@ interface IItemCardHeaderProps {
 const ItemCardHeader = ({
   itemImage,
   itemTitle,
-  itemId,
+  itemSlug,
   itemType,
   imagePriority
 }: IItemCardHeaderProps) => {
@@ -28,7 +28,11 @@ const ItemCardHeader = ({
   return (
     <>
       <Link
-        href={`${(isPost && PATHS.blog) || (isCategory && PATHS.categories)}/${itemId}`}
+        href={
+          (isPost && `${PATHS.blog}/${itemSlug}`) ||
+          (isCategory && `${PATHS.categories}/${itemSlug}`) ||
+          '#'
+        }
         className="w-full overflow-hidden"
       >
         <LoadableImage

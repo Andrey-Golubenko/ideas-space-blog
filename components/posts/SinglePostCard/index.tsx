@@ -56,7 +56,7 @@ const SinglePostCard = ({ post }: ISinglePostCardProps) => {
   const { imageUrls = [] } = post as FullPost
 
   const postCategories = post?.categories?.map((category) => {
-    return category?.name
+    return { categoryName: category?.name, categorySlug: category?.slug }
   })
 
   return (
@@ -74,22 +74,23 @@ const SinglePostCard = ({ post }: ISinglePostCardProps) => {
               Categories:{' '}
             </span>
             {!!postCategories?.length &&
-              postCategories.map((categoryName, index) => {
-                return (
-                  // TODO: Change to <Link> to category pages
-                  <Link
-                    key={categoryName}
-                    href={`${PATHS.categories}`}
-                  >
-                    <span className="text-yellow-600/90">
-                      {categoryName}
-                      {!(postCategories.length - 1 === index) && (
-                        <span className="text-black">, </span>
-                      )}
-                    </span>
-                  </Link>
-                )
-              })}
+              postCategories.map(
+                ({ categoryName, categorySlug }, index) => {
+                  return (
+                    <Link
+                      key={categorySlug}
+                      href={`${PATHS.categories}/${categorySlug}`}
+                    >
+                      <span className="text-yellow-600/90">
+                        {categoryName}
+                        {!(postCategories.length - 1 === index) && (
+                          <span className="text-black">, </span>
+                        )}
+                      </span>
+                    </Link>
+                  )
+                }
+              )}
           </p>
           <p className="flex items-center">
             <CalendarIcon

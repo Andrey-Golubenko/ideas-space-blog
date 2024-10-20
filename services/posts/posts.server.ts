@@ -31,13 +31,29 @@ export const getSinglePost = async (
 
 export const getPostsByCategory = async (categoryId: string) => {
   try {
-    const posts = await db.postCategories.findMany({
+    const initPosts = await db.post.findMany({
       where: {
-        categoryId
+        categories: {
+          some: {
+            categoryId
+          }
+        }
       },
       include: {
-        post: true
+        categories: {
+          include: {
+            category: true
+          }
+        }
       }
+    })
+
+    const posts: FullPost[] = initPosts?.map((post) => {
+      const categories = post?.categories?.map((singleCategory) => {
+        return singleCategory?.category
+      })
+
+      return { ...post, categories }
     })
 
     return posts

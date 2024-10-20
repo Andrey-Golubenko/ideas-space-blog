@@ -26,6 +26,20 @@ export const fetchSingleCategoryById = async (categoryId: string) => {
   }
 }
 
+export const fetchSingleCategoryByName = async (categoryName: string) => {
+  try {
+    const category = db.categories.findUnique({
+      where: {
+        name: categoryName
+      }
+    })
+
+    return await category
+  } catch (error) {
+    throw new Error('Somthing went wrong!')
+  }
+}
+
 export const fetchSinglePostCategories = async (postId: string) => {
   try {
     const singlePostCategories = await db.postCategories.findMany({

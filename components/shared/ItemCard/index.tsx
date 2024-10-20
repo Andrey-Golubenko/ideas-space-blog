@@ -1,9 +1,9 @@
 'use client'
 
 import { Card } from '~/components/ui/card'
-import ItemCardHeader from '~/components/ItemCard/ItemCardHeader'
-import ItemCardContent from '~/components/ItemCard/ItemCardContent'
-import ItemCardFooter from '~/components/ItemCard/ItemCardFooter'
+import ItemCardHeader from '~/components/shared/ItemCard/ItemCardHeader'
+import ItemCardContent from '~/components/shared/ItemCard/ItemCardContent'
+import ItemCardFooter from '~/components/shared/ItemCard/ItemCardFooter'
 import { useItemProps } from '~/hooks/useItemProps'
 import { useItemType } from '~/hooks/useItemType'
 import { TListItem } from '~/types/types'
@@ -13,7 +13,9 @@ interface IItemCardProps {
 }
 
 const ItemCard = ({ item }: IItemCardProps) => {
-  const { itemImage, itemTitle, itemContent } = useItemProps(item)
+  const { itemImage, itemTitle, itemContent, itemSlug } =
+    useItemProps(item)
+
   const { isPost, isCategory } = useItemType(item)
 
   return (
@@ -21,14 +23,14 @@ const ItemCard = ({ item }: IItemCardProps) => {
       <ItemCardHeader
         itemImage={itemImage}
         itemTitle={itemTitle}
-        itemId={item?.id}
+        itemSlug={itemSlug}
         itemType={{ isPost, isCategory }}
       />
 
       <ItemCardContent itemContent={itemContent} />
 
       <ItemCardFooter
-        itemId={item?.id}
+        itemSlug={itemSlug}
         itemType={{ isPost, isCategory }}
       />
     </Card>

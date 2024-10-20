@@ -1,4 +1,4 @@
-import SkeletonCard from '~/components/ItemCard/SkeletonCard'
+import SkeletonCard from '~/components/shared/ItemCard/SkeletonCard'
 import { TSkeletonItems } from '~/types/types'
 
 interface ISkeletonsListProps {
