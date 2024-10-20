@@ -1,4 +1,4 @@
-import { Metadata } from 'next'
+import { type Metadata } from 'next'
 
 import SinglePostPageView from '~/views/SinglePostPageView'
 import { getSinglePost } from '~/services/posts/posts.server'

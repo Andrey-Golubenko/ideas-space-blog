@@ -42,7 +42,7 @@ const MultiSelectField = ({
               options={options}
               disabled={isPending}
               onValueChange={field.onChange}
-              defaultValue={field.value}
+              fieldValue={field.value}
               placeholder={placeholder}
               {...props}
             />

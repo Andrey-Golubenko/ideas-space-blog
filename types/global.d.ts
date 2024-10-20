@@ -29,12 +29,8 @@ declare global {
 }
 
 declare global {
-  interface PostDTO extends Post {
-    categories: {
-      postId: string
-      categoryId: string
-      category: Categories
-    }[]
+  type FullPost = Partial<Post> & {
+    categories?: Categories[]
   }
 }
 

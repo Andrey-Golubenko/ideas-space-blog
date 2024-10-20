@@ -24,7 +24,10 @@ export default function RootLayout({
         <Providers>
           <div className="relative flex h-screen flex-col">
             <Header />
-            <Toaster position="top-center" />
+            <Toaster
+              position="top-center"
+              className="h-[65px] text-base"
+            />
             {children}
             <Footer />
           </div>

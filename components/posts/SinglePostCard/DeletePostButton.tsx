@@ -15,7 +15,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger
+  DialogTrigger,
+  DialogClose
 } from '~/components/ui/dialog'
 import { PATHS } from '~/utils/constants/constants'
 
@@ -91,13 +92,15 @@ const DeletePostButton = ({
             post and remove its data.
           </DialogDescription>
           <DialogFooter className="sm:justify-center">
-            <Button
-              type="submit"
-              onClick={handleDelete}
-              className="bg-red-800 hover:bg-red-700"
-            >
-              Permanently delete post
-            </Button>
+            <DialogClose asChild>
+              <Button
+                type="submit"
+                onClick={handleDelete}
+                className="bg-red-800 hover:bg-red-700"
+              >
+                Permanently delete post?
+              </Button>
+            </DialogClose>
           </DialogFooter>
         </DialogHeader>
       </DialogContent>

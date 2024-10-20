@@ -17,7 +17,7 @@ import {
 } from '~/services/posts/imagesProcessing.client'
 import { PATHS } from '~/utils/constants/constants'
 import { ManagePostSchema } from '~/schemas'
-import { TManagePostForm } from '~/types/types'
+import { type TManagePostForm } from '~/types/types'
 
 interface IEditPostCardProps {
   isLogged: boolean
@@ -31,9 +31,16 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
 
   const router = useRouter()
 
-  const [posts, editablePost, setEditablePost] = useStore((state) => {
-    return [state.posts, state.editablePost, state.setEditablePost]
-  })
+  const [posts, editablePost, initCategories, setEditablePost] = useStore(
+    (state) => {
+      return [
+        state.posts,
+        state.editablePost,
+        state.categories,
+        state.setEditablePost
+      ]
+    }
+  )
 
   const initialPost =
     posts?.find((post) => {
@@ -45,10 +52,19 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
     title,
     content,
     imageUrls,
-    published
-  } = editablePost as Post
+    published,
+    categories: editablePostCategories
+  } = editablePost as FullPost
+
+  const categoriesFieldValues = editablePostCategories?.map(
+    (editPostCategory) => {
+      return editPostCategory?.name
+    }
+  )
 
   const isDisabled = isPending || !isLogged
+
+  const isEditablePostExist = !!Object.values(editablePost)?.length
 
   const form = useForm<TManagePostForm>({
     defaultValues: {
@@ -56,12 +72,11 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
       content: '',
       files: [],
       imageUrls: [],
-      published: false
+      published: false,
+      categories: []
     },
     resolver: zodResolver(ManagePostSchema)
   })
-
-  const isEditablePostExist = !!Object.values(editablePost)?.length
 
   useEffect(() => {
     if (Object.values(editablePost)?.length) {
@@ -69,7 +84,8 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
         title,
         content,
         imageUrls,
-        published: published || false
+        published: published || false,
+        categories: categoriesFieldValues
       })
     }
   }, [isEditablePostExist])
@@ -114,14 +130,22 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
         if (error) return
       }
 
-      const { files, ...restValues } = values
+      const { files, categories, ...restValues } = values
 
-      const newPostValues = {
+      const categoryIds = (categories as string[])?.map((categoryName) => {
+        const selectedCategory = initCategories?.find((initCat) => {
+          return initCat.name === categoryName
+        })
+        return selectedCategory?.id
+      })
+
+      const newPostValues: TManagePostForm = {
         ...restValues,
-        imageUrls: [...newImageUrlsFromFiles, ...newImageUrls]
+        imageUrls: [...newImageUrlsFromFiles, ...newImageUrls],
+        categories: categoryIds
       }
 
-      editPost(newPostValues, postId).then((data) => {
+      editPost(newPostValues, postId as string).then((data) => {
         setError(data.error)
         setSuccess(data.success)
 

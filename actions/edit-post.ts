@@ -6,7 +6,8 @@ import { getSinglePost } from '~/services/posts/posts.server'
 import { getUserById } from '~/services/user'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
 import { ManagePostSchema } from '~/schemas'
-import { TManagePostForm } from '~/types/types'
+import { type Categories } from '@prisma/client'
+import { type TManagePostForm } from '~/types/types'
 
 export const editPost = async (
   values: TManagePostForm,
@@ -30,6 +31,10 @@ export const editPost = async (
     return { error: 'Unauthorized!' }
   }
 
+  if (!postId) {
+    return { error: 'The post you are trying to edit does not exist' }
+  }
+
   const editablePost = await getSinglePost(postId)
 
   if (!editablePost) {
@@ -40,21 +45,37 @@ export const editPost = async (
     return { error: 'You have no permission to edit this post!' }
   }
 
-  const { title, content, imageUrls, published } = validatedFields.data
+  const { title, content, imageUrls, published, categories } =
+    validatedFields.data
 
   try {
-    await db.post.update({
+    const post = await db.post.update({
       where: { id: postId },
       data: {
         title,
         content,
         imageUrls,
-        published
+        published,
+        categories: {
+          deleteMany: {
+            postId
+          },
+          create: (categories as string[])?.map((catId) => {
+            return {
+              category: {
+                connect: { id: catId }
+              }
+            }
+          })
+        }
+      },
+      include: {
+        categories: true
       }
     })
 
     return { success: 'Post has been successfully edited!' }
   } catch {
-    return { error: 'Something went wrong!' }
+    return { error: 'Failed to update the post!' }
   }
 }

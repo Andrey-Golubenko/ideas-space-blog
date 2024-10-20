@@ -6,11 +6,14 @@ import { CardFooter } from '~/components/ui/card'
 import { Button } from '~/components/ui/button'
 import { PATHS } from '~/utils/constants/constants'
 
-interface IPostCardFooterProps {
-  postId: string
+interface IItemCardFooterProps {
+  itemId: string
+  itemType: { isPost: boolean; isCategory: boolean }
 }
 
-const PostCardFooter = ({ postId }: IPostCardFooterProps) => {
+const PostCardFooter = ({ itemId, itemType }: IItemCardFooterProps) => {
+  const { isPost, isCategory } = itemType
+
   return (
     <CardFooter className="mt-auto justify-end">
       <Button
@@ -19,7 +22,11 @@ const PostCardFooter = ({ postId }: IPostCardFooterProps) => {
         size="sm"
         asChild
       >
-        <Link href={`${PATHS.blog}/${postId}`}>
+        <Link
+          href={`${
+            (isPost && PATHS.blog) || (isCategory && PATHS.categories)
+          }/${itemId}`}
+        >
           <span className="rounded-lg bg-slate-100 px-2 py-2">
             Read more . . .
           </span>

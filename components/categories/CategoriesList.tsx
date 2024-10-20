@@ -1,35 +1,40 @@
 'use client'
 
-import { Post } from '@prisma/client'
+import { useEffect } from 'react'
+
+import useStore from '~/store'
+import { useListItemsDistribution } from '~/hooks/useListItemsDistribution'
 import ItemCard from '~/components/ItemCard'
 import NoPostsCard from '~/components/posts/NoPostsCard'
 import SkeletonsList from '~/components/posts/SkeletonsList'
-import { useListItemsDistribution } from '~/hooks/useListItemsDistribution'
 
-interface IPostListProps {
-  posts: Post[]
-  postsCount: number | null
-  isLoading: boolean
-}
+const CategoriesList = () => {
+  const [categories, getAllCategories, categoriesCount, isLoading] =
+    useStore((state) => {
+      return [
+        state.categories,
+        state.getAllCategories,
+        state.categoriesCount,
+        state.isLoading
+      ]
+    })
 
-const PostsList = ({ posts, postsCount, isLoading }: IPostListProps) => {
-  const publishedPosts =
-    posts.filter((post) => {
-      return post.published
-    }) || []
+  useEffect(() => {
+    getAllCategories()
+  }, [getAllCategories])
 
   const { skeletonItems, restItems, thirdItemInList, noItems } =
-    useListItemsDistribution(publishedPosts, postsCount)
+    useListItemsDistribution(categories, categoriesCount)
 
   return (
-    <section className="mb-8 w-full">
+    <section className="my-20 w-full">
       {!noItems ? (
         <SkeletonsList
           skeletonItems={skeletonItems}
           isLoading={isLoading}
         />
       ) : (
-        <NoPostsCard itemName="posts" />
+        <NoPostsCard itemName="categories" />
       )}
 
       <div className="mb-5 grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
@@ -51,4 +56,4 @@ const PostsList = ({ posts, postsCount, isLoading }: IPostListProps) => {
   )
 }
 
-export default PostsList
+export default CategoriesList

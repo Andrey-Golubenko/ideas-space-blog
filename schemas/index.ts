@@ -8,6 +8,7 @@ import {
 } from '~/utils/constants/constants'
 
 export const SingleCategorySchema = z.object({
+  id: z.optional(z.string()),
   name: z.string({ message: 'Category name is required field!' }),
   description: z.string({ message: 'Description is required field!' }),
   imageUrl: z.optional(z.string()),
@@ -50,8 +51,8 @@ export const ManagePostSchema = z.object({
       })
   ),
   imageUrls: z.optional(z.array(z.string())),
-  categories: z.optional(
-    z.array(z.union([z.string(), SingleCategorySchema]))
+  categories: z.array(
+    z.union([z.optional(z.string()), SingleCategorySchema])
   )
 })
 

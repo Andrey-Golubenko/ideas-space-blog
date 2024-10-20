@@ -1,13 +1,11 @@
 'use server'
 
-import * as z from 'zod'
-
 import { db } from '~/libs/db'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
 import { getUserById } from '~/services/user'
-import { Categories } from '@prisma/client'
 import { ManagePostSchema } from '~/schemas'
-import { TManagePostForm } from '~/types/types'
+import { type Categories } from '@prisma/client'
+import { type TManagePostForm } from '~/types/types'
 
 export const newPost = async (
   values: Omit<TManagePostForm, 'categories' | 'files'> & {
@@ -56,11 +54,14 @@ export const newPost = async (
             }
           })
         }
+      },
+      include: {
+        categories: true
       }
     })
 
-    return { success: 'Post has been successfully created!' }
+    return { success: 'New post has been successfully created!' }
   } catch {
-    return { error: 'Something went wrong!' }
+    return { error: 'Failed to create a new post!' }
   }
 }

@@ -8,27 +8,31 @@ import LoadableImage from '~/components/shared/LoadableImage'
 import { fontPoppins } from '~/utils/constants/fonts'
 import { PATHS } from '~/utils/constants/constants'
 
-interface IPostCardHeaderProps {
-  postImage: string
-  postTitle: string
-  postId: string
+interface IItemCardHeaderProps {
+  itemImage: string
+  itemTitle: string
+  itemId: string
+  itemType: { isPost: boolean; isCategory: boolean }
   imagePriority?: boolean
 }
 
-const PostCardHeader = ({
-  postImage,
-  postTitle,
-  postId,
+const ItemCardHeader = ({
+  itemImage,
+  itemTitle,
+  itemId,
+  itemType,
   imagePriority
-}: IPostCardHeaderProps) => {
+}: IItemCardHeaderProps) => {
+  const { isPost, isCategory } = itemType
+
   return (
     <>
       <Link
-        href={`${PATHS.blog}/${postId}`}
+        href={`${(isPost && PATHS.blog) || (isCategory && PATHS.categories)}/${itemId}`}
         className="w-full overflow-hidden"
       >
         <LoadableImage
-          src={postImage}
+          src={itemImage}
           alt="Post image"
           containerHeight={220}
           priority={imagePriority}
@@ -44,11 +48,11 @@ const PostCardHeader = ({
             fontPoppins.className
           )}
         >
-          {postTitle}
+          {itemTitle}
         </h2>
       </CardHeader>
     </>
   )
 }
 
-export default PostCardHeader
+export default ItemCardHeader

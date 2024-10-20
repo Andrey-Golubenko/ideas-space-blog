@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useTransition } from 'react'
-import { ClockIcon } from '@radix-ui/react-icons'
+import Link from 'next/link'
+import { CalendarIcon } from '@radix-ui/react-icons'
 
 import useStore from '~/store'
 import {
@@ -13,11 +14,12 @@ import {
 import SinglePostSlider from '~/components/posts/SinglePostCard/SinglePostSlider'
 import EditPostButton from '~/components/posts/SinglePostCard/EditPostButton'
 import DeletePostButton from '~/components/posts/SinglePostCard/DeletePostButton'
-import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
 import { useCurrentUser } from '~/hooks/useCurrentUser'
+import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
+import { PATHS } from '~/utils/constants/constants'
 
 interface ISinglePostCardProps {
-  post: PostDTO | null
+  post: FullPost | null
 }
 
 const SinglePostCard = ({ post }: ISinglePostCardProps) => {
@@ -31,31 +33,43 @@ const SinglePostCard = ({ post }: ISinglePostCardProps) => {
 
   const isPostManageable = post?.authorId === user?.id
 
+  const checkPostCategoriesChange = post?.categories
+    ?.map((category) => {
+      return category?.id
+    })
+    .join(', ')
+
   useEffect(() => {
     if (user && post && isPostManageable) {
       setEditablePost(post)
     }
-  }, [user, post, isPostManageable, setEditablePost])
+  }, [
+    user,
+    post,
+    checkPostCategoriesChange,
+    isPostManageable,
+    setEditablePost
+  ])
 
   const singlePostTitle: string | '' = toUpperCaseFirstChar(post?.title)
 
-  const { imageUrls = [] } = post as PostDTO
+  const { imageUrls = [] } = post as FullPost
 
-  const postCategories = post?.categories?.map((categoriesItem) => {
-    return categoriesItem?.category?.name
+  const postCategories = post?.categories?.map((category) => {
+    return category?.name
   })
 
   return (
     <Card className="my-12 flex w-full flex-col items-center justify-between rounded-md border-none shadow-md">
       {!!imageUrls?.length && <SinglePostSlider imageUrls={imageUrls} />}
 
-      <CardHeader className="text-2xl font-semibold">
+      <CardHeader className="pb-8 pt-16 text-2xl font-semibold">
         {singlePostTitle}
       </CardHeader>
 
-      <CardContent>
-        <div>
-          <p>
+      <CardContent className="w-full px-24 pb-12">
+        <div className="mb-5">
+          <p className="mb-2">
             <span className="text-sm italic text-slate-500">
               Categories:{' '}
             </span>
@@ -63,23 +77,33 @@ const SinglePostCard = ({ post }: ISinglePostCardProps) => {
               postCategories.map((categoryName, index) => {
                 return (
                   // TODO: Change to <Link> to category pages
-                  <span
-                    className="text-yellow-600/90"
+                  <Link
                     key={categoryName}
+                    href={`${PATHS.categories}`}
                   >
-                    {categoryName}
-                    {!(postCategories.length - 1 === index) && (
-                      <span className="text-black">, </span>
-                    )}
-                  </span>
+                    <span className="text-yellow-600/90">
+                      {categoryName}
+                      {!(postCategories.length - 1 === index) && (
+                        <span className="text-black">, </span>
+                      )}
+                    </span>
+                  </Link>
                 )
               })}
           </p>
-          <p className="flex">
-            <ClockIcon className="mr-4" />
-            <span className="text-sm italic">
-              {post?.createdAt.toLocaleDateString()}
-            </span>
+          <p className="flex items-center">
+            <CalendarIcon
+              height="17px"
+              width="17px"
+              className="mr-2"
+            />
+            <time
+              className="text-sm italic tracking-wider text-slate-500"
+              dateTime={`${post && post?.createdAt?.toLocaleDateString()}`}
+              suppressHydrationWarning
+            >
+              {post && post?.createdAt?.toLocaleDateString('de')}
+            </time>
           </p>
         </div>
         <div className="rounded-lg bg-slate-100 px-2 text-justify">
@@ -87,7 +111,7 @@ const SinglePostCard = ({ post }: ISinglePostCardProps) => {
         </div>
       </CardContent>
 
-      <CardFooter className="w-full sm:w-2/3">
+      <CardFooter className="w-full pb-16 sm:w-2/3">
         {isPostManageable && (
           <div className="flex w-full flex-row items-center justify-between gap-x-6">
             <EditPostButton

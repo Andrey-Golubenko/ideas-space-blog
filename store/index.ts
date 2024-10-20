@@ -14,9 +14,10 @@ interface IUseStore {
   posts: Post[]
   postsCount: number | null
   isLoading: boolean
-  editablePost: Post | {}
+  editablePost: FullPost | {}
 
   categories: Categories[]
+  categoriesCount: number | null
 
   getAllPosts: () => Promise<void>
   getPostsBySearch: (search: string) => Promise<void>
@@ -40,6 +41,7 @@ const useStore = createWithEqualityFn<
           isLoading: false,
           editablePost: {},
           categories: [],
+          categoriesCount: null,
 
           getAllPosts: async () => {
             set((state) => {
@@ -81,7 +83,7 @@ const useStore = createWithEqualityFn<
             })
           },
 
-          setEditablePost: (post: Post | {}) => {
+          setEditablePost: (post: FullPost | {}) => {
             set((state) => {
               return { ...state, editablePost: post }
             })
@@ -92,10 +94,16 @@ const useStore = createWithEqualityFn<
               return { ...state, isLoading: true }
             })
 
-            const fetchedCategories = await fetchAllCategories()
+            const data = await fetchAllCategories()
+            const { categories, categoriesCount } = data
 
             set((state) => {
-              return { ...state, categories: fetchedCategories }
+              return {
+                ...state,
+                categories,
+                categoriesCount,
+                isLoading: false
+              }
             })
           }
         }

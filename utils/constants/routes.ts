@@ -10,6 +10,7 @@ export const PUBLIC_ROUTES = [
   PATHS.home,
   PATHS.blog,
   PATHS.posts,
+  PATHS.categories,
   PATHS.about,
   PATHS.constacts,
   PATHS.team,

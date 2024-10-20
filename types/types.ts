@@ -1,10 +1,11 @@
 import * as z from 'zod'
+
+import { multiSelectVariants } from '~/components/ui/multi-select/multiSelectVariants'
 import { type FileRejection, type DropEvent } from 'react-dropzone'
 import { type VariantProps } from 'class-variance-authority'
-
+import { type Post, type Categories } from '@prisma/client'
 // eslint-disable-next-line import/no-cycle
 import { ManagePostSchema, SingleCategorySchema } from '~/schemas'
-import { multiSelectVariants } from '~/components/ui/multi-select/multiSelectVariants'
 
 export interface INavLink {
   label: string
@@ -15,13 +16,21 @@ export interface ICommonErrorCardProps {
   error: Error
 }
 
+export type TFileError = {
+  fileName?: string
+  message: string
+}
+
 export type TManagePostForm = z.infer<typeof ManagePostSchema>
 
 export type TManageCategoryForm = z.infer<typeof SingleCategorySchema>
 
-export type TFileError = {
-  fileName?: string
-  message: string
+export type TListItem = Post | Categories
+
+export type TSkeletonItems = {
+  firstItem?: TListItem
+  secondItem?: TListItem
+  thirdItem?: TListItem
 }
 
 export type OnDropType =
@@ -60,20 +69,14 @@ export interface IMultiSelectProps
     | ((...event: any[]) => void)
     | ((value: string) => void)
 
-  /** The default selected values when the component mounts. */
-  defaultValue?: string[]
+  /** The value of the field from react-hook-form. */
+  fieldValue?: string[]
 
   /**
    * Placeholder text to be displayed when no values are selected.
    * Optional, defaults to "Select options".
    */
   placeholder?: string
-
-  /**
-   * Animation duration in seconds for the visual effects (e.g., bouncing badges).
-   * Optional, defaults to 0 (no animation).
-   */
-  animation?: number
 
   /**
    * Maximum number of items to display. Extra selected items will be summarized.

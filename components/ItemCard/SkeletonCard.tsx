@@ -1,7 +1,5 @@
 'use client'
 
-import { type Post } from '@prisma/client'
-
 import {
   Card,
   CardHeader,
@@ -9,35 +7,33 @@ import {
   CardFooter
 } from '~/components/ui/card'
 import { Skeleton } from '~/components/ui/skeleton'
-import PostCardHeader from '~/components/posts/PostCard/PostCardHeader'
-import PostCardContent from '~/components/posts/PostCard/PostCardContent'
-import PostCardFooter from '~/components/posts/PostCard/PostCardFooter'
-import { IMAGES_PATHS } from '~/utils/constants/constants'
-import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
+import ItemCardHeader from '~/components/ItemCard/ItemCardHeader'
+import ItemCardContent from '~/components/ItemCard/ItemCardContent'
+import ItemCardFooter from '~/components/ItemCard/ItemCardFooter'
+import { useItemProps } from '~/hooks/useItemProps'
+import { useItemType } from '~/hooks/useItemType'
+import { TListItem } from '~/types/types'
 
 interface IPostCardSkeletonProps {
-  post?: Post
+  item?: TListItem
   isLoading: boolean
 }
 
-const PostCardSkeleton = ({ post, isLoading }: IPostCardSkeletonProps) => {
-  const postImage = post?.imageUrls.length
-    ? post?.imageUrls[0]
-    : IMAGES_PATHS.noImages
+const SkeletonCard = ({ item, isLoading }: IPostCardSkeletonProps) => {
+  const hasContent = item && !isLoading
 
-  const hasContent = post && !isLoading
+  const { itemImage, itemTitle, itemContent } = useItemProps(item)
 
-  const postTitle = toUpperCaseFirstChar(post?.title)
-
-  const postContent = `${toUpperCaseFirstChar(post?.content.slice(0, 120))}...`
+  const { isPost, isCategory } = useItemType(item)
 
   return (
     <Card className="flex min-h-[290px] flex-col rounded-md !border-0 shadow-md">
       {hasContent ? (
-        <PostCardHeader
-          postImage={postImage}
-          postTitle={postTitle}
-          postId={post?.id || ''}
+        <ItemCardHeader
+          itemImage={itemImage}
+          itemTitle={itemTitle}
+          itemId={item?.id || ''}
+          itemType={{ isPost, isCategory }}
           imagePriority
         />
       ) : (
@@ -52,7 +48,7 @@ const PostCardSkeleton = ({ post, isLoading }: IPostCardSkeletonProps) => {
       )}
 
       {hasContent ? (
-        <PostCardContent postContent={postContent} />
+        <ItemCardContent itemContent={itemContent} />
       ) : (
         <CardContent className="space-y-2 pb-4 text-justify">
           <Skeleton className="h-3.5 w-full" />
@@ -62,7 +58,10 @@ const PostCardSkeleton = ({ post, isLoading }: IPostCardSkeletonProps) => {
       )}
 
       {hasContent ? (
-        <PostCardFooter postId={post?.id || ''} />
+        <ItemCardFooter
+          itemId={item?.id || ''}
+          itemType={{ isPost, isCategory }}
+        />
       ) : (
         <CardFooter className="flex justify-end">
           <Skeleton className="h-2 w-8" />
@@ -72,4 +71,4 @@ const PostCardSkeleton = ({ post, isLoading }: IPostCardSkeletonProps) => {
   )
 }
 
-export default PostCardSkeleton
+export default SkeletonCard

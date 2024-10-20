@@ -7,6 +7,7 @@ export const PATHS = {
   newPost: '/blog/new-post',
   editPost: '/edit-post',
   posts: '/api/posts',
+  categories: '/categories',
   about: '/about',
   constacts: '/about/contacts',
   team: '/about/team',
@@ -40,6 +41,7 @@ export const IMAGES_PATHS = {
 export const NAV_LINKS: INavLink[] = [
   { label: 'Home', href: PATHS.home },
   { label: 'Blog', href: PATHS.blog },
+  { label: 'Categories', href: PATHS.categories },
   { label: 'About', href: PATHS.about }
 ]
 

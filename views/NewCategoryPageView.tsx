@@ -1,10 +1,11 @@
 'use client'
 
 import { useState, useTransition } from 'react'
+import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { UserRole } from '@prisma/client'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import { UserRole } from '@prisma/client'
 
 import { Card, CardHeader, CardContent } from '~/components/ui/card'
 import { Form } from '~/components/ui/form'
@@ -20,8 +21,10 @@ import { newCategory } from '~/actions/new-category'
 import { saveImagesToCloudinary } from '~/services/posts/imagesProcessing.client'
 import { SingleCategorySchema } from '~/schemas'
 import { TManageCategoryForm } from '~/types/types'
+import { PATHS } from '~/utils/constants/constants'
 
 const NewCategoryPageView = () => {
+  const router = useRouter()
   const [success, setSuccess] = useState<string | undefined>('')
   const [error, setError] = useState<string | undefined>('')
 
@@ -79,6 +82,8 @@ const NewCategoryPageView = () => {
               closeButton: true,
               duration: 5000
             })
+
+            router.push(PATHS.categories)
           }
         })
         .catch(() => {

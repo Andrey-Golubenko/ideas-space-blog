@@ -6,7 +6,21 @@ export const fetchAllCategories = async () => {
   try {
     const categories = await db.categories.findMany()
 
-    return categories
+    return { categories, categoriesCount: categories?.length }
+  } catch (error) {
+    throw new Error('Somthing went wrong!')
+  }
+}
+
+export const fetchSingleCategoryById = async (categoryId: string) => {
+  try {
+    const category = db.categories.findUnique({
+      where: {
+        id: categoryId
+      }
+    })
+
+    return await category
   } catch (error) {
     throw new Error('Somthing went wrong!')
   }
