@@ -11,7 +11,7 @@ const HeroBanner = () => {
         alt="Hero banner"
         containerHeight={550}
         priority
-        imageClassNames="!animate-banner-scale object-cover "
+        imageClassNames="!animate-banner-scale object-cover"
       />
     </div>
   )

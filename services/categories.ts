@@ -26,11 +26,11 @@ export const fetchSingleCategoryById = async (categoryId: string) => {
   }
 }
 
-export const fetchSingleCategoryByName = async (categoryName: string) => {
+export const fetchSingleCategoryBySlug = async (categorySlug: string) => {
   try {
     const category = db.categories.findUnique({
       where: {
-        name: categoryName
+        slug: categorySlug
       }
     })
 

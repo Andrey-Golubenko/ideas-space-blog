@@ -27,7 +27,7 @@ const CategoriesList = () => {
     useListItemsDistribution(categories, categoriesCount)
 
   return (
-    <section className="my-20 w-full">
+    <section className="my-20 w-full @container">
       {!noItems ? (
         <SkeletonsList
           skeletonItems={skeletonItems}
@@ -37,7 +37,7 @@ const CategoriesList = () => {
         <NoPostsCard itemName="categories" />
       )}
 
-      <div className="mb-5 grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
+      <div className="mb-5 grid w-full grid-cols-1 gap-5 @sm:grid-cols-2 @3xl:grid-cols-3">
         {!isLoading &&
           [...restItems, thirdItemInList]?.map((item) => {
             if (item) {

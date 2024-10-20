@@ -1,6 +1,5 @@
 import { type Metadata } from 'next'
 import SingleCategoryPageView from '~/views/SingleCategoryPageView'
-import { fetchSingleCategoryById } from '~/services/categories'
 import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
 
 interface ISingleCategoryPageProps {
@@ -20,7 +19,7 @@ export async function generateMetadata({
 const SingleCategoryPage = ({
   params: { slug }
 }: ISingleCategoryPageProps) => {
-  return <SingleCategoryPageView categoryName={slug} />
+  return <SingleCategoryPageView categorySlug={slug} />
 }
 
 export default SingleCategoryPage

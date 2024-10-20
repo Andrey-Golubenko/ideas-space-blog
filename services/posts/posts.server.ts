@@ -1,6 +1,7 @@
 'use server'
 
 import { db } from '~/libs/db'
+import { type Post } from '@prisma/client'
 
 export const getSinglePost = async (
   slug: string
@@ -29,33 +30,19 @@ export const getSinglePost = async (
   }
 }
 
-export const getPostsByCategory = async (categoryId: string) => {
+export const getPostsByCategory = async (
+  categoryId: string
+): Promise<Post[] | null> => {
   try {
-    const initPosts = await db.post.findMany({
+    const posts = await db.post.findMany({
       where: {
         categories: {
           some: {
             categoryId
           }
         }
-      },
-      include: {
-        categories: {
-          include: {
-            category: true
-          }
-        }
       }
     })
-
-    const posts: FullPost[] = initPosts?.map((post) => {
-      const categories = post?.categories?.map((singleCategory) => {
-        return singleCategory?.category
-      })
-
-      return { ...post, categories }
-    })
-
     return posts
   } catch {
     return null

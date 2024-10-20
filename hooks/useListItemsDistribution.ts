@@ -1,5 +1,5 @@
 import { Post, type Categories } from '@prisma/client'
-import { useIsMobile } from '~/hooks/useIsMobile'
+import { useIsMobile } from '~/hooks/useMobile'
 import { TSkeletonItems } from '~/types/types'
 
 export const useListItemsDistribution = (
@@ -10,7 +10,7 @@ export const useListItemsDistribution = (
 
   const [firstItem, secondItem, thirdItem, ...restItems] = items || []
 
-  const thirdItemPlace = !isMobile && itemsCount! > 3
+  const thirdItemPlace = !isMobile && itemsCount! >= 3
 
   const isThirdItemInSkeleton = thirdItemPlace ? thirdItem : undefined
 

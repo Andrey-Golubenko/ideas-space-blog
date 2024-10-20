@@ -22,7 +22,7 @@ const PostsList = ({ posts, postsCount, isLoading }: IPostListProps) => {
     useListItemsDistribution(publishedPosts, postsCount)
 
   return (
-    <section className="mb-8 w-full">
+    <section className="mb-8 w-full @container">
       {!noItems ? (
         <SkeletonsList
           skeletonItems={skeletonItems}
@@ -32,7 +32,7 @@ const PostsList = ({ posts, postsCount, isLoading }: IPostListProps) => {
         <NoPostsCard itemName="posts" />
       )}
 
-      <div className="mb-5 grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
+      <div className="mb-5 grid w-full grid-cols-1 gap-5 @sm:grid-cols-2 @3xl:grid-cols-3">
         {!isLoading &&
           [...restItems, thirdItemInList]?.map((item) => {
             if (item) {

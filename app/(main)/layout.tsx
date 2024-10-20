@@ -5,7 +5,7 @@ export default function MainLayout({
 }>) {
   return (
     <main className="to flex basis-full flex-col items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-500 to-blue-800">
-      <div className="justify-centerpy-10 flex flex-col items-center xs:w-[90%]">
+      <div className="justify-centerpy-10 flex flex-col items-center overflow-hidden xs:w-[90%] ">
         {children}
       </div>
     </main>

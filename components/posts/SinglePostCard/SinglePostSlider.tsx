@@ -10,7 +10,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/thumbs'
 
 import LoadableImage from '~/components/shared/LoadableImage'
-import { useIsMobile } from '~/hooks/useIsMobile'
+import { useIsMobile } from '~/hooks/useMobile'
 
 interface ISinglePostAliderProps {
   imageUrls: string[]

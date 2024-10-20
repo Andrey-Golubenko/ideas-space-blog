@@ -8,7 +8,7 @@ export const useIsMobile = (): boolean => {
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth
-      if (width < SCREEN_MD) {
+      if (width < SCREEN_MD - 1) {
         setIsMobile(true)
       } else {
         setIsMobile(false)
@@ -27,5 +27,5 @@ export const useIsMobile = (): boolean => {
     }
   }, [])
 
-  return isMobile
+  return !!isMobile
 }

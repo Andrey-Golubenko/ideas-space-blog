@@ -13,7 +13,7 @@ export default function AboutLayout({
 
       <ul className="w-full list-disc">
         <li>
-          <Link href={PATHS.constacts}>Contacts</Link>
+          <Link href={PATHS.contacts}>Contacts</Link>
         </li>
         <li>
           <Link href={PATHS.team}>Team</Link>

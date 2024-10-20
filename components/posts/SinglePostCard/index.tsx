@@ -2,7 +2,7 @@
 
 import { useEffect, useTransition } from 'react'
 import Link from 'next/link'
-import { CalendarIcon } from '@radix-ui/react-icons'
+import { CalendarIcon, FileTextIcon } from '@radix-ui/react-icons'
 
 import useStore from '~/store'
 import {
@@ -69,10 +69,12 @@ const SinglePostCard = ({ post }: ISinglePostCardProps) => {
 
       <CardContent className="w-full px-24 pb-12">
         <div className="mb-5">
-          <p className="mb-2">
-            <span className="text-sm italic text-slate-500">
-              Categories:{' '}
-            </span>
+          <p className="mb-2 flex items-center">
+            <FileTextIcon
+              height="17px"
+              width="17px"
+              className="mr-2"
+            />
             {!!postCategories?.length &&
               postCategories.map(
                 ({ categoryName, categorySlug }, index) => {
