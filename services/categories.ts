@@ -4,11 +4,17 @@ import { db } from '~/libs/db'
 
 export const fetchAllCategories = async () => {
   try {
-    const categories = await db.categories.findMany()
+    const categories = await db.categories.findMany({
+      where: {
+        slug: {
+          not: 'uncategorized'
+        }
+      }
+    })
 
     return { categories, categoriesCount: categories?.length }
   } catch (error) {
-    throw new Error('Somthing went wrong!')
+    throw new Error('Failed to get categories!')
   }
 }
 
@@ -22,7 +28,7 @@ export const fetchSingleCategoryById = async (categoryId: string) => {
 
     return await category
   } catch (error) {
-    throw new Error('Somthing went wrong!')
+    throw new Error('Failed to fetch category!')
   }
 }
 
@@ -36,7 +42,7 @@ export const fetchSingleCategoryBySlug = async (categorySlug: string) => {
 
     return await category
   } catch (error) {
-    throw new Error('Somthing went wrong!')
+    throw new Error('Failed to get category!')
   }
 }
 
@@ -57,6 +63,37 @@ export const fetchSinglePostCategories = async (postId: string) => {
 
     return categories
   } catch (error) {
-    throw new Error('Somthing went wrong!')
+    throw new Error('Failed to get categories!')
+  }
+}
+
+export const fetchUncategorizedCategory = async () => {
+  try {
+    const uncategorizedCategory = await db.categories.findUnique({
+      where: {
+        slug: 'uncategorized'
+      }
+    })
+
+    return uncategorizedCategory
+  } catch (error) {
+    throw new Error('Failed to fetch "Uncategorized" category!')
+  }
+}
+
+export const fetchPostsIdsInCategory = async (categoryId: string) => {
+  try {
+    const postsInCategory = await db.postCategories.findMany({
+      where: {
+        categoryId
+      },
+      select: {
+        postId: true
+      }
+    })
+
+    return postsInCategory
+  } catch (error) {
+    throw new Error('Failed to fetch post IDs for category!')
   }
 }

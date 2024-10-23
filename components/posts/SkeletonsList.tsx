@@ -13,7 +13,7 @@ const SkeletonsList = ({
   const { firstItem, secondItem, thirdItem } = skeletonItems
 
   return (
-    <div className="mb-5 grid w-full grid-cols-1 gap-5 @sm:grid-cols-2 @3xl:grid-cols-3">
+    <div className="mb-5 grid w-full grid-cols-1 gap-5 @md:grid-cols-2 @3xl:grid-cols-3">
       <SkeletonCard
         item={firstItem}
         isLoading={isLoading}

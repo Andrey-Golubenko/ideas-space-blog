@@ -89,7 +89,7 @@ enum InitCategoriesName {
   Home_and_Garden,
   Cooking,
   Sports_and_Health,
-  Lifestyle,
+  Uncategorized,
   Nature,
   Technology,
   Technic,

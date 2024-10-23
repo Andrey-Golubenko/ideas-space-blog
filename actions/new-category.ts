@@ -23,7 +23,9 @@ export const newCategory = async (
   }
 
   if (user.role !== UserRole.ADMIN) {
-    return { error: 'You do not have permission to do this!' }
+    return {
+      error: 'You do not have a permission to create new category!'
+    }
   }
 
   const dbUser = await getUserById(user?.id)

@@ -3,6 +3,7 @@
 import { db } from '~/libs/db'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
 import { getUserById } from '~/services/user'
+import { fetchUncategorizedCategory } from '~/services/categories'
 import { ManagePostSchema } from '~/schemas'
 import { type Categories } from '@prisma/client'
 import { type TManagePostForm } from '~/types/types'
@@ -33,9 +34,13 @@ export const newPost = async (
   const { title, content, imageUrls, published, categories } =
     validatedFields.data
 
+  const uncategorizedCategory = await fetchUncategorizedCategory()
+
   const categoryIds = categories?.map((category) => {
     return (category as Categories)?.id
   })
+
+  const postCategoryIds = [...categoryIds, uncategorizedCategory?.id]
 
   try {
     await db.post.create({
@@ -46,7 +51,7 @@ export const newPost = async (
         published,
         authorId: dbUser?.id,
         categories: {
-          create: categoryIds?.map((catId) => {
+          create: postCategoryIds?.map((catId) => {
             return {
               category: {
                 connect: { id: catId }

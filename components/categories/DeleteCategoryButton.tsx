@@ -5,8 +5,6 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
 import useStore from '~/store'
-import { deletePost } from '~/actions/delete-post'
-import { destroyImagesInCloudinary } from '~/services/posts/imagesProcessing.client'
 import { Button } from '~/components/ui/button'
 import {
   Dialog,
@@ -18,41 +16,49 @@ import {
   DialogTrigger,
   DialogClose
 } from '~/components/ui/dialog'
+import { destroyImagesInCloudinary } from '~/services/posts/imagesProcessing.client'
+import { deleteCategory } from '~/actions/delete-category'
 import { PATHS } from '~/utils/constants/constants'
 
-interface IPostDeleteButtonProps {
-  postId?: string
-  imageUrls: string[]
-  isPostManageable: boolean
+interface ICategoryDeleteButtonProps {
+  categoryId?: string
+  imageUrl: string | null
+  isAdmin: boolean
   isPending: boolean
   startTransition: TransitionStartFunction
 }
 
-const DeletePostButton = ({
-  postId,
-  imageUrls,
-  isPostManageable,
+const DeleteCategoryButton = ({
+  categoryId,
+  imageUrl,
+  isAdmin,
   isPending,
   startTransition
-}: IPostDeleteButtonProps) => {
-  const [setEditablePost] = useStore((state) => {
-    return [state.setEditablePost]
+}: ICategoryDeleteButtonProps) => {
+  const [categories, setCategories] = useStore((state) => {
+    return [state.categories, state.setCategories]
   })
 
   const router = useRouter()
 
   const handleDelete = () => {
     startTransition(async () => {
-      if (postId && isPostManageable) {
-        if (imageUrls?.length) {
+      if (categoryId && isAdmin) {
+        const newCategories = categories?.filter((category) => {
+          return category?.id !== categoryId
+        })
+
+        setCategories(newCategories)
+
+        if (imageUrl) {
           try {
-            await destroyImagesInCloudinary(imageUrls)
+            await destroyImagesInCloudinary([imageUrl])
           } catch (error) {
             return
           }
         }
 
-        deletePost(postId).then((data) => {
+        deleteCategory(categoryId).then((data) => {
           if (data?.error) {
             toast.error(data?.error, {
               richColors: true,
@@ -65,8 +71,7 @@ const DeletePostButton = ({
               closeButton: true
             })
 
-            setEditablePost({})
-            router.push(PATHS.blog)
+            router.push(PATHS.categories)
           }
         })
       }
@@ -78,19 +83,19 @@ const DeletePostButton = ({
       <DialogTrigger asChild>
         <Button
           disabled={isPending}
-          className={`h-10 w-[40%] min-w-[90px] rounded-lg bg-red-800 hover:bg-red-800/90 md:w-[35%] lg:w-[25%] ${isPending ? 'grayscale' : ''}`}
+          className={`h-10 w-full rounded-lg bg-red-800 hover:bg-red-800/90 ${isPending ? 'grayscale' : ''}`}
         >
-          Delete post
+          Delete category
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[430px]">
         <DialogHeader>
           <DialogTitle className="mb-4 text-center">
-            Delete post
+            Delete category
           </DialogTitle>
           <DialogDescription className="!mb-4 text-base">
             This action cannot be undone. This will permanently delete your
-            post and remove its data.
+            category and remove its data.
           </DialogDescription>
           <DialogFooter className="sm:justify-center">
             <DialogClose asChild>
@@ -99,7 +104,7 @@ const DeletePostButton = ({
                 onClick={handleDelete}
                 className="bg-red-800 hover:bg-red-700"
               >
-                Permanently delete post
+                Permanently delete category
               </Button>
             </DialogClose>
           </DialogFooter>
@@ -109,4 +114,4 @@ const DeletePostButton = ({
   )
 }
 
-export default DeletePostButton
+export default DeleteCategoryButton

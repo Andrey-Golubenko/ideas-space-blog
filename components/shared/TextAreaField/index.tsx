@@ -40,7 +40,8 @@ const TextAreaField = ({
                 {...field}
                 disabled={isPending}
                 placeholder={placeholder}
-                rows={7}
+                maxLength={200}
+                rows={5}
                 {...props}
               />
             </FormControl>

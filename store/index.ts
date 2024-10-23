@@ -25,6 +25,7 @@ interface IUseStore {
   setEditablePost: (post: Post | {}) => void
 
   getAllCategories: () => Promise<void>
+  setCategories: (categories: Categories[]) => void
 }
 
 const useStore = createWithEqualityFn<
@@ -105,11 +106,18 @@ const useStore = createWithEqualityFn<
                 isLoading: false
               }
             })
+          },
+
+          // After deliting one category
+          setCategories: (categories: Categories[]) => {
+            set((state) => {
+              return { ...state, categories }
+            })
           }
         }
       },
       {
-        name: 'posts-storage',
+        name: 'storage',
         storage: createJSONStorage(() => {
           return sessionStorage
         })

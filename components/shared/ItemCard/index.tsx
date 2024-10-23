@@ -6,6 +6,7 @@ import ItemCardContent from '~/components/shared/ItemCard/ItemCardContent'
 import ItemCardFooter from '~/components/shared/ItemCard/ItemCardFooter'
 import { useItemProps } from '~/hooks/useItemProps'
 import { useItemType } from '~/hooks/useItemType'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { TListItem } from '~/types/types'
 
 interface IItemCardProps {
@@ -18,8 +19,13 @@ const ItemCard = ({ item }: IItemCardProps) => {
 
   const { isPost, isCategory } = useItemType(item)
 
+  const [autoAnimateRef] = useAutoAnimate()
+
   return (
-    <Card className="flex min-h-max flex-col rounded-md !border-0 shadow-md hover:rounded-t-md">
+    <Card
+      ref={autoAnimateRef}
+      className="flex min-h-max flex-col rounded-md !border-0 shadow-md hover:rounded-t-md"
+    >
       <ItemCardHeader
         itemImage={itemImage}
         itemTitle={itemTitle}

@@ -38,7 +38,7 @@ const ItemCardHeader = ({
         <LoadableImage
           src={itemImage}
           alt="Post image"
-          containerHeight={220}
+          containerHeight={250}
           priority={imagePriority}
           imageClassNames="rounded-t-md object-cover hover:rounded-md"
           containerClassNames="rounded-t-md duration-700 hover:scale-110 hover:rounded-md"

@@ -61,9 +61,10 @@ const NewPostCard = ({ isLogged }: INewPostFormProps) => {
 
       const { files, categories, ...restValues } = values
 
-      const categoriesWithId = initCategories?.filter((category) => {
-        return categories?.includes(category?.name)
-      })
+      const categoriesWithId =
+        initCategories?.filter((category) => {
+          return categories?.includes(category?.name)
+        }) || []
 
       const newPostValues = {
         ...restValues,

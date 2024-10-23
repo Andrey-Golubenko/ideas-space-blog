@@ -38,7 +38,7 @@ export const useItemProps = (item?: TListItem) => {
     itemTitle = toUpperCaseFirstChar(category?.name)
 
     itemContent = category?.description
-      ? `${toUpperCaseFirstChar(category?.description.slice(0, 120))}...`
+      ? `${toUpperCaseFirstChar(category?.description)}`
       : ''
 
     itemSlug = category?.slug
