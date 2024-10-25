@@ -10,8 +10,11 @@ import useStore from '~/store'
 import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
 import PostManageForm from '~/components/shared/PostManageForm'
 import { newPost } from '~/actions/new-post'
-import { PATHS } from '~/utils/constants/constants'
-import { saveImagesToCloudinary } from '~/services/posts/imagesProcessing.client'
+import {
+  CLOUDINARY_POSTS_IMAGES_FOLDER,
+  PATHS
+} from '~/utils/constants/constants'
+import { saveImagesToCloudinary } from '~/services/imagesProcessing'
 import { ManagePostSchema } from '~/schemas'
 import { TManagePostForm } from '~/types/types'
 
@@ -52,7 +55,11 @@ const NewPostCard = ({ isLogged }: INewPostFormProps) => {
       const newImages = values?.files || []
 
       if (newImages?.length) {
-        imageUrls = await saveImagesToCloudinary(newImages, setError)
+        imageUrls = await saveImagesToCloudinary(
+          newImages,
+          CLOUDINARY_POSTS_IMAGES_FOLDER,
+          setError
+        )
 
         if (!imageUrls) {
           return

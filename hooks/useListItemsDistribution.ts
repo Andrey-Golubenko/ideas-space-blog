@@ -16,7 +16,7 @@ export const useListItemsDistribution = (
 
   const thirdItemInList = !shouldPlaceThirdItem ? thirdItem : undefined
 
-  const noItems = typeof itemsCount === 'number' && itemsCount === 0
+  const noItems = typeof itemsCount === 'number' && items?.length === 0
 
   const skeletonItems: TSkeletonItems = {
     firstItem,

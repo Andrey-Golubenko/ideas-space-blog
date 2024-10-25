@@ -6,7 +6,7 @@ import { toast } from 'sonner'
 
 import useStore from '~/store'
 import { deletePost } from '~/actions/delete-post'
-import { destroyImagesInCloudinary } from '~/services/posts/imagesProcessing.client'
+import { destroyImagesInCloudinary } from '~/services/imagesProcessing'
 import { Button } from '~/components/ui/button'
 import {
   Dialog,
@@ -18,7 +18,10 @@ import {
   DialogTrigger,
   DialogClose
 } from '~/components/ui/dialog'
-import { PATHS } from '~/utils/constants/constants'
+import {
+  CLOUDINARY_POSTS_IMAGES_FOLDER,
+  PATHS
+} from '~/utils/constants/constants'
 
 interface IPostDeleteButtonProps {
   postId?: string
@@ -46,7 +49,10 @@ const DeletePostButton = ({
       if (postId && isPostManageable) {
         if (imageUrls?.length) {
           try {
-            await destroyImagesInCloudinary(imageUrls)
+            await destroyImagesInCloudinary(
+              imageUrls,
+              CLOUDINARY_POSTS_IMAGES_FOLDER
+            )
           } catch (error) {
             return
           }

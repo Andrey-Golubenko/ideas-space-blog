@@ -14,8 +14,11 @@ import { editPost } from '~/actions/edit-post'
 import {
   destroyImagesInCloudinary,
   saveImagesToCloudinary
-} from '~/services/posts/imagesProcessing.client'
-import { PATHS } from '~/utils/constants/constants'
+} from '~/services/imagesProcessing'
+import {
+  CLOUDINARY_POSTS_IMAGES_FOLDER,
+  PATHS
+} from '~/utils/constants/constants'
 import { ManagePostSchema } from '~/schemas'
 import { type TManagePostForm } from '~/types/types'
 
@@ -107,7 +110,10 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
         })
 
         try {
-          await destroyImagesInCloudinary(deletedImageUrls)
+          await destroyImagesInCloudinary(
+            deletedImageUrls,
+            CLOUDINARY_POSTS_IMAGES_FOLDER
+          )
         } catch {
           return
         }
@@ -120,6 +126,7 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
       if (uploadedFiles?.length) {
         newImageUrlsFromFiles = await saveImagesToCloudinary(
           uploadedFiles,
+          CLOUDINARY_POSTS_IMAGES_FOLDER,
           setError
         )
 

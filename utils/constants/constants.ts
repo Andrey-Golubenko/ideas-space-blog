@@ -74,7 +74,9 @@ export const MAX_FILE_SIZE = 2 * 1024 * 1024 // 2 MB
 
 export const MAX_FILES_COUNT = 8
 
-export const CLOUDINARY_IMAGE_FOLDER = 'nextjs-blog'
+export const CLOUDINARY_POSTS_IMAGES_FOLDER = 'blog-posts'
+
+export const CLOUDINARY_CATEGORIES_IMAGES_FOLDER = 'blog-categories'
 
 export const SCREEN_SM = 480
 
@@ -84,7 +86,8 @@ export const SLUG_MODEL = /^[a-z-]+$/
 
 export const DEFAULT_CATEGORY = {
   name: 'Uncategorized',
-  slug: 'uncategorized'
+  slug: 'uncategorized',
+  description: 'Default category for uncategorized posts.'
 }
 
 // TODO: For storage as an example

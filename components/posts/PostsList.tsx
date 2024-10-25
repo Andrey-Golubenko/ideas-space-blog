@@ -1,10 +1,13 @@
 'use client'
 
-import { Post } from '@prisma/client'
+import { usePathname } from 'next/navigation'
+
 import ItemCard from '~/components/shared/ItemCard'
 import NoPostsCard from '~/components/posts/NoPostsCard'
 import SkeletonsList from '~/components/posts/SkeletonsList'
 import { useListItemsDistribution } from '~/hooks/useListItemsDistribution'
+import { PATHS } from '~/utils/constants/constants'
+import { type Post } from '@prisma/client'
 
 interface IPostListProps {
   posts: Post[]
@@ -13,13 +16,18 @@ interface IPostListProps {
 }
 
 const PostsList = ({ posts, postsCount, isLoading }: IPostListProps) => {
+  const pathname = usePathname()
+
   const publishedPosts =
     posts.filter((post) => {
       return post.published
     }) || []
 
+  const desplayedPosts =
+    pathname === PATHS.profile ? posts : publishedPosts
+
   const { skeletonItems, restItems, thirdItemInList, noItems } =
-    useListItemsDistribution(publishedPosts, postsCount)
+    useListItemsDistribution(desplayedPosts, postsCount)
 
   return (
     <section className="mb-8 w-full @container">

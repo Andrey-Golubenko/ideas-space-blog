@@ -16,9 +16,12 @@ import {
   DialogTrigger,
   DialogClose
 } from '~/components/ui/dialog'
-import { destroyImagesInCloudinary } from '~/services/posts/imagesProcessing.client'
+import { destroyImagesInCloudinary } from '~/services/imagesProcessing'
 import { deleteCategory } from '~/actions/delete-category'
-import { PATHS } from '~/utils/constants/constants'
+import {
+  CLOUDINARY_CATEGORIES_IMAGES_FOLDER,
+  PATHS
+} from '~/utils/constants/constants'
 
 interface ICategoryDeleteButtonProps {
   categoryId?: string
@@ -59,7 +62,10 @@ const DeleteCategoryButton = ({
 
         if (imageUrl) {
           try {
-            await destroyImagesInCloudinary([imageUrl])
+            await destroyImagesInCloudinary(
+              [imageUrl],
+              CLOUDINARY_CATEGORIES_IMAGES_FOLDER
+            )
           } catch (error) {
             return
           }

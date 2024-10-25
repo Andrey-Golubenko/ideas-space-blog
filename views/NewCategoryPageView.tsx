@@ -18,10 +18,13 @@ import FormSuccess from '~/components/FormSuccess'
 import RoleGate from '~/components/auth/RoleGate'
 
 import { newCategory } from '~/actions/new-category'
-import { saveImagesToCloudinary } from '~/services/posts/imagesProcessing.client'
+import { saveImagesToCloudinary } from '~/services/imagesProcessing'
 import { SingleCategorySchema } from '~/schemas'
 import { TManageCategoryForm } from '~/types/types'
-import { PATHS } from '~/utils/constants/constants'
+import {
+  CLOUDINARY_CATEGORIES_IMAGES_FOLDER,
+  PATHS
+} from '~/utils/constants/constants'
 
 const NewCategoryPageView = () => {
   const router = useRouter()
@@ -53,6 +56,7 @@ const NewCategoryPageView = () => {
       if (newImage?.length) {
         const cloudinaryUrls = await saveImagesToCloudinary(
           newImage,
+          CLOUDINARY_CATEGORIES_IMAGES_FOLDER,
           setError
         )
 

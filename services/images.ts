@@ -2,9 +2,11 @@
 
 import { type UploadApiResponse } from 'cloudinary/types'
 import cloudinary from '~/libs/cloudinary/cloudinary.config'
-import { CLOUDINARY_IMAGE_FOLDER } from '~/utils/constants/constants'
 
-export const uploadImageToCloudinary = async (formData: FormData) => {
+export const uploadImageToCloudinary = async (
+  formData: FormData,
+  storageFolder: string
+) => {
   try {
     const file = formData.get('file')
     const fileName = (file as File)?.name.split('.').shift()
@@ -19,7 +21,7 @@ export const uploadImageToCloudinary = async (formData: FormData) => {
     const uploadResult = await new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
-          folder: CLOUDINARY_IMAGE_FOLDER,
+          folder: storageFolder,
           public_id: fileName,
           use_filename: true
         },
@@ -46,7 +48,8 @@ export const uploadImageToCloudinary = async (formData: FormData) => {
 }
 
 export const deleteImagesFromCloudinary = async (
-  imageName: string
+  imageName: string,
+  storageFolder: string
 ): Promise<
   | {
       error: string
@@ -59,7 +62,7 @@ export const deleteImagesFromCloudinary = async (
 > => {
   try {
     const deleteResult = await cloudinary.uploader.destroy(
-      `${CLOUDINARY_IMAGE_FOLDER}/${imageName}`,
+      `${storageFolder}/${imageName}`,
       {
         invalidate: true,
         resource_type: 'image'

@@ -96,7 +96,7 @@ const SinglePostCard = ({ post }: ISinglePostCardProps) => {
                       <span className="text-yellow-600/90">
                         {categoryName}
                         {!(postCategories.length - 1 === index) && (
-                          <span className="text-black">, </span>
+                          <span className="text-black">,&nbsp;</span>
                         )}
                       </span>
                     </Link>

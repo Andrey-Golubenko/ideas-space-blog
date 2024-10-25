@@ -9,6 +9,7 @@ import { getImageNameFromUrl } from '~/utils/helpers/helpers'
 
 export const saveImagesToCloudinary = async (
   files: File[],
+  storageFolder: string,
   setError: Dispatch<SetStateAction<string | undefined>>
 ): Promise<string[] | null> => {
   const imageUrls: string[] = []
@@ -19,7 +20,7 @@ export const saveImagesToCloudinary = async (
 
       formData.append('file', file, file.name)
 
-      return uploadImageToCloudinary(formData)
+      return uploadImageToCloudinary(formData, storageFolder)
     })
 
     const uploadResults = await Promise.all(uploadPromises)
@@ -40,11 +41,14 @@ export const saveImagesToCloudinary = async (
   }
 }
 
-export const destroyImagesInCloudinary = async (imageUrls: string[]) => {
+export const destroyImagesInCloudinary = async (
+  imageUrls: string[],
+  storageFolder: string
+) => {
   try {
     const imageDeleteResultsPromises = imageUrls.map((url) => {
       const imageName = getImageNameFromUrl(url)
-      return deleteImagesFromCloudinary(imageName!)
+      return deleteImagesFromCloudinary(imageName!, storageFolder)
     })
 
     const imageDeleteResults = await Promise.all(
