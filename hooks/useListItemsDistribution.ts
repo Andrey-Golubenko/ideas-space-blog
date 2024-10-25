@@ -10,18 +10,18 @@ export const useListItemsDistribution = (
 
   const [firstItem, secondItem, thirdItem, ...restItems] = items || []
 
-  const thirdItemPlace = !isMobile && itemsCount! >= 3
+  const shouldPlaceThirdItem = !isMobile && itemsCount! >= 3
 
-  const isThirdItemInSkeleton = thirdItemPlace ? thirdItem : undefined
+  const thirdItemInSkeleton = shouldPlaceThirdItem ? thirdItem : undefined
 
-  const thirdItemInList = !thirdItemPlace ? thirdItem : undefined
+  const thirdItemInList = !shouldPlaceThirdItem ? thirdItem : undefined
 
   const noItems = typeof itemsCount === 'number' && itemsCount === 0
 
   const skeletonItems: TSkeletonItems = {
     firstItem,
     secondItem,
-    thirdItem: isThirdItemInSkeleton
+    thirdItem: thirdItemInSkeleton
   }
 
   return {

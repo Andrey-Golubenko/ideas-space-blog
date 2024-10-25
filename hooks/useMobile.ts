@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react'
 
-import { SCREEN_MD } from '~/utils/constants/constants'
-
 export const useIsMobile = (): boolean => {
   const [isMobile, setIsMobile] = useState<boolean>(false)
 
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth
-      if (width < SCREEN_MD - 1) {
+      if (width < 860) {
         setIsMobile(true)
       } else {
         setIsMobile(false)

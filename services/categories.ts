@@ -1,13 +1,14 @@
 'use server'
 
 import { db } from '~/libs/db'
+import { DEFAULT_CATEGORY } from '~/utils/constants/constants'
 
 export const fetchAllCategories = async () => {
   try {
     const categories = await db.categories.findMany({
       where: {
         slug: {
-          not: 'uncategorized'
+          not: `${DEFAULT_CATEGORY.slug}`
         }
       }
     })
@@ -71,13 +72,13 @@ export const fetchUncategorizedCategory = async () => {
   try {
     const uncategorizedCategory = await db.categories.findUnique({
       where: {
-        slug: 'uncategorized'
+        slug: `${DEFAULT_CATEGORY.slug}`
       }
     })
 
     return uncategorizedCategory
   } catch (error) {
-    throw new Error('Failed to fetch "Uncategorized" category!')
+    throw new Error(`Failed to fetch '${DEFAULT_CATEGORY.name}' category!`)
   }
 }
 

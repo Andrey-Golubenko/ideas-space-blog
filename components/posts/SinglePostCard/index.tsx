@@ -16,7 +16,7 @@ import EditPostButton from '~/components/posts/SinglePostCard/EditPostButton'
 import DeletePostButton from '~/components/posts/SinglePostCard/DeletePostButton'
 import { useCurrentUser } from '~/hooks/useCurrentUser'
 import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
-import { PATHS } from '~/utils/constants/constants'
+import { DEFAULT_CATEGORY, PATHS } from '~/utils/constants/constants'
 
 interface ISinglePostCardProps {
   post: FullPost | null
@@ -78,7 +78,17 @@ const SinglePostCard = ({ post }: ISinglePostCardProps) => {
             {!!postCategories?.length &&
               postCategories.map(
                 ({ categoryName, categorySlug }, index) => {
-                  return (
+                  const isUncategorized =
+                    categoryName === DEFAULT_CATEGORY.name
+
+                  return isUncategorized ? (
+                    <span
+                      key={categorySlug}
+                      className="text-yellow-600/90"
+                    >
+                      {categoryName}
+                    </span>
+                  ) : (
                     <Link
                       key={categorySlug}
                       href={`${PATHS.categories}/${categorySlug}`}

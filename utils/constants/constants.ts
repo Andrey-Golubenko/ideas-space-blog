@@ -82,6 +82,11 @@ export const SCREEN_MD = 768
 
 export const SLUG_MODEL = /^[a-z-]+$/
 
+export const DEFAULT_CATEGORY = {
+  name: 'Uncategorized',
+  slug: 'uncategorized'
+}
+
 // TODO: For storage as an example
 enum InitCategoriesName {
   Finance,

@@ -137,6 +137,8 @@ const NewCategoryPageView = () => {
                   label="Category description"
                   placeholder="A short description of the category"
                   isPending={isPending}
+                  maxLength={200}
+                  rows={5}
                 />
 
                 <FormError message={error} />

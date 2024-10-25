@@ -4,9 +4,9 @@ import { db } from '~/libs/db'
 
 import { getSinglePost } from '~/services/posts/posts.server'
 import { getUserById } from '~/services/user'
+import { fetchUncategorizedCategory } from '~/services/categories'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
 import { ManagePostSchema } from '~/schemas'
-import { type Categories } from '@prisma/client'
 import { type TManagePostForm } from '~/types/types'
 
 export const editPost = async (
@@ -45,8 +45,14 @@ export const editPost = async (
     return { error: 'You have no permission to edit this post!' }
   }
 
+  const uncategorizedCategory = await fetchUncategorizedCategory()
+
   const { title, content, imageUrls, published, categories } =
     validatedFields.data
+
+  const newCategories = categories?.length
+    ? categories
+    : [uncategorizedCategory?.id]
 
   try {
     await db.post.update({
@@ -60,7 +66,7 @@ export const editPost = async (
           deleteMany: {
             postId
           },
-          create: (categories as string[])?.map((catId) => {
+          create: (newCategories as string[])?.map((catId) => {
             return {
               category: {
                 connect: { id: catId }
@@ -76,6 +82,6 @@ export const editPost = async (
 
     return { success: 'Post has been successfully edited!' }
   } catch {
-    return { error: 'Failed to update the post!' }
+    return { error: 'Failed to edit the post!' }
   }
 }

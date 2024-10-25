@@ -26,6 +26,7 @@ interface IUseStore {
 
   getAllCategories: () => Promise<void>
   setCategories: (categories: Categories[]) => void
+  setCategoriesCount: (categoriesLength: number) => void
 }
 
 const useStore = createWithEqualityFn<
@@ -112,6 +113,12 @@ const useStore = createWithEqualityFn<
           setCategories: (categories: Categories[]) => {
             set((state) => {
               return { ...state, categories }
+            })
+          },
+
+          setCategoriesCount: (categoriesLength: number) => {
+            set((state) => {
+              return { ...state, categoriesCount: categoriesLength }
             })
           }
         }

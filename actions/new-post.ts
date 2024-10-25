@@ -40,7 +40,9 @@ export const newPost = async (
     return (category as Categories)?.id
   })
 
-  const postCategoryIds = [...categoryIds, uncategorizedCategory?.id]
+  const postCategoryIds = categoryIds?.length
+    ? categoryIds
+    : [uncategorizedCategory?.id]
 
   try {
     await db.post.create({

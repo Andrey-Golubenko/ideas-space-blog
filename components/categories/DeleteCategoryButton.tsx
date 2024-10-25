@@ -35,9 +35,15 @@ const DeleteCategoryButton = ({
   isPending,
   startTransition
 }: ICategoryDeleteButtonProps) => {
-  const [categories, setCategories] = useStore((state) => {
-    return [state.categories, state.setCategories]
-  })
+  const [categories, setCategories, setCategoriesCount] = useStore(
+    (state) => {
+      return [
+        state.categories,
+        state.setCategories,
+        state.setCategoriesCount
+      ]
+    }
+  )
 
   const router = useRouter()
 
@@ -49,6 +55,7 @@ const DeleteCategoryButton = ({
         })
 
         setCategories(newCategories)
+        setCategoriesCount(newCategories?.length)
 
         if (imageUrl) {
           try {

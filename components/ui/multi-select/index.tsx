@@ -23,6 +23,7 @@ import {
 } from '~/components/ui/command'
 import { multiSelectVariants } from '~/components/ui/multi-select/multiSelectVariants'
 import { type IMultiSelectProps } from '~/types/types'
+import { DEFAULT_CATEGORY } from '~/utils/constants/constants'
 
 export const MultiSelect = forwardRef<
   HTMLButtonElement,
@@ -44,6 +45,10 @@ export const MultiSelect = forwardRef<
     ref
   ) => {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false)
+
+    const displayedFieldValues = fieldValue?.filter((value) => {
+      return value !== DEFAULT_CATEGORY.name
+    })
 
     const handleInputKeyDown = (
       event: React.KeyboardEvent<HTMLInputElement>
@@ -118,33 +123,35 @@ export const MultiSelect = forwardRef<
             {fieldValue?.length > 0 ? (
               <div className="flex w-full items-center justify-between">
                 <div className="flex flex-wrap items-center">
-                  {fieldValue?.slice(0, maxCount)?.map((value) => {
-                    const option = options.find((o) => {
-                      return o.value === value
-                    })
+                  {displayedFieldValues
+                    ?.slice(0, maxCount)
+                    ?.map((value) => {
+                      const option = options.find((o) => {
+                        return o.value === value
+                      })
 
-                    const IconComponent = option?.icon
+                      const IconComponent = option?.icon
 
-                    return (
-                      <Badge
-                        key={value}
-                        className={cn(multiSelectVariants({ variant }))}
-                      >
-                        {IconComponent && (
-                          <IconComponent className="mr-2 h-4 w-4" />
-                        )}
+                      return (
+                        <Badge
+                          key={value}
+                          className={cn(multiSelectVariants({ variant }))}
+                        >
+                          {IconComponent && (
+                            <IconComponent className="mr-2 h-4 w-4" />
+                          )}
 
-                        {option?.label}
-                        <XCircle
-                          className="ml-2 h-4 w-4 cursor-pointer"
-                          onClick={(event) => {
-                            event?.stopPropagation()
-                            toggleOption(value)
-                          }}
-                        />
-                      </Badge>
-                    )
-                  })}
+                          {option?.label}
+                          <XCircle
+                            className="ml-2 h-4 w-4 cursor-pointer"
+                            onClick={(event) => {
+                              event?.stopPropagation()
+                              toggleOption(value)
+                            }}
+                          />
+                        </Badge>
+                      )
+                    })}
 
                   {fieldValue?.length > maxCount && (
                     <Badge

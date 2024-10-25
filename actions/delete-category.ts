@@ -10,6 +10,7 @@ import {
 import { getUserById } from '~/services/user'
 import { updatePostsCategories } from '~/actions/update-posts-categories'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
+import { DEFAULT_CATEGORY } from '~/utils/constants/constants'
 
 export const deleteCategory = async (categoryId: string) => {
   try {
@@ -38,12 +39,14 @@ export const deleteCategory = async (categoryId: string) => {
     const uncategorizedCategory = await fetchUncategorizedCategory()
 
     if (uncategorizedCategory?.id === categoryId) {
-      return { error: 'Cannot delete "Uncategorized" category!' }
+      return {
+        error: `Can not delete '${DEFAULT_CATEGORY.name}' category!`
+      }
     }
 
     if (!uncategorizedCategory) {
       return {
-        error: 'There is no "Uncategorized" category to link post with!'
+        error: `There is no '${DEFAULT_CATEGORY.name}' category to link post with!`
       }
     }
 

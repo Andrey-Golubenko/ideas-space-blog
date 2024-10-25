@@ -21,7 +21,7 @@ const CategoriesList = () => {
 
   useEffect(() => {
     getAllCategories()
-  }, [categories?.length])
+  }, [getAllCategories])
 
   const { skeletonItems, restItems, thirdItemInList, noItems } =
     useListItemsDistribution(categories, categoriesCount)

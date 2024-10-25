@@ -85,6 +85,7 @@ const PostManageForm = ({
             name="content"
             label="Post content"
             isPending={isDisabled}
+            rows={7}
           />
 
           <MultiSelectField

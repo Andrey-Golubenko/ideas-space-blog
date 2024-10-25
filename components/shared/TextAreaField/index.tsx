@@ -1,4 +1,4 @@
-import { type FormHTMLAttributes } from 'react'
+import { type TextareaHTMLAttributes } from 'react'
 
 import {
   FormControl,
@@ -25,7 +25,7 @@ const TextAreaField = ({
   control,
   isPending,
   ...props
-}: ITextAreaFieldProps & FormHTMLAttributes<HTMLTextAreaElement>) => {
+}: ITextAreaFieldProps & TextareaHTMLAttributes<HTMLTextAreaElement>) => {
   return (
     <FormField
       control={control}
@@ -40,8 +40,6 @@ const TextAreaField = ({
                 {...field}
                 disabled={isPending}
                 placeholder={placeholder}
-                maxLength={200}
-                rows={5}
                 {...props}
               />
             </FormControl>
