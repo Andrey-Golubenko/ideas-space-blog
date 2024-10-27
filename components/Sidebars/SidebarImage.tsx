@@ -1,5 +1,6 @@
 import { forwardRef, memo } from 'react'
 import Image from 'next/image'
+import { IMAGES_PATHS } from '~/utils/constants/constants'
 
 interface ISidebarImageProps {
   imageUrl: string
@@ -7,6 +8,10 @@ interface ISidebarImageProps {
 
 const SidebarImage = forwardRef<HTMLDivElement, ISidebarImageProps>(
   ({ imageUrl }, ref) => {
+    const itemImageUrl = imageUrl?.length
+      ? imageUrl
+      : IMAGES_PATHS.noImages
+
     return (
       <div
         style={{
@@ -17,7 +22,7 @@ const SidebarImage = forwardRef<HTMLDivElement, ISidebarImageProps>(
         ref={ref}
       >
         <Image
-          src={imageUrl}
+          src={itemImageUrl}
           alt="Category image"
           sizes="100%"
           fill

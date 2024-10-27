@@ -10,6 +10,7 @@ import { useEffect, useState, useTransition } from 'react'
 import { getUserRole } from '~/utils/helpers/server.helpers'
 import { Categories, UserRole } from '@prisma/client'
 import DeleteCategoryButton from '~/components/categories/DeleteCategoryButton'
+import EditCategoryButton from '~/components/categories/EditCategoryButton'
 
 interface IItemCardFooterProps {
   itemSlug?: string
@@ -20,9 +21,6 @@ const PostCardFooter = ({ itemSlug, itemType }: IItemCardFooterProps) => {
   const { isPost, isCategory } = itemType
 
   const [userRole, setUserRole] = useState<UserRole>(UserRole.USER)
-  const [editableCategory, setEditableCategory] = useState<
-    Categories | {}
-  >({})
 
   useEffect(() => {
     if (isCategory) {
@@ -35,20 +33,13 @@ const PostCardFooter = ({ itemSlug, itemType }: IItemCardFooterProps) => {
     }
   }, [])
 
-  const [categories] = useStore((state) => {
-    return [state.categories]
+  const [categories, setEditableCategory] = useStore((state) => {
+    return [state.categories, state.setEditableCategory]
   })
 
-  useEffect(() => {
-    if (isCategory) {
-      const currentCategory: Categories | {} =
-        categories.find((category) => {
-          return category?.slug === itemSlug
-        }) || {}
-
-      setEditableCategory(currentCategory)
-    }
-  }, [])
+  const localEditableCategory = categories?.find((category) => {
+    return category?.slug === itemSlug
+  })
 
   const [isPending, startTransition] = useTransition()
 
@@ -77,16 +68,20 @@ const PostCardFooter = ({ itemSlug, itemType }: IItemCardFooterProps) => {
       </Button>
 
       {isAdmin && (
-        <div className="flex w-full items-center justify-center">
+        <div className="flex w-full flex-col items-center justify-center gap-y-4">
           <DeleteCategoryButton
-            categoryId={(editableCategory as Categories)?.id}
-            imageUrl={(editableCategory as Categories)?.imageUrl}
+            categoryId={(localEditableCategory as Categories)?.id}
+            imageUrl={(localEditableCategory as Categories)?.imageUrl}
             isAdmin={isAdmin}
             isPending={isPending}
             startTransition={startTransition}
           />
 
-          {/* <EditCategoryButton editableCategory={editableCategory} /> */}
+          <EditCategoryButton
+            category={localEditableCategory as Categories}
+            setEditableCategory={setEditableCategory}
+            isPending={isPending}
+          />
         </div>
       )}
     </CardFooter>

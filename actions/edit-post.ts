@@ -7,6 +7,7 @@ import { getUserById } from '~/services/user'
 import { fetchUncategorizedCategory } from '~/services/categories'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
 import { ManagePostSchema } from '~/schemas'
+import { UserRole } from '@prisma/client'
 import { type TManagePostForm } from '~/types/types'
 
 export const editPost = async (
@@ -41,7 +42,7 @@ export const editPost = async (
     return { error: 'The post you are trying to edit does not exist' }
   }
 
-  if (editablePost.authorId !== user.id) {
+  if (editablePost.authorId !== user.id || user.role !== UserRole.ADMIN) {
     return { error: 'You have no permission to edit this post!' }
   }
 

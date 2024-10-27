@@ -29,16 +29,20 @@ export const SingleCategorySchema = z.object({
     }),
   imageUrl: z.optional(z.string()),
   file: z.optional(
-    z.array(
-      z.instanceof(File).refine(
-        (file) => {
-          return file.size <= MAX_FILE_SIZE
-        },
-        {
-          message: `The file size should be no more than ${MAX_FILE_SIZE / 1024 / 1024} MB. Try again please.`
-        }
+    z
+      .array(
+        z.instanceof(File).refine(
+          (file) => {
+            return file.size <= MAX_FILE_SIZE
+          },
+          {
+            message: `The file size should be no more than ${MAX_FILE_SIZE / 1024 / 1024} MB. Try again please.`
+          }
+        )
       )
-    )
+      .max(1, {
+        message: `You can upload only 1 file.`
+      })
   )
 })
 

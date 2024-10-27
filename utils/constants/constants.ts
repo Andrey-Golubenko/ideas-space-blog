@@ -15,6 +15,7 @@ export const PATHS = {
   settings: '/settings',
   admin: '/admin',
   newCategory: '/admin/new-category',
+  editCategory: '/admin/edit-category',
 
   signIn: '/auth',
   logIn: '/auth/login',

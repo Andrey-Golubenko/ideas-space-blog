@@ -8,6 +8,7 @@ import { toast } from 'sonner'
 import { type Post } from '@prisma/client'
 
 import useStore from '~/store'
+import { useCleaningItem } from '~/hooks/useCleaningItem'
 import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
 import PostManageForm from '~/components/shared/PostManageForm'
 import { editPost } from '~/actions/edit-post'
@@ -92,6 +93,8 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
       })
     }
   }, [isEditablePostExist])
+
+  useCleaningItem(setEditablePost)
 
   const handleOnSubmit = (values: TManagePostForm) => {
     setError('')

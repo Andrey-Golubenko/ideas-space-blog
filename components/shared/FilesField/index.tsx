@@ -50,16 +50,12 @@ const FilesField = ({
 }: IFilesFieldProps & FormHTMLAttributes<HTMLInputElement>) => {
   const [filesErrors, setFilesErrors] = useState<TFileError[]>([])
 
-  const { register, unregister, setValue } = useFormContext()
+  const { register, setValue } = useFormContext()
 
   useEffect(() => {
     register(name)
     register(additionalName)
-    return () => {
-      unregister(name)
-      unregister(additionalName)
-    }
-  }, [register, unregister, name, additionalName])
+  }, [register, name, additionalName])
 
   useEffect(() => {
     if (Array.isArray(validateErrors) && validateErrors?.length) {
@@ -79,11 +75,15 @@ const FilesField = ({
       name: additionalName
     }) || []
 
+  const imageUrlsArray: string[] = Array.isArray(imageUrls)
+    ? imageUrls
+    : [imageUrls]
+
   const { onDrop } = useOnDrop({
     fieldName: name,
     multiple,
     files,
-    imageUrls,
+    imageUrls: imageUrlsArray,
     setFilesErrors,
     setFilesDuplicate,
     setValue
@@ -101,14 +101,18 @@ const FilesField = ({
   )
 
   const handleOnImageUrlDelete = useCallback(
-    (fileName: string): void => {
-      const newImageUrls = imageUrls.filter((url) => {
-        return !url.includes(fileName)
+    (imageName: string): void => {
+      const newImageUrls = imageUrlsArray.filter((url) => {
+        return !url.includes(imageName)
       })
 
-      setValue('imageUrls', newImageUrls)
+      const formFieldNewImageUrls = Array.isArray(imageUrls)
+        ? newImageUrls
+        : newImageUrls.join()
+
+      setValue(additionalName, formFieldNewImageUrls)
     },
-    [imageUrls, setValue]
+    [imageUrlsArray, setValue]
   )
 
   const handleDropRejected = (fileRejections: FileRejection[]) => {
@@ -194,10 +198,10 @@ const FilesField = ({
         <DuplicatesFilesList filesDuplicates={filesDuplicates} />
       )}
 
-      {(!!files?.length || !!imageUrls?.length) && (
+      {(!!files?.length || !!imageUrlsArray?.length) && (
         <FilesList
           files={files}
-          imageUrls={imageUrls}
+          imageUrls={imageUrlsArray}
           handleOnFileDelete={handleOnFileDelete}
           handleOnImageUrlDelete={handleOnImageUrlDelete}
           isPending={isPending}

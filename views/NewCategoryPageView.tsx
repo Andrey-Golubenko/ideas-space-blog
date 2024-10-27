@@ -8,15 +8,8 @@ import { toast } from 'sonner'
 import { UserRole } from '@prisma/client'
 
 import { Card, CardHeader, CardContent } from '~/components/ui/card'
-import { Form } from '~/components/ui/form'
-import TextAreaField from '~/components/shared/TextAreaField'
-import FilesField from '~/components/shared/FilesField'
-import TextField from '~/components/shared/TextField'
-import LoadableButton from '~/components/shared/LoadableButton'
-import FormError from '~/components/FormError'
-import FormSuccess from '~/components/FormSuccess'
 import RoleGate from '~/components/auth/RoleGate'
-
+import CategoryManageForm from '~/components/shared/CategoryManageForm'
 import { newCategory } from '~/actions/new-category'
 import { saveImagesToCloudinary } from '~/services/imagesProcessing'
 import { SingleCategorySchema } from '~/schemas'
@@ -106,56 +99,14 @@ const NewCategoryPageView = () => {
       </CardHeader>
       <CardContent className="flex flex-grow flex-col justify-evenly space-y-4">
         <RoleGate allowedRole={UserRole.ADMIN}>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(handleOnSubmit)}
-              className="space-y-8"
-            >
-              <div className="space-y-6">
-                <TextField
-                  control={form.control}
-                  name="name"
-                  label="Category name"
-                  placeholder="Unique name for the category"
-                  isPending={isPending}
-                />
-
-                <TextField
-                  control={form.control}
-                  name="slug"
-                  label="Category slug"
-                  placeholder="The URL of the category page, in lowercase only, separated by a dash"
-                  isPending={isPending}
-                />
-
-                <FilesField
-                  name="file"
-                  additionalName="imageUrl"
-                  validateErrors={form.formState.errors.file}
-                  isPending={isPending}
-                />
-
-                <TextAreaField
-                  control={form.control}
-                  name="description"
-                  label="Category description"
-                  placeholder="A short description of the category"
-                  isPending={isPending}
-                  maxLength={200}
-                  rows={5}
-                />
-
-                <FormError message={error} />
-                <FormSuccess message={success} />
-
-                <LoadableButton
-                  type="submit"
-                  isDisabled={isPending}
-                  label="Create a new category"
-                />
-              </div>
-            </form>
-          </Form>
+          <CategoryManageForm
+            form={form}
+            handleOnSubmit={handleOnSubmit}
+            isDisabled={isPending}
+            success={success}
+            error={error}
+            label="Create a new category"
+          />
         </RoleGate>
       </CardContent>
     </Card>

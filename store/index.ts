@@ -13,11 +13,13 @@ import { fetchAllCategories } from '~/services/categories'
 interface IUseStore {
   posts: Post[]
   postsCount: number | null
-  isLoading: boolean
   editablePost: FullPost | {}
 
   categories: Categories[]
   categoriesCount: number | null
+  editableCategory: Categories | {}
+
+  isLoading: boolean
 
   getAllPosts: () => Promise<void>
   getPostsBySearch: (search: string) => Promise<void>
@@ -27,6 +29,7 @@ interface IUseStore {
   getAllCategories: () => Promise<void>
   setCategories: (categories: Categories[]) => void
   setCategoriesCount: (categoriesLength: number) => void
+  setEditableCategory: (category: Categories | {}) => void
 }
 
 const useStore = createWithEqualityFn<
@@ -40,10 +43,11 @@ const useStore = createWithEqualityFn<
         return {
           posts: [],
           postsCount: null,
-          isLoading: false,
           editablePost: {},
           categories: [],
           categoriesCount: null,
+          editableCategory: {},
+          isLoading: false,
 
           getAllPosts: async () => {
             set((state) => {
@@ -119,6 +123,12 @@ const useStore = createWithEqualityFn<
           setCategoriesCount: (categoriesLength: number) => {
             set((state) => {
               return { ...state, categoriesCount: categoriesLength }
+            })
+          },
+
+          setEditableCategory: (category: Categories | {}) => {
+            set((state) => {
+              return { ...state, editableCategory: category }
             })
           }
         }
