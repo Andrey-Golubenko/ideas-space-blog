@@ -16,10 +16,10 @@ import { TListItem } from '~/types/types'
 
 interface IPostCardSkeletonProps {
   item?: TListItem
-  isLoading: boolean
+  isLoading?: boolean
 }
 
-const SkeletonCard = ({ item, isLoading }: IPostCardSkeletonProps) => {
+const SkeletonItemCard = ({ item, isLoading }: IPostCardSkeletonProps) => {
   const hasContent = item && !isLoading
 
   const { itemImage, itemTitle, itemContent, itemSlug } =
@@ -72,4 +72,4 @@ const SkeletonCard = ({ item, isLoading }: IPostCardSkeletonProps) => {
   )
 }
 
-export default SkeletonCard
+export default SkeletonItemCard

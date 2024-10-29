@@ -2,7 +2,7 @@ import Navigation from '~/components/navigation/Navigation'
 
 export default function Header() {
   return (
-    <header className="flex items-center justify-center bg-[#2C2C32] px-0 py-2">
+    <header className="z-10 -mb-3 flex items-center justify-center px-0">
       <Navigation />
     </header>
   )

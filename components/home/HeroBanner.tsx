@@ -5,11 +5,11 @@ import LoadableImage from '~/components/shared/LoadableImage'
 
 const HeroBanner = () => {
   return (
-    <div className="h-[550px] w-full">
+    <div className="w-full">
       <LoadableImage
         src={IMAGES_PATHS.heroBanner}
         alt="Hero banner"
-        containerHeight={550}
+        containerHeight={600}
         priority
         imageClassNames="!animate-banner-scale object-cover"
       />

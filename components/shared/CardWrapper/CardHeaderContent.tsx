@@ -14,10 +14,10 @@ const CardHeaderContent = ({
 }: IAuthHeaderProps & HTMLAttributes<HTMLDivElement>) => {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-4">
-      <h1 className={cn('text-3xl font-semibold', fontPoppins.className)}>
+      <h1 className={cn('text-4xl font-semibold', fontPoppins.className)}>
         {title}
       </h1>
-      <p className="text-sm text-muted-foreground">{label}</p>
+      <p className="text-base text-muted-foreground">{label}</p>
     </div>
   )
 }

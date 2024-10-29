@@ -2,7 +2,7 @@ import { fontPlayfairDisplay } from '~/utils/constants/fonts'
 
 const Greeting = () => {
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex h-full w-full flex-col items-center justify-center rounded-xl bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-500 to-blue-800 py-20">
       <h2
         className={`${fontPlayfairDisplay.className} text-outline-white text-shadow-black mb-12 bg-[url('/images/hero-banner.webp')] bg-cover bg-clip-text bg-center bg-no-repeat text-center text-6xl font-bold tracking-wider text-transparent brightness-200 md:text-8xl`}
       >

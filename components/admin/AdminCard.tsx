@@ -5,7 +5,7 @@ import { toast } from 'sonner'
 import { UserRole } from '@prisma/client'
 
 import { Card, CardHeader, CardContent } from '~/components/ui/card'
-import RoleGate from '~/components/auth/RoleGate'
+import WithRole from '~/components/hoc/WithRole'
 
 import AdminCardItem from '~/components/admin/AdminCardItem'
 import FormSuccess from '~/components/FormSuccess'
@@ -60,9 +60,9 @@ const AdminCard = () => {
         <p className="text-center text-2xl font-semibold">🔑 Admin</p>
       </CardHeader>
       <CardContent className="flex flex-grow flex-col justify-evenly space-y-4">
-        <RoleGate allowedRole={UserRole.ADMIN}>
+        <WithRole allowedRole={UserRole.ADMIN}>
           <FormSuccess message="You are allowed to see this content!" />
-        </RoleGate>
+        </WithRole>
         <AdminCardItem
           label="Admin-only API Route"
           buttonLabel="Click to test"

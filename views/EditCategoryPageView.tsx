@@ -10,7 +10,7 @@ import { UserRole, type Categories } from '@prisma/client'
 import useStore from '~/store'
 import { useCleaningItem } from '~/hooks/useCleaningItem'
 import { Card, CardHeader, CardContent } from '~/components/ui/card'
-import RoleGate from '~/components/auth/RoleGate'
+import WithRole from '~/components/hoc/WithRole'
 import { editCategory } from '~/actions/edit-category'
 import {
   destroyImagesInCloudinary,
@@ -159,7 +159,7 @@ const EditCategoryPageView = () => {
         </p>
       </CardHeader>
       <CardContent className="flex flex-grow flex-col justify-evenly space-y-4">
-        <RoleGate allowedRole={UserRole.ADMIN}>
+        <WithRole allowedRole={UserRole.ADMIN}>
           <CategoryManageForm
             form={form}
             handleOnSubmit={handleOnSubmit}
@@ -168,7 +168,7 @@ const EditCategoryPageView = () => {
             error={error}
             label="Edit category"
           />
-        </RoleGate>
+        </WithRole>
       </CardContent>
     </Card>
   )

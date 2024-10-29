@@ -12,7 +12,7 @@ const Navigation = async () => {
   const isMobile = deviceType === 'mobile'
 
   return (
-    <div className="flex w-full">
+    <div className="flex w-full rounded-b-lg bg-[rgb(44,47,58)] py-2">
       {isMobile ? (
         <MobileNavMenu
           isLoggedIn={!!user}

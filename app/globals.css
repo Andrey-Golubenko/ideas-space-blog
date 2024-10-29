@@ -69,11 +69,19 @@ body {
   }
 }
 
+/* text-stroke gray untility */
+@layer utilities {
+  .text-outline-gray {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+    text-stroke: 1px rgba(255, 255, 255, 0.2);
+  }
+}
+
 /* text-stroke white untility */
 @layer utilities {
   .text-outline-white {
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
-    text-stroke: 1px rgba(255, 255, 255, 0.2);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 1);
+    text-stroke: 1px rgba(255, 255, 255, 1);
   }
 }
 

@@ -9,7 +9,7 @@ interface IGateRoleProps {
   allowedRole: UserRole
 }
 
-const RoleGate = ({ children, allowedRole }: IGateRoleProps) => {
+const WithRole = ({ children, allowedRole }: IGateRoleProps) => {
   const user = useCurrentUser()
 
   const userRole = user?.role
@@ -23,4 +23,4 @@ const RoleGate = ({ children, allowedRole }: IGateRoleProps) => {
   return children
 }
 
-export default RoleGate
+export default WithRole

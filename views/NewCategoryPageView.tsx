@@ -8,7 +8,7 @@ import { toast } from 'sonner'
 import { UserRole } from '@prisma/client'
 
 import { Card, CardHeader, CardContent } from '~/components/ui/card'
-import RoleGate from '~/components/auth/RoleGate'
+import WithRole from '~/components/hoc/WithRole'
 import CategoryManageForm from '~/components/shared/CategoryManageForm'
 import { newCategory } from '~/actions/new-category'
 import { saveImagesToCloudinary } from '~/services/imagesProcessing'
@@ -98,7 +98,7 @@ const NewCategoryPageView = () => {
         </p>
       </CardHeader>
       <CardContent className="flex flex-grow flex-col justify-evenly space-y-4">
-        <RoleGate allowedRole={UserRole.ADMIN}>
+        <WithRole allowedRole={UserRole.ADMIN}>
           <CategoryManageForm
             form={form}
             handleOnSubmit={handleOnSubmit}
@@ -107,7 +107,7 @@ const NewCategoryPageView = () => {
             error={error}
             label="Create a new category"
           />
-        </RoleGate>
+        </WithRole>
       </CardContent>
     </Card>
   )

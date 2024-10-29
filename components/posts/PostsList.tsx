@@ -4,7 +4,8 @@ import { usePathname } from 'next/navigation'
 
 import ItemCard from '~/components/shared/ItemCard'
 import NoPostsCard from '~/components/posts/NoPostsCard'
-import SkeletonsList from '~/components/posts/SkeletonsList'
+import WithSkeletonsList from '~/components/hoc/WithSkeletonsList'
+import SkeletonItemCard from '~/components/shared/ItemCard/SkeletonItemCard'
 import { useListItemsDistribution } from '~/hooks/useListItemsDistribution'
 import { PATHS } from '~/utils/constants/constants'
 import { type Post } from '@prisma/client'
@@ -32,10 +33,12 @@ const PostsList = ({ posts, postsCount, isLoading }: IPostListProps) => {
   return (
     <section className="mb-8 w-full @container">
       {!noItems ? (
-        <SkeletonsList
+        <WithSkeletonsList
           skeletonItems={skeletonItems}
           isLoading={isLoading}
-        />
+        >
+          <SkeletonItemCard />
+        </WithSkeletonsList>
       ) : (
         <NoPostsCard itemName="posts" />
       )}

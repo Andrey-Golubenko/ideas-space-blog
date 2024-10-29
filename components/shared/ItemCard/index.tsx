@@ -10,7 +10,7 @@ import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { TListItem } from '~/types/types'
 
 interface IItemCardProps {
-  item: TListItem
+  item?: TListItem
 }
 
 const ItemCard = ({ item }: IItemCardProps) => {
