@@ -25,7 +25,9 @@ const SkeletonSectionItemCard = ({
   const { isPost, isCategory } = useItemType(item)
 
   return (
-    <Card className="flex min-h-max flex-col items-center justify-center !border-0 bg-transparent shadow-none">
+    <Card
+      className={`flex min-h-max flex-col items-center justify-center ${isCategory ? '!border-0 bg-transparent shadow-none' : ''}`}
+    >
       {hasContent ? (
         <Link
           href={
@@ -33,15 +35,15 @@ const SkeletonSectionItemCard = ({
             (isCategory && `${PATHS.categories}/${itemSlug}`) ||
             '#'
           }
-          className="w-[200px] overflow-hidden rounded-full"
+          className={`overflow-hidden ${isCategory ? 'w-[200px] rounded-full' : 'w-full rounded-lg border-b'}`}
         >
           <LoadableImage
             src={itemImage}
-            alt="Post image"
-            containerHeight={200}
+            alt={`${itemTitle} image`}
+            containerHeight={isCategory ? 200 : 250}
             priority
-            imageClassNames="rounded-full object-cover"
-            containerClassNames="rounded-full duration-700 hover:scale-110"
+            imageClassNames={`object-cover ${isCategory ? 'rounded-full' : 'rounded-lg'}`}
+            containerClassNames={` duration-700 hover:scale-110 ${isCategory ? 'rounded-full' : 'rounded-lg'}`}
           />
         </Link>
       ) : (
@@ -59,7 +61,7 @@ const SkeletonSectionItemCard = ({
           >
             <h2
               className={`
-              text-outline-white line-clamp-2 w-full text-2xl font-semibold 
+              text-outline-white line-clamp-2 w-full text-2xl hover:text-black/60 ${isCategory ? 'font-semibold' : 'font-bold'} 
               ${fontPoppins.className}`}
             >
               {itemTitle}

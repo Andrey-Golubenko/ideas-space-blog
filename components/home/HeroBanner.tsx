@@ -9,7 +9,7 @@ const HeroBanner = () => {
       <LoadableImage
         src={IMAGES_PATHS.heroBanner}
         alt="Hero banner"
-        containerHeight={600}
+        containerHeight={670}
         priority
         imageClassNames="!animate-banner-scale object-cover"
       />

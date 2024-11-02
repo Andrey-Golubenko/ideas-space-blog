@@ -35,20 +35,20 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
 
   const router = useRouter()
 
-  const [posts, editablePost, initCategories, setEditablePost] = useStore(
+  const [posts, singlePost, initCategories, setSinglePost] = useStore(
     (state) => {
       return [
         state.posts,
-        state.editablePost,
+        state.singlePost,
         state.categories,
-        state.setEditablePost
+        state.setSinglePost
       ]
     }
   )
 
   const initialPost =
     posts?.find((post) => {
-      return post?.id === (editablePost as Post)?.id
+      return post?.id === (singlePost as Post)?.id
     }) || {}
 
   const {
@@ -58,7 +58,7 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
     imageUrls,
     published,
     categories: editablePostCategories
-  } = editablePost as FullPost
+  } = singlePost as FullPost
 
   const categoriesFieldValues = editablePostCategories?.map(
     (editPostCategory) => {
@@ -68,7 +68,7 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
 
   const isDisabled = isPending || !isLogged
 
-  const isEditablePostExist = !!Object.values(editablePost)?.length
+  const isEditablePostExist = !!Object.values(singlePost)?.length
 
   const form = useForm<TManagePostForm>({
     defaultValues: {
@@ -83,7 +83,7 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
   })
 
   useEffect(() => {
-    if (Object.values(editablePost)?.length) {
+    if (Object.values(singlePost)?.length) {
       form.reset({
         title,
         content,
@@ -94,7 +94,7 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
     }
   }, [isEditablePostExist])
 
-  useCleaningItem(setEditablePost)
+  useCleaningItem(setSinglePost)
 
   const handleOnSubmit = (values: TManagePostForm) => {
     setError('')
@@ -166,7 +166,7 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
             duration: 5000
           })
 
-          setEditablePost({})
+          setSinglePost({})
 
           router.push(`${PATHS.blog}/${postId}`)
         }

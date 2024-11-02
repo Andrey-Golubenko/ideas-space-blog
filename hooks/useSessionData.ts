@@ -1,6 +1,6 @@
 'use client'
 
-// Replace useSession() hook
+// Replace useSession() hook, BUT WORK NOT SAFE (there are often problems with the operation of userContext())
 
 import { useContext } from 'react'
 import type { Session } from 'next-auth'

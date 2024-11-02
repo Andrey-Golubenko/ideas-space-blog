@@ -1,3 +1,5 @@
+'use client'
+
 import {
   cloneElement,
   useEffect,
@@ -32,6 +34,8 @@ const WithCategoryData = ({
   return (
     <section className="my-20 w-full @container">
       {!noItems ? (
+        // Passing skeletonItems and isLoading as a props in children
+
         cloneElement(children[0] as ReactElement, {
           skeletonItems,
           isLoading
@@ -40,11 +44,12 @@ const WithCategoryData = ({
         <NoPostsCard itemName="categories" />
       )}
 
-      <div className="mb-5 grid w-full grid-cols-1 gap-5 @md:grid-cols-2 @3xl:grid-cols-3">
-        {!isLoading &&
-          [...restItems, thirdItemInList]?.map((item) => {
+      {!isLoading && restItems?.length > 0 && (
+        <div className="mb-5 grid w-full grid-cols-1 gap-5 @md:grid-cols-2 @3xl:grid-cols-3">
+          {[...restItems, thirdItemInList]?.map((item) => {
             if (item) {
               // Passing the key and item as a props in children
+
               return cloneElement(children[1] as ReactElement, {
                 key: item?.id,
                 item
@@ -53,7 +58,8 @@ const WithCategoryData = ({
 
             return undefined
           })}
-      </div>
+        </div>
+      )}
     </section>
   )
 }

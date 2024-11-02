@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { type Categories } from '@prisma/client'
 
+import { useItemType } from '~/hooks/useItemType'
+import { useItemProps } from '~/hooks/useItemProps'
 import { Card, CardHeader } from '~/components/ui/card'
 import LoadableImage from '~/components/shared/LoadableImage'
 import { PATHS } from '~/utils/constants/constants'
@@ -14,33 +16,48 @@ interface ICategoriesSectionItemProps {
 const SectionItemCard = ({ item }: ICategoriesSectionItemProps) => {
   const [autoAnimateRef] = useAutoAnimate()
 
+  const { isPost, isCategory } = useItemType(item)
+
+  const { itemImage, itemTitle, itemContent, itemSlug } =
+    useItemProps(item)
+
   return (
     <Card
       ref={autoAnimateRef}
-      className="flex min-h-max flex-col items-center justify-center !border-0 bg-transparent shadow-none"
+      className={`flex min-h-max flex-col items-center justify-center ${isCategory ? '!border-0 bg-transparent shadow-none' : ''}`}
     >
       <Link
-        href={`${PATHS.categories}/${item?.slug}`}
-        className="w-[200px] overflow-hidden rounded-full"
+        href={
+          (isPost && `${PATHS.blog}/${itemSlug}`) ||
+          (isCategory && `${PATHS.categories}/${itemSlug}`) ||
+          '#'
+        }
+        className={`overflow-hidden ${isCategory ? 'w-[200px] rounded-full' : 'w-full rounded-lg border-b'}`}
       >
         <LoadableImage
-          src={item?.imageUrl as string}
-          alt="Post image"
-          containerHeight={200}
+          src={itemImage}
+          alt={`${itemTitle} image`}
+          containerHeight={isCategory ? 200 : 250}
           priority
-          imageClassNames="rounded-full object-cover"
-          containerClassNames="rounded-full duration-700 hover:scale-110"
+          imageClassNames={`object-cover ${isCategory ? 'rounded-full' : 'rounded-lg'}`}
+          containerClassNames={` duration-700 hover:scale-110 ${isCategory ? 'rounded-full' : 'rounded-lg'}`}
         />
       </Link>
 
       <CardHeader className="pb-4">
-        <Link href={`${PATHS.categories}/${item?.slug}`}>
+        <Link
+          href={
+            (isPost && `${PATHS.blog}/${itemSlug}`) ||
+            (isCategory && `${PATHS.categories}/${itemSlug}`) ||
+            '#'
+          }
+        >
           <h2
             className={`
-            text-outline-white line-clamp-2 w-full text-2xl font-semibold 
-            ${fontPoppins.className}`}
+              text-outline-white line-clamp-2 w-full text-2xl hover:text-black/60 ${isCategory ? 'font-semibold' : 'font-bold'} 
+              ${fontPoppins.className}`}
           >
-            {item?.name}
+            {itemTitle}
           </h2>
         </Link>
       </CardHeader>

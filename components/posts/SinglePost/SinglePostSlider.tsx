@@ -20,23 +20,23 @@ const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
   const isMobil = useIsMobile()
 
+  const imagesCount = imageUrls?.length ?? 0
+
   /** Count of the thumbnails to view for mobil and for desktop */
   const multiThumbsPerView = isMobil ? 2.5 : 3
 
-  const thumbsPerView = Math.min(
-    imageUrls?.length ?? 0,
-    multiThumbsPerView
-  )
+  const thumbsPerView =
+    imagesCount > multiThumbsPerView ? multiThumbsPerView : imagesCount
 
   /** Set to true to enable continuous loop mode.
    * It is taken into account that the sum of the parameters 'slidesPerView' and 'slidesPerGroup' (1 - by default) for thumbnails should be no more than 3 (parameter 'slidesPerView' for thumbnails)
    */
-  const isThumsInLoop = thumbsPerView - 1 >= 3
+  const isThumsInLoop = imagesCount - 1 >= 3
 
   /** Set to true to enable continuous loop mode.
    * It is taken into account that the sum of the parameters 'slidesPerView' and 'slidesPerGroup' (1 - by default) for thumbnails should be no more than 1 (parameter 'slidesPerView' for images)
    */
-  const isImageInLoop = imageUrls.length - 1 >= 1
+  const isImageInLoop = imagesCount - 1 >= 1
 
   /** The height of the slider container with thumbnails in pixels */
   const thumbsHeight = isMobil ? 95 : 130

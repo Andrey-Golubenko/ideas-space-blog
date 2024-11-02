@@ -5,7 +5,7 @@ import SectionCategoriesList from '~/components/categories/SectionCategoriesList
 const CategoriesSection = () => {
   return (
     <Card className="h-full w-full border-transparent bg-slate-100 shadow-md">
-      <CardHeader className="pb-12 pt-20">
+      <CardHeader className="pb-0 pt-20">
         <CardHeaderContent
           title="Topic Highlights"
           label="Blog Themes"

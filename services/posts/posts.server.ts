@@ -48,3 +48,18 @@ export const getPostsByCategory = async (
     return null
   }
 }
+
+export const fetchRecentPosts = async () => {
+  try {
+    const posts = await db.post.findMany({
+      take: 3,
+      orderBy: {
+        createdAt: 'desc'
+      }
+    })
+
+    return { recentPosts: posts, recentPostsCount: posts?.length }
+  } catch (error) {
+    throw new Error('Failed ti fetch recent posts!')
+  }
+}

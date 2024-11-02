@@ -6,14 +6,18 @@ import { type Categories, type Post } from '@prisma/client'
 import {
   fetchPosts,
   fetchPostsBySearch,
-  fetchPostsByUserId
+  fetchPostsByUserId,
+  fetchSinglePostById
 } from '~/services/posts/posts.client'
 import { fetchAllCategories } from '~/services/categories'
+import { fetchRecentPosts } from '~/services/posts/posts.server'
 
 interface IUseStore {
   posts: Post[]
   postsCount: number | null
-  editablePost: FullPost | {}
+  singlePost: FullPost | {}
+  recentPosts: Post[]
+  recentPostsCount: number | null
 
   categories: Categories[]
   categoriesCount: number | null
@@ -24,7 +28,9 @@ interface IUseStore {
   getAllPosts: () => Promise<void>
   getPostsBySearch: (search: string) => Promise<void>
   getPostsByUserId: (userId: string) => Promise<void>
-  setEditablePost: (post: Post | {}) => void
+  getSinglePostById: (postId: string) => void
+  setSinglePost: (post: FullPost | {}) => void
+  getRecentPosts: () => Promise<void>
 
   getAllCategories: () => Promise<void>
   setCategories: (categories: Categories[]) => void
@@ -43,7 +49,9 @@ const useStore = createWithEqualityFn<
         return {
           posts: [],
           postsCount: null,
-          editablePost: {},
+          singlePost: {},
+          recentPosts: [],
+          recentPostsCount: null,
           categories: [],
           categoriesCount: null,
           editableCategory: {},
@@ -89,9 +97,40 @@ const useStore = createWithEqualityFn<
             })
           },
 
-          setEditablePost: (post: FullPost | {}) => {
+          getRecentPosts: async () => {
             set((state) => {
-              return { ...state, editablePost: post }
+              return { ...state, isLoading: true }
+            })
+
+            const data = await fetchRecentPosts()
+
+            const { recentPosts, recentPostsCount } = data
+
+            set((state) => {
+              return {
+                ...state,
+                recentPosts,
+                recentPostsCount,
+                isLoading: false
+              }
+            })
+          },
+
+          getSinglePostById: async (postId: string) => {
+            set((state) => {
+              return { ...state, isLoading: true }
+            })
+
+            const singlePost = await fetchSinglePostById(postId)
+
+            set((state) => {
+              return { ...state, singlePost, isLoading: false }
+            })
+          },
+
+          setSinglePost: (post: FullPost | {}) => {
+            set((state) => {
+              return { ...state, singlePost: post }
             })
           },
 

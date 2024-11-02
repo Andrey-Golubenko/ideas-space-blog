@@ -49,7 +49,7 @@ const PostCardFooter = ({ itemSlug, itemType }: IItemCardFooterProps) => {
     <CardFooter className="mt-auto flex-col justify-end">
       <Button
         variant="link"
-        className="mb-12 ml-auto font-normal"
+        className="mb-5 ml-auto font-normal"
         size="sm"
         asChild
       >

@@ -1,22 +1,26 @@
 'use client'
 
+import { cloneElement, type ReactElement } from 'react'
 import { usePathname } from 'next/navigation'
 
-import ItemCard from '~/components/shared/ItemCard'
-import NoPostsCard from '~/components/posts/NoPostsCard'
-import WithSkeletonsList from '~/components/hoc/WithSkeletonsList'
-import SkeletonItemCard from '~/components/shared/ItemCard/SkeletonItemCard'
 import { useListItemsDistribution } from '~/hooks/useListItemsDistribution'
+import NoPostsCard from '~/components/posts/NoPostsCard'
 import { PATHS } from '~/utils/constants/constants'
 import { type Post } from '@prisma/client'
 
-interface IPostListProps {
+interface IWithPostDataProps {
+  children: ReactElement[]
   posts: Post[]
   postsCount: number | null
   isLoading: boolean
 }
 
-const PostsList = ({ posts, postsCount, isLoading }: IPostListProps) => {
+const WithPostData = ({
+  children,
+  posts,
+  postsCount,
+  isLoading
+}: IWithPostDataProps) => {
   const pathname = usePathname()
 
   const publishedPosts =
@@ -33,33 +37,30 @@ const PostsList = ({ posts, postsCount, isLoading }: IPostListProps) => {
   return (
     <section className="mb-8 w-full @container">
       {!noItems ? (
-        <WithSkeletonsList
-          skeletonItems={skeletonItems}
-          isLoading={isLoading}
-        >
-          <SkeletonItemCard />
-        </WithSkeletonsList>
+        cloneElement(children[0], {
+          skeletonItems,
+          isLoading
+        })
       ) : (
         <NoPostsCard itemName="posts" />
       )}
 
-      <div className="mb-5 grid w-full grid-cols-1 gap-5 @md:grid-cols-2 @3xl:grid-cols-3">
-        {!isLoading &&
-          [...restItems, thirdItemInList]?.map((item) => {
+      {!isLoading && restItems?.length > 0 && (
+        <div className="mb-5 grid w-full grid-cols-1 gap-5 @md:grid-cols-2 @3xl:grid-cols-3">
+          {[...restItems, thirdItemInList]?.map((item) => {
             if (item) {
-              return (
-                <ItemCard
-                  key={item?.id}
-                  item={item}
-                />
-              )
+              return cloneElement(children[1], {
+                key: item?.id,
+                item
+              })
             }
 
             return undefined
           })}
-      </div>
+        </div>
+      )}
     </section>
   )
 }
 
-export default PostsList
+export default WithPostData

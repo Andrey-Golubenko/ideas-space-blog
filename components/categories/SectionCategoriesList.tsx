@@ -1,9 +1,9 @@
 'use client'
 
 import WithCategoryData from '~/components/hoc/WithCategoryData'
-import SectionItemCard from '~/components/shared/sectionItemCard'
+import SectionItemCard from '~/components/shared/SectionItemCard'
 import WithSkeletonsList from '~/components/hoc/WithSkeletonsList'
-import SkeletonSectionItemCard from '~/components/shared/sectionItemCard/SkeletonSectionItemCard'
+import SkeletonSectionItemCard from '~/components/shared/SectionItemCard/SkeletonSectionItemCard'
 
 const SectionCategoriesList = () => {
   return (

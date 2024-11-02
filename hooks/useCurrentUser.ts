@@ -1,7 +1,7 @@
-import { useSessionData } from '~/hooks/useSessionData'
+import { useSession } from 'next-auth/react'
 
 export const useCurrentUser = () => {
-  const { data } = useSessionData()
+  const { data } = useSession()
 
   const user = data?.user
 

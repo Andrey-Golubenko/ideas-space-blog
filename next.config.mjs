@@ -28,7 +28,7 @@ const nextConfig = withSvgr({
   },
 
   webpack(config, { isServer }) {
-    // Let's make sure that SVG files are processed using @svgr/webpack
+    // To sure that SVG files are processed using @svgr/webpack
     config.module.rules.push({
       test: /\.svg$/,
       issuer: /\.[jt]sx?$/,

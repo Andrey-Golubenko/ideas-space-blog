@@ -33,22 +33,22 @@ const ItemCardHeader = ({
           (isCategory && `${PATHS.categories}/${itemSlug}`) ||
           '#'
         }
-        className="w-full overflow-hidden"
+        className="w-full overflow-hidden rounded-md border-b"
       >
         <LoadableImage
           src={itemImage}
-          alt="Post image"
+          alt={`${itemTitle} image`}
           containerHeight={250}
           priority={imagePriority}
-          imageClassNames="rounded-t-md object-cover hover:rounded-md"
-          containerClassNames="rounded-t-md duration-700 hover:scale-110 hover:rounded-md"
+          imageClassNames="object-cover rounded-md"
+          containerClassNames="duration-700 hover:scale-110 rounded-md"
         />
       </Link>
 
       <CardHeader className="pb-4">
         <h2
           className={cn(
-            'w-full truncate text-2xl font-semibold',
+            'line-clamp-2 w-full text-2xl font-semibold',
             fontPoppins.className
           )}
         >

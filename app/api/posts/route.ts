@@ -1,6 +1,6 @@
-import { type Post } from '@prisma/client'
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '~/libs/db'
+import { type Post } from '@prisma/client'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request?.url)
@@ -28,20 +28,24 @@ export async function GET(request: NextRequest) {
           ]
         }
       })
-    } catch {
-      throw new Error('Somthing went wrong!')
+    } catch (error) {
+      console.error('Error :', error)
+
+      throw new Error('Failed to fetch posts!')
     }
   } else {
     try {
       posts = await db.post.findMany({
         take: 9
       })
-    } catch {
+    } catch (error) {
+      console.error('Error :', error)
+
       throw new Error('Somthing went wrong!')
     }
   }
 
-  const data = { posts, postsCount: posts.length }
+  const data = { posts, postsCount: posts?.length }
 
   return NextResponse.json(data)
 }

@@ -15,7 +15,7 @@ import SelectField from '~/components/shared/SelectField'
 import SwitchField from '~/components/shared/SwitchField'
 import LoadableButton from '~/components/shared/LoadableButton'
 import { settings } from '~/actions/settings'
-import { useSessionData } from '~/hooks/useSessionData'
+import { useSession } from 'next-auth/react'
 import { emptyStringToUndefined } from '~/utils/helpers/helpers'
 import { SettingsSchema } from '~/schemas'
 
@@ -25,7 +25,7 @@ interface ISettingsFormProps {
 
 const SettingsForm = ({ session }: ISettingsFormProps) => {
   const user = session?.user
-  const { update } = useSessionData()
+  const { update } = useSession()
 
   const [error, setError] = useState<string | undefined>()
   const [success, setSuccess] = useState<string | undefined>()

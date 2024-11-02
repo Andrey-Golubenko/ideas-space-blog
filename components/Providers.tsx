@@ -1,13 +1,13 @@
 'use client'
 
+import { SessionProvider } from 'next-auth/react'
 import { ParallaxProvider } from 'react-scroll-parallax'
-import { SessionDataProvider } from '~/libs/custom-providers/SessionDataProvider'
 
 const Providers = ({ children }: React.PropsWithChildren) => {
   return (
-    <SessionDataProvider>
+    <SessionProvider>
       <ParallaxProvider>{children}</ParallaxProvider>
-    </SessionDataProvider>
+    </SessionProvider>
   )
 }
 

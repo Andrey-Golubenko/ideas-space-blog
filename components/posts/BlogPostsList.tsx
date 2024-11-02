@@ -3,7 +3,10 @@
 import { useEffect } from 'react'
 
 import useStore from '~/store'
-import PostsList from '~/components/posts/PostsList'
+import WithPostData from '~/components/hoc/WithPostData'
+import WithSkeletonsList from '~/components/hoc/WithSkeletonsList'
+import ItemCard from '~/components/shared/ItemCard'
+import SkeletonItemCard from '~/components/shared/ItemCard/SkeletonItemCard'
 
 const BlogPostsList = () => {
   const [posts, postsCount, isLoading, getAllPosts] = useStore((state) => {
@@ -20,11 +23,17 @@ const BlogPostsList = () => {
   }, [getAllPosts])
 
   return (
-    <PostsList
+    <WithPostData
       posts={posts}
       postsCount={postsCount}
       isLoading={isLoading}
-    />
+    >
+      <WithSkeletonsList>
+        <SkeletonItemCard />
+      </WithSkeletonsList>
+
+      <ItemCard />
+    </WithPostData>
   )
 }
 

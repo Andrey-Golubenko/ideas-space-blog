@@ -1,8 +1,12 @@
 'use client'
 
-import { type Post } from '@prisma/client'
 import { useEffect, useState } from 'react'
-import PostsList from '~/components/posts/PostsList'
+
+import WithPostData from '~/components/hoc/WithPostData'
+import WithSkeletonsList from '~/components/hoc/WithSkeletonsList'
+import ItemCard from '~/components/shared/ItemCard'
+import SkeletonItemCard from '~/components/shared/ItemCard/SkeletonItemCard'
+import { type Post } from '@prisma/client'
 
 interface ISingleCategoryCardProps {
   posts: Post[] | null
@@ -21,11 +25,17 @@ const SingleCategoryCard = ({ posts }: ISingleCategoryCardProps) => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <PostsList
+      <WithPostData
         posts={posts as Post[]}
         postsCount={postsCount}
         isLoading={isLoading}
-      />
+      >
+        <WithSkeletonsList>
+          <SkeletonItemCard />
+        </WithSkeletonsList>
+
+        <ItemCard />
+      </WithPostData>
     </div>
   )
 }

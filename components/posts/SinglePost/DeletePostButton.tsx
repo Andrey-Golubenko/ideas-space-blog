@@ -38,8 +38,8 @@ const DeletePostButton = ({
   isPending,
   startTransition
 }: IPostDeleteButtonProps) => {
-  const [setEditablePost] = useStore((state) => {
-    return [state.setEditablePost]
+  const [setSinglePost] = useStore((state) => {
+    return [state.setSinglePost]
   })
 
   const router = useRouter()
@@ -71,7 +71,7 @@ const DeletePostButton = ({
               closeButton: true
             })
 
-            setEditablePost({})
+            setSinglePost({})
             router.push(PATHS.blog)
           }
         })
