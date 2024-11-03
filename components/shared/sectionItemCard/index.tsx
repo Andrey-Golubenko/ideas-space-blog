@@ -18,8 +18,7 @@ const SectionItemCard = ({ item }: ICategoriesSectionItemProps) => {
 
   const { isPost, isCategory } = useItemType(item)
 
-  const { itemImage, itemTitle, itemContent, itemSlug } =
-    useItemProps(item)
+  const { itemImage, itemTitle, itemSlug } = useItemProps(item)
 
   return (
     <Card

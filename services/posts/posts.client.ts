@@ -1,56 +1,93 @@
-import { type Post } from '@prisma/client'
+import { PostsData } from '~/types/types'
 
-export const fetchPosts = async (): Promise<{
-  posts: Post[]
-  postsCount: number
-}> => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/posts`,
-    {
-      next: {
-        revalidate: 600 // sec
+export const fetchPosts = async (): Promise<PostsData> => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/posts`,
+      {
+        next: {
+          revalidate: 600 // sec
+        }
       }
+    )
+
+    if (!response.ok) {
+      throw new Error('Unable fetch posts!')
     }
-  )
 
-  if (!response.ok) {
-    throw new Error('Unable fetch posts!')
+    const data: PostsData = await response.json()
+
+    if (!data?.posts?.length) {
+      throw new Error('Ivalid posts data received!')
+    }
+
+    return data
+  } catch (error) {
+    console.error(error)
+
+    throw new Error(
+      (error as Error)?.message || 'An unknown error occurred!'
+    )
   }
-
-  return response.json()
 }
 
 export const fetchPostsBySearch = async (
   search: string
-): Promise<{
-  posts: Post[]
-  postsCount: number
-}> => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/posts?q=${search}`
-  )
+): Promise<PostsData> => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/posts?q=${search}`
+    )
 
-  if (!response.ok)
-    throw new Error('Unable fetch posts! An unexpected error has occured!')
+    if (!response.ok)
+      throw new Error(
+        'Unable fetch posts! An unexpected error has occurred!'
+      )
 
-  return response.json()
+    const data: PostsData = await response.json()
+
+    if (!data?.posts.length) {
+      throw new Error('Invalid posts data received!')
+    }
+
+    return data
+  } catch (error) {
+    console.error(error)
+
+    throw new Error(
+      (error as Error)?.message || 'An unknown error occurred!'
+    )
+  }
 }
 
 export const fetchPostsByUserId = async (
   userId: string
-): Promise<{
-  posts: Post[]
-  postsCount: number
-}> => {
-  const respons = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/profile?q=${userId}`
-  )
+): Promise<PostsData> => {
+  try {
+    const respons = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/profile?q=${userId}`
+    )
 
-  if (!respons.ok) {
-    throw new Error('Unable fetch posts! An unexpected error has occured!')
+    if (!respons.ok) {
+      throw new Error(
+        'Unable fetch posts! An unexpected error has occured!'
+      )
+    }
+
+    const data: PostsData = await respons.json()
+
+    if (!data?.posts.length) {
+      throw new Error('Invalid post data received!')
+    }
+
+    return data
+  } catch (error) {
+    console.error(error)
+
+    throw new Error(
+      (error as Error)?.message || 'An unknown error occurred!'
+    )
   }
-
-  return respons.json()
 }
 
 export const fetchSinglePostById = async (
@@ -67,7 +104,7 @@ export const fetchSinglePostById = async (
       )
     }
 
-    const post = await response.json()
+    const post: FullPost = await response.json()
 
     if (!post || !post?.id) {
       throw new Error('Invalid post data received!')
@@ -76,6 +113,7 @@ export const fetchSinglePostById = async (
     return post
   } catch (error) {
     console.error(error)
+
     throw new Error(
       (error as Error)?.message || 'An unknown error occurred!'
     )

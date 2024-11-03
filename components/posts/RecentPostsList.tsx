@@ -7,8 +7,6 @@ import { Card, CardContent, CardHeader } from '~/components/ui/card'
 import CardHeaderContent from '~/components/shared/CardWrapper/CardHeaderContent'
 import WithPostData from '~/components/hoc/WithPostData'
 import WithSkeletonsList from '~/components/hoc/WithSkeletonsList'
-import ItemCard from '~/components/shared/ItemCard'
-import SkeletonItemCard from '~/components/shared/ItemCard/SkeletonItemCard'
 import SectionItemCard from '../shared/SectionItemCard'
 import SkeletonSectionItemCard from '../shared/SectionItemCard/SkeletonSectionItemCard'
 

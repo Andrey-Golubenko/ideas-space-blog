@@ -8,9 +8,8 @@ export const PATHS = {
   editPost: '/edit-post',
   posts: '/api/posts',
   categories: '/categories',
+  // TODO: Later Delete 'about-page'
   about: '/about',
-  contacts: '/about/contacts',
-  team: '/about/team',
   profile: '/profile',
   settings: '/settings',
   admin: '/admin',
@@ -36,7 +35,8 @@ export const PATHS = {
 export const IMAGES_PATHS = {
   logo: '/images/logo.svg',
   noImages: '/images/image-placeholder.svg',
-  heroBanner: '/images/hero-banner.webp'
+  heroBanner: '/images/hero-banner.webp',
+  errorBanner: '/images/error-banner.svg'
 }
 
 export const NAV_LINKS: INavLink[] = [

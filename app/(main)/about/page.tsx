@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import CommonErrorCard from '~/components/CommonErrorCard'
 
 export const metadata: Metadata = {
   title: 'About page | Next app'
@@ -6,8 +7,8 @@ export const metadata: Metadata = {
 
 const AboutPage = () => {
   return (
-    <div className="page-wrapper">
-      <h1 className="page-heading">Select subitem :</h1>
+    <div className="page-wrapper w-full">
+      <CommonErrorCard />
     </div>
   )
 }

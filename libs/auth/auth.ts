@@ -6,8 +6,8 @@ import { db } from '~/libs/db'
 import authConfig from '~/libs/auth/auth.config'
 import { getUserById } from '~/services/user'
 import { getTwoFactorConfirmationByUserId } from '~/services/twoFactorConfirmation'
-import { PATHS } from '~/utils/constants/constants'
 import { getAccountByUserId } from '~/services/account'
+import { PATHS } from '~/utils/constants/constants'
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: {
@@ -69,6 +69,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       return session
     },
+
     async jwt({ token }) {
       if (!token.sub) return token
 

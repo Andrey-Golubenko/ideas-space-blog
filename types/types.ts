@@ -12,13 +12,14 @@ export interface INavLink {
   href: string
 }
 
-export interface ICommonErrorCardProps {
-  error: Error
-}
-
 export type TFileError = {
   fileName?: string
   message: string
+}
+
+export type PostsData = {
+  posts: Post[]
+  postsCount: number
 }
 
 export type TManagePostForm = z.infer<typeof ManagePostSchema>

@@ -1,41 +1,73 @@
 'use client'
 
-import { ExclamationTriangleIcon } from '@radix-ui/react-icons'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
-import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
 import { Button } from '~/components/ui/button'
-import { PATHS } from '~/utils/constants/constants'
-import { ICommonErrorCardProps } from '~/types/types'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader
+} from '~/components/ui/card'
+import CardHeaderContent from '~/components/shared/CardWrapper/CardHeaderContent'
+import { IMAGES_PATHS, PATHS } from '~/utils/constants/constants'
 
-const CommonErrorCard = ({
-  error = { name: 'An Error', message: 'Somthing went wrong!' }
-}: ICommonErrorCardProps) => {
+const CommonErrorCard = () => {
   const router = useRouter()
 
   return (
-    <AppCardWrapper
-      className="xs:w-[80%] sm:w-[50%] lg:w-[40%]"
-      headerTitle="🚨 Error"
-      headerLabel="An error has occurred!"
-    >
-      <div className="flex flex-col items-center justify-center">
-        <ExclamationTriangleIcon
-          className="mb-5 text-destructive"
-          width={20}
-          height={20}
+    <Card className="my-20 w-full sm:w-[80%] lg:w-[70%]">
+      <CardHeader>
+        <CardHeaderContent
+          title="Error"
+          label="An unexpected error has occurred!"
         />
-        <Button
-          size="lg"
-          variant="outline"
-          onClick={() => {
-            return router.push(PATHS.home)
-          }}
-        >
-          Go Home
-        </Button>
-      </div>
-    </AppCardWrapper>
+      </CardHeader>
+
+      <CardContent>
+        <Image
+          src={IMAGES_PATHS.errorBanner}
+          alt="Error"
+          priority
+          width={700}
+          height={400}
+          className="h-auto w-full rounded-lg lg:h-[500px]"
+        />
+      </CardContent>
+
+      <CardFooter className="flex w-full flex-col items-center justify-center">
+        <p className="mb-3 mt-6 text-center text-muted-foreground md:text-xl">
+          We are already working on fixing this error.
+        </p>
+        <p className="mb-8 text-center text-muted-foreground md:text-xl">
+          Please try again later or go to Homepage!
+        </p>
+        <div className="flex w-full flex-wrap items-center justify-between md:w-9/12">
+          <Button
+            size="lg"
+            variant="outline"
+            className="mb-2 w-full border border-black/20 bg-slate-100 hover:border-black/10 hover:bg-slate-100/60 md:mb-0 md:w-[45%]"
+            onClick={() => {
+              return router.push(PATHS.home)
+            }}
+          >
+            Go Home
+          </Button>
+
+          <Button
+            size="lg"
+            variant="outline"
+            className="w-full border border-black/20 bg-slate-100 hover:border-black/10 hover:bg-slate-100/60 md:w-[45%]"
+            onClick={() => {
+              return router.refresh()
+            }}
+          >
+            Reload page
+          </Button>
+        </div>
+      </CardFooter>
+    </Card>
   )
 }
 

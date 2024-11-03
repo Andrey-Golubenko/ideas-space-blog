@@ -3,49 +3,38 @@ import { db } from '~/libs/db'
 import { type Post } from '@prisma/client'
 
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request?.url)
+  const { searchParams } = new URL(request.url)
 
   const query = searchParams.get('q')
 
-  let posts: Post[] = []
+  try {
+    const posts: Post[] = await db.post.findMany({
+      take: 9,
+      where: query
+        ? {
+            OR: [
+              { content: { contains: query } },
+              { title: { contains: query } }
+            ]
+          }
+        : undefined
+    })
 
-  if (query) {
-    try {
-      posts = await db.post.findMany({
-        take: 9,
-        where: {
-          OR: [
-            {
-              content: {
-                contains: query
-              }
-            },
-            {
-              title: {
-                contains: query
-              }
-            }
-          ]
-        }
-      })
-    } catch (error) {
-      console.error('Error :', error)
-
-      throw new Error('Failed to fetch posts!')
+    if (posts?.length === 0) {
+      return NextResponse.json(
+        { error: 'Posts not found' },
+        { status: 404 }
+      )
     }
-  } else {
-    try {
-      posts = await db.post.findMany({
-        take: 9
-      })
-    } catch (error) {
-      console.error('Error :', error)
 
-      throw new Error('Somthing went wrong!')
-    }
+    const data = { posts, postsCount: posts.length }
+    return NextResponse.json(data)
+  } catch (error) {
+    console.error('Error fetching posts:', error)
+
+    return NextResponse.json(
+      { error: 'Failed to fetch posts!' },
+      { status: 500 }
+    )
   }
-
-  const data = { posts, postsCount: posts?.length }
-
-  return NextResponse.json(data)
 }
