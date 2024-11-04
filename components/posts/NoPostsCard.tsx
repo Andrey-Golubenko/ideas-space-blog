@@ -1,6 +1,7 @@
 'use client'
 
-import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
+import { Card, CardContent, CardHeader } from '../ui/card'
+import CardHeaderContent from '../shared/CardWrapper/CardHeaderContent'
 
 interface INoPostsCardProps {
   itemName: string
@@ -8,14 +9,19 @@ interface INoPostsCardProps {
 
 const NoPostsCard = ({ itemName }: INoPostsCardProps) => {
   return (
-    <AppCardWrapper
-      headerTitle="🔭  Search results"
-      headerLabel={`No ${itemName}`}
-    >
-      <p className="flex flex-row items-center justify-center text-xl">
-        {`Unfartunatly, we did not find any ${itemName}.`}
-      </p>
-    </AppCardWrapper>
+    <Card className="min-h-96">
+      <CardHeader>
+        <CardHeaderContent
+          title="🔭  Search results"
+          label={`No ${itemName}`}
+        />
+      </CardHeader>
+      <CardContent>
+        <p className="text-center text-xl">
+          {`Unfartunatly, we did not find any ${itemName}.`}
+        </p>
+      </CardContent>
+    </Card>
   )
 }
 

@@ -18,14 +18,17 @@ export const getSinglePost = async (
       }
     })
 
-    const categories = initPost?.categories?.map((singleCategory) => {
-      return singleCategory?.category
-    })
+    if (!initPost) return null
 
+    const categories = initPost.categories.map((singleCategory) => {
+      return singleCategory.category
+    })
     const post: FullPost = { ...initPost, categories }
 
     return post
-  } catch {
+  } catch (error) {
+    console.error('Error fetching single post:', error)
+
     return null
   }
 }
@@ -37,14 +40,19 @@ export const getPostsByCategory = async (
     const posts = await db.post.findMany({
       where: {
         categories: {
-          some: {
-            categoryId
-          }
+          some: { categoryId }
         }
       }
     })
+
+    if (!posts || !posts.length) {
+      return null
+    }
+
     return posts
-  } catch {
+  } catch (error) {
+    console.error('Error fetching posts by category:', error)
+
     return null
   }
 }
@@ -53,13 +61,17 @@ export const fetchRecentPosts = async () => {
   try {
     const posts = await db.post.findMany({
       take: 3,
-      orderBy: {
-        createdAt: 'desc'
-      }
+      orderBy: { createdAt: 'desc' }
     })
 
-    return { recentPosts: posts, recentPostsCount: posts?.length }
+    if (!posts || !posts.length) {
+      return null
+    }
+
+    return { recentPosts: posts, recentPostsCount: posts.length }
   } catch (error) {
-    throw new Error('Failed ti fetch recent posts!')
+    console.error('Error fetching recent posts:', error)
+
+    throw new Error('Failed to fetch recent posts')
   }
 }

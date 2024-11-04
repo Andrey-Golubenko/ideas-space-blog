@@ -14,16 +14,31 @@ import { Skeleton } from '~/components/ui/skeleton'
 interface ISinglePostCardProps {
   postId: string
   user: UserDTO
+  serverSinglePost: FullPost | null
 }
 
-const SinglePostCard = ({ postId, user }: ISinglePostCardProps) => {
-  const [singlePost, getSinglePostById, isLoading] = useStore((state) => {
-    return [state.singlePost, state.getSinglePostById, state.isLoading]
-  })
+const SinglePostCard = ({
+  postId,
+  user,
+  serverSinglePost
+}: ISinglePostCardProps) => {
+  const [singlePost, getSinglePostById, setSinglePost, isLoading] =
+    useStore((state) => {
+      return [
+        state.singlePost,
+        state.getSinglePostById,
+        state.setSinglePost,
+        state.isLoading
+      ]
+    })
 
   useEffect(() => {
-    if (postId) getSinglePostById(postId)
-  }, [postId, getSinglePostById])
+    if (!serverSinglePost || !serverSinglePost?.id || postId) {
+      getSinglePostById(postId)
+    } else {
+      setSinglePost(serverSinglePost)
+    }
+  }, [serverSinglePost, postId, getSinglePostById, setSinglePost])
 
   const isPostExist: boolean = !!Object.values(singlePost)?.length
 

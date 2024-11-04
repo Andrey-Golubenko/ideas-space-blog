@@ -7,14 +7,14 @@ const Greeting = () => {
       <Card className="bg-slate-100">
         <CardHeader>
           <h2
-            className={`${fontPlayfairDisplay.className} text-outline-gray pt-6 text-center text-6xl font-bold !italic tracking-wider text-slate-500`}
+            className={`${fontPlayfairDisplay.className} text-outline-gray pt-6 text-center text-2xl font-bold !italic tracking-wider text-slate-500 sm:text-4xl md:text-6xl`}
           >
             Welkome !
           </h2>
         </CardHeader>
         <CardContent className="grid place-items-center">
           <p
-            className={`${fontPlayfairDisplay.className} p-5 px-14 text-center text-xl !italic leading-10 tracking-wider text-slate-600`}
+            className={`${fontPlayfairDisplay.className} p-5 px-0 text-center text-xl !italic leading-10 tracking-wider text-slate-600 md:px-14`}
           >
             Welcome to Ideas Space – a platform where every thought finds
             its place! This blog is designed to inspire and share knowledge

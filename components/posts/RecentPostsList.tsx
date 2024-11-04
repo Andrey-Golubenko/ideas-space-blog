@@ -26,14 +26,14 @@ const RecentPostsList = () => {
   }, [])
 
   return (
-    <Card className="bg-slate-100 px-10">
+    <Card className="bg-slate-100 px-2 sm:px-10">
       <CardHeader className="pb-10 pt-12">
         <CardHeaderContent
           title="Recent posts"
           label="New in the Blog"
         />
       </CardHeader>
-      <CardContent className="pb-0">
+      <CardContent className="px-0 pb-0 sm:px-6">
         <WithPostData
           posts={recentPosts}
           postsCount={recentPostsCount}
