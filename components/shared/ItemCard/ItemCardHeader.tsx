@@ -2,27 +2,29 @@
 
 import Link from 'next/link'
 
-import { cn } from '~/libs/utils'
 import { CardHeader } from '~/components/ui/card'
 import LoadableImage from '~/components/shared/LoadableImage'
+import PostMeta from '~/components/posts/PostMeta'
+import { useItemProps } from '~/hooks/useItemProps'
 import { fontPoppins } from '~/utils/constants/fonts'
+import { cn } from '~/libs/utils'
 import { PATHS } from '~/utils/constants/constants'
+import { type TListItem } from '~/types/types'
 
 interface IItemCardHeaderProps {
-  itemImage: string
-  itemTitle: string
-  itemSlug: string
+  item?: TListItem
   itemType: { isPost: boolean; isCategory: boolean }
   imagePriority?: boolean
 }
 
 const ItemCardHeader = ({
-  itemImage,
-  itemTitle,
-  itemSlug,
+  item,
   itemType,
   imagePriority
 }: IItemCardHeaderProps) => {
+  const { itemImage, itemTitle, itemSlug, itemCreatedAt, authorId } =
+    useItemProps(item)
+
   const { isPost, isCategory } = itemType
 
   return (
@@ -54,6 +56,15 @@ const ItemCardHeader = ({
         >
           {itemTitle}
         </h2>
+
+        {isPost && (
+          <div className="w-full pt-4">
+            <PostMeta
+              authorId={authorId}
+              itemCreatedAt={itemCreatedAt}
+            />
+          </div>
+        )}
       </CardHeader>
     </>
   )

@@ -7,8 +7,8 @@ import { Card, CardContent, CardHeader } from '~/components/ui/card'
 import CardHeaderContent from '~/components/shared/CardWrapper/CardHeaderContent'
 import WithPostData from '~/components/hoc/WithPostData'
 import WithSkeletonsList from '~/components/hoc/WithSkeletonsList'
-import SectionItemCard from '../shared/SectionItemCard'
-import SkeletonSectionItemCard from '../shared/SectionItemCard/SkeletonSectionItemCard'
+import SectionItemCard from '~/components/shared/SectionItemCard'
+import SkeletonPostSectionItem from '~/components/shared/SectionItemCard/SkeletonPostSectionItem'
 
 const RecentPostsList = () => {
   const [recentPosts, getRecentPosts, recentPostsCount, isLoading] =
@@ -40,7 +40,7 @@ const RecentPostsList = () => {
           isLoading={isLoading}
         >
           <WithSkeletonsList>
-            <SkeletonSectionItemCard />
+            <SkeletonPostSectionItem />
           </WithSkeletonsList>
 
           <SectionItemCard />

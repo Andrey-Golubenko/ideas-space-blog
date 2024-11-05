@@ -11,6 +11,8 @@ export const useItemProps = (item?: TListItem) => {
   let itemTitle = ''
   let itemContent = ''
   let itemSlug = ''
+  let itemCreatedAt = ''
+  let authorId = ''
 
   if (isPost) {
     const post = item as Post
@@ -19,13 +21,18 @@ export const useItemProps = (item?: TListItem) => {
       ? post?.imageUrls[0]
       : IMAGES_PATHS.noImages
 
-    itemTitle = toUpperCaseFirstChar(post?.title)
+    itemTitle = toUpperCaseFirstChar(post?.title) ?? ''
 
     itemContent = post?.content
       ? `${toUpperCaseFirstChar(post?.content.slice(0, 120))}...`
       : ''
 
-    itemSlug = post?.id
+    itemSlug = post?.id ?? ''
+
+    authorId = post?.authorId ?? ''
+
+    itemCreatedAt =
+      new Date(post?.createdAt)?.toLocaleDateString('de') ?? ''
   }
 
   if (isCategory) {
@@ -48,6 +55,8 @@ export const useItemProps = (item?: TListItem) => {
     itemImage,
     itemTitle,
     itemContent,
-    itemSlug
+    itemSlug,
+    authorId,
+    itemCreatedAt
   }
 }

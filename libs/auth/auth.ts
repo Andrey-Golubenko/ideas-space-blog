@@ -12,7 +12,7 @@ import { PATHS } from '~/utils/constants/constants'
 export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: {
     signIn: PATHS.logIn,
-    error: PATHS.error
+    error: PATHS.authError
   },
   events: {
     async linkAccount({ user }) {

@@ -22,8 +22,7 @@ interface IPostCardSkeletonProps {
 const SkeletonItemCard = ({ item, isLoading }: IPostCardSkeletonProps) => {
   const hasContent = item && !isLoading
 
-  const { itemImage, itemTitle, itemContent, itemSlug } =
-    useItemProps(item)
+  const { itemContent, itemSlug } = useItemProps(item)
 
   const { isPost, isCategory } = useItemType(item)
 
@@ -31,9 +30,7 @@ const SkeletonItemCard = ({ item, isLoading }: IPostCardSkeletonProps) => {
     <Card className="flex min-h-[290px] flex-col rounded-md !border-0 shadow-md">
       {hasContent ? (
         <ItemCardHeader
-          itemImage={itemImage}
-          itemTitle={itemTitle}
-          itemSlug={itemSlug}
+          item={item}
           itemType={{ isPost, isCategory }}
           imagePriority
         />

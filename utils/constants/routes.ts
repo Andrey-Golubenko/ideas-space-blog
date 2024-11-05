@@ -12,10 +12,9 @@ export const PUBLIC_ROUTES = [
   PATHS.posts,
   PATHS.categories,
   PATHS.about,
-  PATHS.constacts,
-  PATHS.team,
   PATHS.signIn,
-  PATHS.emailVerification
+  PATHS.emailVerification,
+  PATHS.commonError
 ]
 
 /**
@@ -41,7 +40,7 @@ export const AUTH_ROUTES = [
   PATHS.register,
   PATHS.resetPassword,
   PATHS.newPassword,
-  PATHS.error,
+  PATHS.authError,
 
   // route for automatically generated (by next-auth library) login-form
   PATHS.libSignIn

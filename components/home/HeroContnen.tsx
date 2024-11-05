@@ -15,7 +15,7 @@ const HeroContnen = () => {
       ref={ref}
     >
       <p
-        className={`${fontPlayfairDisplay.className} text-outline-black px-10 text-center text-5xl font-bold !italic text-white lg:text-6xl`}
+        className={`${fontPlayfairDisplay.className} text-outline-black px-10 text-center text-5xl font-bold !italic text-white drop-shadow-[1px_1px_2px_#000] lg:text-6xl`}
       >
         Be inspired, create, embody!
       </p>

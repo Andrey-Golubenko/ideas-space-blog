@@ -22,7 +22,9 @@ export const PATHS = {
   emailVerification: '/auth/email-verification',
   resetPassword: '/auth/reset-password',
   newPassword: '/auth/new-password',
-  error: '/auth/error',
+
+  commonError: '/error',
+  authError: '/auth/error',
 
   authActionsPref: '/api/auth',
 
@@ -36,7 +38,8 @@ export const IMAGES_PATHS = {
   logo: '/images/logo.svg',
   noImages: '/images/image-placeholder.svg',
   heroBanner: '/images/hero-banner.webp',
-  errorBanner: '/images/error-banner.svg'
+  errorBanner: '/images/error-banner.svg',
+  notFoudBanner: '/images/not-found-banner.svg'
 }
 
 export const NAV_LINKS: INavLink[] = [

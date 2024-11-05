@@ -27,6 +27,7 @@ const SinglePostContent = ({
             width="17px"
             className="mr-2"
           />
+
           {!!singlePostCategories?.length &&
             singlePostCategories.map(
               ({ categoryName, categorySlug }, index) => {
@@ -47,6 +48,7 @@ const SinglePostContent = ({
                   >
                     <span className="text-yellow-600/90 hover:text-yellow-600/70">
                       {categoryName}
+
                       {!(singlePostCategories.length - 1 === index) && (
                         <span className="text-black">,&nbsp;</span>
                       )}
@@ -56,12 +58,14 @@ const SinglePostContent = ({
               }
             )}
         </p>
+
         <p className="flex items-center">
           <CalendarIcon
             height="17px"
             width="17px"
             className="mr-2"
           />
+
           <time
             className="text-sm italic tracking-wider text-slate-500"
             suppressHydrationWarning
@@ -70,6 +74,7 @@ const SinglePostContent = ({
           </time>
         </p>
       </div>
+
       <div className="rounded-lg bg-slate-100 px-2 text-justify">
         {singlePostContent}
       </div>

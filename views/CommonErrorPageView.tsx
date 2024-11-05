@@ -13,7 +13,7 @@ import {
 import CardHeaderContent from '~/components/shared/CardWrapper/CardHeaderContent'
 import { IMAGES_PATHS, PATHS } from '~/utils/constants/constants'
 
-const CommonErrorCard = () => {
+const CommonErrorPageView = () => {
   const router = useRouter()
 
   return (
@@ -40,9 +40,11 @@ const CommonErrorCard = () => {
         <p className="mb-3 mt-6 text-center text-muted-foreground md:text-xl">
           We are already working on fixing this error.
         </p>
+
         <p className="mb-8 text-center text-muted-foreground md:text-xl">
           Please try again later or go to Homepage!
         </p>
+
         <div className="flex w-full flex-wrap items-center justify-between md:w-9/12">
           <Button
             size="lg"
@@ -60,7 +62,7 @@ const CommonErrorCard = () => {
             variant="outline"
             className="w-full border border-black/20 bg-slate-100 hover:border-black/10 hover:bg-slate-100/60 md:w-[45%]"
             onClick={() => {
-              return router.refresh()
+              return window.location.reload()
             }}
           >
             Reload page
@@ -71,4 +73,4 @@ const CommonErrorCard = () => {
   )
 }
 
-export default CommonErrorCard
+export default CommonErrorPageView

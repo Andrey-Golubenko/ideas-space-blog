@@ -42,8 +42,9 @@ const CategorySidebar = () => {
           <SidebarGroupLabel className="mb-4 text-base">
             Categories
           </SidebarGroupLabel>
+
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu ref={autoAnimateRef}>
               {!!categories?.length &&
                 categories?.map((category) => {
                   const isActive = params?.slug === category?.slug
@@ -60,12 +61,11 @@ const CategorySidebar = () => {
                         >
                           <SidebarImage
                             imageUrl={category?.imageUrl as string}
-                            ref={autoAnimateRef}
                           />
 
                           <span>{category?.name}</span>
 
-                          <ChevronRightIcon className=" bg ml-auto !h-[20px] !w-[20px]" />
+                          <ChevronRightIcon className="bg ml-auto !h-[20px] !w-[20px]" />
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>

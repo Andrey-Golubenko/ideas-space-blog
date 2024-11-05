@@ -2,10 +2,11 @@ import Link from 'next/link'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { type Categories } from '@prisma/client'
 
-import { useItemType } from '~/hooks/useItemType'
-import { useItemProps } from '~/hooks/useItemProps'
 import { Card, CardHeader } from '~/components/ui/card'
 import LoadableImage from '~/components/shared/LoadableImage'
+import PostMeta from '~/components/posts/PostMeta'
+import { useItemType } from '~/hooks/useItemType'
+import { useItemProps } from '~/hooks/useItemProps'
 import { PATHS } from '~/utils/constants/constants'
 import { fontPoppins } from '~/utils/constants/fonts'
 
@@ -18,7 +19,8 @@ const SectionItemCard = ({ item }: ICategoriesSectionItemProps) => {
 
   const { isPost, isCategory } = useItemType(item)
 
-  const { itemImage, itemTitle, itemSlug } = useItemProps(item)
+  const { itemImage, itemTitle, itemSlug, authorId, itemCreatedAt } =
+    useItemProps(item)
 
   return (
     <Card
@@ -52,13 +54,19 @@ const SectionItemCard = ({ item }: ICategoriesSectionItemProps) => {
           }
         >
           <h2
-            className={`
-              text-outline-white line-clamp-2 w-full text-2xl hover:text-black/60 ${isCategory ? 'font-semibold' : 'font-bold'} 
+            className={`line-clamp-2 w-full text-2xl hover:text-black/60 ${isCategory ? 'text-center' : 'text-start font-bold'} 
               ${fontPoppins.className}`}
           >
             {itemTitle}
           </h2>
         </Link>
+
+        {isPost && (
+          <PostMeta
+            authorId={authorId}
+            itemCreatedAt={itemCreatedAt}
+          />
+        )}
       </CardHeader>
     </Card>
   )
