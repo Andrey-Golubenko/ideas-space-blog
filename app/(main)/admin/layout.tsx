@@ -1,7 +1,7 @@
 import { SidebarProvider, SidebarTrigger } from '~/components/ui/sidebar'
-import CategoriesSidebar from '~/components/Sidebars/CategoriesSidebar'
+import AdminSidebar from '~/components/Sidebars/AdminSidebar'
 
-const SingleCategoryLayoute = ({
+const AdminLayoute = ({
   children
 }: Readonly<{
   children: React.ReactNode
@@ -9,8 +9,8 @@ const SingleCategoryLayoute = ({
   return (
     <SidebarProvider>
       <div className="flex w-full items-stretch gap-x-4 py-12">
-        <CategoriesSidebar />
-        <div className="z-20 w-full rounded-md bg-white p-8">
+        <AdminSidebar />
+        <div className="w-full rounded-md bg-white p-8">
           <SidebarTrigger
             className="mb-8"
             tooltip="Toggle Sidebar"
@@ -22,4 +22,4 @@ const SingleCategoryLayoute = ({
   )
 }
 
-export default SingleCategoryLayoute
+export default AdminLayoute

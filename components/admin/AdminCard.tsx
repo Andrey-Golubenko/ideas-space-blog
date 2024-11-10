@@ -10,53 +10,25 @@ import WithRole from '~/components/hoc/WithRole'
 import AdminCardItem from '~/components/admin/AdminCardItem'
 import FormSuccess from '~/components/FormSuccess'
 
-import { PATHS } from '~/utils/constants/constants'
+import CalendarDateRangePicker from '~/components/shared/CalendarDateRangePicker'
 import { admin } from '~/actions/admin'
+import { PATHS } from '~/utils/constants/constants'
 
 const AdminCard = () => {
-  const router = useRouter()
-
-  const handleOnCreateCategory = () => {
-    router.push(PATHS.newCategory)
-  }
-
-  const onServerActionClick = () => {
-    admin().then((data) => {
-      if (data.success) {
-        toast.success(data.success, {
-          richColors: true,
-          closeButton: true
-        })
-      }
-
-      if (data.error) {
-        toast.error(data.error, {
-          richColors: true,
-          closeButton: true
-        })
-      }
-    })
-  }
-
-  const onApiRouteClick = () => {
-    fetch(PATHS.apiAdmin).then((response) => {
-      if (response.ok) {
-        toast.success('Allowed API Route!', {
-          richColors: true,
-          closeButton: true
-        })
-      } else {
-        toast.error('Forbidden API Route!', {
-          richColors: true,
-          closeButton: true
-        })
-      }
-    })
-  }
-
   return (
-    <Card className="mb-12 flex min-h-[420px] flex-col">
-      <CardHeader>
+    <Card className="mb-12 flex min-h-[420px] w-full flex-col p-6">
+      <section className="flex w-full space-y-2">
+        <div className="flex w-full flex-row items-center justify-between space-y-2">
+          <h2 className="flex text-2xl font-bold tracking-tight">
+            Hi, Welcome back 👋
+          </h2>
+          <div className="hidden items-center space-x-2 md:flex">
+            <CalendarDateRangePicker />
+          </div>
+        </div>
+      </section>
+
+      {/* <CardHeader>
         <p className="text-center text-2xl font-semibold">🔑 Admin</p>
       </CardHeader>
       <CardContent className="flex flex-grow flex-col justify-evenly space-y-4">
@@ -78,7 +50,7 @@ const AdminCard = () => {
           buttonLabel="Click to create"
           handleClick={handleOnCreateCategory}
         />
-      </CardContent>
+      </CardContent> */}
     </Card>
   )
 }

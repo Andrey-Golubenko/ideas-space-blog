@@ -26,7 +26,13 @@ export default function RootLayout({
             <Header />
             <Toaster
               position="top-center"
-              className="h-[65px] text-base"
+              toastOptions={{
+                className: 'h-[65px] text-base pl-8 md:min-w-[450px]',
+                classNames: {
+                  closeButton:
+                    'right-0 left-auto top-1/2 -translate-x-[50%] -translate-y-[50%] !text-black mr-8 !w-6 !h-6'
+                }
+              }}
             />
             {children}
             <Footer />

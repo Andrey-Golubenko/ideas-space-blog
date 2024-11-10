@@ -38,6 +38,15 @@ body {
   @apply my-4 text-xl font-semibold;
 }
 
+/* Toaster (Sonner) - overwritten styles */
+
+@layer components {
+  .toaster.group svg {
+    @apply w-6 h-6
+  } 
+}
+
+
 /* Swiper - overwritten styles */
 
 .swiper-button-next,

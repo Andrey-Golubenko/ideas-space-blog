@@ -13,8 +13,13 @@ export const PATHS = {
   profile: '/profile',
   settings: '/settings',
   admin: '/admin',
-  newCategory: '/admin/new-category',
-  editCategory: '/admin/edit-category',
+  adminUsers: '/admin/admin-users',
+  adminPosts: '/admin/admin-posts',
+  adminCategories: '/admin/admin-categories',
+  adminSettings: '/admin/admin-settings',
+
+  newCategory: '/admin/admin-categories/new-category',
+  editCategory: '/admin/admin-categories/edit-category',
 
   signIn: '/auth',
   logIn: '/auth/login',

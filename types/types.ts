@@ -1,4 +1,6 @@
+import { type ForwardRefExoticComponent, type RefAttributes } from 'react'
 import * as z from 'zod'
+import { type LucideProps } from 'lucide-react'
 
 import { multiSelectVariants } from '~/components/ui/multi-select/multiSelectVariants'
 import { type FileRejection, type DropEvent } from 'react-dropzone'
@@ -103,4 +105,12 @@ export interface IMultiSelectProps
    * Optional, can be used to add custom styles.
    */
   className?: string
+}
+
+export type IAdminSidebarItem = {
+  title: string
+  icon: ForwardRefExoticComponent<
+    Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>
+  >
+  path: string
 }
