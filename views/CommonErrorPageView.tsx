@@ -62,10 +62,10 @@ const CommonErrorPageView = () => {
             variant="outline"
             className="w-full border border-black/20 bg-slate-100 hover:border-black/10 hover:bg-slate-100/60 md:w-[45%]"
             onClick={() => {
-              return window.location.reload()
+              return router.back()
             }}
           >
-            Reload page
+            GO back
           </Button>
         </div>
       </CardFooter>

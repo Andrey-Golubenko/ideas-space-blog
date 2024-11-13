@@ -42,16 +42,15 @@ body {
 
 @layer components {
   .toaster.group svg {
-    @apply w-6 h-6
-  } 
+    @apply size-6;
+  }
 }
-
 
 /* Swiper - overwritten styles */
 
 .swiper-button-next,
 .swiper-button-prev {
-  @apply !mt-0 !block !h-[30px] !w-[30px] -translate-y-1/2 rounded-full border border-[#837d7d] bg-[url('/icons/slider-arrow.svg')] bg-[length:100%_auto] bg-center bg-no-repeat;
+  @apply !mt-0 !block !size-[30px] -translate-y-1/2 rounded-full border border-[#837d7d] bg-[url('/icons/slider-arrow.svg')] bg-[length:100%_auto] bg-center bg-no-repeat;
 }
 
 .swiper-button-prev {

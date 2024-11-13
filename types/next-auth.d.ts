@@ -1,10 +1,14 @@
-import type { DefaultSession } from 'next-auth'
+import { type DefaultSession } from 'next-auth'
+import { DefaultJWT } from 'next-auth/jwt'
 import { UserRole } from '@prisma/client'
 
 declare module 'next-auth/jwt' {
-  interface JWT {
+  interface JWT extends DefaultJWT {
     id: string
     role?: UserRole
+    isTwoFactorEnabled: boolean
+    isOAuth: boolean
+    sessionId?: string
   }
 }
 
@@ -13,6 +17,7 @@ declare module 'next-auth' {
    * Returned by `auth`, `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
    */
   interface Session {
+    sessionId: string
     user: UserDTO & DefaultSession['user']
     /**
      * By default, TypeScript merges new interface properties and overwrites existing ones.

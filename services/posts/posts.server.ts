@@ -65,7 +65,7 @@ export const fetchRecentPosts = async () => {
     })
 
     if (!posts || !posts.length) {
-      return null
+      return { recentPosts: [], recentPostsCount: null }
     }
 
     return { recentPosts: posts, recentPostsCount: posts.length }

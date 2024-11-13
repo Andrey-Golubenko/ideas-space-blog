@@ -13,8 +13,10 @@ export const isPublicRoute = (pathname: string): boolean => {
       return pathname !== route
     })
 
+  const isApiRoute = pathname.includes('/api/')
+
   const isPublic: boolean =
-    PUBLIC_ROUTES.includes(pathname) || isDynamicRoute
+    PUBLIC_ROUTES.includes(pathname) || isDynamicRoute || isApiRoute
 
   return isPublic
 }

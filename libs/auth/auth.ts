@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth'
+import { v4 as uuidv4 } from 'uuid'
 import { PrismaAdapter } from '@auth/prisma-adapter'
-import { UserRole } from '@prisma/client'
 
 import { db } from '~/libs/db'
 import authConfig from '~/libs/auth/auth.config'
@@ -48,29 +48,32 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
 
     async session({ token, session }) {
+      if (token.sessionId) {
+        session.sessionId = token.sessionId
+      }
+
       if (token.sub && session.user) {
         session.user.id = token.sub
       }
 
       if (token.role && session.user) {
-        session.user.role = token.role as UserRole
+        session.user.role = token.role
       }
 
       if (session.user) {
-        session.user.isTwoFactorEnabled =
-          token.isTwoFactorEnabled as boolean
+        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled
       }
 
       if (session.user) {
         session.user.name = token.name as string | null
         session.user.email = token.email as string
-        session.user.isOAuth = token.isOAuth as boolean
+        session.user.isOAuth = token.isOAuth
       }
 
       return session
     },
 
-    async jwt({ token }) {
+    async jwt({ token, account }) {
       if (!token.sub) return token
 
       const existingUser = await getUserById(token.sub)
@@ -78,6 +81,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (!existingUser) return token
 
       const existingAccount = await getAccountByUserId(existingUser.id)
+
+      if (account) {
+        token.sessionId = uuidv4()
+      }
 
       token.isOAuth = Boolean(existingAccount)
       token.name = existingUser.name

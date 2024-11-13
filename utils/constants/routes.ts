@@ -26,9 +26,10 @@ export const PUBLIC_ROUTES_EXCEPTIONS = [PATHS.newPost]
 
 /**
  * An array of routes that can have additional segment.
+ * These routes DON'T require authentication.
  * @type {string []}
  */
-export const PUBLIC_ROUTES_WITH_DYNAMIC_SEGMENT = [PATHS.blog]
+export const PUBLIC_ROUTES_WITH_DYNAMIC_SEGMENT = [PATHS.blog, PATHS.categories]
 
 /**
  * An array of routes that are used for authentication.

@@ -13,7 +13,7 @@ import { Skeleton } from '~/components/ui/skeleton'
 
 interface ISinglePostCardProps {
   postId: string
-  user: UserDTO
+  user: UserDTO | {}
   serverSinglePost: FullPost | null
 }
 
@@ -33,10 +33,10 @@ const SinglePostCard = ({
     })
 
   useEffect(() => {
-    if (!serverSinglePost || !serverSinglePost?.id || postId) {
+    if (!serverSinglePost && postId) {
       getSinglePostById(postId)
     } else {
-      setSinglePost(serverSinglePost)
+      setSinglePost(serverSinglePost as FullPost)
     }
   }, [serverSinglePost, postId, getSinglePostById, setSinglePost])
 
@@ -44,7 +44,8 @@ const SinglePostCard = ({
 
   const hasContent = isPostExist && !isLoading
 
-  const isPostManageable = (singlePost as FullPost)?.authorId === user?.id
+  const isPostManageable =
+    (singlePost as FullPost)?.authorId === ((user as UserDTO)?.id ?? '')
 
   const singlePostTitle: string | '' = toUpperCaseFirstChar(
     (singlePost as FullPost)?.title

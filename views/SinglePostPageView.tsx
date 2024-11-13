@@ -8,13 +8,13 @@ interface ISinglePostProps {
 }
 
 const SinglePostPageView = async ({ postId }: ISinglePostProps) => {
-  const { user } = (await auth()) as Session
+  const currentUser = ((await auth()) as Session)?.user
   const serverSinglePost = await getSinglePost(postId)
 
   return (
     <SinglePostCard
       postId={postId}
-      user={user}
+      user={currentUser}
       serverSinglePost={serverSinglePost}
     />
   )

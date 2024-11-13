@@ -16,7 +16,10 @@ const { auth } = NextAuth(authConfig)
 export default auth((request) => {
   // User agent detection
   const ua = userAgent(request)
+
   const isMobile = ua.device.type === 'mobile'
+
+  const ipAddress = request.headers.get('x-forwarded-for') || 'localhost'
 
   // Authentication logic
   const { nextUrl } = request
@@ -28,6 +31,7 @@ export default auth((request) => {
 
   let response = NextResponse.next()
   response.headers.set('x-device-type', isMobile ? 'mobile' : 'desktop')
+  response.headers.set('x-forwarded-for', ipAddress)
 
   if (isApiAuthRoute) {
     return response
@@ -35,11 +39,6 @@ export default auth((request) => {
 
   if (isAuthRoute) {
     if (isLoggedIn) {
-      response.headers.set(
-        'x-device-type',
-        isMobile ? 'mobile' : 'desktop'
-      )
-
       response = NextResponse.redirect(
         new URL(DEFAULT_LOGIN_REDIRECT, nextUrl)
       )
@@ -57,8 +56,6 @@ export default auth((request) => {
     }
 
     const encodedCallbackUrl = encodeURIComponent(callbackUrl)
-
-    response.headers.set('x-device-type', isMobile ? 'mobile' : 'desktop')
 
     response = NextResponse.redirect(
       new URL(`${PATHS.logIn}?callbackUrl=${encodedCallbackUrl}`, nextUrl)
