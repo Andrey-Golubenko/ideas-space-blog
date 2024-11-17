@@ -6,6 +6,7 @@ import { multiSelectVariants } from '~/components/ui/multi-select/multiSelectVar
 import { type FileRejection, type DropEvent } from 'react-dropzone'
 import { type VariantProps } from 'class-variance-authority'
 import { type Post, type Categories } from '@prisma/client'
+import type { TZDate } from '@date-fns/tz'
 // eslint-disable-next-line import/no-cycle
 import { ManagePostSchema, SingleCategorySchema } from '~/schemas'
 
@@ -113,4 +114,12 @@ export type IAdminSidebarItem = {
     Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>
   >
   path: string
+}
+
+export type FullTZDate = TZDate & { internal: Date }
+
+export interface IUserVisit {
+  date: string
+  desktop: number
+  mobile: number
 }

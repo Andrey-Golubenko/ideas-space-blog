@@ -11,6 +11,8 @@ import {
 } from '~/services/posts/posts.client'
 import { fetchAllCategories } from '~/services/categories'
 import { fetchRecentPosts } from '~/services/posts/posts.server'
+import { fetchUsersVisits } from '~/services/userVisits/visitsData'
+import { IUserVisit } from '~/types/types'
 
 interface IUseStore {
   posts: Post[]
@@ -22,6 +24,8 @@ interface IUseStore {
   categories: Categories[]
   categoriesCount: number | null
   editableCategory: Categories | {}
+
+  usersVisits: IUserVisit[] | null
 
   isLoading: boolean
 
@@ -36,6 +40,8 @@ interface IUseStore {
   setCategories: (categories: Categories[]) => void
   setCategoriesCount: (categoriesLength: number) => void
   setEditableCategory: (category: Categories | {}) => void
+
+  getUsersVisits: (startDate?: Date, endDate?: Date) => void
 }
 
 const useStore = createWithEqualityFn<
@@ -55,6 +61,7 @@ const useStore = createWithEqualityFn<
           categories: [],
           categoriesCount: null,
           editableCategory: {},
+          usersVisits: [],
           isLoading: false,
 
           getAllPosts: async () => {
@@ -168,6 +175,22 @@ const useStore = createWithEqualityFn<
           setEditableCategory: (category: Categories | {}) => {
             set((state) => {
               return { ...state, editableCategory: category }
+            })
+          },
+
+          getUsersVisits: async (startDate?: Date, endDate?: Date) => {
+            set((state) => {
+              return { ...state, isLoading: true }
+            })
+
+            const visitsData = await fetchUsersVisits(startDate, endDate)
+
+            set((state) => {
+              return {
+                ...state,
+                usersVisits: visitsData,
+                isLoading: false
+              }
             })
           }
         }

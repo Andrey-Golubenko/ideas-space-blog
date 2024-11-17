@@ -6,11 +6,11 @@ export const useGetSession = () => {
   const [session, setSession] = useState<Session | null>(null)
 
   useEffect(() => {
-    const getSessionData = async () => {
+    const runGetSessionData = async () => {
       const sessionData = await getSession()
       setSession(sessionData)
     }
-    getSessionData()
+    runGetSessionData()
   }, [])
 
   return session

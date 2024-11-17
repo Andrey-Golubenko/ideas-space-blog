@@ -98,7 +98,6 @@ export const fetchSinglePostById = async (
       `${process.env.NEXT_PUBLIC_APP_URL}/api/single-post?q=${postId}`
     )
 
-    console.log('response :>> ', response)
     if (!response?.ok) {
       throw new Error(
         'Failed to fetch the post!  An unexpected error has occurred!'
@@ -110,8 +109,6 @@ export const fetchSinglePostById = async (
     if (!post || !post?.id) {
       throw new Error('Invalid post data received!')
     }
-
-    console.log('post :>> ', post)
 
     return post
   } catch (error) {

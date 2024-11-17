@@ -2,20 +2,33 @@
 
 import { headers, cookies } from 'next/headers'
 import { startOfDay } from 'date-fns'
+import { tz } from '@date-fns/tz'
+
 import {
   checkDailyVisitForGast,
   checkDailyVisitForUser
-} from '~/services/visitLog'
-import { type Session } from 'next-auth'
+} from '~/services/userVisits/visitLog'
 import { createVisit } from '~/actions/create-visit'
+import { setCookieWithExpiry } from '~/actions/set-cookie'
+import { type Session } from 'next-auth'
+import { FullTZDate } from '~/types/types'
 
-export const trackVisit = async (session: Session | null) => {
+export const trackVisit = async (
+  session: Session | null,
+  timeZone: string
+) => {
   const headersList = headers()
   const cookieStore = cookies()
 
-  const today: Date = startOfDay(new Date())
+  const today: Date = (
+    startOfDay(new Date(), {
+      in: tz(timeZone)
+    }) as FullTZDate
+  )?.internal
+
   const ipAddress = headersList.get('x-forwarded-for') ?? ''
   const userAgent = headersList.get('user-agent') ?? ''
+
   const deviceType = headersList.get('x-device-type')
   const isMobile = deviceType === 'mobile'
 
@@ -25,6 +38,7 @@ export const trackVisit = async (session: Session | null) => {
 
     if (previousSessionId !== sessionId) {
       const userId = session?.user?.id ?? ''
+
       const visit = await checkDailyVisitForUser(userId, today)
 
       if (!visit) {
@@ -37,7 +51,7 @@ export const trackVisit = async (session: Session | null) => {
         })
       }
 
-      cookieStore.set('previousSessionId', sessionId)
+      setCookieWithExpiry('previousSessionId', sessionId, timeZone)
     }
   }
 
@@ -45,6 +59,7 @@ export const trackVisit = async (session: Session | null) => {
     const previousGastIpAddress = cookieStore.get(
       'previousGastIpAddress'
     )?.value
+
     const previousUserAgent = cookieStore.get('previousUserAgent')?.value
 
     const isNotPreviousGast: boolean =
@@ -68,8 +83,8 @@ export const trackVisit = async (session: Session | null) => {
         })
       }
 
-      cookieStore.set('previousGastIpAddress', ipAddress)
-      cookieStore.set('previousUserAgent', userAgent)
+      setCookieWithExpiry('previousGastIpAddress', ipAddress, timeZone)
+      setCookieWithExpiry('previousUserAgent', userAgent, timeZone)
     }
   }
 }

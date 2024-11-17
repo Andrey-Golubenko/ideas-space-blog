@@ -17,7 +17,8 @@ const config = {
       sm: `${SCREEN_SM}px`,
       md: `${SCREEN_MD}px`,
       lg: '976px',
-      xl: '1440px'
+      xl: '1024px',
+      '2xl': '1440px'
     },
     container: {
       center: true,

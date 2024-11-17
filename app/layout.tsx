@@ -8,7 +8,7 @@ import { Toaster } from '~/components/ui/sonner'
 import Providers from '~/components/Providers'
 import Header from '~/components/layout/Header'
 import Footer from '~/components/layout/Footer'
-import ClientTrackVisit from '~/components/admin/ClientTrackVisit'
+import ClientTrackVisit from '~/components/layout/ClientTrackVisit'
 
 const inter = Inter({ subsets: ['latin'] })
 

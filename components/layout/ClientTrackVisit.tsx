@@ -11,7 +11,13 @@ interface IClientTrackVisitProps {
 const ClientTrackVisit = ({ session }: IClientTrackVisitProps) => {
   useEffect(() => {
     const runTrackVisit = async () => {
-      await trackVisit(session)
+      try {
+        const timeZone = Intl.DateTimeFormat()?.resolvedOptions()?.timeZone
+
+        await trackVisit(session, timeZone)
+      } catch (error) {
+        console.error('Error tracking visit:', error)
+      }
     }
 
     runTrackVisit()
