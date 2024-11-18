@@ -5,7 +5,7 @@ import DateRangePicker from '~/components/shared/DateRangePicker'
 import { Button } from '~/components/ui/button'
 import { DateRange } from 'react-day-picker'
 
-const AdminCardHeader = () => {
+const AdminDashboardHeader = () => {
   const [date, setDate] = useState<DateRange | undefined>({
     from: undefined,
     to: undefined
@@ -47,4 +47,4 @@ const AdminCardHeader = () => {
   )
 }
 
-export default AdminCardHeader
+export default AdminDashboardHeader

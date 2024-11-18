@@ -1,21 +1,16 @@
 'use server'
 
-import { startOfMonth, format } from 'date-fns'
-import { de } from 'date-fns/locale'
+import { startOfMonth } from 'date-fns'
 import { db } from '~/libs/db'
-
-type VisitsByDate = Record<
-  string,
-  { date: string; desktop: number; mobile: number }
->
+import { getVisitsByDate } from '~/services/userVisits/visitsByDate'
+import { getBrowserStats } from '~/services/userVisits/browserStats'
 
 export const fetchUsersVisits = async (
   startDate?: Date,
   endDate?: Date
 ) => {
   const start = startDate ?? startOfMonth(new Date())
-
-  const end = endDate || new Date()
+  const end = endDate ?? new Date()
 
   try {
     const userVisits = await db.dailyVisit.findMany({
@@ -31,32 +26,17 @@ export const fetchUsersVisits = async (
     })
 
     if (!userVisits || userVisits.length === 0) {
-      return []
+      return { visitsByDate: [], browserStats: [] }
     }
 
-    const visitsByDate = userVisits.reduce((acc, visit) => {
-      const formattedDate = format(new Date(visit.date), 'yyyy-MM-dd', {
-        locale: de
-      })
+    const visitsByDate = await getVisitsByDate(userVisits)
 
-      if (!acc[formattedDate]) {
-        acc[formattedDate] = {
-          date: formattedDate,
-          desktop: 0,
-          mobile: 0
-        }
-      }
+    const browserStats = await getBrowserStats(userVisits)
 
-      if (visit.isMobile) {
-        acc[formattedDate].mobile += 1
-      } else {
-        acc[formattedDate].desktop += 1
-      }
-
-      return acc
-    }, {} as VisitsByDate)
-
-    return Object.values(visitsByDate)
+    return {
+      visitsByDate,
+      browserStats
+    }
   } catch (error) {
     console.error('Error fetching visit:', error)
 

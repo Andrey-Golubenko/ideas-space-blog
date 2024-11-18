@@ -29,3 +29,19 @@ export const isWebKitDetermine = async () => {
   // WebKit = Apple WebKit, but not Blink, Gecko or Presto
   return isWebKit && !isBlink && !isGecko && !isPresto
 }
+
+export const getBrowserName = async (
+  userAgent: string | null
+): Promise<string> => {
+  if (!userAgent) return 'other'
+
+  const ua = userAgent.toLowerCase()
+
+  if (ua.includes('chrome') && !ua.includes('edg') && !ua.includes('opr'))
+    return 'chrome'
+  if (ua.includes('safari') && !ua.includes('chrome')) return 'safari'
+  if (ua.includes('firefox')) return 'firefox'
+  if (ua.includes('edg')) return 'edge'
+
+  return 'other'
+}

@@ -12,7 +12,7 @@ import {
 import { fetchAllCategories } from '~/services/categories'
 import { fetchRecentPosts } from '~/services/posts/posts.server'
 import { fetchUsersVisits } from '~/services/userVisits/visitsData'
-import { IUserVisit } from '~/types/types'
+import { type IBrowserStats, type IUserVisit } from '~/types/types'
 
 interface IUseStore {
   posts: Post[]
@@ -26,6 +26,7 @@ interface IUseStore {
   editableCategory: Categories | {}
 
   usersVisits: IUserVisit[] | null
+  browserStats: IBrowserStats[] | null
 
   isLoading: boolean
 
@@ -62,6 +63,7 @@ const useStore = createWithEqualityFn<
           categoriesCount: null,
           editableCategory: {},
           usersVisits: [],
+          browserStats: [],
           isLoading: false,
 
           getAllPosts: async () => {
@@ -188,7 +190,8 @@ const useStore = createWithEqualityFn<
             set((state) => {
               return {
                 ...state,
-                usersVisits: visitsData,
+                usersVisits: visitsData?.visitsByDate ?? [],
+                browserStats: visitsData?.browserStats ?? [],
                 isLoading: false
               }
             })

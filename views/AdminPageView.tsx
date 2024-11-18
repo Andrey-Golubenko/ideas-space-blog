@@ -1,7 +1,7 @@
-import AdminCard from '~/components/admin/AdminCard'
+import AdminDashboard from '~/components/admin/AdminDashboard'
 
 const AdminPageView = () => {
-  return <AdminCard />
+  return <AdminDashboard />
 }
 
 export default AdminPageView

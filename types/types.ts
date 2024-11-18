@@ -118,8 +118,19 @@ export type IAdminSidebarItem = {
 
 export type FullTZDate = TZDate & { internal: Date }
 
+export type TVisitsByDate = Record<
+  string,
+  { date: string; desktop: number; mobile: number }
+>
+
 export interface IUserVisit {
   date: string
   desktop: number
   mobile: number
+}
+
+export interface IBrowserStats {
+  browser: string
+  visitors: number
+  fill: string
 }
