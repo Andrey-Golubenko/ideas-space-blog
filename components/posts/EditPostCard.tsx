@@ -16,12 +16,9 @@ import {
   destroyImagesInCloudinary,
   saveImagesToCloudinary
 } from '~/services/imagesProcessing'
-import {
-  CLOUDINARY_POSTS_IMAGES_FOLDER,
-  PATHS
-} from '~/utils/constants/constants'
+import { CLOUDINARY_POSTS_IMAGES_FOLDER, PATHS } from '~/utils/constants'
 import { ManagePostSchema } from '~/schemas'
-import { type TManagePostForm } from '~/types/types'
+import { type TManagePostForm } from '~/types'
 
 interface IEditPostCardProps {
   isLogged: boolean

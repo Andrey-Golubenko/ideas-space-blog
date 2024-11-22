@@ -14,7 +14,7 @@ import PasswordField from '~/components/shared/PasswordField'
 import TextField from '~/components/shared/TextField'
 import LoadableButton from '~/components/shared/LoadableButton'
 import { LogInSchema } from '~/schemas'
-import { AUTH_ERRORS, PATHS } from '~/utils/constants/constants'
+import { AUTH_ERRORS, PATHS } from '~/utils/constants'
 import { logIn } from '~/actions/login'
 
 const LoginForm = () => {

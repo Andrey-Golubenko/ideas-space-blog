@@ -1,6 +1,6 @@
 import { type Metadata } from 'next'
 import SingleCategoryPageView from '~/views/SingleCategoryPageView'
-import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
+import { toUpperCaseFirstChar } from '~/utils/helpers'
 
 interface ISingleCategoryPageProps {
   params: { slug: string }

@@ -7,10 +7,21 @@ export interface InputProps
   inputAdornment?: React.ReactNode
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ inputAdornment, className, type, ...props }, ref) => {
+const Input = React.forwardRef<
+  HTMLInputElement,
+  InputProps & { containerClassName?: string }
+>(
+  (
+    { inputAdornment, containerClassName, className, type, ...props },
+    ref
+  ) => {
     return (
-      <div className="relative flex items-center gap-2">
+      <div
+        className={cn(
+          'relative flex items-center gap-2',
+          containerClassName
+        )}
+      >
         <input
           type={type}
           className={cn(

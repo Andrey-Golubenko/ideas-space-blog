@@ -7,7 +7,7 @@ import {
   SidebarMenuItem
 } from '~/components/ui/sidebar'
 import SidebarImage from '~/components/Sidebars/SidebarImage'
-import { PATHS } from '~/utils/constants/constants'
+import { PATHS } from '~/utils/constants'
 
 interface ICategoriesSidebarItemProps {
   category: Categories

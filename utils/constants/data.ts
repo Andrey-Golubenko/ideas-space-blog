@@ -6,8 +6,8 @@ import {
   Settings
 } from 'lucide-react'
 
-import { PATHS } from '~/utils/constants/constants'
-import { IAdminSidebarItem } from '~/types/types'
+import { PATHS } from '~/utils/constants'
+import { IAdminSidebarItem } from '~/types'
 
 export const adminDashboard: IAdminSidebarItem[] = [
   {

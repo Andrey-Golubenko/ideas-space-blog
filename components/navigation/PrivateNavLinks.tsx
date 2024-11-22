@@ -1,6 +1,6 @@
 'use client'
 
-import { PRIVATE_NAV_LINKS } from '~/utils/constants/constants'
+import { PRIVATE_NAV_LINKS } from '~/utils/constants'
 import NavLinksItem from '~/components/navigation/NavLinksItem'
 
 const PrivateNavLinks = ({ isMobile }: { isMobile: boolean }) => {

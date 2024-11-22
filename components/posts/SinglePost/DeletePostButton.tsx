@@ -21,7 +21,7 @@ import {
 import {
   CLOUDINARY_POSTS_IMAGES_FOLDER,
   PATHS
-} from '~/utils/constants/constants'
+} from '~/utils/constants'
 
 interface IPostDeleteButtonProps {
   postId?: string

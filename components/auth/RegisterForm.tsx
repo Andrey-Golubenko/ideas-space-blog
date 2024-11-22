@@ -14,7 +14,8 @@ import PasswordField from '~/components/shared/PasswordField'
 import LoadableButton from '~/components/shared/LoadableButton'
 import { RegisterSchema } from '~/schemas'
 import { register } from '~/actions/register'
-import { PATHS } from '~/utils/constants/constants'
+import { PATHS } from '~/utils/constants'
+import { type TManageRegisterForm } from '~/types'
 
 const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>('')
@@ -22,7 +23,7 @@ const RegisterForm = () => {
 
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<z.infer<typeof RegisterSchema>>({
+  const form = useForm<TManageRegisterForm>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
       name: '',
@@ -31,7 +32,7 @@ const RegisterForm = () => {
     }
   })
 
-  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
+  const onSubmit = (values: TManageRegisterForm) => {
     setError('')
     setSuccess('')
 

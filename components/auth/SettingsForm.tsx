@@ -14,9 +14,9 @@ import PasswordField from '~/components/shared/PasswordField'
 import SelectField from '~/components/shared/SelectField'
 import SwitchField from '~/components/shared/SwitchField'
 import LoadableButton from '~/components/shared/LoadableButton'
-import { settings } from '~/actions/settings'
+import { editUser } from '~/actions/edit-user'
 import { useSession } from 'next-auth/react'
-import { emptyStringToUndefined } from '~/utils/helpers/helpers'
+import { emptyStringToUndefined } from '~/utils/helpers'
 import { SettingsSchema } from '~/schemas'
 
 interface ISettingsFormProps {
@@ -48,7 +48,7 @@ const SettingsForm = ({ session }: ISettingsFormProps) => {
     const preparedValues = emptyStringToUndefined(values)
 
     startTransition(() => {
-      settings(preparedValues)
+      editUser(preparedValues)
         .then((data) => {
           if (data.error) {
             setError(data.error)

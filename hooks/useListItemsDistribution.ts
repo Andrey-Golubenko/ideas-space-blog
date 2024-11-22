@@ -1,6 +1,6 @@
 import { Post, type Categories } from '@prisma/client'
 import { useIsMobile } from '~/hooks/useMobile'
-import { TSkeletonItems } from '~/types/types'
+import { TSkeletonItems } from '~/types'
 
 export const useListItemsDistribution = (
   items: Post[] | Categories[],

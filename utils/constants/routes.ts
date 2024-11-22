@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { PATHS } from '~/utils/constants/constants'
+import { PATHS } from '~/utils/constants'
 
 /**
  * An array of routes that are accessible to the public.

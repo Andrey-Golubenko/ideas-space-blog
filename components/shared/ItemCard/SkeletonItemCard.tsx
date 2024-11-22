@@ -12,7 +12,7 @@ import ItemCardContent from '~/components/shared/ItemCard/ItemCardContent'
 import ItemCardFooter from '~/components/shared/ItemCard/ItemCardFooter'
 import { useItemProps } from '~/hooks/useItemProps'
 import { useItemType } from '~/hooks/useItemType'
-import { TListItem } from '~/types/types'
+import { TListItem } from '~/types'
 
 interface IPostCardSkeletonProps {
   item?: TListItem

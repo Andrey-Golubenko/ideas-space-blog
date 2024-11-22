@@ -6,7 +6,7 @@ import {
   MAX_FILES_COUNT,
   MAX_FILE_SIZE,
   SLUG_MODEL
-} from '~/utils/constants/constants'
+} from '~/utils/constants'
 
 export const SingleCategorySchema = z.object({
   id: z.optional(z.string()),
@@ -91,6 +91,7 @@ export const SearchPostSchema = z.object({
 
 export const SettingsSchema = z
   .object({
+    id: z.string(),
     name: z.optional(z.string()),
     email: z.optional(z.string().email()),
     password: z.optional(z.string()),

@@ -19,10 +19,10 @@ import {
 import {
   CLOUDINARY_CATEGORIES_IMAGES_FOLDER,
   PATHS
-} from '~/utils/constants/constants'
+} from '~/utils/constants'
 import CategoryManageForm from '~/components/shared/CategoryManageForm'
 import { SingleCategorySchema } from '~/schemas'
-import { TManageCategoryForm } from '~/types/types'
+import { type TManageCategoryForm } from '~/types'
 
 const EditCategoryPageView = () => {
   const router = useRouter()
@@ -155,7 +155,7 @@ const EditCategoryPageView = () => {
     <Card className="my-12 flex min-h-[420px] flex-col">
       <CardHeader>
         <p className="text-center text-2xl font-semibold">
-          🗂️ Edit the category
+          📂 Edit the category
         </p>
       </CardHeader>
       <CardContent className="flex flex-grow flex-col justify-evenly space-y-4">

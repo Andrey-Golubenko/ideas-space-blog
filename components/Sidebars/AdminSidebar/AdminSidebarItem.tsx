@@ -5,7 +5,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from '~/components/ui/sidebar'
-import { IAdminSidebarItem } from '~/types/types'
+import { IAdminSidebarItem } from '~/types'
 
 interface IAdminSidebarItemProps {
   dashboardItem: IAdminSidebarItem

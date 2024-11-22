@@ -10,7 +10,7 @@ import FilesField from '~/components/shared/FilesField'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import LoadableButton from '~/components/shared/LoadableButton'
-import { TManageCategoryForm } from '~/types/types'
+import { TManageCategoryForm } from '~/types'
 
 interface IPostManageFormProps {
   form: UseFormReturn<TManageCategoryForm>

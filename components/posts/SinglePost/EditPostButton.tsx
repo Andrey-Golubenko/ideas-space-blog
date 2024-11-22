@@ -3,7 +3,7 @@
 import Link from 'next/link'
 
 import { Button } from '~/components/ui/button'
-import { PATHS } from '~/utils/constants/constants'
+import { PATHS } from '~/utils/constants'
 
 interface IChangePostButtonProps {
   postId?: string

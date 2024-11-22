@@ -7,7 +7,7 @@ import { Card } from '~/components/ui/card'
 import ItemCardHeader from '~/components/shared/ItemCard/ItemCardHeader'
 import ItemCardContent from '~/components/shared/ItemCard/ItemCardContent'
 import ItemCardFooter from '~/components/shared/ItemCard/ItemCardFooter'
-import { TListItem } from '~/types/types'
+import { TListItem } from '~/types'
 
 interface IItemCardProps {
   item?: TListItem

@@ -1,8 +1,8 @@
 import { useItemType } from '~/hooks/useItemType'
-import { IMAGES_PATHS } from '~/utils/constants/constants'
-import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
+import { IMAGES_PATHS } from '~/utils/constants'
+import { toUpperCaseFirstChar } from '~/utils/helpers'
 import { type Post, type Categories } from '@prisma/client'
-import { type TListItem } from '~/types/types'
+import { type TListItem } from '~/types'
 
 export const useItemProps = (item?: TListItem) => {
   const { isCategory, isPost } = useItemType(item)

@@ -10,9 +10,12 @@ import {
 import { getUserById } from '~/services/user'
 import { updatePostsCategories } from '~/actions/update-posts-categories'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
-import { DEFAULT_CATEGORY } from '~/utils/constants/constants'
+import { DEFAULT_CATEGORY } from '~/utils/constants'
+import { type TActionReturn } from '~/types'
 
-export const deleteCategory = async (categoryId: string) => {
+export const deleteCategory = async (
+  categoryId: string
+): TActionReturn => {
   try {
     const user = await getCurrentUser()
 

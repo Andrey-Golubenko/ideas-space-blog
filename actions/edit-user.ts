@@ -1,17 +1,18 @@
 'use server'
 
-import * as z from 'zod'
 import * as bcrypt from 'bcryptjs'
 
 import { db } from '~/libs/db'
 import { sendVerificationEmail } from '~/libs/mail'
 import { generateVerificationToken } from '~/libs/tokens'
-import { SettingsSchema } from '~/schemas'
+import { UserRole } from '@prisma/client'
 import { getUserByEmail, getUserById } from '~/services/user'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
+import { type TManageUserForm, type TActionReturn } from '~/types'
 
-export const settings = async (values: z.infer<typeof SettingsSchema>) => {
+export const editUser = async (values: TManageUserForm): TActionReturn => {
   const user = await getCurrentUser()
+  const isAdmin = user?.role === UserRole.ADMIN
 
   if (!user) {
     return { error: 'Unauthorized!' }
@@ -23,14 +24,18 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
     return { error: 'Unauthorized!' }
   }
 
-  if (user.isOAuth) {
+  if (!isAdmin && user?.id !== values?.id) {
+    return { error: 'You do not have a permission to edit this content!' }
+  }
+
+  if (user.isOAuth && !isAdmin) {
     values.email = undefined
     values.password = undefined
     values.newPassword = undefined
     values.isTwoFactorEnabled = undefined
   }
 
-  if (values.email && values.email !== user.email) {
+  if (values.email && values.email !== user.email && !isAdmin) {
     const existingUser = await getUserByEmail(values.email)
 
     if (existingUser && existingUser.id !== user.id) {
@@ -63,12 +68,16 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
     values.newPassword = undefined
   }
 
-  const updatedUser = await db.user.update({
-    where: { id: dbUser.id },
-    data: {
-      ...values
-    }
-  })
+  try {
+    await db.user.update({
+      where: { id: values?.id },
+      data: {
+        ...values
+      }
+    })
 
-  return { success: 'Settings updated!' }
+    return { success: 'The user was successfully updated!' }
+  } catch (error) {
+    return { error: 'Failed to update user!' }
+  }
 }

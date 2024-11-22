@@ -10,13 +10,10 @@ import useStore from '~/store'
 import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
 import PostManageForm from '~/components/shared/PostManageForm'
 import { newPost } from '~/actions/new-post'
-import {
-  CLOUDINARY_POSTS_IMAGES_FOLDER,
-  PATHS
-} from '~/utils/constants/constants'
+import { CLOUDINARY_POSTS_IMAGES_FOLDER, PATHS } from '~/utils/constants'
 import { saveImagesToCloudinary } from '~/services/imagesProcessing'
 import { ManagePostSchema } from '~/schemas'
-import { TManagePostForm } from '~/types/types'
+import { TManagePostForm } from '~/types'
 
 interface INewPostFormProps {
   isLogged: boolean

@@ -23,9 +23,9 @@ import FilesList from '~/components/shared/FilesField/FilesList'
 import {
   ECCEPTED_IMAGES_EXTENTIONS,
   MAX_FILE_SIZE
-} from '~/utils/constants/constants'
+} from '~/utils/constants'
 import { useOnDrop } from '~/hooks/useOnDrop'
-import { type TFileError } from '~/types/types'
+import { type TFileError } from '~/types'
 
 interface IFilesFieldProps {
   name: string

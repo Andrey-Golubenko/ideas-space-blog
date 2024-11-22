@@ -3,15 +3,16 @@
 import * as z from 'zod'
 import bcrypt from 'bcryptjs'
 
-import { NewPasswordSchema } from '~/schemas'
+import { db } from '~/libs/db'
 import { getPasswordResetTokenByToken } from '~/services/passwordResetToken'
 import { getUserByEmail } from '~/services/user'
-import { db } from '~/libs/db'
+import { NewPasswordSchema } from '~/schemas'
+import { type TManagePasswordForm, type TActionReturn } from '~/types'
 
 export const newPassword = async (
-  values: z.infer<typeof NewPasswordSchema>,
+  values: TManagePasswordForm,
   token?: string
-) => {
+): TActionReturn => {
   if (!token) {
     return { error: 'Missing token!' }
   }

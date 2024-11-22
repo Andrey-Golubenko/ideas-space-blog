@@ -13,11 +13,8 @@ import MultiSelectField from '~/components/shared/MultiSelectField'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import LoadableButton from '~/components/shared/LoadableButton'
-import {
-  type IMultiSelectProps,
-  type TManagePostForm
-} from '~/types/types'
-import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
+import { type IMultiSelectProps, type TManagePostForm } from '~/types'
+import { toUpperCaseFirstChar } from '~/utils/helpers'
 
 interface IPostManageFormProps {
   form: UseFormReturn<TManagePostForm>

@@ -4,8 +4,9 @@ import { db } from '~/libs/db'
 import { getSinglePost } from '~/services/posts/posts.server'
 import { getUserById } from '~/services/user'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
+import { type TActionReturn } from '~/types'
 
-export const deletePost = async (postId: string) => {
+export const deletePost = async (postId: string): TActionReturn => {
   const user = await getCurrentUser()
 
   if (!user) {

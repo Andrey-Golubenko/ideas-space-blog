@@ -1,6 +1,6 @@
 'use client'
 
-import { IMAGES_PATHS } from '~/utils/constants/constants'
+import { IMAGES_PATHS } from '~/utils/constants'
 import LoadableImage from '~/components/shared/LoadableImage'
 
 const HeroBanner = () => {

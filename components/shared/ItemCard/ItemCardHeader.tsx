@@ -8,8 +8,8 @@ import PostMeta from '~/components/posts/PostMeta'
 import { useItemProps } from '~/hooks/useItemProps'
 import { fontPoppins } from '~/utils/constants/fonts'
 import { cn } from '~/libs/utils'
-import { PATHS } from '~/utils/constants/constants'
-import { type TListItem } from '~/types/types'
+import { PATHS } from '~/utils/constants'
+import { type TListItem } from '~/types'
 
 interface IItemCardHeaderProps {
   item?: TListItem

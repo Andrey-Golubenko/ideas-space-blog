@@ -8,7 +8,7 @@ import SinglePostHeader from '~/components/posts/SinglePost/SinglePostHeader'
 import SinglePostContent from '~/components/posts/SinglePost/SinglePostContent'
 import SinglePostFooter from '~/components/posts/SinglePost/SinglePostFooter'
 import SinglePostSlider from '~/components/posts/SinglePost/SinglePostSlider'
-import { toUpperCaseFirstChar } from '~/utils/helpers/helpers'
+import { toUpperCaseFirstChar } from '~/utils/helpers'
 import { Skeleton } from '~/components/ui/skeleton'
 
 interface ISinglePostCardProps {

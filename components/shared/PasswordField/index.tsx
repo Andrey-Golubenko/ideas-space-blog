@@ -1,7 +1,7 @@
 import { type FormHTMLAttributes, useState } from 'react'
 import Link from 'next/link'
 
-import { PATHS } from '~/utils/constants/constants'
+import { PATHS } from '~/utils/constants'
 import {
   FormControl,
   FormField,

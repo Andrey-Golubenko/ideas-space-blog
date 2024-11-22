@@ -1,4 +1,4 @@
-import { PostsData } from '~/types/types'
+import { type PostsData } from '~/types'
 
 export const fetchPosts = async (): Promise<PostsData> => {
   try {

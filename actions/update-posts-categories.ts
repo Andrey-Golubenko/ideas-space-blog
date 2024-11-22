@@ -1,4 +1,5 @@
 import { db } from '~/libs/db'
+import { type TActionReturn } from '~/types'
 
 interface IUpdatePostsCategoriesProps {
   postsInCategory: {
@@ -12,7 +13,7 @@ export const updatePostsCategories = async ({
   postsInCategory,
   categoryId,
   uncategorizedCategoryId
-}: IUpdatePostsCategoriesProps) => {
+}: IUpdatePostsCategoriesProps): TActionReturn => {
   try {
     const updatePromises = postsInCategory.map(async (postCategory) => {
       const { postId } = postCategory
@@ -43,6 +44,7 @@ export const updatePostsCategories = async ({
     return { success: 'Posts categories were successfuly updated!' }
   } catch (error) {
     console.error('Failed to update posts categories:', error)
+
     return { error: 'Failed to update posts categories!' }
   }
 }

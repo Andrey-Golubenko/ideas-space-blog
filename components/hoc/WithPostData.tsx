@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 
 import { useListItemsDistribution } from '~/hooks/useListItemsDistribution'
 import NoPostsCard from '~/components/posts/NoPostsCard'
-import { PATHS } from '~/utils/constants/constants'
+import { PATHS } from '~/utils/constants'
 import { type Post } from '@prisma/client'
 
 interface IWithPostDataProps {

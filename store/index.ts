@@ -12,7 +12,7 @@ import {
 import { fetchAllCategories } from '~/services/categories'
 import { fetchRecentPosts } from '~/services/posts/posts.server'
 import { fetchUsersVisits } from '~/services/userVisits/visitsData'
-import { type IBrowserStats, type IUserVisit } from '~/types/types'
+import { type IBrowserStats, type IUserVisit } from '~/types'
 
 interface IUseStore {
   posts: Post[]

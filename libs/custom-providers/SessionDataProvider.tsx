@@ -13,7 +13,7 @@ import React, {
 import { usePathname } from 'next/navigation'
 import type { Session } from 'next-auth'
 import { getCsrfToken } from 'next-auth/react'
-import { PATHS } from '~/utils/constants/constants'
+import { PATHS } from '~/utils/constants'
 
 /**
  * Provider props

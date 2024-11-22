@@ -1,4 +1,4 @@
-import { TListItem } from '~/types/types'
+import { TListItem } from '~/types'
 
 export const useItemType = (item?: TListItem) => {
   const isPost: boolean = (item && 'title' in item) || false

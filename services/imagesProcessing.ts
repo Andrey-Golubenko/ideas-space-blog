@@ -5,7 +5,7 @@ import {
   uploadImageToCloudinary,
   deleteImagesFromCloudinary
 } from '~/services/images'
-import { getImageNameFromUrl } from '~/utils/helpers/helpers'
+import { getImageNameFromUrl } from '~/utils/helpers'
 
 export const saveImagesToCloudinary = async (
   files: File[],

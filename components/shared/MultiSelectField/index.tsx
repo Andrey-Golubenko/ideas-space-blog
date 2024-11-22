@@ -7,7 +7,7 @@ import {
   FormMessage
 } from '~/components/ui/form'
 import { MultiSelect } from '~/components/ui/multi-select'
-import { IMultiSelectProps } from '~/types/types'
+import { IMultiSelectProps } from '~/types'
 
 interface IMultiSelectFieldProps {
   name: string

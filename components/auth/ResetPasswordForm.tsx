@@ -11,9 +11,10 @@ import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import TextField from '~/components/shared/TextField'
 import LoadableButton from '~/components/shared/LoadableButton'
-import { ResetSchema } from '~/schemas'
-import { PATHS } from '~/utils/constants/constants'
 import { passwordReset } from '~/actions/reset-password'
+import { PATHS } from '~/utils/constants'
+import { ResetSchema } from '~/schemas'
+import { TManageResetPasswordForm } from '~/types'
 
 const ResetPasswordForm = () => {
   const [error, setError] = useState<string | undefined>('')
@@ -21,14 +22,14 @@ const ResetPasswordForm = () => {
 
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<z.infer<typeof ResetSchema>>({
+  const form = useForm<TManageResetPasswordForm>({
     resolver: zodResolver(ResetSchema),
     defaultValues: {
       email: ''
     }
   })
 
-  const onSubmit = (values: z.infer<typeof ResetSchema>) => {
+  const onSubmit = (values: TManageResetPasswordForm) => {
     setError('')
     setSuccess('')
 

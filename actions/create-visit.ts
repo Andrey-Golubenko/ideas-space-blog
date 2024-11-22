@@ -1,6 +1,7 @@
 'use server'
 
 import { db } from '~/libs/db'
+import { type TActionReturn } from '~/types'
 
 interface INewDailyVisitArs {
   userId: string | null
@@ -16,7 +17,7 @@ export const createVisit = async ({
   ipAddress,
   userAgent,
   isMobile
-}: INewDailyVisitArs) => {
+}: INewDailyVisitArs): TActionReturn => {
   try {
     await db.dailyVisit.create({
       data: {

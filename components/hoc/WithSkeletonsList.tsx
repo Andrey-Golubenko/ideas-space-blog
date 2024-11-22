@@ -1,6 +1,6 @@
 import { cloneElement, type ReactElement } from 'react'
 
-import { type TSkeletonItems } from '~/types/types'
+import { type TSkeletonItems } from '~/types'
 
 interface IWithSkeletonsListProps {
   skeletonItems?: TSkeletonItems

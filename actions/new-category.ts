@@ -5,11 +5,11 @@ import { getCurrentUser } from '~/utils/helpers/server.helpers'
 import { getUserById } from '~/services/user'
 import { UserRole } from '@prisma/client'
 import { SingleCategorySchema } from '~/schemas'
-import { TManageCategoryForm } from '~/types/types'
+import { type TManageCategoryForm, type TActionReturn } from '~/types'
 
 export const newCategory = async (
   values: Omit<TManageCategoryForm, 'file'>
-) => {
+): TActionReturn => {
   const validatedFields = SingleCategorySchema.safeParse(values)
 
   if (!validatedFields.success) {

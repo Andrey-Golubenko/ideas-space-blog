@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import Image from 'next/image'
-import { IMAGES_PATHS } from '~/utils/constants/constants'
+import { IMAGES_PATHS } from '~/utils/constants'
 
 interface ISidebarImageProps {
   imageUrl: string

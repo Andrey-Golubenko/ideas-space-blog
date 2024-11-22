@@ -8,7 +8,7 @@ import { Skeleton } from '~/components/ui/skeleton'
 import PostMeta from '~/components/posts/PostMeta'
 import { useItemProps } from '~/hooks/useItemProps'
 import { fontPoppins } from '~/utils/constants/fonts'
-import { PATHS } from '~/utils/constants/constants'
+import { PATHS } from '~/utils/constants'
 import { type Categories } from '@prisma/client'
 
 interface ISkeletonPostSectionItemProps {

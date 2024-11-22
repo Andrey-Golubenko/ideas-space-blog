@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { INavLink } from '~/types/types'
+import { type INavLink } from '~/types'
 
 export const PATHS = {
   home: '/',
@@ -14,6 +14,7 @@ export const PATHS = {
   settings: '/settings',
   admin: '/admin',
   adminUsers: '/admin/admin-users',
+  adminEditUsers: '/admin/admin-users/edit-user-',
   adminPosts: '/admin/admin-posts',
   adminCategories: '/admin/admin-categories',
   adminSettings: '/admin/admin-settings',
@@ -98,6 +99,12 @@ export const DEFAULT_CATEGORY = {
   slug: 'uncategorized',
   description: 'Default category for uncategorized posts.'
 }
+
+export const AUTH_OPTIONS = [
+  { value: 'github', label: 'GitHub provider' },
+  { value: 'google', label: 'Google provider' },
+  { value: 'local', label: 'Local provider' }
+]
 
 // TODO: For storage as an example
 enum InitCategoriesName {

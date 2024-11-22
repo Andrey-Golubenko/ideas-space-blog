@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { FileTextIcon, CalendarIcon } from 'lucide-react'
 
 import { CardContent } from '~/components/ui/card'
-import { DEFAULT_CATEGORY, PATHS } from '~/utils/constants/constants'
+import { DEFAULT_CATEGORY, PATHS } from '~/utils/constants'
 
 interface ISinglePostContentProps {
   singlePostCategories: {

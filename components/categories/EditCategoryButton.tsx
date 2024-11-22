@@ -4,7 +4,7 @@ import { useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { Button } from '~/components/ui/button'
-import { PATHS } from '~/utils/constants/constants'
+import { PATHS } from '~/utils/constants'
 import { type Categories } from '@prisma/client'
 
 interface IEditCategoryButtonProps {

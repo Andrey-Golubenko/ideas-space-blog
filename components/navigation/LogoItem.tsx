@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
-import { PATHS, IMAGES_PATHS } from '~/utils/constants/constants'
+import { PATHS, IMAGES_PATHS } from '~/utils/constants'
 
 interface ILogoItemProps {
   logoClassNames?: string

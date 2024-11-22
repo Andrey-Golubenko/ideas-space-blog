@@ -7,7 +7,7 @@ import authConfig from '~/libs/auth/auth.config'
 import { getUserById } from '~/services/user'
 import { getTwoFactorConfirmationByUserId } from '~/services/twoFactorConfirmation'
 import { getAccountByUserId } from '~/services/account'
-import { PATHS } from '~/utils/constants/constants'
+import { PATHS } from '~/utils/constants'
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: {

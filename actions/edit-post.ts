@@ -8,12 +8,12 @@ import { fetchUncategorizedCategory } from '~/services/categories'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
 import { ManagePostSchema } from '~/schemas'
 import { UserRole } from '@prisma/client'
-import { type TManagePostForm } from '~/types/types'
+import { type TManagePostForm, type TActionReturn } from '~/types'
 
 export const editPost = async (
   values: TManagePostForm,
   postId: string
-) => {
+): TActionReturn => {
   const validatedFields = ManagePostSchema.safeParse(values)
 
   if (!validatedFields.success) {

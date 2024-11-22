@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { getImageNameFromUrl, urlToFile } from '~/utils/helpers/helpers'
+import { getImageNameFromUrl, urlToFile } from '~/utils/helpers'
 
 export const useLoadFilesFromUrls = (imageUrls: string[]) => {
   const [editPostState, setEditPostState] = useState({

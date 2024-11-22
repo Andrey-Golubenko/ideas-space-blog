@@ -8,7 +8,7 @@ import {
   DialogTitle
 } from '~/components/ui/dialog'
 import LoginForm from '~/components/auth/LoginForm'
-import { PATHS } from '~/utils/constants/constants'
+import { PATHS } from '~/utils/constants'
 
 interface ILoginButtonProps {
   children: React.ReactNode

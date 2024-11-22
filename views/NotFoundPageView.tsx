@@ -9,7 +9,7 @@ import {
   CardContent,
   CardFooter
 } from '~/components/ui/card'
-import { IMAGES_PATHS, PATHS } from '~/utils/constants/constants'
+import { IMAGES_PATHS, PATHS } from '~/utils/constants'
 
 const NotFoundPageView = () => {
   return (

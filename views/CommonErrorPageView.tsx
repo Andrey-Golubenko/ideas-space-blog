@@ -11,7 +11,7 @@ import {
   CardHeader
 } from '~/components/ui/card'
 import CardHeaderContent from '~/components/shared/CardWrapper/CardHeaderContent'
-import { IMAGES_PATHS, PATHS } from '~/utils/constants/constants'
+import { IMAGES_PATHS, PATHS } from '~/utils/constants'
 
 const CommonErrorPageView = () => {
   const router = useRouter()

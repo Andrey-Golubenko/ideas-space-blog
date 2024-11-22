@@ -8,7 +8,14 @@ import { type VariantProps } from 'class-variance-authority'
 import { type Post, type Categories } from '@prisma/client'
 import type { TZDate } from '@date-fns/tz'
 // eslint-disable-next-line import/no-cycle
-import { ManagePostSchema, SingleCategorySchema } from '~/schemas'
+import {
+  ManagePostSchema,
+  NewPasswordSchema,
+  RegisterSchema,
+  ResetSchema,
+  SettingsSchema,
+  SingleCategorySchema
+} from '~/schemas'
 
 export interface INavLink {
   label: string
@@ -20,14 +27,34 @@ export type TFileError = {
   message: string
 }
 
+export type TActionReturn = Promise<
+  | {
+      error: string
+      success?: undefined
+    }
+  | {
+      success: string
+      error?: undefined
+    }
+  | null
+>
+
 export type PostsData = {
   posts: Post[]
   postsCount: number
 }
 
+export type TManageRegisterForm = z.infer<typeof RegisterSchema>
+
+export type TManagePasswordForm = z.infer<typeof NewPasswordSchema>
+
+export type TManageResetPasswordForm = z.infer<typeof ResetSchema>
+
 export type TManagePostForm = z.infer<typeof ManagePostSchema>
 
 export type TManageCategoryForm = z.infer<typeof SingleCategorySchema>
+
+export type TManageUserForm = z.infer<typeof SettingsSchema>
 
 export type TListItem = Post | Categories
 
@@ -133,4 +160,12 @@ export interface IBrowserStats {
   browser: string
   visitors: number
   fill: string
+}
+
+export type TDeserializedUser = {
+  id: string
+  image: string | null
+  name: string | null
+  email: string
+  provider: string
 }

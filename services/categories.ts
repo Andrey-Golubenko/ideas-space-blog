@@ -1,7 +1,7 @@
 'use server'
 
 import { db } from '~/libs/db'
-import { DEFAULT_CATEGORY } from '~/utils/constants/constants'
+import { DEFAULT_CATEGORY } from '~/utils/constants'
 
 export const fetchAllCategories = async () => {
   try {

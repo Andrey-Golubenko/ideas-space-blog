@@ -7,7 +7,7 @@ import LoadableImage from '~/components/shared/LoadableImage'
 import PostMeta from '~/components/posts/PostMeta'
 import { useItemType } from '~/hooks/useItemType'
 import { useItemProps } from '~/hooks/useItemProps'
-import { PATHS } from '~/utils/constants/constants'
+import { PATHS } from '~/utils/constants'
 import { fontPoppins } from '~/utils/constants/fonts'
 
 interface ICategoriesSectionItemProps {

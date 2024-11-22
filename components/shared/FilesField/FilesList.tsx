@@ -5,7 +5,7 @@ import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { CrossCircledIcon } from '@radix-ui/react-icons'
 
 import LoadableImage from '~/components/shared/LoadableImage'
-import { getImageNameFromUrl } from '~/utils/helpers/helpers'
+import { getImageNameFromUrl } from '~/utils/helpers'
 
 interface IFilesListProps {
   files?: File[]

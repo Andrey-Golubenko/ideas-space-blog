@@ -2,7 +2,7 @@
 
 import { getBrowserName } from '~/services/userAgent'
 import { type DailyVisit } from '@prisma/client'
-import { type IBrowserStats } from '~/types/types'
+import { type IBrowserStats } from '~/types'
 
 export const getBrowserStats = async (
   userVisits: DailyVisit[]

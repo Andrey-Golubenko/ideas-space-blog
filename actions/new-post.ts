@@ -6,13 +6,13 @@ import { getUserById } from '~/services/user'
 import { fetchUncategorizedCategory } from '~/services/categories'
 import { ManagePostSchema } from '~/schemas'
 import { type Categories } from '@prisma/client'
-import { type TManagePostForm } from '~/types/types'
+import { type TManagePostForm, type TActionReturn } from '~/types'
 
 export const newPost = async (
   values: Omit<TManagePostForm, 'categories' | 'files'> & {
     categories: Categories[]
   }
-) => {
+): TActionReturn => {
   const validatedFields = ManagePostSchema.safeParse(values)
 
   if (!validatedFields.success) {

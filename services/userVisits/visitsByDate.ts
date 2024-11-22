@@ -4,7 +4,7 @@ import { format } from 'date-fns'
 import { de } from 'date-fns/locale'
 
 import { DailyVisit } from '@prisma/client'
-import { type TVisitsByDate } from '~/types/types'
+import { type TVisitsByDate } from '~/types'
 
 export const getVisitsByDate = async (
   userVisits: DailyVisit[]

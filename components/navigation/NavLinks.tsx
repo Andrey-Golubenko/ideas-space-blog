@@ -1,6 +1,6 @@
 'use client'
 
-import { NAV_LINKS, PATHS } from '~/utils/constants/constants'
+import { NAV_LINKS, PATHS } from '~/utils/constants'
 import PrivateNavLinks from '~/components/navigation/PrivateNavLinks'
 import NavMenuItem from '~/components/navigation/NavLinksItem'
 

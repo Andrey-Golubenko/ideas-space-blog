@@ -4,7 +4,7 @@ import { db } from '~/libs/db'
 import { getVerificationTokenByEmail } from '~/services/verificationToken'
 import { getPasswordResetTokenByEmail } from '~/services/passwordResetToken'
 import { getTwoFactorTokenByEmail } from '~/services/twoFactorToken'
-import { FIFTEEN_MINUTES, ONE_HOUR } from '~/utils/constants/constants'
+import { FIFTEEN_MINUTES, ONE_HOUR } from '~/utils/constants'
 
 export const generateTwoFactorToken = async (email: string) => {
   const token = crypto.randomInt(100_000, 1_000_000).toString()

@@ -24,7 +24,7 @@ import {
   TooltipTrigger
 } from '~/components/ui/tooltip'
 import { cn } from '~/libs/utils'
-import { PATHS } from '~/utils/constants/constants'
+import { PATHS } from '~/utils/constants'
 
 const SIDEBAR_COOKIE_NAME = 'sidebar:state'
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7

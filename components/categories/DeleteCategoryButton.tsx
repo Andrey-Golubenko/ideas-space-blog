@@ -21,7 +21,7 @@ import { deleteCategory } from '~/actions/delete-category'
 import {
   CLOUDINARY_CATEGORIES_IMAGES_FOLDER,
   PATHS
-} from '~/utils/constants/constants'
+} from '~/utils/constants'
 
 interface ICategoryDeleteButtonProps {
   categoryId?: string
@@ -79,7 +79,7 @@ const DeleteCategoryButton = ({
             })
           }
           if (data?.success) {
-            toast.success(data.success, {
+            toast.success(data?.success, {
               richColors: true,
               closeButton: true
             })

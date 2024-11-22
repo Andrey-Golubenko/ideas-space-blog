@@ -11,12 +11,12 @@ import {
 import { createVisit } from '~/actions/create-visit'
 import { setCookieWithExpiry } from '~/actions/set-cookie'
 import { type Session } from 'next-auth'
-import { FullTZDate } from '~/types/types'
+import { FullTZDate } from '~/types'
 
 export const trackVisit = async (
   session: Session | null,
   timeZone: string
-) => {
+): Promise<void> => {
   const headersList = headers()
   const cookieStore = cookies()
 

@@ -7,8 +7,8 @@ import {
   API_AUTH_PREFIX,
   DEFAULT_LOGIN_REDIRECT
 } from '~/utils/constants/routes'
-import { PATHS } from '~/utils/constants/constants'
-import { isPublicRoute } from '~/utils/helpers/helpers'
+import { PATHS } from '~/utils/constants'
+import { isPublicRoute } from '~/utils/helpers'
 
 const { auth } = NextAuth(authConfig)
 

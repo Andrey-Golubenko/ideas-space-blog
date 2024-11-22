@@ -13,11 +13,11 @@ import CategoryManageForm from '~/components/shared/CategoryManageForm'
 import { newCategory } from '~/actions/new-category'
 import { saveImagesToCloudinary } from '~/services/imagesProcessing'
 import { SingleCategorySchema } from '~/schemas'
-import { TManageCategoryForm } from '~/types/types'
+import { type TManageCategoryForm } from '~/types'
 import {
   CLOUDINARY_CATEGORIES_IMAGES_FOLDER,
   PATHS
-} from '~/utils/constants/constants'
+} from '~/utils/constants'
 
 const NewCategoryPageView = () => {
   const router = useRouter()

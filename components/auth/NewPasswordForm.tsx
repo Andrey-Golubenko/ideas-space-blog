@@ -13,8 +13,9 @@ import FormSuccess from '~/components/FormSuccess'
 import PasswordField from '~/components/shared/PasswordField'
 import LoadableButton from '~/components/shared/LoadableButton'
 import { newPassword } from '~/actions/new-password'
+import { PATHS } from '~/utils/constants'
 import { NewPasswordSchema } from '~/schemas'
-import { PATHS } from '~/utils/constants/constants'
+import { type TManagePasswordForm } from '~/types'
 
 const NewPasswordForm = () => {
   const searchParams = useSearchParams()
@@ -25,14 +26,14 @@ const NewPasswordForm = () => {
 
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<z.infer<typeof NewPasswordSchema>>({
+  const form = useForm<TManagePasswordForm>({
     resolver: zodResolver(NewPasswordSchema),
     defaultValues: {
       password: ''
     }
   })
 
-  const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
+  const onSubmit = (values: TManagePasswordForm) => {
     setError('')
     setSuccess('')
 

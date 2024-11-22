@@ -1,10 +1,10 @@
 import { useCallback, type Dispatch, type SetStateAction } from 'react'
 import { type FieldValues, type UseFormSetValue } from 'react-hook-form'
 
-import { MAX_FILES_COUNT } from '~/utils/constants/constants'
-import { getImageNames } from '~/utils/helpers/helpers'
+import { MAX_FILES_COUNT } from '~/utils/constants'
+import { getImageNames } from '~/utils/helpers'
 import { SingleFileSchema } from '~/schemas'
-import { type OnDropType, type TFileError } from '~/types/types'
+import { type OnDropType, type TFileError } from '~/types'
 
 interface IuseOnDropProps {
   fieldName: string

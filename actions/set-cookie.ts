@@ -3,14 +3,14 @@
 import { cookies } from 'next/headers'
 import { endOfDay } from 'date-fns'
 import { tz } from '@date-fns/tz'
-import { FullTZDate } from '~/types/types'
+import { FullTZDate } from '~/types'
 import { isWebKitDetermine } from '~/services/userAgent'
 
 export const setCookieWithExpiry = async (
   name: string,
   value: string,
   timeZone: string
-) => {
+): Promise<void> => {
   const cookieStore = cookies()
 
   const isWebKitUserAgent = await isWebKitDetermine()
