@@ -12,7 +12,11 @@ import {
 import { fetchAllCategories } from '~/services/categories'
 import { fetchRecentPosts } from '~/services/posts/posts.server'
 import { fetchUsersVisits } from '~/services/userVisits/visitsData'
-import { type IBrowserStats, type IUserVisit } from '~/types'
+import {
+  type IBrowserStats,
+  type IUserVisit,
+  type TDeserializedUser
+} from '~/types'
 
 interface IUseStore {
   posts: Post[]
@@ -28,6 +32,9 @@ interface IUseStore {
   usersVisits: IUserVisit[] | null
   browserStats: IBrowserStats[] | null
 
+  displayedUsers: TDeserializedUser[] | []
+  displayedUsersCount: number | null
+
   isLoading: boolean
 
   getAllPosts: () => Promise<void>
@@ -41,6 +48,9 @@ interface IUseStore {
   setCategories: (categories: Categories[]) => void
   setCategoriesCount: (categoriesLength: number) => void
   setEditableCategory: (category: Categories | {}) => void
+
+  setDisplayedUsers: (users: TDeserializedUser[] | []) => void
+  setDisplayedUsersCount: (totalUsers: number | null) => void
 
   getUsersVisits: (startDate?: Date, endDate?: Date) => void
 }
@@ -64,6 +74,8 @@ const useStore = createWithEqualityFn<
           editableCategory: {},
           usersVisits: [],
           browserStats: [],
+          displayedUsers: [],
+          displayedUsersCount: null,
           isLoading: false,
 
           getAllPosts: async () => {
@@ -194,6 +206,20 @@ const useStore = createWithEqualityFn<
                 browserStats: visitsData?.browserStats ?? [],
                 isLoading: false
               }
+            })
+          },
+
+          setDisplayedUsers: (
+            displayedUsers: TDeserializedUser[] | []
+          ) => {
+            set((state) => {
+              return { ...state, displayedUsers }
+            })
+          },
+
+          setDisplayedUsersCount: (totalUsers: number | null) => {
+            set((state) => {
+              return { ...state, displayedUsersCount: totalUsers }
             })
           }
         }

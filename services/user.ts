@@ -4,38 +4,73 @@ import { db } from '~/libs/db'
 import { type User } from '@prisma/client'
 import { type TDeserializedUser } from '~/types'
 
-export const fetchAllUser = async (): Promise<
-  TDeserializedUser[] | null
-> => {
-  try {
-    const initialUsers = await db.user.findMany({
-      select: {
-        id: true,
-        image: true,
-        name: true,
-        email: true,
-        accounts: {
-          select: {
-            provider: true
-          }
-        }
-      },
-      orderBy: {
-        createdAt: 'asc'
-      }
-    })
+export const fetchCurrentPageOfFilteredUsers = async (
+  limit: number,
+  offset: number,
+  searchQuery?: string | null,
+  authProviderFilter?: string | null
+) => {
+  const filters = authProviderFilter?.split('.') || []
 
-    const users: TDeserializedUser[] = initialUsers.map((user) => {
+  // Making a transaction from two requests
+  try {
+    const [filteredUsers, totalUsers] = await db.$transaction([
+      db.user.findMany({
+        where: {
+          name: searchQuery
+            ? { contains: searchQuery, mode: 'insensitive' }
+            : undefined,
+          accounts: authProviderFilter
+            ? {
+                some: {
+                  provider: { in: filters }
+                }
+              }
+            : undefined
+        },
+        take: limit,
+        skip: offset,
+        orderBy: { createdAt: 'asc' },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          image: true,
+          accounts: {
+            select: {
+              provider: true
+            }
+          },
+          createdAt: true
+        }
+      }),
+      db.user.count({
+        where: {
+          name: searchQuery
+            ? { contains: searchQuery, mode: 'insensitive' }
+            : undefined,
+          accounts: authProviderFilter
+            ? {
+                some: {
+                  provider: { in: filters }
+                }
+              }
+            : undefined
+        }
+      })
+    ])
+
+    const users: TDeserializedUser[] = filteredUsers.map((user) => {
+      const { accounts, ...restValues } = user
       return {
-        ...user,
+        ...restValues,
         provider: user.accounts[0]?.provider ?? 'local'
       }
     })
 
-    return users
+    return { users, totalUsers }
   } catch (error) {
-    console.error('Failed to fetch users:', error)
-
+    console.error('Failed to fetch filtered users:', error)
     return null
   }
 }

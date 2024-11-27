@@ -5,6 +5,8 @@ import { Edit, MoreHorizontal, Trash } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
+import { useCurrentUser } from '~/hooks/useCurrentUser'
+import { useDisplayedUsers } from '~/hooks/useDisplayedUsers'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +17,7 @@ import {
 import { Button } from '~/components/ui/button'
 import AlertModal from '~/components/shared/Modal/AlertModal'
 import { deleteUser } from '~/actions/delete-user'
+import { logOut } from '~/actions/logout'
 import { PATHS } from '~/utils/constants'
 
 interface ICellActionProps {
@@ -25,25 +28,40 @@ const CellAction = ({ userId }: ICellActionProps) => {
   const [open, setOpen] = useState(false)
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
+  const currentUser = useCurrentUser()
+
+  const { refreshUsers } = useDisplayedUsers({
+    currentPage: 1,
+    limit: 10,
+    authProviderFilter: null,
+    searchQuery: null
+  })
 
   const onConfirm = () => {
-    startTransition(() => {
-      deleteUser(userId).then((data) => {
+    startTransition(async () => {
+      try {
+        const data = await deleteUser(userId)
+
         if (data?.error) {
-          toast.error(data?.error, {
-            richColors: true,
-            closeButton: true
-          })
-        }
-        if (data?.success) {
+          toast.error(data?.error, { richColors: true, closeButton: true })
+        } else if (data?.success) {
           toast.success(data?.success, {
             richColors: true,
             closeButton: true
           })
 
-          router.push(PATHS.adminUsers)
+          setOpen(false)
+
+          if (currentUser?.id === userId) {
+            await logOut()
+          }
+
+          await refreshUsers()
         }
-      })
+      } catch (error) {
+        console.error('Error deleting user:', error)
+        toast.error('Failed to delete user.')
+      }
     })
   }
 

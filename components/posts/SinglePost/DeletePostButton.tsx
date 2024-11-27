@@ -18,10 +18,7 @@ import {
   DialogTrigger,
   DialogClose
 } from '~/components/ui/dialog'
-import {
-  CLOUDINARY_POSTS_IMAGES_FOLDER,
-  PATHS
-} from '~/utils/constants'
+import { CLOUDINARY_POSTS_IMAGES_FOLDER, PATHS } from '~/utils/constants'
 
 interface IPostDeleteButtonProps {
   postId?: string

@@ -1,8 +1,11 @@
 'use client'
 
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense } from 'react'
+import { parseAsInteger, useQueryState } from 'nuqs'
 
+import useStore from '~/store'
 import { useUsersTableFilters } from '~/hooks/useUsersTableFilters'
+import { useDisplayedUsers } from '~/hooks/useDisplayedUsers'
 import DataTable from '~/components/ui/table/DataTable'
 import { columns } from '~/components/admin/AdminUsers/UsersTable/columns'
 import DataTableFilterBox from '~/components/ui/table/DataTableFilterBox'
@@ -10,16 +13,22 @@ import DataTableResetFilter from '~/components/ui/table/DataTableResetFilter'
 import DataTableSearch from '~/components/ui/table/DataTableSearch'
 import { DataTableSkeleton } from '~/components/ui/table/DataTableSkeleton'
 import { AUTH_OPTIONS } from '~/utils/constants'
-import { TDeserializedUser } from '~/types'
 
-interface IUsersTableProps {
-  users: TDeserializedUser[]
-  totalUsers: number
-}
+const UsersTable = () => {
+  const [displayedUsers, displayedUsersCount] = useStore((state) => {
+    return [state.displayedUsers, state.displayedUsersCount]
+  })
 
-const UsersTable = ({ users, totalUsers }: IUsersTableProps) => {
-  const [displayedUsers, setDisplayedUsers] =
-    useState<TDeserializedUser[]>(users)
+  const [currentPage, setCurrentPage] = useQueryState(
+    'page',
+    parseAsInteger.withOptions({ shallow: false }).withDefault(1)
+  )
+  const [pageSize, setPageSize] = useQueryState(
+    'limit',
+    parseAsInteger
+      .withOptions({ shallow: false, history: 'push' })
+      .withDefault(10)
+  )
 
   const {
     authProviderFilter,
@@ -31,27 +40,12 @@ const UsersTable = ({ users, totalUsers }: IUsersTableProps) => {
     setSearchQuery
   } = useUsersTableFilters()
 
-  useEffect(() => {
-    if (authProviderFilter || searchQuery) {
-      const filters = authProviderFilter?.split('.') || []
-
-      const filteredUsers = users?.filter((user) => {
-        const matchesSearch = searchQuery
-          ? user?.name?.toLowerCase().includes(searchQuery.toLowerCase())
-          : true
-
-        const matchesProvider = filters.length
-          ? filters.includes(user?.provider)
-          : true
-
-        return matchesSearch && matchesProvider
-      })
-
-      setDisplayedUsers(filteredUsers || [])
-    } else {
-      setDisplayedUsers(users || [])
-    }
-  }, [searchQuery, authProviderFilter, users])
+  const { loading } = useDisplayedUsers({
+    currentPage,
+    limit: pageSize,
+    authProviderFilter,
+    searchQuery
+  })
 
   return (
     <div className="space-y-4">
@@ -74,20 +68,32 @@ const UsersTable = ({ users, totalUsers }: IUsersTableProps) => {
           onReset={resetFilters}
         />
       </div>
-      <Suspense
-        fallback={
-          <DataTableSkeleton
-            columnCount={5}
-            rowCount={10}
-          />
-        }
-      >
-        <DataTable
-          columns={columns}
-          data={displayedUsers}
-          totalItems={totalUsers}
+      {loading ? (
+        <DataTableSkeleton
+          columnCount={5}
+          rowCount={10}
         />
-      </Suspense>
+      ) : (
+        <Suspense
+          fallback={
+            <DataTableSkeleton
+              columnCount={5}
+              rowCount={10}
+            />
+          }
+        >
+          <DataTable
+            key={displayedUsers?.length}
+            columns={columns}
+            data={displayedUsers}
+            totalItems={displayedUsersCount}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+          />
+        </Suspense>
+      )}
     </div>
   )
 }
