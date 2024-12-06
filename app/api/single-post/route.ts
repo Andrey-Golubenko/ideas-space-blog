@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '~/libs/db'
+
+import { getSinglePost } from '~/services/posts/posts.server'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request?.url)
@@ -15,29 +16,14 @@ export async function GET(request: NextRequest) {
 
   if (query) {
     try {
-      const initPost = await db.post.findUnique({
-        where: { id: query },
-        include: {
-          categories: {
-            include: {
-              category: true
-            }
-          }
-        }
-      })
+      const singlePost: FullPost | null = await getSinglePost(query)
 
-      if (!initPost) {
+      if (!singlePost) {
         return NextResponse.json(
           { error: 'Post not found' },
           { status: 404 }
         )
       }
-
-      const categories = initPost?.categories?.map((singleCategory) => {
-        return singleCategory?.category
-      })
-
-      const singlePost: FullPost = { ...initPost, categories }
 
       return NextResponse.json(singlePost)
     } catch (error) {

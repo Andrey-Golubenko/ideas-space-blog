@@ -43,7 +43,9 @@ const DataTable = <TData, TValue>({
   pageSizeOptions
 }: IDataTableProps<TData, TValue>) => {
   const paginationState = {
-    pageIndex: currentPage - 1, // zero-based index for React Table
+    // zero-based index for React Table
+    pageIndex: currentPage - 1,
+
     pageSize
   }
 
@@ -81,7 +83,7 @@ const DataTable = <TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <ScrollArea className="grid h-[calc(80vh-220px)] rounded-md border md:h-[calc(90dvh-240px)]">
+      <ScrollArea className="grid h-[calc(80vh-220px)] rounded-md border md:h-[calc(90dvh-240px)] [&_td]:p-3">
         <Table className="relative">
           <DataTableHeader table={table} />
 

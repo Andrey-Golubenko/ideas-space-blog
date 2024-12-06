@@ -1,28 +1,29 @@
 'use client'
 
-import { Suspense } from 'react'
+import { Suspense, useMemo } from 'react'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
 import useStore from '~/store'
-import { useUsersTableFilters } from '~/hooks/useUsersTableFilters'
-import { useDisplayedUsers } from '~/hooks/useDisplayedUsers'
+import { useDataTablePosts } from '~/hooks/useDataTablePosts'
+import { usePostsTableFilters } from '~/hooks/usePostsTableFilters'
+import { columns } from '~/components/admin/AdminPosts/columns'
 import DataTable from '~/components/ui/table/DataTable'
-import { columns } from '~/components/admin/AdminUsers/UsersTable/columns'
+import { DataTableSkeleton } from '~/components/ui/table/DataTableSkeleton'
+import DataTableSearch from '~/components/ui/table/DataTableSearch'
 import DataTableFilterBox from '~/components/ui/table/DataTableFilterBox'
 import DataTableResetFilter from '~/components/ui/table/DataTableResetFilter'
-import DataTableSearch from '~/components/ui/table/DataTableSearch'
-import { DataTableSkeleton } from '~/components/ui/table/DataTableSkeleton'
-import { AUTH_OPTIONS } from '~/utils/constants'
+import { PUBLISHED_OPTIONS } from '~/utils/constants'
 
-const UsersTable = () => {
-  const [displayedUsers, displayedUsersCount] = useStore((state) => {
-    return [state.displayedUsers, state.displayedUsersCount]
+const PostsTable = () => {
+  const [dataTablePosts, isLoading] = useStore((state) => {
+    return [state.dataTablePosts, state.isLoading]
   })
 
   const [currentPage, setCurrentPage] = useQueryState(
     'page',
     parseAsInteger.withOptions({ shallow: false }).withDefault(1)
   )
+
   const [pageSize, setPageSize] = useQueryState(
     'limit',
     parseAsInteger
@@ -31,21 +32,34 @@ const UsersTable = () => {
   )
 
   const {
-    authProviderFilter,
-    setAuthProviderFilter,
+    categoriesFilter,
+    setCategoriesFilter,
+    publishedFilter,
+    setPublishedFilter,
     isAnyFilterActive,
     resetFilters,
     searchQuery,
     setPage,
     setSearchQuery
-  } = useUsersTableFilters()
+  } = usePostsTableFilters()
 
-  const { loading } = useDisplayedUsers({
+  const dataTablePostsProps = useMemo(() => {
+    return {
+      currentPage,
+      limit: pageSize,
+      categoriesFilter,
+      publishedFilter,
+      searchQuery
+    }
+  }, [
     currentPage,
-    limit: pageSize,
-    authProviderFilter,
+    pageSize,
+    categoriesFilter,
+    publishedFilter,
     searchQuery
-  })
+  ])
+
+  const { categoriesOptions } = useDataTablePosts(dataTablePostsProps)
 
   return (
     <div className="space-y-4">
@@ -56,19 +70,27 @@ const UsersTable = () => {
           setSearchQuery={setSearchQuery}
           setPage={setPage}
         />
+
         <DataTableFilterBox
-          filterKey="provider"
-          title="Provider type"
-          options={AUTH_OPTIONS}
-          setFilterValue={setAuthProviderFilter}
-          filterValue={authProviderFilter}
+          title="Category"
+          options={categoriesOptions}
+          filterValue={categoriesFilter}
+          setFilterValue={setCategoriesFilter}
         />
+
+        <DataTableFilterBox
+          title="Published"
+          options={PUBLISHED_OPTIONS}
+          filterValue={publishedFilter}
+          setFilterValue={setPublishedFilter}
+        />
+
         <DataTableResetFilter
           isFilterActive={isAnyFilterActive}
           onReset={resetFilters}
         />
       </div>
-      {loading ? (
+      {isLoading ? (
         <DataTableSkeleton
           columnCount={5}
           rowCount={10}
@@ -83,10 +105,10 @@ const UsersTable = () => {
           }
         >
           <DataTable
-            key={displayedUsers?.length}
+            key={dataTablePosts?.length}
             columns={columns}
-            data={displayedUsers}
-            totalItems={displayedUsersCount}
+            data={dataTablePosts}
+            totalItems={dataTablePosts?.length}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
             pageSize={pageSize}
@@ -98,4 +120,4 @@ const UsersTable = () => {
   )
 }
 
-export default UsersTable
+export default PostsTable

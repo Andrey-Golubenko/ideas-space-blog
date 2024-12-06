@@ -31,7 +31,6 @@ interface FilterOption {
 }
 
 interface IFilterBoxProps {
-  filterKey: string
   title: string
   options: FilterOption[]
   setFilterValue: (
@@ -42,7 +41,6 @@ interface IFilterBoxProps {
 }
 
 const DataTableFilterBox = ({
-  filterKey,
   title,
   options,
   setFilterValue,

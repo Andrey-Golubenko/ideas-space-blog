@@ -2,6 +2,10 @@
 
 import { db } from '~/libs/db'
 import { type Post } from '@prisma/client'
+import {
+  type IFetchPostsFunctionProps,
+  type TDeserializedPost
+} from '~/types'
 
 export const getSinglePost = async (
   slug: string
@@ -11,8 +15,13 @@ export const getSinglePost = async (
       where: { id: slug },
       include: {
         categories: {
-          include: {
-            category: true
+          select: {
+            category: {
+              select: {
+                name: true,
+                slug: true
+              }
+            }
           }
         }
       }
@@ -21,8 +30,12 @@ export const getSinglePost = async (
     if (!initPost) return null
 
     const categories = initPost.categories.map((singleCategory) => {
-      return singleCategory.category
+      return {
+        categoryName: singleCategory?.category?.name,
+        categorySlug: singleCategory?.category?.slug
+      }
     })
+
     const post: FullPost = { ...initPost, categories }
 
     return post
@@ -73,5 +86,85 @@ export const fetchRecentPosts = async () => {
     console.error('Error fetching recent posts:', error)
 
     throw new Error('Failed to fetch recent posts')
+  }
+}
+
+export const fetchCurrentPageOfFilteredPosts = async ({
+  limit,
+  offset,
+  categoriesFilter,
+  publishedFilter,
+  searchQuery
+}: IFetchPostsFunctionProps) => {
+  const catFilters = categoriesFilter?.split('.') || []
+  const isPublishFilter = publishedFilter !== 'draft'
+
+  try {
+    const filteredPosts = await db.post.findMany({
+      where: {
+        title: searchQuery
+          ? { contains: searchQuery, mode: 'insensitive' }
+          : undefined,
+        categories: categoriesFilter
+          ? {
+              some: {
+                category: {
+                  slug: { in: catFilters }
+                }
+              }
+            }
+          : undefined,
+        published: publishedFilter ? isPublishFilter : undefined
+      },
+      take: limit,
+      skip: offset as number,
+      orderBy: { createdAt: 'asc' },
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        imageUrls: true,
+        published: true,
+        author: {
+          select: {
+            name: true
+          }
+        },
+        categories: {
+          select: {
+            category: {
+              select: {
+                name: true,
+                slug: true
+              }
+            }
+          }
+        }
+      }
+    })
+
+    const posts: TDeserializedPost[] = filteredPosts.map((post) => {
+      const { author, categories, ...restValues } = post
+
+      const authorName = author?.name
+
+      const formatedCategories = categories.map((singleCategory) => {
+        return {
+          categoryName: singleCategory?.category?.name,
+          categorySlug: singleCategory?.category?.slug
+        }
+      })
+
+      return {
+        ...restValues,
+        author: authorName,
+        categories: formatedCategories
+      }
+    })
+
+    return posts
+  } catch (error) {
+    console.error('Failed to fetch filtered posts:', error)
+    return null
   }
 }

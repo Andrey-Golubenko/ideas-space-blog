@@ -2,8 +2,18 @@
 
 import { db } from '~/libs/db'
 import { DEFAULT_CATEGORY } from '~/utils/constants'
+import { type TTRuncatedCategories } from '~/types'
 
-export const fetchAllCategories = async () => {
+export const fetchAllCategories = async (): Promise<{
+  categories: {
+    id: string
+    name: string
+    slug: string
+    imageUrl: string | null
+    description: string | null
+  }[]
+  categoriesCount: number
+}> => {
   try {
     const categories = await db.categories.findMany({
       where: {
@@ -19,7 +29,38 @@ export const fetchAllCategories = async () => {
   }
 }
 
-export const fetchSingleCategoryById = async (categoryId: string) => {
+export const fetchAllCategoriesTruncated = async (): Promise<
+  TTRuncatedCategories[] | null
+> => {
+  try {
+    const categories = await db.categories.findMany({
+      where: {
+        slug: {
+          not: `${DEFAULT_CATEGORY.slug}`
+        }
+      },
+      select: {
+        name: true,
+        slug: true
+      }
+    })
+
+    return categories
+  } catch (error) {
+    console.error('Failed to fetch categories!', error)
+    return null
+  }
+}
+
+export const fetchSingleCategoryById = async (
+  categoryId: string
+): Promise<{
+  id: string
+  name: string
+  slug: string
+  imageUrl: string | null
+  description: string | null
+} | null> => {
   try {
     const category = db.categories.findUnique({
       where: {
@@ -33,7 +74,15 @@ export const fetchSingleCategoryById = async (categoryId: string) => {
   }
 }
 
-export const fetchSingleCategoryBySlug = async (categorySlug: string) => {
+export const fetchSingleCategoryBySlug = async (
+  categorySlug: string
+): Promise<{
+  id: string
+  name: string
+  slug: string
+  imageUrl: string | null
+  description: string | null
+} | null> => {
   try {
     const category = db.categories.findUnique({
       where: {
@@ -47,7 +96,17 @@ export const fetchSingleCategoryBySlug = async (categorySlug: string) => {
   }
 }
 
-export const fetchSinglePostCategories = async (postId: string) => {
+export const fetchSinglePostCategories = async (
+  postId: string
+): Promise<
+  {
+    id: string
+    name: string
+    slug: string
+    imageUrl: string | null
+    description: string | null
+  }[]
+> => {
   try {
     const singlePostCategories = await db.postCategories.findMany({
       where: {
@@ -68,7 +127,13 @@ export const fetchSinglePostCategories = async (postId: string) => {
   }
 }
 
-export const fetchUncategorizedCategory = async () => {
+export const fetchUncategorizedCategory = async (): Promise<{
+  id: string
+  name: string
+  slug: string
+  imageUrl: string | null
+  description: string | null
+} | null> => {
   try {
     const uncategorizedCategory = await db.categories.findUnique({
       where: {
@@ -82,7 +147,13 @@ export const fetchUncategorizedCategory = async () => {
   }
 }
 
-export const fetchPostsIdsInCategory = async (categoryId: string) => {
+export const fetchPostsIdsInCategory = async (
+  categoryId: string
+): Promise<
+  {
+    postId: string
+  }[]
+> => {
   try {
     const postsInCategory = await db.postCategories.findMany({
       where: {

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -30,6 +30,10 @@ const EditUserPageView = ({ user }: IEditUserPageViewProps) => {
 
   const [isPending, startTransition] = useTransition()
 
+  const pathname = usePathname()
+
+  const isAdminPage = pathname.includes(PATHS.adminEditUsers)
+
   const form = useForm<TManageUserForm>({
     defaultValues: {
       id: user?.id,
@@ -52,11 +56,11 @@ const EditUserPageView = ({ user }: IEditUserPageViewProps) => {
     startTransition(() => {
       editUser(preparedValues)
         .then((data) => {
-          setError(data.error)
-          setSuccess(data.success)
+          setError(data?.error)
+          setSuccess(data?.success)
 
-          if (data.success) {
-            toast.success(data.success, {
+          if (data?.success) {
+            toast.success(data?.success, {
               richColors: true,
               closeButton: true,
               duration: 5000
@@ -76,7 +80,9 @@ const EditUserPageView = ({ user }: IEditUserPageViewProps) => {
   }
 
   return (
-    <Card className="my-12 flex min-h-[420px] flex-col">
+    <Card
+      className={`${isAdminPage ? 'mx-auto my-4 w-4/5 @5xl:w-3/5' : 'my-16'} flex min-h-[420px] flex-col shadow-md`}
+    >
       <CardHeader>
         <p className="text-center text-2xl font-semibold">
           👤 Edit the user

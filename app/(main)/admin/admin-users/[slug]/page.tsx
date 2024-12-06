@@ -12,7 +12,11 @@ const EditUserPage = async ({ params: { slug } }: IEditUserPageProps) => {
 
   const user = await getUserById(userId)
 
-  return <EditUserPageView user={user} />
+  return (
+    <div className="@container">
+      <EditUserPageView user={user} />
+    </div>
+  )
 }
 
 export default EditUserPage

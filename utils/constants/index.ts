@@ -16,6 +16,7 @@ export const PATHS = {
   adminUsers: '/admin/admin-users',
   adminEditUsers: '/admin/admin-users/edit-user-',
   adminPosts: '/admin/admin-posts',
+  adminEditPost: '/admin/admin-posts/edit-post-',
   adminCategories: '/admin/admin-categories',
   adminSettings: '/admin/admin-settings',
 
@@ -104,6 +105,11 @@ export const AUTH_OPTIONS = [
   { value: 'github', label: 'GitHub provider' },
   { value: 'google', label: 'Google provider' },
   { value: 'local', label: 'Local provider' }
+]
+
+export const PUBLISHED_OPTIONS = [
+  { value: 'published', label: 'Published' },
+  { value: 'draft', label: 'Draft' }
 ]
 
 // TODO: For storage as an example

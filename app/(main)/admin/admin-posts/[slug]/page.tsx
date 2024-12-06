@@ -8,7 +8,7 @@ const EditPostPage = async () => {
   const isAdmin = user?.role === UserRole.ADMIN
 
   return (
-    <div className="py-10 xs:w-[95%] sm:w-[80%] md:w-[75%] lg:w-[60%]">
+    <div className="@container">
       <EditPostView
         isLogged={!!user}
         isAdmin={isAdmin}

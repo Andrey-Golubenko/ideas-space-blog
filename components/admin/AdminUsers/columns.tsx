@@ -4,7 +4,7 @@ import { type ColumnDef } from '@tanstack/react-table'
 import { FaUser } from 'react-icons/fa'
 
 import { Checkbox } from '~/components/ui/checkbox'
-import CellAction from '~/components/admin/AdminUsers/UsersTable/CellAction'
+import CellAction from '~/components/admin/AdminUsers/CellAction'
 import {
   Avatar,
   AvatarImage,
@@ -45,20 +45,12 @@ export const columns: ColumnDef<TDeserializedUser>[] = [
     header: 'IMAGE',
     cell: ({ row }) => {
       return (
-        <>
-          <Avatar>
-            <AvatarImage src={row.getValue('image') || ''} />
-            <AvatarFallback className="bg-sky-500">
-              <FaUser className="text-white" />
-            </AvatarFallback>
-          </Avatar>
-          {/* <Image
-            src={row.getValue('photo_url')}
-            alt={row.getValue('name')}
-            fill
-            className="rounded-lg"
-          /> */}
-        </>
+        <Avatar>
+          <AvatarImage src={row.getValue('image') || ''} />
+          <AvatarFallback className="bg-sky-500">
+            <FaUser className="text-white" />
+          </AvatarFallback>
+        </Avatar>
       )
     }
   },

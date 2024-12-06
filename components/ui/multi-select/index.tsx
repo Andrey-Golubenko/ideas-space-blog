@@ -22,8 +22,8 @@ import {
   CommandSeparator
 } from '~/components/ui/command'
 import { multiSelectVariants } from '~/components/ui/multi-select/multiSelectVariants'
-import { type IMultiSelectProps } from '~/types'
 import { DEFAULT_CATEGORY } from '~/utils/constants'
+import { type IMultiSelectProps } from '~/types'
 
 export const MultiSelect = forwardRef<
   HTMLButtonElement,

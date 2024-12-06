@@ -10,13 +10,20 @@ import {
   fetchSinglePostById
 } from '~/services/posts/posts.client'
 import { fetchAllCategories } from '~/services/categories'
-import { fetchRecentPosts } from '~/services/posts/posts.server'
+import {
+  fetchCurrentPageOfFilteredPosts,
+  fetchRecentPosts
+} from '~/services/posts/posts.server'
 import { fetchUsersVisits } from '~/services/userVisits/visitsData'
 import {
+  type TDeserializedPost,
   type IBrowserStats,
   type IUserVisit,
-  type TDeserializedUser
+  type TDeserializedUser,
+  type IFetchPostsFunctionProps,
+  type IFetchUsersFunctionProps
 } from '~/types'
+import { fetchCurrentPageOfFilteredUsers } from '~/services/user'
 
 interface IUseStore {
   posts: Post[]
@@ -24,6 +31,7 @@ interface IUseStore {
   singlePost: FullPost | {}
   recentPosts: Post[]
   recentPostsCount: number | null
+  dataTablePosts: TDeserializedPost[]
 
   categories: Categories[]
   categoriesCount: number | null
@@ -32,8 +40,7 @@ interface IUseStore {
   usersVisits: IUserVisit[] | null
   browserStats: IBrowserStats[] | null
 
-  displayedUsers: TDeserializedUser[] | []
-  displayedUsersCount: number | null
+  dataTableUsers: TDeserializedUser[] | []
 
   isLoading: boolean
 
@@ -41,7 +48,7 @@ interface IUseStore {
   getPostsBySearch: (search: string) => Promise<void>
   getPostsByUserId: (userId: string) => Promise<void>
   getSinglePostById: (postId: string) => void
-  setSinglePost: (post: FullPost | {}) => void
+  setSinglePost: (post: FullPost | {} | TDeserializedPost) => void
   getRecentPosts: () => Promise<void>
 
   getAllCategories: () => Promise<void>
@@ -49,8 +56,8 @@ interface IUseStore {
   setCategoriesCount: (categoriesLength: number) => void
   setEditableCategory: (category: Categories | {}) => void
 
-  setDisplayedUsers: (users: TDeserializedUser[] | []) => void
-  setDisplayedUsersCount: (totalUsers: number | null) => void
+  getDataTableUsers: (props: IFetchUsersFunctionProps) => void
+  getDataTablePosts: (props: IFetchPostsFunctionProps) => void
 
   getUsersVisits: (startDate?: Date, endDate?: Date) => void
 }
@@ -74,8 +81,8 @@ const useStore = createWithEqualityFn<
           editableCategory: {},
           usersVisits: [],
           browserStats: [],
-          displayedUsers: [],
-          displayedUsersCount: null,
+          dataTableUsers: [],
+          dataTablePosts: [],
           isLoading: false,
 
           getAllPosts: async () => {
@@ -209,18 +216,70 @@ const useStore = createWithEqualityFn<
             })
           },
 
-          setDisplayedUsers: (
-            displayedUsers: TDeserializedUser[] | []
-          ) => {
+          getDataTableUsers: async ({
+            limit,
+            offset,
+            searchQuery,
+            providerFilter
+          }: IFetchUsersFunctionProps) => {
             set((state) => {
-              return { ...state, displayedUsers }
+              return { ...state, isLoading: true }
             })
+
+            try {
+              const users = await fetchCurrentPageOfFilteredUsers({
+                limit,
+                offset,
+                searchQuery,
+                providerFilter
+              })
+
+              if (users) {
+                set((state) => {
+                  return { ...state, dataTableUsers: users }
+                })
+              }
+            } catch (error) {
+              console.error('Error fetching users:', error)
+            } finally {
+              set((state) => {
+                return { ...state, isLoading: false }
+              })
+            }
           },
 
-          setDisplayedUsersCount: (totalUsers: number | null) => {
+          getDataTablePosts: async ({
+            limit,
+            offset,
+            searchQuery,
+            categoriesFilter,
+            publishedFilter
+          }: IFetchPostsFunctionProps) => {
             set((state) => {
-              return { ...state, displayedUsersCount: totalUsers }
+              return { ...state, isLoading: true }
             })
+
+            try {
+              const posts = await fetchCurrentPageOfFilteredPosts({
+                limit,
+                offset,
+                searchQuery,
+                categoriesFilter,
+                publishedFilter
+              })
+
+              if (posts) {
+                set((state) => {
+                  return { ...state, dataTablePosts: posts }
+                })
+              }
+            } catch (error) {
+              console.error('Error fetching posts:', error)
+            } finally {
+              set((state) => {
+                return { ...state, isLoading: false }
+              })
+            }
           }
         }
       },

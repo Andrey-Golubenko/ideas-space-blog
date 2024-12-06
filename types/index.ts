@@ -162,10 +162,41 @@ export interface IBrowserStats {
   fill: string
 }
 
+export interface IFetchDataFunctionProps {
+  limit: number
+  searchQuery: string | null
+  currentPage?: number
+  offset?: number
+}
+
+export interface IFetchPostsFunctionProps extends IFetchDataFunctionProps {
+  categoriesFilter: string | null
+  publishedFilter: string | null
+}
+
+export interface IFetchUsersFunctionProps extends IFetchDataFunctionProps {
+  providerFilter: string | null
+}
+
 export type TDeserializedUser = {
   id: string
   image: string | null
   name: string | null
   email: string
   provider: string
+}
+
+export type TTRuncatedCategories = {
+  name: string
+  slug: string
+}
+
+export type TDeserializedPost = {
+  id: string
+  imageUrls: string[] | null
+  title: string | null
+  content: string
+  author: string | null
+  categories: TCategoryOptions[] | null
+  published: boolean
 }

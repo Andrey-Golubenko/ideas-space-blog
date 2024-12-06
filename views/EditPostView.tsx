@@ -16,15 +16,16 @@ import {
   destroyImagesInCloudinary,
   saveImagesToCloudinary
 } from '~/services/imagesProcessing'
-import { CLOUDINARY_POSTS_IMAGES_FOLDER, PATHS } from '~/utils/constants'
+import { CLOUDINARY_POSTS_IMAGES_FOLDER } from '~/utils/constants'
 import { ManagePostSchema } from '~/schemas'
 import { type TManagePostForm } from '~/types'
 
-interface IEditPostCardProps {
+interface IEditPostViewProps {
   isLogged: boolean
+  isAdmin: boolean
 }
 
-const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
+const EditPostView = ({ isLogged, isAdmin }: IEditPostViewProps) => {
   const [success, setSuccess] = useState<string | undefined>('')
   const [error, setError] = useState<string | undefined>('')
 
@@ -32,19 +33,24 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
 
   const router = useRouter()
 
-  const [posts, singlePost, initCategories, setSinglePost] = useStore(
-    (state) => {
-      return [
-        state.posts,
-        state.singlePost,
-        state.categories,
-        state.setSinglePost
-      ]
-    }
-  )
+  const [
+    posts,
+    dataTablePosts,
+    singlePost,
+    initCategories,
+    setSinglePost
+  ] = useStore((state) => {
+    return [
+      state.posts,
+      state.dataTablePosts,
+      state.singlePost,
+      state.categories,
+      state.setSinglePost
+    ]
+  })
 
   const initialPost =
-    posts?.find((post) => {
+    (isAdmin ? dataTablePosts : posts)?.find((post) => {
       return post?.id === (singlePost as Post)?.id
     }) || {}
 
@@ -59,7 +65,7 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
 
   const categoriesFieldValues = editablePostCategories?.map(
     (editPostCategory) => {
-      return editPostCategory?.name
+      return editPostCategory?.categoryName
     }
   )
 
@@ -153,11 +159,11 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
       }
 
       editPost(newPostValues, postId as string).then((data) => {
-        setError(data.error)
-        setSuccess(data.success)
+        setError(data?.error)
+        setSuccess(data?.success)
 
-        if (data.success) {
-          toast.success(data.success, {
+        if (data?.success) {
+          toast.success(data?.success, {
             richColors: true,
             closeButton: true,
             duration: 5000
@@ -165,7 +171,7 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
 
           setSinglePost({})
 
-          router.push(`${PATHS.blog}/${postId}`)
+          router.back()
         }
       })
     })
@@ -188,4 +194,4 @@ const EditPostCard = ({ isLogged }: IEditPostCardProps) => {
   )
 }
 
-export default EditPostCard
+export default EditPostView

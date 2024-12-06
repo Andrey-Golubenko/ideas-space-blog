@@ -1,6 +1,7 @@
 'use server'
 
 import { db } from '~/libs/db'
+import { UserRole } from '@prisma/client'
 import { getSinglePost } from '~/services/posts/posts.server'
 import { getUserById } from '~/services/user'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
@@ -8,6 +9,7 @@ import { type TActionReturn } from '~/types'
 
 export const deletePost = async (postId: string): TActionReturn => {
   const user = await getCurrentUser()
+  const isAdmin = user?.role === UserRole.ADMIN
 
   if (!user) {
     return { error: 'Unauthorized!' }
@@ -25,7 +27,7 @@ export const deletePost = async (postId: string): TActionReturn => {
     return { error: 'There are no posts for deleting!' }
   }
 
-  if (post.authorId !== user.id) {
+  if (post.authorId !== user.id && !isAdmin) {
     return { error: 'You have no permission to delete this post!' }
   }
 

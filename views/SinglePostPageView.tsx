@@ -1,7 +1,8 @@
 import { Session } from 'next-auth'
+
 import { auth } from '~/libs/auth/auth'
-import SinglePostCard from '~/components/posts/SinglePost'
 import { getSinglePost } from '~/services/posts/posts.server'
+import SinglePostCard from '~/components/posts/SinglePost'
 
 interface ISinglePostProps {
   postId: string

@@ -9,8 +9,9 @@ export const searchParams = {
   page: parseAsInteger.withDefault(1),
   limit: parseAsInteger.withDefault(10),
   q: parseAsString,
-  authProvider: parseAsString
-  // categories: parseAsString
+  authProvider: parseAsString,
+  categories: parseAsString,
+  published: parseAsString
 }
 
 export const searchParamsCache = createSearchParamsCache(searchParams)

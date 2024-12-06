@@ -53,10 +53,7 @@ const SinglePostCard = ({
 
   const singlePostImageUrls = (singlePost as FullPost)?.imageUrls ?? []
 
-  const singlePostCategories =
-    (singlePost as FullPost)?.categories?.map((category) => {
-      return { categoryName: category?.name, categorySlug: category?.slug }
-    }) ?? []
+  const singlePostCategories = (singlePost as FullPost)?.categories ?? []
 
   const singlePostCreatedAt = (singlePost as FullPost)?.createdAt
     ? new Date((singlePost as FullPost)?.createdAt!)?.toLocaleDateString(

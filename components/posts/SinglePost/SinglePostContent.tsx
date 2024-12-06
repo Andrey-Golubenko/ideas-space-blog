@@ -5,10 +5,7 @@ import { CardContent } from '~/components/ui/card'
 import { DEFAULT_CATEGORY, PATHS } from '~/utils/constants'
 
 interface ISinglePostContentProps {
-  singlePostCategories: {
-    categoryName: string
-    categorySlug: string
-  }[]
+  singlePostCategories: TCategoryOptions[]
   singlePostCreatedAt: string
   singlePostContent: string
 }

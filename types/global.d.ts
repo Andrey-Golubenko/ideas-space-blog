@@ -29,8 +29,15 @@ declare global {
 }
 
 declare global {
+  type TCategoryOptions = {
+    categoryName: string
+    categorySlug: string
+  }
+}
+
+declare global {
   type FullPost = Partial<Post> & {
-    categories?: Categories[]
+    categories?: TCategoryOptions[]
   }
 }
 
