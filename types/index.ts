@@ -1,6 +1,7 @@
 import { type ForwardRefExoticComponent, type RefAttributes } from 'react'
 import * as z from 'zod'
 import { type LucideProps } from 'lucide-react'
+import { type SearchParams } from 'nuqs'
 
 import { multiSelectVariants } from '~/components/ui/multi-select/multiSelectVariants'
 import { type FileRejection, type DropEvent } from 'react-dropzone'
@@ -133,6 +134,14 @@ export interface IMultiSelectProps
    * Optional, can be used to add custom styles.
    */
   className?: string
+}
+
+export interface IPageWithSearchParamsProps {
+  searchParams: SearchParams
+}
+
+export interface IRCWithSearchParamsKeyProps {
+  searchParamsKey: string
 }
 
 export type IAdminSidebarItem = {

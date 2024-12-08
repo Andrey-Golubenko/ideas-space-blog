@@ -13,8 +13,9 @@ import DataTableSearch from '~/components/ui/table/DataTableSearch'
 import DataTableFilterBox from '~/components/ui/table/DataTableFilterBox'
 import DataTableResetFilter from '~/components/ui/table/DataTableResetFilter'
 import { PUBLISHED_OPTIONS } from '~/utils/constants'
+import { type IRCWithSearchParamsKeyProps } from '~/types'
 
-const PostsTable = () => {
+const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
   const [dataTablePosts, isLoading] = useStore((state) => {
     return [state.dataTablePosts, state.isLoading]
   })
@@ -97,6 +98,7 @@ const PostsTable = () => {
         />
       ) : (
         <Suspense
+          key={searchParamsKey}
           fallback={
             <DataTableSkeleton
               columnCount={5}

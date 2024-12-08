@@ -1,14 +1,7 @@
-import NewPostCard from '~/components/posts/NewPostCard'
-import { getCurrentUser } from '~/utils/helpers/server.helpers'
+import BlogNewPostPageView from '~/views/BlogNewPostPageView'
 
-const NewPostPage = async () => {
-  const user = await getCurrentUser()
-
-  return (
-    <div className=" py-10 xs:w-[95%] sm:w-[85%] lg:w-[65%]">
-      <NewPostCard isLogged={!!user} />
-    </div>
-  )
+const BlogNewPostPage = async () => {
+  return <BlogNewPostPageView />
 }
 
-export default NewPostPage
+export default BlogNewPostPage

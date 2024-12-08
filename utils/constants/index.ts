@@ -4,7 +4,7 @@ import { type INavLink } from '~/types'
 export const PATHS = {
   home: '/',
   blog: '/blog',
-  newPost: '/blog/new-post',
+  blogNewPost: '/blog/new-post',
   editPost: '/edit-post',
   posts: '/api/posts',
   categories: '/categories',
@@ -16,6 +16,7 @@ export const PATHS = {
   adminUsers: '/admin/admin-users',
   adminEditUsers: '/admin/admin-users/edit-user-',
   adminPosts: '/admin/admin-posts',
+  adminNewPost: '/admin/admin-posts/new-post',
   adminEditPost: '/admin/admin-posts/edit-post-',
   adminCategories: '/admin/admin-categories',
   adminSettings: '/admin/admin-settings',

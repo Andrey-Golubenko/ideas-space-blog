@@ -22,7 +22,7 @@ export const PUBLIC_ROUTES = [
  * These routes require authentication.
  * @type {string []}
  */
-export const PUBLIC_ROUTES_EXCEPTIONS = [PATHS.newPost]
+export const PUBLIC_ROUTES_EXCEPTIONS = [PATHS.blogNewPost]
 
 /**
  * An array of routes that can have additional segment.

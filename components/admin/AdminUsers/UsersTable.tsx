@@ -13,8 +13,9 @@ import DataTableResetFilter from '~/components/ui/table/DataTableResetFilter'
 import DataTableSearch from '~/components/ui/table/DataTableSearch'
 import { DataTableSkeleton } from '~/components/ui/table/DataTableSkeleton'
 import { AUTH_OPTIONS } from '~/utils/constants'
+import { type IRCWithSearchParamsKeyProps } from '~/types'
 
-const UsersTable = () => {
+const UsersTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
   const [dataTableUsers, isLoading] = useStore((state) => {
     return [state.dataTableUsers, state.isLoading]
   })
@@ -79,6 +80,7 @@ const UsersTable = () => {
         />
       ) : (
         <Suspense
+          key={searchParamsKey}
           fallback={
             <DataTableSkeleton
               columnCount={5}

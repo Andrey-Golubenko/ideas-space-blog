@@ -1,8 +1,11 @@
 import { Heading } from '~/components/ui/heading'
 import { Separator } from '~/components/ui/separator'
 import UsersTable from '~/components/admin/AdminUsers/UsersTable'
+import { type IRCWithSearchParamsKeyProps } from '~/types'
 
-const AdminUsersPageView = () => {
+const AdminUsersPageView = ({
+  searchParamsKey
+}: IRCWithSearchParamsKeyProps) => {
   return (
     <div className="space-y-4">
       <div className="flex items-start justify-between">
@@ -14,7 +17,7 @@ const AdminUsersPageView = () => {
 
       <Separator />
 
-      <UsersTable />
+      <UsersTable searchParamsKey={searchParamsKey} />
     </div>
   )
 }

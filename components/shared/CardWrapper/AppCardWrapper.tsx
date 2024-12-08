@@ -31,7 +31,7 @@ const AppCardWrapper = ({
 }: ICardWrapperProps & HTMLAttributes<HTMLDivElement>) => {
   const pathname = usePathname()
 
-  const isAdminPage = pathname.includes(PATHS.adminEditPost)
+  const isAdminPage = pathname.includes(PATHS.admin)
 
   return (
     <Card
