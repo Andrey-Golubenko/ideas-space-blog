@@ -196,8 +196,8 @@ export type TDeserializedUser = {
 }
 
 export type TTRuncatedCategories = {
+  id: string
   name: string
-  slug: string
 }
 
 export type TDeserializedPost = {

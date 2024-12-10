@@ -30,8 +30,8 @@ declare global {
 
 declare global {
   type TCategoryOptions = {
+    categoryId: string
     categoryName: string
-    categorySlug: string
   }
 }
 

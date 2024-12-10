@@ -6,6 +6,7 @@ import { parseAsInteger, useQueryState } from 'nuqs'
 import useStore from '~/store'
 import { useDataTablePosts } from '~/hooks/useDataTablePosts'
 import { usePostsTableFilters } from '~/hooks/usePostsTableFilters'
+import { useCategoriesOptions } from '~/hooks/useCategoriesOptions'
 import { columns } from '~/components/admin/AdminPosts/columns'
 import DataTable from '~/components/ui/table/DataTable'
 import { DataTableSkeleton } from '~/components/ui/table/DataTableSkeleton'
@@ -60,7 +61,9 @@ const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
     searchQuery
   ])
 
-  const { categoriesOptions } = useDataTablePosts(dataTablePostsProps)
+  const { categoriesOptions } = useCategoriesOptions()
+
+  useDataTablePosts(dataTablePostsProps)
 
   return (
     <div className="space-y-4">

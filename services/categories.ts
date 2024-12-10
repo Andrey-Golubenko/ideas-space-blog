@@ -12,7 +12,6 @@ export const fetchAllCategories = async (): Promise<{
     imageUrl: string | null
     description: string | null
   }[]
-  categoriesCount: number
 }> => {
   try {
     const categories = await db.categories.findMany({
@@ -23,29 +22,24 @@ export const fetchAllCategories = async (): Promise<{
       }
     })
 
-    return { categories, categoriesCount: categories?.length }
+    return { categories }
   } catch (error) {
     throw new Error('Failed to get categories!')
   }
 }
 
 export const fetchAllCategoriesTruncated = async (): Promise<
-  TTRuncatedCategories[] | null
+  TTRuncatedCategories[] | [] | null
 > => {
   try {
     const categories = await db.categories.findMany({
-      where: {
-        slug: {
-          not: `${DEFAULT_CATEGORY.slug}`
-        }
-      },
       select: {
-        name: true,
-        slug: true
+        id: true,
+        name: true
       }
     })
 
-    return categories
+    return categories ?? []
   } catch (error) {
     console.error('Failed to fetch categories!', error)
     return null

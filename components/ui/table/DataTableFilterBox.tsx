@@ -104,7 +104,7 @@ const DataTableFilterBox = ({
                     {selectedValuesSet.size} selected
                   </Badge>
                 ) : (
-                  Array.from(selectedValuesSet).map((value) => {
+                  Array.from(selectedValuesSet)?.map((value) => {
                     return (
                       <Badge
                         variant="secondary"
@@ -123,6 +123,7 @@ const DataTableFilterBox = ({
           )}
         </Button>
       </PopoverTrigger>
+
       <PopoverContent
         className="w-[200px] p-0"
         align="start"
@@ -134,7 +135,7 @@ const DataTableFilterBox = ({
             <CommandEmpty>No results found.</CommandEmpty>
 
             <CommandGroup>
-              {options.map((option) => {
+              {options?.map((option) => {
                 return (
                   <CommandItem
                     key={option.value}

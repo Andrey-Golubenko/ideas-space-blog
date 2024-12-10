@@ -1,13 +1,15 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { db } from '~/libs/db'
+import { UserRole } from '@prisma/client'
 
 import { getSinglePost } from '~/services/posts/posts.server'
 import { getUserById } from '~/services/user'
 import { fetchUncategorizedCategory } from '~/services/categories'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
+import { PATHS } from '~/utils/constants'
 import { ManagePostSchema } from '~/schemas'
-import { UserRole } from '@prisma/client'
 import { type TManagePostForm, type TActionReturn } from '~/types'
 
 export const editPost = async (
@@ -51,8 +53,15 @@ export const editPost = async (
   const { title, content, imageUrls, published, categories } =
     validatedFields.data
 
+  const validCategories =
+    categories?.length > 1
+      ? (categories as string[]).filter((categoryId) => {
+          return categoryId !== uncategorizedCategory?.id
+        })
+      : (categories as string[])
+
   const newCategories = categories?.length
-    ? categories
+    ? validCategories
     : [uncategorizedCategory?.id]
 
   try {
@@ -67,7 +76,7 @@ export const editPost = async (
           deleteMany: {
             postId
           },
-          create: (newCategories as string[])?.map((catId) => {
+          create: newCategories?.map((catId) => {
             return {
               category: {
                 connect: { id: catId }
@@ -80,6 +89,8 @@ export const editPost = async (
         categories: true
       }
     })
+
+    revalidatePath(`${PATHS.blog}/${postId}`)
 
     return { success: 'Post has been successfully edited!' }
   } catch {

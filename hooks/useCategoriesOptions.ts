@@ -1,31 +1,57 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+
+import useStore from '~/store'
 import { fetchAllCategoriesTruncated } from '~/services/categories'
+import { toUpperCaseFirstChar } from '~/utils/helpers'
+import { type IMultiSelectProps, type TTRuncatedCategories } from '~/types'
 
 export const useCategoriesOptions = () => {
   const [categoriesOptions, setCategoriesOptions] = useState<
-    { value: string; label: string }[]
+    IMultiSelectProps['options']
   >([])
 
-  useEffect(() => {
-    const runFetchCategories = async () => {
-      const truncatedCategories =
+  const [categories] = useStore((state) => {
+    return [state.categories]
+  })
+
+  const runFetchCategories = useCallback(async () => {
+    if (categoriesOptions.length > 0) return
+
+    try {
+      const truncatedCategories: TTRuncatedCategories[] =
         (await fetchAllCategoriesTruncated()) ?? []
-      const options = truncatedCategories?.map((category) => {
+
+      const options = truncatedCategories.map((category) => {
+        const categoryName = toUpperCaseFirstChar(category?.name)
+
         return {
-          value: category?.slug,
-          label: category?.name
+          value: category?.id,
+          label: categoryName
         }
       })
 
-      setCategoriesOptions((prev) => {
-        return JSON.stringify(prev) !== JSON.stringify(options)
-          ? options
-          : prev
-      })
+      setCategoriesOptions(options)
+    } catch (error) {
+      console.error('Error fetching categories:', error)
     }
-
-    runFetchCategories()
   }, [])
 
-  return categoriesOptions
+  useEffect(() => {
+    if (!categories?.length) {
+      runFetchCategories()
+    } else {
+      const options = categories?.map((category) => {
+        const categoryName = toUpperCaseFirstChar(category?.name)
+
+        return {
+          value: category?.id,
+          label: categoryName
+        }
+      })
+
+      setCategoriesOptions(options)
+    }
+  }, [runFetchCategories])
+
+  return { categoriesOptions }
 }

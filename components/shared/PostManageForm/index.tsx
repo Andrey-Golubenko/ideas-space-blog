@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useState, type FormHTMLAttributes } from 'react'
+import { useState, type FormHTMLAttributes } from 'react'
 import { type UseFormReturn } from 'react-hook-form'
 
-import useStore from '~/store'
+import { useCategoriesOptions } from '~/hooks/useCategoriesOptions'
 import { Form } from '~/components/ui/form'
 import TextField from '~/components/shared/TextField'
 import TextAreaField from '~/components/shared/TextAreaField'
@@ -13,8 +13,7 @@ import MultiSelectField from '~/components/shared/MultiSelectField'
 import FormError from '~/components/FormError'
 import FormSuccess from '~/components/FormSuccess'
 import LoadableButton from '~/components/shared/LoadableButton'
-import { type IMultiSelectProps, type TManagePostForm } from '~/types'
-import { toUpperCaseFirstChar } from '~/utils/helpers'
+import { type TManagePostForm } from '~/types'
 
 interface IPostManageFormProps {
   form: UseFormReturn<TManagePostForm>
@@ -36,20 +35,7 @@ const PostManageForm = ({
 }: IPostManageFormProps & FormHTMLAttributes<HTMLFormElement>) => {
   const [filesDuplicates, setFilesDuplicate] = useState<string[] | []>([])
 
-  const [categories, getAllCategories] = useStore((state) => {
-    return [state.categories, state.getAllCategories]
-  })
-
-  useEffect(() => {
-    if (!categories?.length) getAllCategories()
-  }, [])
-
-  const multiOptions: IMultiSelectProps['options'] =
-    categories?.map((category) => {
-      const categoryName = toUpperCaseFirstChar(category?.name)
-
-      return { label: categoryName, value: categoryName }
-    }) || []
+  const { categoriesOptions } = useCategoriesOptions()
 
   return (
     <Form {...form}>
@@ -86,7 +72,7 @@ const PostManageForm = ({
           />
 
           <MultiSelectField
-            options={multiOptions}
+            options={categoriesOptions}
             control={form.control}
             name="categories"
             label="Post categories"

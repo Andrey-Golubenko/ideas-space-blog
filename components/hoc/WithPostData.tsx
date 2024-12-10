@@ -11,7 +11,7 @@ import { type Post } from '@prisma/client'
 interface IWithPostDataProps {
   children: ReactElement[]
   posts: Post[]
-  postsCount: number | null
+  postsCount: number
   isLoading: boolean
 }
 

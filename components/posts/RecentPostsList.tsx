@@ -11,15 +11,9 @@ import SectionItemCard from '~/components/shared/SectionItemCard'
 import SkeletonPostSectionItem from '~/components/shared/SectionItemCard/SkeletonPostSectionItem'
 
 const RecentPostsList = () => {
-  const [recentPosts, getRecentPosts, recentPostsCount, isLoading] =
-    useStore((state) => {
-      return [
-        state.recentPosts,
-        state.getRecentPosts,
-        state.recentPostsCount,
-        state.isLoading
-      ]
-    })
+  const [recentPosts, getRecentPosts, isLoading] = useStore((state) => {
+    return [state.recentPosts, state.getRecentPosts, state.isLoading]
+  })
 
   useEffect(() => {
     getRecentPosts()
@@ -36,7 +30,7 @@ const RecentPostsList = () => {
       <CardContent className="px-0 pb-0 sm:px-6">
         <WithPostData
           posts={recentPosts}
-          postsCount={recentPostsCount}
+          postsCount={recentPosts?.length}
           isLoading={isLoading}
         >
           <WithSkeletonsList>

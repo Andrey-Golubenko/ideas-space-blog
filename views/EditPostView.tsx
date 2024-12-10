@@ -33,21 +33,16 @@ const EditPostView = ({ isLogged, isAdmin }: IEditPostViewProps) => {
 
   const router = useRouter()
 
-  const [
-    posts,
-    dataTablePosts,
-    singlePost,
-    initCategories,
-    setSinglePost
-  ] = useStore((state) => {
-    return [
-      state.posts,
-      state.dataTablePosts,
-      state.singlePost,
-      state.categories,
-      state.setSinglePost
-    ]
-  })
+  const [posts, dataTablePosts, singlePost, setSinglePost] = useStore(
+    (state) => {
+      return [
+        state.posts,
+        state.dataTablePosts,
+        state.singlePost,
+        state.setSinglePost
+      ]
+    }
+  )
 
   const initialPost =
     (isAdmin ? dataTablePosts : posts)?.find((post) => {
@@ -65,7 +60,7 @@ const EditPostView = ({ isLogged, isAdmin }: IEditPostViewProps) => {
 
   const categoriesFieldValues = editablePostCategories?.map(
     (editPostCategory) => {
-      return editPostCategory?.categoryName
+      return editPostCategory?.categoryId
     }
   )
 
@@ -143,19 +138,11 @@ const EditPostView = ({ isLogged, isAdmin }: IEditPostViewProps) => {
         if (error) return
       }
 
-      const { files, categories, ...restValues } = values
-
-      const categoryIds = (categories as string[])?.map((categoryName) => {
-        const selectedCategory = initCategories?.find((initCat) => {
-          return initCat.name === categoryName
-        })
-        return selectedCategory?.id
-      })
+      const { files, ...restValues } = values
 
       const newPostValues: TManagePostForm = {
         ...restValues,
-        imageUrls: [...newImageUrlsFromFiles, ...newImageUrls],
-        categories: categoryIds
+        imageUrls: [...newImageUrlsFromFiles, ...newImageUrls]
       }
 
       editPost(newPostValues, postId as string).then((data) => {

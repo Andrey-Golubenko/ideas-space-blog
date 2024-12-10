@@ -1,7 +1,14 @@
-import BlogNewPostPageView from '~/views/BlogNewPostPageView'
+import { getCurrentUser } from '~/utils/helpers/server.helpers'
+import NewPostPageView from '~/views/NewPostPageView'
 
 const BlogNewPostPage = async () => {
-  return <BlogNewPostPageView />
+  const user = await getCurrentUser()
+
+  return (
+    <div className="py-10 xs:w-[95%] sm:w-[85%] lg:w-[65%]">
+      <NewPostPageView isLogged={!!user} />
+    </div>
+  )
 }
 
 export default BlogNewPostPage

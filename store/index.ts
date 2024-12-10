@@ -15,6 +15,7 @@ import {
   fetchRecentPosts
 } from '~/services/posts/posts.server'
 import { fetchUsersVisits } from '~/services/userVisits/visitsData'
+import { fetchCurrentPageOfFilteredUsers } from '~/services/user'
 import {
   type TDeserializedPost,
   type IBrowserStats,
@@ -23,23 +24,20 @@ import {
   type IFetchPostsFunctionProps,
   type IFetchUsersFunctionProps
 } from '~/types'
-import { fetchCurrentPageOfFilteredUsers } from '~/services/user'
 
 interface IUseStore {
   posts: Post[]
   postsCount: number | null
   singlePost: FullPost | {}
   recentPosts: Post[]
-  recentPostsCount: number | null
-  dataTablePosts: TDeserializedPost[]
 
   categories: Categories[]
-  categoriesCount: number | null
   editableCategory: Categories | {}
 
   usersVisits: IUserVisit[] | null
   browserStats: IBrowserStats[] | null
 
+  dataTablePosts: TDeserializedPost[]
   dataTableUsers: TDeserializedUser[] | []
 
   isLoading: boolean
@@ -53,7 +51,6 @@ interface IUseStore {
 
   getAllCategories: () => Promise<void>
   setCategories: (categories: Categories[]) => void
-  setCategoriesCount: (categoriesLength: number) => void
   setEditableCategory: (category: Categories | {}) => void
 
   getDataTableUsers: (props: IFetchUsersFunctionProps) => void
@@ -75,14 +72,16 @@ const useStore = createWithEqualityFn<
           postsCount: null,
           singlePost: {},
           recentPosts: [],
-          recentPostsCount: null,
+
           categories: [],
-          categoriesCount: null,
           editableCategory: {},
+
           usersVisits: [],
           browserStats: [],
+
           dataTableUsers: [],
           dataTablePosts: [],
+
           isLoading: false,
 
           getAllPosts: async () => {
@@ -132,13 +131,12 @@ const useStore = createWithEqualityFn<
 
             const data = await fetchRecentPosts()
 
-            const { recentPosts, recentPostsCount } = data
+            const { recentPosts } = data
 
             set((state) => {
               return {
                 ...state,
                 recentPosts,
-                recentPostsCount,
                 isLoading: false
               }
             })
@@ -168,13 +166,12 @@ const useStore = createWithEqualityFn<
             })
 
             const data = await fetchAllCategories()
-            const { categories, categoriesCount } = data
+            const { categories } = data
 
             set((state) => {
               return {
                 ...state,
                 categories,
-                categoriesCount,
                 isLoading: false
               }
             })
@@ -184,12 +181,6 @@ const useStore = createWithEqualityFn<
           setCategories: (categories: Categories[]) => {
             set((state) => {
               return { ...state, categories }
-            })
-          },
-
-          setCategoriesCount: (categoriesLength: number) => {
-            set((state) => {
-              return { ...state, categoriesCount: categoriesLength }
             })
           },
 

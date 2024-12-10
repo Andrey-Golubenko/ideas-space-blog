@@ -46,10 +46,6 @@ export const MultiSelect = forwardRef<
   ) => {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false)
 
-    const displayedFieldValues = fieldValue?.filter((value) => {
-      return value !== DEFAULT_CATEGORY.name
-    })
-
     const handleInputKeyDown = (
       event: React.KeyboardEvent<HTMLInputElement>
     ) => {
@@ -59,7 +55,7 @@ export const MultiSelect = forwardRef<
         event?.key === 'Backspace' &&
         !event?.currentTarget?.value
       ) {
-        const newSelectedValues = [...displayedFieldValues]
+        const newSelectedValues = [...fieldValue]
 
         newSelectedValues?.pop()
 
@@ -67,12 +63,13 @@ export const MultiSelect = forwardRef<
       }
     }
 
-    const toggleOption = (option: string) => {
-      const newSelectedValues = displayedFieldValues?.includes(option)
-        ? displayedFieldValues.filter((value) => {
-            return value !== option
+    // delete selected category from field-values
+    const toggleOption = (targetOption: string) => {
+      const newSelectedValues = fieldValue?.includes(targetOption)
+        ? fieldValue.filter((value) => {
+            return value !== targetOption
           })
-        : [...displayedFieldValues, option]
+        : [...fieldValue, targetOption]
       onValueChange(newSelectedValues)
     }
 
@@ -87,13 +84,13 @@ export const MultiSelect = forwardRef<
     }
 
     const clearExtraOptions = () => {
-      const newSelectedValues = displayedFieldValues?.slice(0, maxCount)
+      const newSelectedValues = fieldValue?.slice(0, maxCount)
 
       onValueChange(newSelectedValues)
     }
 
     const toggleAll = () => {
-      if (displayedFieldValues?.length === options?.length) {
+      if (fieldValue?.length === options?.length) {
         handleClear()
       } else {
         const allValues = options?.map((option) => {
@@ -120,47 +117,45 @@ export const MultiSelect = forwardRef<
               className
             )}
           >
-            {displayedFieldValues?.length > 0 ? (
+            {fieldValue?.length > 0 ? (
               <div className="flex w-full items-center justify-between">
                 <div className="flex flex-wrap items-center">
-                  {displayedFieldValues
-                    ?.slice(0, maxCount)
-                    ?.map((value) => {
-                      const option = options.find((o) => {
-                        return o.value === value
-                      })
+                  {fieldValue?.slice(0, maxCount)?.map((value) => {
+                    const option = options?.find((o) => {
+                      return o.value === value
+                    })
 
-                      const IconComponent = option?.icon
+                    const IconComponent = option?.icon
 
-                      return (
-                        <Badge
-                          key={value}
-                          className={cn(multiSelectVariants({ variant }))}
-                        >
-                          {IconComponent && (
-                            <IconComponent className="mr-2 h-4 w-4" />
-                          )}
+                    return (
+                      <Badge
+                        key={value}
+                        className={cn(multiSelectVariants({ variant }))}
+                      >
+                        {IconComponent && (
+                          <IconComponent className="mr-2 h-4 w-4" />
+                        )}
 
-                          {option?.label}
-                          <XCircle
-                            className="ml-2 h-4 w-4 cursor-pointer"
-                            onClick={(event) => {
-                              event?.stopPropagation()
-                              toggleOption(value)
-                            }}
-                          />
-                        </Badge>
-                      )
-                    })}
+                        {option?.label}
+                        <XCircle
+                          className="ml-2 h-4 w-4 cursor-pointer"
+                          onClick={(event) => {
+                            event?.stopPropagation()
+                            toggleOption(value)
+                          }}
+                        />
+                      </Badge>
+                    )
+                  })}
 
-                  {displayedFieldValues?.length > maxCount && (
+                  {fieldValue?.length > maxCount && (
                     <Badge
                       className={cn(
                         'border-foreground/1 bg-transparent text-foreground hover:bg-transparent',
                         multiSelectVariants({ variant })
                       )}
                     >
-                      {`+ ${displayedFieldValues.length - maxCount} more`}
+                      {`+ ${fieldValue.length - maxCount} more`}
 
                       <XCircle
                         className="ml-2 h-4 w-4 cursor-pointer"
@@ -200,6 +195,7 @@ export const MultiSelect = forwardRef<
             )}
           </Button>
         </PopoverTrigger>
+
         <PopoverContent
           className="w-auto p-0"
           align="start"
@@ -225,7 +221,7 @@ export const MultiSelect = forwardRef<
                   <div
                     className={cn(
                       'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
-                      displayedFieldValues?.length === options?.length
+                      fieldValue?.length === options?.length
                         ? 'bg-primary text-primary-foreground'
                         : 'opacity-50 [&_svg]:invisible'
                     )}
@@ -237,9 +233,7 @@ export const MultiSelect = forwardRef<
                 </CommandItem>
 
                 {options?.map((option) => {
-                  const isSelected = displayedFieldValues?.includes(
-                    option.value
-                  )
+                  const isSelected = fieldValue?.includes(option.value)
 
                   return (
                     <CommandItem
@@ -274,7 +268,7 @@ export const MultiSelect = forwardRef<
 
               <CommandGroup>
                 <div className="flex items-center justify-between">
-                  {displayedFieldValues?.length > 0 && (
+                  {fieldValue?.length > 0 && (
                     <>
                       <CommandItem
                         onSelect={handleClear}

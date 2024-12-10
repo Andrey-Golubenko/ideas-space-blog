@@ -26,7 +26,7 @@ const SinglePostContent = ({
           />
 
           {!!singlePostCategories?.length &&
-            singlePostCategories.map(
+            singlePostCategories?.map(
               ({ categoryName, categorySlug }, index) => {
                 const isUncategorized =
                   categoryName === DEFAULT_CATEGORY.name

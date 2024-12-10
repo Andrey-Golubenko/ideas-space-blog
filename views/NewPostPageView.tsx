@@ -6,28 +6,23 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 
-import useStore from '~/store'
 import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
 import PostManageForm from '~/components/shared/PostManageForm'
 import { newPost } from '~/actions/new-post'
-import { CLOUDINARY_POSTS_IMAGES_FOLDER, PATHS } from '~/utils/constants'
+import { CLOUDINARY_POSTS_IMAGES_FOLDER } from '~/utils/constants'
 import { saveImagesToCloudinary } from '~/services/imagesProcessing'
 import { ManagePostSchema } from '~/schemas'
 import { TManagePostForm } from '~/types'
 
-interface INewPostFormProps {
+interface INewPostPageViewProps {
   isLogged: boolean
 }
 
-const NewPostCard = ({ isLogged }: INewPostFormProps) => {
+const NewPostPageView = ({ isLogged }: INewPostPageViewProps) => {
   const [success, setSuccess] = useState<string | undefined>('')
   const [error, setError] = useState<string | undefined>('')
 
   const [isPending, startTransition] = useTransition()
-
-  const [initCategories] = useStore((state) => {
-    return [state.categories]
-  })
 
   const form = useForm<TManagePostForm>({
     defaultValues: {
@@ -63,17 +58,11 @@ const NewPostCard = ({ isLogged }: INewPostFormProps) => {
         }
       }
 
-      const { files, categories, ...restValues } = values
-
-      const categoriesWithId =
-        initCategories?.filter((category) => {
-          return categories?.includes(category?.name)
-        }) || []
+      const { files, ...restValues } = values
 
       const newPostValues = {
         ...restValues,
-        imageUrls,
-        categories: categoriesWithId
+        imageUrls
       }
 
       newPost(newPostValues)
@@ -88,7 +77,7 @@ const NewPostCard = ({ isLogged }: INewPostFormProps) => {
               duration: 5000
             })
 
-            router.push(`${PATHS.blog}`)
+            router.back()
           }
         })
         .catch(() => {
@@ -116,4 +105,4 @@ const NewPostCard = ({ isLogged }: INewPostFormProps) => {
   )
 }
 
-export default NewPostCard
+export default NewPostPageView

@@ -14,22 +14,16 @@ import NoPostsCard from '~/components/posts/NoPostsCard'
 const WithCategoryData = ({
   children
 }: Readonly<{ children: ReactNode[] }>) => {
-  const [categories, getAllCategories, categoriesCount, isLoading] =
-    useStore((state) => {
-      return [
-        state.categories,
-        state.getAllCategories,
-        state.categoriesCount,
-        state.isLoading
-      ]
-    })
+  const [categories, getAllCategories, isLoading] = useStore((state) => {
+    return [state.categories, state.getAllCategories, state.isLoading]
+  })
 
   useEffect(() => {
     getAllCategories()
   }, [getAllCategories])
 
   const { skeletonItems, restItems, thirdItemInList, noItems } =
-    useListItemsDistribution(categories, categoriesCount)
+    useListItemsDistribution(categories, categories?.length)
 
   return (
     <section className="my-20 w-full @container">

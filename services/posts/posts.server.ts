@@ -18,6 +18,7 @@ export const getSinglePost = async (
           select: {
             category: {
               select: {
+                id: true,
                 name: true,
                 slug: true
               }
@@ -31,6 +32,7 @@ export const getSinglePost = async (
 
     const categories = initPost.categories.map((singleCategory) => {
       return {
+        categoryId: singleCategory?.category?.id,
         categoryName: singleCategory?.category?.name,
         categorySlug: singleCategory?.category?.slug
       }
@@ -70,7 +72,9 @@ export const getPostsByCategory = async (
   }
 }
 
-export const fetchRecentPosts = async () => {
+export const fetchRecentPosts = async (): Promise<{
+  recentPosts: Post[]
+}> => {
   try {
     const posts = await db.post.findMany({
       take: 3,
@@ -78,10 +82,10 @@ export const fetchRecentPosts = async () => {
     })
 
     if (!posts || !posts.length) {
-      return { recentPosts: [], recentPostsCount: null }
+      return { recentPosts: [] }
     }
 
-    return { recentPosts: posts, recentPostsCount: posts.length }
+    return { recentPosts: posts }
   } catch (error) {
     console.error('Error fetching recent posts:', error)
 
@@ -109,7 +113,7 @@ export const fetchCurrentPageOfFilteredPosts = async ({
           ? {
               some: {
                 category: {
-                  slug: { in: catFilters }
+                  id: { in: catFilters }
                 }
               }
             }
@@ -134,8 +138,8 @@ export const fetchCurrentPageOfFilteredPosts = async ({
           select: {
             category: {
               select: {
-                name: true,
-                slug: true
+                id: true,
+                name: true
               }
             }
           }
@@ -150,8 +154,9 @@ export const fetchCurrentPageOfFilteredPosts = async ({
 
       const formatedCategories = categories.map((singleCategory) => {
         return {
-          categoryName: singleCategory?.category?.name,
-          categorySlug: singleCategory?.category?.slug
+          // TODO: check is it neassasery to get id, name, slug
+          categoryId: singleCategory?.category?.id,
+          categoryName: singleCategory?.category?.name
         }
       })
 

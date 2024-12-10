@@ -81,7 +81,7 @@ const DeletePostButton = ({
       <DialogTrigger asChild>
         <Button
           disabled={isPending}
-          className={`h-10 w-[40%] min-w-[90px] rounded-lg bg-red-800 hover:bg-red-800/90 md:w-[35%] lg:w-[25%] ${isPending ? 'grayscale' : ''}`}
+          className={`h-10 w-[40%] min-w-[90px] rounded-lg border border-black/20 bg-red-700/85 hover:bg-red-700/75 md:w-[35%] lg:w-[25%] ${isPending ? 'grayscale' : ''}`}
         >
           Delete post
         </Button>

@@ -5,13 +5,10 @@ import { getCurrentUser } from '~/utils/helpers/server.helpers'
 import { getUserById } from '~/services/user'
 import { fetchUncategorizedCategory } from '~/services/categories'
 import { ManagePostSchema } from '~/schemas'
-import { type Categories } from '@prisma/client'
 import { type TManagePostForm, type TActionReturn } from '~/types'
 
 export const newPost = async (
-  values: Omit<TManagePostForm, 'categories' | 'files'> & {
-    categories: Categories[]
-  }
+  values: Omit<TManagePostForm, 'files'>
 ): TActionReturn => {
   const validatedFields = ManagePostSchema.safeParse(values)
 
@@ -36,12 +33,8 @@ export const newPost = async (
 
   const uncategorizedCategory = await fetchUncategorizedCategory()
 
-  const categoryIds = categories?.map((category) => {
-    return (category as Categories)?.id
-  })
-
-  const postCategoryIds = categoryIds?.length
-    ? categoryIds
+  const postCategoryIds = categories?.length
+    ? (categories as string[])
     : [uncategorizedCategory?.id]
 
   try {
