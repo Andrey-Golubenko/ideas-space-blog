@@ -1,5 +1,7 @@
 'use server'
 
+import { cache } from 'react'
+
 import { db } from '~/libs/db'
 import { type Post } from '@prisma/client'
 import {
@@ -7,70 +9,70 @@ import {
   type TDeserializedPost
 } from '~/types'
 
-export const getSinglePost = async (
-  slug: string
-): Promise<FullPost | null> => {
-  try {
-    const initPost = await db.post.findUnique({
-      where: { id: slug },
-      include: {
-        categories: {
-          select: {
-            category: {
-              select: {
-                id: true,
-                name: true,
-                slug: true
+export const getSinglePost = cache(
+  async (slug: string): Promise<FullPost | null> => {
+    try {
+      const initPost = await db.post.findUnique({
+        where: { id: slug },
+        include: {
+          categories: {
+            select: {
+              category: {
+                select: {
+                  id: true,
+                  name: true,
+                  slug: true
+                }
               }
             }
           }
         }
-      }
-    })
+      })
 
-    if (!initPost) return null
+      if (!initPost) return null
 
-    const categories = initPost.categories.map((singleCategory) => {
-      return {
-        categoryId: singleCategory?.category?.id,
-        categoryName: singleCategory?.category?.name,
-        categorySlug: singleCategory?.category?.slug
-      }
-    })
-
-    const post: FullPost = { ...initPost, categories }
-
-    return post
-  } catch (error) {
-    console.error('Error fetching single post:', error)
-
-    return null
-  }
-}
-
-export const getPostsByCategory = async (
-  categoryId: string
-): Promise<Post[] | null> => {
-  try {
-    const posts = await db.post.findMany({
-      where: {
-        categories: {
-          some: { categoryId }
+      const categories = initPost.categories.map((singleCategory) => {
+        return {
+          categoryId: singleCategory?.category?.id,
+          categoryName: singleCategory?.category?.name,
+          categorySlug: singleCategory?.category?.slug
         }
-      }
-    })
+      })
 
-    if (!posts || !posts.length) {
+      const post: FullPost = { ...initPost, categories }
+
+      return post
+    } catch (error) {
+      console.error('Error fetching single post:', error)
+
       return null
     }
-
-    return posts
-  } catch (error) {
-    console.error('Error fetching posts by category:', error)
-
-    return null
   }
-}
+)
+
+export const getPostsByCategory = cache(
+  async (categoryId: string): Promise<Post[] | null> => {
+    try {
+      const posts = await db.post.findMany({
+        where: {
+          categories: {
+            some: { categoryId }
+          }
+        }
+      })
+
+      if (!posts || !posts.length) {
+        return null
+      }
+
+      return posts
+    } catch (error) {
+      console.error('Error fetching posts by category:', error)
+
+      return null
+    }
+  }
+)
 
 export const fetchRecentPosts = async (): Promise<{
   recentPosts: Post[]
@@ -154,7 +156,6 @@ export const fetchCurrentPageOfFilteredPosts = async ({
 
       const formatedCategories = categories.map((singleCategory) => {
         return {
-          // TODO: check is it neassasery to get id, name, slug
           categoryId: singleCategory?.category?.id,
           categoryName: singleCategory?.category?.name
         }

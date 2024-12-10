@@ -36,7 +36,12 @@ export const fetchPostsBySearch = async (
 ): Promise<PostsData> => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/posts?q=${search}`
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/posts?q=${search}`,
+      {
+        next: {
+          revalidate: 600
+        }
+      }
     )
 
     if (!response.ok)
@@ -65,7 +70,12 @@ export const fetchPostsByUserId = async (
 ): Promise<PostsData> => {
   try {
     const respons = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/profile?q=${userId}`
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/profile?q=${userId}`,
+      {
+        next: {
+          revalidate: 600
+        }
+      }
     )
 
     if (!respons.ok) {
@@ -95,7 +105,12 @@ export const fetchSinglePostById = async (
 ): Promise<FullPost> => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/single-post?q=${postId}`
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/single-post?q=${postId}`,
+      {
+        next: {
+          revalidate: 600
+        }
+      }
     )
 
     if (!response?.ok) {
