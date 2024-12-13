@@ -29,9 +29,9 @@ interface IUseStore {
   posts: Post[]
   postsCount: number | null
   singlePost: FullPost | {}
-  recentPosts: Post[]
+  recentPosts: Post[] | null | []
 
-  categories: Categories[]
+  categories: Categories[] | null | []
   editableCategory: Categories | {}
 
   usersVisits: IUserVisit[] | null
@@ -71,9 +71,9 @@ const useStore = createWithEqualityFn<
           posts: [],
           postsCount: null,
           singlePost: {},
-          recentPosts: [],
+          recentPosts: null,
 
-          categories: [],
+          categories: null,
           editableCategory: {},
 
           usersVisits: [],

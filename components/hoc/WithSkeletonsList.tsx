@@ -1,23 +1,30 @@
 import { cloneElement, type ReactElement } from 'react'
 
-import { type TSkeletonItems } from '~/types'
+import { type TItemType, type TSkeletonItems } from '~/types'
 
 interface IWithSkeletonsListProps {
+  children: ReactElement
   skeletonItems?: TSkeletonItems
   isLoading?: boolean
-  children: ReactElement
+  itemType?: TItemType
 }
 
 const WithSkeletonsList = ({
   children,
   skeletonItems,
-  isLoading
+  isLoading,
+  itemType
 }: IWithSkeletonsListProps) => {
-  const { firstItem, secondItem, thirdItem } =
+  const { firstItem, secondItem, thirdItem, fourthItem } =
     skeletonItems as TSkeletonItems
 
+  const isPost = itemType?.isPost
+  const isCategory = itemType?.isCategory
+
   return (
-    <div className="mb-5 grid w-full grid-cols-1 gap-5 @md:grid-cols-2 @3xl:grid-cols-3">
+    <div
+      className={`mb-5 grid w-full grid-cols-1 gap-5 @md:grid-cols-2 @3xl:grid-cols-3 ${isPost ? '' : '@4xl:grid-cols-4'}`}
+    >
       {cloneElement(children as ReactElement, {
         item: firstItem,
         isLoading
@@ -34,6 +41,13 @@ const WithSkeletonsList = ({
         ? null
         : cloneElement(children as ReactElement, {
             item: thirdItem,
+            isLoading
+          })}
+
+      {(!isCategory && isPost) || (firstItem && !fourthItem)
+        ? null
+        : cloneElement(children as ReactElement, {
+            item: fourthItem,
             isLoading
           })}
     </div>

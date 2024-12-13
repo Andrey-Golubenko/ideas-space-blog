@@ -57,12 +57,15 @@ export type TManageCategoryForm = z.infer<typeof SingleCategorySchema>
 
 export type TManageUserForm = z.infer<typeof SettingsSchema>
 
-export type TListItem = Post | Categories
+export type TListItem = Post | Categories | null
+
+export type TItemType = { isPost?: boolean; isCategory?: boolean }
 
 export type TSkeletonItems = {
   firstItem?: TListItem
   secondItem?: TListItem
   thirdItem?: TListItem
+  fourthItem?: TListItem
 }
 
 export type OnDropType =

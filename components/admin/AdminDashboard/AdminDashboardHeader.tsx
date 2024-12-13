@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react'
+import { type DateRange } from 'react-day-picker'
 
 import useStore from '~/store'
 import DateRangePicker from '~/components/shared/DateRangePicker'
 import { Button } from '~/components/ui/button'
-import { DateRange } from 'react-day-picker'
 
 const AdminDashboardHeader = () => {
   const [date, setDate] = useState<DateRange | undefined>({
@@ -38,7 +38,7 @@ const AdminDashboardHeader = () => {
       <Button
         variant="outline"
         size="sm"
-        className="ml-auto w-full bg-blue-100 hover:bg-blue-100/70 sm:h-9 sm:px-4 sm:py-2 lg:w-auto"
+        className="ml-auto w-full border border-black/20 bg-blue-200 hover:bg-blue-200/70 sm:h-9 sm:px-4 sm:py-2 lg:w-auto"
         onClick={handleClick}
       >
         Download statistics

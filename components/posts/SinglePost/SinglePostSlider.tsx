@@ -18,12 +18,12 @@ interface ISinglePostAliderProps {
 
 const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
-  const isMobil = useIsMobile()
+  const { isMobile } = useIsMobile()
 
   const imagesCount = imageUrls?.length ?? 0
 
   /** Count of the thumbnails to view for mobil and for desktop */
-  const multiThumbsPerView = isMobil ? 2.5 : 3
+  const multiThumbsPerView = isMobile ? 2.5 : 3
 
   const thumbsPerView =
     imagesCount > multiThumbsPerView ? multiThumbsPerView : imagesCount
@@ -39,7 +39,7 @@ const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
   const isImageInLoop = imagesCount - 1 >= 1
 
   /** The height of the slider container with thumbnails in pixels */
-  const thumbsHeight = isMobil ? 95 : 130
+  const thumbsHeight = isMobile ? 95 : 130
 
   return (
     <div className="xs:w-full lg:w-[80%] lg:pt-10">
@@ -81,7 +81,7 @@ const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
           '--swiper-pagination-color': '#fff'
         }}
         onSwiper={setThumbsSwiper as (swiper: unknown) => void}
-        navigation={!isMobil}
+        navigation={!isMobile}
         loop={isThumsInLoop}
         spaceBetween={10}
         slidesPerView={thumbsPerView}

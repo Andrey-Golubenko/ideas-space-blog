@@ -3,13 +3,13 @@
 import { Card, CardContent, CardHeader } from '../ui/card'
 import CardHeaderContent from '../shared/CardWrapper/CardHeaderContent'
 
-interface INoPostsCardProps {
+interface INoItemsCardProps {
   itemName: string
 }
 
-const NoPostsCard = ({ itemName }: INoPostsCardProps) => {
+const NoItemsCard = ({ itemName }: INoItemsCardProps) => {
   return (
-    <Card className="min-h-96">
+    <Card className="flex min-h-96 flex-col items-center justify-center">
       <CardHeader>
         <CardHeaderContent
           title="🔭  Search results"
@@ -25,4 +25,4 @@ const NoPostsCard = ({ itemName }: INoPostsCardProps) => {
   )
 }
 
-export default NoPostsCard
+export default NoItemsCard

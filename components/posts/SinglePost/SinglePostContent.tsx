@@ -16,52 +16,56 @@ const SinglePostContent = ({
   singlePostContent
 }: ISinglePostContentProps) => {
   return (
-    <CardContent className="w-full px-24 pb-12">
-      <div className="mb-5">
-        <p className="mb-2 flex items-center">
-          <FileTextIcon
-            height="17px"
-            width="17px"
-            className="mr-2"
-          />
+    <CardContent className="w-full px-5 pb-12 lg:px-24">
+      <div className="mb-5 pl-2">
+        <div className="mb-2 flex items-center">
+          <span className="mr-2 h-[17px] w-[17px]">
+            <FileTextIcon
+              height="17px"
+              width="17px"
+            />
+          </span>
 
-          {!!singlePostCategories?.length &&
-            singlePostCategories?.map(
-              ({ categoryName, categorySlug }, index) => {
-                const isUncategorized =
-                  categoryName === DEFAULT_CATEGORY.name
+          <p className="flex flex-wrap items-center">
+            {!!singlePostCategories?.length &&
+              singlePostCategories?.map(
+                ({ categoryName, categorySlug }, index) => {
+                  const isUncategorized =
+                    categoryName === DEFAULT_CATEGORY.name
 
-                return isUncategorized ? (
-                  <span
-                    key={categorySlug}
-                    className="text-yellow-600/90"
-                  >
-                    {categoryName}
-                  </span>
-                ) : (
-                  <Link
-                    key={categorySlug}
-                    href={`${PATHS.categories}/${categorySlug}`}
-                  >
-                    <span className="text-yellow-600/90 hover:text-yellow-600/70">
+                  return isUncategorized ? (
+                    <span
+                      key={categorySlug}
+                      className="text-sm text-yellow-600/90"
+                    >
                       {categoryName}
-
-                      {!(singlePostCategories.length - 1 === index) && (
-                        <span className="text-black">,&nbsp;</span>
-                      )}
                     </span>
-                  </Link>
-                )
-              }
-            )}
-        </p>
+                  ) : (
+                    <Link
+                      key={categorySlug}
+                      href={`${PATHS.categories}/${categorySlug}`}
+                    >
+                      <span className="text-base text-yellow-600/90 hover:text-yellow-600/70">
+                        {categoryName}
+
+                        {!(singlePostCategories.length - 1 === index) && (
+                          <span className="text-black">,&nbsp;</span>
+                        )}
+                      </span>
+                    </Link>
+                  )
+                }
+              )}
+          </p>
+        </div>
 
         <p className="flex items-center">
-          <CalendarIcon
-            height="17px"
-            width="17px"
-            className="mr-2"
-          />
+          <span className="mr-2 h-[17px] w-[17px]">
+            <CalendarIcon
+              height="17px"
+              width="17px"
+            />
+          </span>
 
           <time
             className="text-sm italic tracking-wider text-slate-500"

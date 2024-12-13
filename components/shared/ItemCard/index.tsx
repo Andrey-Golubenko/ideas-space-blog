@@ -30,7 +30,10 @@ const ItemCard = ({ item }: IItemCardProps) => {
         itemType={{ isPost, isCategory }}
       />
 
-      <ItemCardContent itemContent={itemContent} />
+      <ItemCardContent
+        itemContent={itemContent}
+        itemType={{ isPost, isCategory }}
+      />
 
       <ItemCardFooter
         itemSlug={itemSlug}

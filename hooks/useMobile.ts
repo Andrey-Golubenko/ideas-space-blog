@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react'
 
-export const useIsMobile = (): boolean => {
+export const useIsMobile = (): {
+  isMobile: boolean
+  isSmallScreen: boolean
+} => {
   const [isMobile, setIsMobile] = useState<boolean>(false)
+  const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false)
 
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth
-      if (width < 860) {
-        setIsMobile(true)
-      } else {
-        setIsMobile(false)
-      }
+      setIsMobile(width < 860)
+      setIsSmallScreen(width < 854)
     }
 
     // Checking the screen width at the first render
@@ -21,9 +22,9 @@ export const useIsMobile = (): boolean => {
 
     // Removing the listener when unmounting the component
     return () => {
-      return window.removeEventListener('resize', handleResize)
+      window.removeEventListener('resize', handleResize)
     }
   }, [])
 
-  return !!isMobile
+  return { isMobile, isSmallScreen }
 }

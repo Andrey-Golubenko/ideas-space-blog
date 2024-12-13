@@ -1,7 +1,5 @@
 'use server'
 
-import { cache } from 'react'
-
 import { db } from '~/libs/db'
 import { type User } from '@prisma/client'
 import {
@@ -63,67 +61,65 @@ export const fetchCurrentPageOfFilteredUsers = async ({
   }
 }
 
-export const getUserByEmail = cache(
-  async (email: string): Promise<User | null> => {
-    if (!email || typeof email !== 'string') {
-      console.error('Invalid Email provided')
+export const getUserByEmail = async (
+  email: string
+): Promise<User | null> => {
+  if (!email || typeof email !== 'string') {
+    console.error('Invalid Email provided')
 
-      return null
-    }
-
-    try {
-      const user = await db.user.findUnique({ where: { email } })
-
-      if (!user) {
-        console.warn(`User with Email ${email} not found`)
-
-        return null
-      }
-
-      return user
-    } catch (error) {
-      console.error('Failed to fetch user:', error)
-
-      return null
-    }
+    return null
   }
-)
 
-export const getUserById = cache(
-  async (id: string): Promise<UserDTO | null> => {
-    if (!id || typeof id !== 'string') {
-      console.error('Invalid ID provided')
+  try {
+    const user = await db.user.findUnique({ where: { email } })
+
+    if (!user) {
+      console.warn(`User with Email ${email} not found`)
 
       return null
     }
 
-    try {
-      const initialUser = await db.user.findUnique({
-        where: { id },
-        include: {
-          accounts: {
-            select: {
-              id: true
-            }
+    return user
+  } catch (error) {
+    console.error('Failed to fetch user:', error)
+
+    return null
+  }
+}
+
+export const getUserById = async (id: string): Promise<UserDTO | null> => {
+  if (!id || typeof id !== 'string') {
+    console.error('Invalid ID provided')
+
+    return null
+  }
+
+  try {
+    const initialUser = await db.user.findUnique({
+      where: { id },
+      include: {
+        accounts: {
+          select: {
+            id: true
           }
         }
-      })
-
-      if (!initialUser) {
-        console.warn(`User with ID ${id} not found`)
-
-        return null
       }
+    })
 
-      const { accounts, ...singleUser } = initialUser
-
-      const serializedUser = { ...singleUser, isOAuth: !!accounts[0]?.id }
-
-      return serializedUser
-    } catch (error) {
-      console.error('Failed to fetch user:', error)
+    if (!initialUser) {
+      console.warn(`User with ID ${id} not found`)
 
       return null
     }
+
+    const { accounts, ...singleUser } = initialUser
+
+    const serializedUser = { ...singleUser, isOAuth: !!accounts[0]?.id }
+
+    return serializedUser
+  } catch (error) {
+    console.error('Failed to fetch user:', error)
+
+    return null
   }
-)
+}

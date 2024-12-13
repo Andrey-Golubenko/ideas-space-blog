@@ -4,12 +4,12 @@ import { useEffect } from 'react'
 
 import useStore from '~/store'
 import { Card } from '~/components/ui/card'
+import { Skeleton } from '~/components/ui/skeleton'
 import SinglePostHeader from '~/components/posts/SinglePost/SinglePostHeader'
 import SinglePostContent from '~/components/posts/SinglePost/SinglePostContent'
 import SinglePostFooter from '~/components/posts/SinglePost/SinglePostFooter'
 import SinglePostSlider from '~/components/posts/SinglePost/SinglePostSlider'
 import { toUpperCaseFirstChar } from '~/utils/helpers'
-import { Skeleton } from '~/components/ui/skeleton'
 
 interface ISinglePostCardProps {
   postId: string
@@ -64,7 +64,7 @@ const SinglePostCard = ({
   const singlePostContent = (singlePost as FullPost)?.content ?? ''
 
   return (
-    <Card className="my-12 flex min-h-[70svh] w-full flex-col items-center justify-between rounded-md border-none shadow-md">
+    <Card className="flex min-h-[70svh] w-full flex-col items-center justify-between rounded-md border-none shadow-md md:my-12">
       {!hasContent ? (
         <>
           <Skeleton className="mx-auto !mb-8 h-[500px] w-full" />

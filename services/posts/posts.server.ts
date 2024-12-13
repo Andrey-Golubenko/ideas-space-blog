@@ -141,7 +141,8 @@ export const fetchCurrentPageOfFilteredPosts = async ({
             category: {
               select: {
                 id: true,
-                name: true
+                name: true,
+                slug: true
               }
             }
           }
@@ -157,7 +158,8 @@ export const fetchCurrentPageOfFilteredPosts = async ({
       const formatedCategories = categories.map((singleCategory) => {
         return {
           categoryId: singleCategory?.category?.id,
-          categoryName: singleCategory?.category?.name
+          categoryName: singleCategory?.category?.name,
+          categorySlug: singleCategory?.category?.slug
         }
       })
 

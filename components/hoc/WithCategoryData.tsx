@@ -9,7 +9,7 @@ import {
 
 import useStore from '~/store'
 import { useListItemsDistribution } from '~/hooks/useListItemsDistribution'
-import NoPostsCard from '~/components/posts/NoPostsCard'
+import NoItemsCard from '~/components/posts/NoItemsCard'
 
 const WithCategoryData = ({
   children
@@ -19,28 +19,33 @@ const WithCategoryData = ({
   })
 
   useEffect(() => {
-    getAllCategories()
+    if (!categories) getAllCategories()
   }, [getAllCategories])
 
-  const { skeletonItems, restItems, thirdItemInList, noItems } =
+  const { skeletonItems, restItems, fourthItemInList, noItems } =
     useListItemsDistribution(categories, categories?.length)
 
+  const itemType = { isPost: false, isCategory: true }
+
   return (
-    <section className="my-20 w-full @container">
+    <section className="w-full @container md:my-20">
       {!noItems ? (
         // Passing skeletonItems and isLoading as a props in children
 
         cloneElement(children[0] as ReactElement, {
           skeletonItems,
-          isLoading
+          isLoading,
+          itemType
         })
       ) : (
-        <NoPostsCard itemName="categories" />
+        <NoItemsCard itemName="categories" />
       )}
 
-      {!isLoading && restItems?.length > 0 && (
-        <div className="mb-5 grid w-full grid-cols-1 gap-5 @md:grid-cols-2 @3xl:grid-cols-3">
-          {[...restItems, thirdItemInList]?.map((item) => {
+      {!isLoading && (restItems?.length > 0 || fourthItemInList) && (
+        <div
+          className={`mb-5 grid w-full grid-cols-1 gap-5 @md:grid-cols-2 @3xl:grid-cols-3 ${itemType?.isPost ? '' : '@4xl:grid-cols-4'}`}
+        >
+          {[...restItems, fourthItemInList]?.map((item) => {
             if (item) {
               // Passing the key and item as a props in children
 

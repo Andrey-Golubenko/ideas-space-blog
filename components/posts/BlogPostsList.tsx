@@ -6,7 +6,7 @@ import useStore from '~/store'
 import WithPostData from '~/components/hoc/WithPostData'
 import WithSkeletonsList from '~/components/hoc/WithSkeletonsList'
 import ItemCard from '~/components/shared/ItemCard'
-import SkeletonItemCard from '~/components/shared/ItemCard/SkeletonItemCard'
+import SkeletonPostCard from '~/components/shared/ItemCard/SkeletonPostCard'
 
 const BlogPostsList = () => {
   const [posts, postsCount, isLoading, getAllPosts] = useStore((state) => {
@@ -29,7 +29,7 @@ const BlogPostsList = () => {
       isLoading={isLoading}
     >
       <WithSkeletonsList>
-        <SkeletonItemCard />
+        <SkeletonPostCard />
       </WithSkeletonsList>
 
       <ItemCard />

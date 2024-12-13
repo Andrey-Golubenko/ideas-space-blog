@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import WithPostData from '~/components/hoc/WithPostData'
 import WithSkeletonsList from '~/components/hoc/WithSkeletonsList'
 import ItemCard from '~/components/shared/ItemCard'
-import SkeletonItemCard from '~/components/shared/ItemCard/SkeletonItemCard'
+import SkeletonPostCard from '~/components/shared/ItemCard/SkeletonPostCard'
 import { type Post } from '@prisma/client'
 
 interface ISingleCategoryCardProps {
@@ -31,7 +31,7 @@ const SingleCategoryCard = ({ posts }: ISingleCategoryCardProps) => {
         isLoading={isLoading}
       >
         <WithSkeletonsList>
-          <SkeletonItemCard />
+          <SkeletonPostCard />
         </WithSkeletonsList>
 
         <ItemCard />

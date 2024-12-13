@@ -1,5 +1,7 @@
 'use client'
 
+import { useItemProps } from '~/hooks/useItemProps'
+import { useItemType } from '~/hooks/useItemType'
 import {
   Card,
   CardHeader,
@@ -10,8 +12,6 @@ import { Skeleton } from '~/components/ui/skeleton'
 import ItemCardHeader from '~/components/shared/ItemCard/ItemCardHeader'
 import ItemCardContent from '~/components/shared/ItemCard/ItemCardContent'
 import ItemCardFooter from '~/components/shared/ItemCard/ItemCardFooter'
-import { useItemProps } from '~/hooks/useItemProps'
-import { useItemType } from '~/hooks/useItemType'
 import { TListItem } from '~/types'
 
 interface IPostCardSkeletonProps {
@@ -19,7 +19,7 @@ interface IPostCardSkeletonProps {
   isLoading?: boolean
 }
 
-const SkeletonItemCard = ({ item, isLoading }: IPostCardSkeletonProps) => {
+const SkeletonPostCard = ({ item, isLoading }: IPostCardSkeletonProps) => {
   const hasContent = item && !isLoading
 
   const { itemContent, itemSlug } = useItemProps(item)
@@ -46,7 +46,10 @@ const SkeletonItemCard = ({ item, isLoading }: IPostCardSkeletonProps) => {
       )}
 
       {hasContent ? (
-        <ItemCardContent itemContent={itemContent} />
+        <ItemCardContent
+          itemContent={itemContent}
+          itemType={{ isPost, isCategory }}
+        />
       ) : (
         <CardContent className="space-y-2 pb-4 text-justify">
           <Skeleton className="h-3.5 w-full" />
@@ -69,4 +72,4 @@ const SkeletonItemCard = ({ item, isLoading }: IPostCardSkeletonProps) => {
   )
 }
 
-export default SkeletonItemCard
+export default SkeletonPostCard

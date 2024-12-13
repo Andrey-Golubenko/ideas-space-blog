@@ -1,6 +1,11 @@
 'use client'
 
-import { useEffect, type Dispatch, type SetStateAction } from 'react'
+import {
+  useCallback,
+  useEffect,
+  type Dispatch,
+  type SetStateAction
+} from 'react'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import { Button } from '~/components/ui/button'
@@ -17,20 +22,28 @@ const MobileNavMenuButton = ({
 }: IMobileNavMenuButtonProps) => {
   const [autoAnimateRef] = useAutoAnimate()
 
-  const handleDocumentClick = (event: MouseEvent) => {
-    const target = event.target as HTMLElement
-    const navMenu = document.getElementById('nav-menu')
-    const navMenuButton = document.getElementById('nav-menu-button')
+  const handleDocumentClick = useCallback(
+    (event: MouseEvent) => {
+      const target = event.target as HTMLElement
+      const navMenu = document.getElementById('nav-menu')
+      const navMenuButton = document.getElementById('nav-menu-button')
 
-    if (
-      navMenu &&
-      !navMenu.contains(target) &&
-      navMenuButton &&
-      !navMenuButton.contains(target)
-    ) {
-      setIsOpen(false)
-    }
-  }
+      if (navMenu && navMenu.contains(target) && target.tagName === 'A') {
+        setIsOpen(false)
+        return
+      }
+
+      if (
+        navMenu &&
+        !navMenu.contains(target) &&
+        navMenuButton &&
+        !navMenuButton.contains(target)
+      ) {
+        setIsOpen(false)
+      }
+    },
+    [setIsOpen]
+  )
 
   useEffect(() => {
     if (isOpen) {
@@ -42,7 +55,7 @@ const MobileNavMenuButton = ({
     return () => {
       document.removeEventListener('click', handleDocumentClick)
     }
-  }, [isOpen])
+  }, [isOpen, handleDocumentClick])
 
   const handleClick = () => {
     setIsOpen((prev) => {

@@ -3,13 +3,13 @@
 import WithCategoryData from '~/components/hoc/WithCategoryData'
 import WithSkeletonsList from '~/components/hoc/WithSkeletonsList'
 import ItemCard from '~/components/shared/ItemCard'
-import SkeletonItemCard from '~/components/shared/ItemCard/SkeletonItemCard'
+import SkeletonCatCard from '~/components/shared/ItemCard/SkeletonCatCard'
 
 const CategoriesList = () => {
   return (
     <WithCategoryData>
       <WithSkeletonsList>
-        <SkeletonItemCard />
+        <SkeletonCatCard />
       </WithSkeletonsList>
 
       <ItemCard />

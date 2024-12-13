@@ -19,7 +19,7 @@ interface IPostMetaProps {
 }
 
 const PostMeta = ({ authorId, itemCreatedAt }: IPostMetaProps) => {
-  const [postAuthor, setPostAuthor] = useState<User | null>(null)
+  const [postAuthor, setPostAuthor] = useState<UserDTO | null>(null)
 
   useEffect(() => {
     if (authorId) {

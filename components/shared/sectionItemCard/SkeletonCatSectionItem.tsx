@@ -1,14 +1,11 @@
 'use client'
 
-import Link from 'next/link'
-
-import { CardHeader } from '~/components/ui/card'
-import LoadableImage from '~/components/shared/LoadableImage'
-import { Skeleton } from '~/components/ui/skeleton'
-import { useItemProps } from '~/hooks/useItemProps'
-import { fontPoppins } from '~/utils/constants/fonts'
-import { PATHS } from '~/utils/constants'
 import { type Categories } from '@prisma/client'
+
+import { useItemProps } from '~/hooks/useItemProps'
+import { Skeleton } from '~/components/ui/skeleton'
+import SectionItemCardImage from '~/components/shared/SectionItemCard/SectionItemCardImage'
+import SectionItemCardHeader from '~/components/shared/SectionItemCard/SectionItemCardHeader'
 
 interface ISkeletonCatSectionItemProps {
   item?: Categories
@@ -26,34 +23,22 @@ const SkeletonCatSectionItem = ({
   return (
     <div className="flex min-h-max flex-col items-center justify-center !border-0 !bg-transparent shadow-none">
       {hasContent ? (
-        <Link
-          href={`${PATHS.categories}/${itemSlug}`}
-          className="w-[200px] overflow-hidden rounded-full"
-        >
-          <LoadableImage
-            src={itemImage}
-            alt={`${itemTitle} image`}
-            containerHeight={200}
-            priority
-            imageClassNames="object-cover rounded-full"
-            containerClassNames="duration-700 hover:scale-110 rounded-full"
-          />
-        </Link>
+        <SectionItemCardImage
+          itemSlug={itemSlug}
+          itemTitle={itemTitle}
+          itemImage={itemImage}
+          itemType={{ isCategory: true, isPost: false }}
+        />
       ) : (
         <Skeleton className="mb-8 h-[200px] w-[200px] overflow-hidden rounded-full" />
       )}
 
       {hasContent ? (
-        <CardHeader className="w-full pb-8">
-          <Link href={`${PATHS.categories}/${itemSlug}`}>
-            <h2
-              className={`line-clamp-2 w-full text-center text-2xl hover:text-black/60  
-              ${fontPoppins.className}`}
-            >
-              {itemTitle}
-            </h2>
-          </Link>
-        </CardHeader>
+        <SectionItemCardHeader
+          itemSlug={itemSlug}
+          itemTitle={itemTitle}
+          itemType={{ isCategory: true, isPost: false }}
+        />
       ) : (
         <Skeleton className="mb-6 h-8 w-5/6" />
       )}

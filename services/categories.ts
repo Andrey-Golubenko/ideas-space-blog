@@ -25,6 +25,10 @@ export const fetchAllCategories = cache(
         }
       })
 
+      if (!categories || !categories?.length) {
+        return { categories: [] }
+      }
+
       return { categories }
     } catch (error) {
       throw new Error('Failed to get categories!')
@@ -61,13 +65,13 @@ export const fetchSingleCategoryById = cache(
     description: string | null
   } | null> => {
     try {
-      const category = db.categories.findUnique({
+      const category = await db.categories.findUnique({
         where: {
           id: categoryId
         }
       })
 
-      return await category
+      return category
     } catch (error) {
       throw new Error('Failed to fetch category!')
     }
@@ -85,13 +89,13 @@ export const fetchSingleCategoryBySlug = cache(
     description: string | null
   } | null> => {
     try {
-      const category = db.categories.findUnique({
+      const category = await db.categories.findUnique({
         where: {
           slug: categorySlug
         }
       })
 
-      return await category
+      return category
     } catch (error) {
       throw new Error('Failed to get category!')
     }

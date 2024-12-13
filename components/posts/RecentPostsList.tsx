@@ -16,8 +16,8 @@ const RecentPostsList = () => {
   })
 
   useEffect(() => {
-    getRecentPosts()
-  }, [])
+    if (!recentPosts) getRecentPosts()
+  }, [getRecentPosts])
 
   return (
     <Card className="bg-slate-100 px-2 sm:px-10">
@@ -30,7 +30,7 @@ const RecentPostsList = () => {
       <CardContent className="px-0 pb-0 sm:px-6">
         <WithPostData
           posts={recentPosts}
-          postsCount={recentPosts?.length}
+          postsCount={recentPosts ? recentPosts?.length : null}
           isLoading={isLoading}
         >
           <WithSkeletonsList>

@@ -8,7 +8,7 @@ import PostsHeaderCard from '~/components/profileInfo/PostsHeaderCard'
 import WithPostData from '~/components/hoc/WithPostData'
 import WithSkeletonsList from '~/components/hoc/WithSkeletonsList'
 import ItemCard from '~/components/shared/ItemCard'
-import SkeletonItemCard from '~/components/shared/ItemCard/SkeletonItemCard'
+import SkeletonPostCard from '~/components/shared/ItemCard/SkeletonPostCard'
 
 interface IProfilePostsListProps {
   currentUser?: UserDTO & User
@@ -44,7 +44,7 @@ const ProfilePostsList = ({ currentUser }: IProfilePostsListProps) => {
         isLoading={isLoading}
       >
         <WithSkeletonsList>
-          <SkeletonItemCard />
+          <SkeletonPostCard />
         </WithSkeletonsList>
 
         <ItemCard />
