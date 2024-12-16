@@ -1,5 +1,7 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
+
 import { db } from '~/libs/db'
 import { UserRole } from '@prisma/client'
 import {
@@ -10,7 +12,7 @@ import {
 import { getUserById } from '~/services/user'
 import { updatePostsCategories } from '~/actions/update-posts-categories'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
-import { DEFAULT_CATEGORY } from '~/utils/constants'
+import { DEFAULT_CATEGORY, PATHS } from '~/utils/constants'
 import { type TActionReturn } from '~/types'
 
 export const deleteCategory = async (
@@ -70,6 +72,9 @@ export const deleteCategory = async (
     await db.categories.delete({
       where: { id: categoryId }
     })
+
+    revalidatePath(PATHS.categories)
+    revalidatePath(PATHS.adminCategories)
 
     return { success: 'The category was successfully deleted!' }
   } catch (error) {

@@ -1,10 +1,13 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
+
 import { db } from '~/libs/db'
 import { UserRole } from '@prisma/client'
 import { getSinglePost } from '~/services/posts/posts.server'
 import { getUserById } from '~/services/user'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
+import { PATHS } from '~/utils/constants'
 import { type TActionReturn } from '~/types'
 
 export const deletePost = async (postId: string): TActionReturn => {
@@ -35,6 +38,9 @@ export const deletePost = async (postId: string): TActionReturn => {
     await db.post.delete({
       where: { id: postId }
     })
+
+    revalidatePath(PATHS.blog)
+    revalidatePath(PATHS.adminPosts)
 
     return { success: 'The post was successfully deleted!' }
   } catch {

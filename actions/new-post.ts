@@ -1,10 +1,13 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
+
 import { db } from '~/libs/db'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
 import { getUserById } from '~/services/user'
 import { fetchUncategorizedCategory } from '~/services/categories'
 import { ManagePostSchema } from '~/schemas'
+import { PATHS } from '~/utils/constants'
 import { type TManagePostForm, type TActionReturn } from '~/types'
 
 export const newPost = async (
@@ -59,6 +62,9 @@ export const newPost = async (
         categories: true
       }
     })
+
+    revalidatePath(PATHS.blog)
+    revalidatePath(PATHS.adminPosts)
 
     return { success: 'New post has been successfully created!' }
   } catch {

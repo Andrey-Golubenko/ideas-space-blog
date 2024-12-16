@@ -1,9 +1,12 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
+
 import { db } from '~/libs/db'
 import { UserRole } from '@prisma/client'
 import { getUserById } from '~/services/user'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
+import { PATHS } from '~/utils/constants'
 import { type TActionReturn } from '~/types'
 
 export const deleteUser = async (userId: string): TActionReturn => {
@@ -38,6 +41,8 @@ export const deleteUser = async (userId: string): TActionReturn => {
         id: userId
       }
     })
+
+    revalidatePath(PATHS.adminUsers)
 
     return { success: 'The user was successfully deleted!' }
   } catch {

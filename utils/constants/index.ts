@@ -19,10 +19,11 @@ export const PATHS = {
   adminNewPost: '/admin/admin-posts/new-post',
   adminEditPost: '/admin/admin-posts/edit-post-',
   adminCategories: '/admin/admin-categories',
+  adminEditCategory: '/admin/admin-categories/edit-category',
+
   adminSettings: '/admin/admin-settings',
 
   newCategory: '/admin/admin-categories/new-category',
-  editCategory: '/admin/admin-categories/edit-category',
 
   signIn: '/auth',
   logIn: '/auth/login',

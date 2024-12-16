@@ -9,7 +9,10 @@ import {
   fetchPostsByUserId,
   fetchSinglePostById
 } from '~/services/posts/posts.client'
-import { fetchAllCategories } from '~/services/categories'
+import {
+  fetchAllCategories,
+  fetchCurrentPageOfFilteredCategories
+} from '~/services/categories'
 import {
   fetchCurrentPageOfFilteredPosts,
   fetchRecentPosts
@@ -22,7 +25,8 @@ import {
   type IUserVisit,
   type TDeserializedUser,
   type IFetchPostsFunctionProps,
-  type IFetchUsersFunctionProps
+  type IFetchUsersFunctionProps,
+  type IFetchDataFunctionProps
 } from '~/types'
 
 interface IUseStore {
@@ -39,6 +43,7 @@ interface IUseStore {
 
   dataTablePosts: TDeserializedPost[]
   dataTableUsers: TDeserializedUser[] | []
+  dataTableCategories: Categories[]
 
   isLoading: boolean
 
@@ -55,6 +60,7 @@ interface IUseStore {
 
   getDataTableUsers: (props: IFetchUsersFunctionProps) => void
   getDataTablePosts: (props: IFetchPostsFunctionProps) => void
+  getDataTableCategories: (props: IFetchDataFunctionProps) => void
 
   getUsersVisits: (startDate?: Date, endDate?: Date) => void
 }
@@ -81,6 +87,7 @@ const useStore = createWithEqualityFn<
 
           dataTableUsers: [],
           dataTablePosts: [],
+          dataTableCategories: [],
 
           isLoading: false,
 
@@ -262,6 +269,37 @@ const useStore = createWithEqualityFn<
               if (posts) {
                 set((state) => {
                   return { ...state, dataTablePosts: posts }
+                })
+              }
+            } catch (error) {
+              console.error('Error fetching posts:', error)
+            } finally {
+              set((state) => {
+                return { ...state, isLoading: false }
+              })
+            }
+          },
+
+          getDataTableCategories: async ({
+            limit,
+            offset,
+            searchQuery
+          }: IFetchDataFunctionProps) => {
+            set((state) => {
+              return { ...state, isLoading: true }
+            })
+
+            try {
+              const categories =
+                await fetchCurrentPageOfFilteredCategories({
+                  limit,
+                  offset,
+                  searchQuery
+                })
+
+              if (categories) {
+                set((state) => {
+                  return { ...state, dataTableCategories: categories }
                 })
               }
             } catch (error) {

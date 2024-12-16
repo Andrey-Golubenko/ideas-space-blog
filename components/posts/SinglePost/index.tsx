@@ -88,11 +88,11 @@ const SinglePostCard = ({
 
       {!hasContent ? (
         <>
-          <div className="mb-5 flex w-full flex-col items-start justify-start px-20">
+          <div className="mb-5 flex w-full flex-col items-start justify-start px-5 lg:px-20">
             <Skeleton className="mb-4 h-5 w-1/2" />
             <Skeleton className="h-5 w-1/2" />
           </div>
-          <div className="mb-6 w-full p-6 px-20 pt-0">
+          <div className="mb-6 w-full p-6 px-5 pt-0 lg:px-20">
             <Skeleton className="h-[400px] w-full" />
           </div>
         </>
@@ -106,8 +106,8 @@ const SinglePostCard = ({
 
       {!hasContent ? (
         <div className="flex w-full items-center justify-between p-6 pb-16 pt-0 sm:w-2/3">
-          <Skeleton className="h-10 w-44" />
-          <Skeleton className="h-10 w-44" />
+          <Skeleton className="h-10 w-[45%]" />
+          <Skeleton className="h-10 w-[45%]" />
         </div>
       ) : (
         <SinglePostFooter

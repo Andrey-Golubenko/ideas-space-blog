@@ -1,6 +1,7 @@
 'use server'
 
 import * as bcrypt from 'bcryptjs'
+import { revalidatePath } from 'next/cache'
 
 import { db } from '~/libs/db'
 import { sendVerificationEmail } from '~/libs/mail'
@@ -8,6 +9,7 @@ import { generateVerificationToken } from '~/libs/tokens'
 import { UserRole } from '@prisma/client'
 import { getUserByEmail, getUserById } from '~/services/user'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
+import { PATHS } from '~/utils/constants'
 import { type TManageUserForm, type TActionReturn } from '~/types'
 
 export const editUser = async (values: TManageUserForm): TActionReturn => {
@@ -75,6 +77,8 @@ export const editUser = async (values: TManageUserForm): TActionReturn => {
         ...values
       }
     })
+
+    revalidatePath(PATHS.adminUsers)
 
     return { success: 'The user was successfully updated!' }
   } catch (error) {

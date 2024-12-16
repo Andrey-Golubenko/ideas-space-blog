@@ -3,8 +3,12 @@
 import { cache } from 'react'
 
 import { db } from '~/libs/db'
+import { type Categories } from '@prisma/client'
 import { DEFAULT_CATEGORY } from '~/utils/constants'
-import { type TTRuncatedCategories } from '~/types'
+import {
+  type IFetchDataFunctionProps,
+  type TTRuncatedCategories
+} from '~/types'
 
 export const fetchAllCategories = cache(
   async (): Promise<{
@@ -53,6 +57,32 @@ export const fetchAllCategoriesTruncated = cache(
     }
   }
 )
+
+export const fetchCurrentPageOfFilteredCategories = async ({
+  limit,
+  offset,
+  searchQuery
+}: IFetchDataFunctionProps) => {
+  try {
+    const filteredCategories: Categories[] = await db.categories.findMany({
+      where: {
+        slug: {
+          not: `${DEFAULT_CATEGORY.slug}`
+        },
+        name: searchQuery
+          ? { contains: searchQuery, mode: 'insensitive' }
+          : undefined
+      },
+      take: limit,
+      skip: offset as number
+    })
+
+    return filteredCategories
+  } catch (error) {
+    console.error('Failed to fetch filtered posts:', error)
+    return null
+  }
+}
 
 export const fetchSingleCategoryById = cache(
   async (

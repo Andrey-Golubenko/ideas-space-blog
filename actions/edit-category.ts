@@ -1,10 +1,13 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
+
 import { db } from '~/libs/db'
 import { UserRole } from '@prisma/client'
 import { getUserById } from '~/services/user'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
 import { SingleCategorySchema } from '~/schemas'
+import { PATHS } from '~/utils/constants'
 import { type TManageCategoryForm, type TActionReturn } from '~/types'
 
 export const editCategory = async (
@@ -49,6 +52,9 @@ export const editCategory = async (
         imageUrl
       }
     })
+
+    revalidatePath(PATHS.categories)
+    revalidatePath(PATHS.adminCategories)
 
     return { success: 'The category was successfully updated!' }
   } catch (error) {

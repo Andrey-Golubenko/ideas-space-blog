@@ -16,10 +16,7 @@ import {
   destroyImagesInCloudinary,
   saveImagesToCloudinary
 } from '~/services/imagesProcessing'
-import {
-  CLOUDINARY_CATEGORIES_IMAGES_FOLDER,
-  PATHS
-} from '~/utils/constants'
+import { CLOUDINARY_CATEGORIES_IMAGES_FOLDER } from '~/utils/constants'
 import CategoryManageForm from '~/components/shared/CategoryManageForm'
 import { SingleCategorySchema } from '~/schemas'
 import { type TManageCategoryForm } from '~/types'
@@ -31,18 +28,17 @@ const EditCategoryPageView = () => {
 
   const [isPending, startTransition] = useTransition()
 
-  const [categories, editableCategory, setEditableCategory] = useStore(
-    (state) => {
+  const [dataTableCategories, editableCategory, setEditableCategory] =
+    useStore((state) => {
       return [
-        state.categories,
+        state.dataTableCategories,
         state.editableCategory,
         state.setEditableCategory
       ]
-    }
-  )
+    })
 
   const initialCategory: Categories | {} =
-    categories?.find((category) => {
+    dataTableCategories?.find((category) => {
       return category?.id === (editableCategory as Categories)?.id
     }) || {}
 
@@ -130,11 +126,11 @@ const EditCategoryPageView = () => {
 
       editCategory(newCategoryValues, editableCategoryId)
         .then((data) => {
-          setError(data.error)
-          setSuccess(data.success)
+          setError(data?.error)
+          setSuccess(data?.success)
 
-          if (data.success) {
-            toast.success(data.success, {
+          if (data?.success) {
+            toast.success(data?.success, {
               richColors: true,
               closeButton: true,
               duration: 5000
@@ -142,7 +138,7 @@ const EditCategoryPageView = () => {
 
             setEditableCategory({})
 
-            router.push(PATHS.categories)
+            router.back()
           }
         })
         .catch(() => {
