@@ -11,8 +11,8 @@ import {
   SidebarGroupLabel,
   SidebarMenu
 } from '~/components/ui/sidebar'
-import AdminSidebarHeader from '~/components/Sidebars/AdminSidebar/AdminSidebarHeader'
-import AdminSidebarItem from '~/components/Sidebars/AdminSidebar/AdminSidebarItem'
+import SidebarItemSection from '~/components/Sidebars/SidebarItemSection'
+import SidebarHeaderSection from '~/components/Sidebars/SidebarHeaderSection'
 import { adminDashboard } from '~/utils/constants/data'
 
 const AdminSidebar = () => {
@@ -25,7 +25,9 @@ const AdminSidebar = () => {
       collapsible="icon"
       className="!absolute h-full overflow-hidden !border-0"
     >
-      <AdminSidebarHeader />
+      <SidebarHeaderSection
+        sidebarType={{ isAdmin: true, isCategory: false }}
+      />
 
       <SidebarContent className="overflow-x-hidden">
         <SidebarGroup className="py-6">
@@ -40,9 +42,9 @@ const AdminSidebar = () => {
                   const isActive = pathname === item?.path
 
                   return (
-                    <AdminSidebarItem
+                    <SidebarItemSection
                       key={item?.title}
-                      dashboardItem={item}
+                      item={item}
                       isActive={isActive}
                     />
                   )

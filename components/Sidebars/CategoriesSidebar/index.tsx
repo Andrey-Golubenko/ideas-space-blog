@@ -13,8 +13,8 @@ import {
   SidebarGroupLabel,
   SidebarMenu
 } from '~/components/ui/sidebar'
-import CategoriesSidebarHeader from '~/components/Sidebars/CategoriesSidebar/CategoriesSidebarHeader'
-import CategoriesSidebarItem from '~/components/Sidebars/CategoriesSidebar/CategoriesSidebarItem'
+import SidebarItemSection from '~/components/Sidebars/SidebarItemSection'
+import SidebarHeaderSection from '~/components/Sidebars/SidebarHeaderSection'
 
 const CategoriesSidebar = () => {
   const [categories, getAllCategories] = useStore((state) => {
@@ -36,7 +36,9 @@ const CategoriesSidebar = () => {
       collapsible="icon"
       className="!absolute h-full overflow-hidden !border-0"
     >
-      <CategoriesSidebarHeader />
+      <SidebarHeaderSection
+        sidebarType={{ isAdmin: false, isCategory: true }}
+      />
 
       <SidebarContent className="overflow-x-hidden">
         <SidebarGroup className="px-4 py-6">
@@ -51,9 +53,9 @@ const CategoriesSidebar = () => {
                   const isActive = params?.slug === category?.slug
 
                   return (
-                    <CategoriesSidebarItem
+                    <SidebarItemSection
                       key={category?.id}
-                      category={category}
+                      item={category}
                       isActive={isActive}
                     />
                   )

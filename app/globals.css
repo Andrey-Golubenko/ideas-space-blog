@@ -21,12 +21,18 @@ body {
 }
 
 .header-link {
-  @apply border-b-2 border-transparent px-1 py-0 pb-2 text-white no-underline transition-all duration-300 hover:border-white hover:underline-offset-4;
+  @apply border-b-2 border-transparent px-1 py-0 pb-2 text-[15px] text-white no-underline transition-all duration-300 hover:border-white hover:underline-offset-4;
+}
+
+@layer base {
+  :root {
+    --logo-color: 193 77% 61%;
+  }
 }
 
 @layer components {
   .header-link-active {
-    @apply header-link !text-[rgb(57,213,255)] hover:border-[rgb(57,213,255)];
+    @apply header-link !text-[hsl(var(--logo-color))] hover:border-[hsl(var(--logo-color))];
   }
 }
 

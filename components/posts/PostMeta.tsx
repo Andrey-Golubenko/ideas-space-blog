@@ -11,7 +11,6 @@ import { getUserById } from '~/services/user'
 
 import { CalendarIcon } from '@radix-ui/react-icons'
 import { FaUser } from 'react-icons/fa'
-import { type User } from '@prisma/client'
 
 interface IPostMetaProps {
   authorId: string
@@ -37,7 +36,10 @@ const PostMeta = ({ authorId, itemCreatedAt }: IPostMetaProps) => {
     <div className="mb-4 w-full">
       <div className="mb-2 flex items-center">
         <Avatar className="mr-2 border border-slate-300">
-          <AvatarImage src={(postAuthor?.image as string) || ''} />
+          <AvatarImage
+            src={(postAuthor?.image as string) ?? ''}
+            alt={postAuthor?.name ?? 'Anonymous'}
+          />
           <AvatarFallback className="bg-sky-500">
             <FaUser className="text-white" />
           </AvatarFallback>

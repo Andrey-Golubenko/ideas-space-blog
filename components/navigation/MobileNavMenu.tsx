@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import NavLinks from '~/components/navigation/NavLinks'
 import MobileNavMenuButton from '~/components/navigation/MobileNavMenuButton'
 import LogoItem from '~/components/navigation/LogoItem'
+import { Separator } from '~/components/ui/separator'
 
 const MobileNavMenu = ({ isLoggedIn, isMobile }: INavMenuProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -23,14 +24,14 @@ const MobileNavMenu = ({ isLoggedIn, isMobile }: INavMenuProps) => {
 
   return (
     <div className="w-full">
-      <div className="flex items-center">
+      <div className="grid grid-cols-3 items-center">
         <MobileNavMenuButton
           isOpen={isOpen}
           setIsOpen={setIsOpen}
+          buttonClassNames="col-start-1 justify-self-start"
         />
-        <div className="flex grow items-center justify-center">
-          <LogoItem />
-        </div>
+
+        <LogoItem logoClassNames="col-start-2 justify-self-center" />
       </div>
 
       <div
@@ -39,9 +40,13 @@ const MobileNavMenu = ({ isLoggedIn, isMobile }: INavMenuProps) => {
 
       <nav
         id="nav-menu"
-        className={`fixed inset-y-0 -right-1 z-50 h-screen w-[50%] transform rounded-none  border-l-[3px] border-white shadow-[-2px_0_0_0_#000] transition-transform duration-500 ease-in-out ${isOpen ? '-translate-x-[25%]' : 'translate-x-full'}`}
+        className={`fixed inset-y-0 -right-1 z-50 flex h-screen w-[60%] transform flex-col items-center rounded-none  border-l-[3px] border-white bg-[#2C2C32] shadow-[-2px_0_0_0_#000] transition-transform duration-500 ease-in-out ${isOpen ? '-translate-x-0' : 'translate-x-full'}`}
       >
-        <ul className=" flex h-screen w-[60vw] flex-col items-start space-y-10 bg-[#2C2C32] pl-10 pt-28 text-[15px]">
+        <LogoItem logoClassNames="pt-6 pb-4" />
+
+        <Separator className="w-full" />
+
+        <ul className=" flex h-screen w-[60vw] flex-col items-start space-y-10 pl-10 pt-10 text-[15px]">
           <NavLinks
             isLoggedIn={isLoggedIn}
             isMobile={isMobile}

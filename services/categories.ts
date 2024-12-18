@@ -46,7 +46,8 @@ export const fetchAllCategoriesTruncated = cache(
       const categories = await db.categories.findMany({
         select: {
           id: true,
-          name: true
+          name: true,
+          slug: true
         }
       })
 

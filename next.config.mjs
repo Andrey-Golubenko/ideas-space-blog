@@ -1,7 +1,7 @@
 import withSvgr from 'next-svgr'
 
 /** @type {import('next').NextConfig} */
-const nextConfig = withSvgr({
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -25,18 +25,7 @@ const nextConfig = withSvgr({
         }
       }
     }
-  },
-
-  webpack(config, { isServer }) {
-    // To sure that SVG files are processed using @svgr/webpack
-    config.module.rules.push({
-      test: /\.svg$/,
-      issuer: /\.[jt]sx?$/,
-      use: ['@svgr/webpack']
-    })
-
-    return config
   }
-})
+}
 
-export default nextConfig
+export default withSvgr(nextConfig)

@@ -2,8 +2,7 @@ import {
   LayoutDashboard,
   UsersRound,
   WalletCards,
-  Layers,
-  Settings
+  Layers
 } from 'lucide-react'
 
 import { PATHS } from '~/utils/constants'
@@ -29,10 +28,5 @@ export const adminDashboard: IAdminSidebarItem[] = [
     title: 'Categories',
     icon: Layers,
     path: PATHS.adminCategories
-  },
-  {
-    title: 'Settings',
-    icon: Settings,
-    path: PATHS.adminSettings
   }
 ]

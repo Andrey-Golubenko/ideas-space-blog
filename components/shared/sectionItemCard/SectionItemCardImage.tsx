@@ -32,12 +32,13 @@ const SectionItemCardImage = ({
     >
       <LoadableImage
         src={itemImage}
-        alt={`${itemTitle} image`}
+        alt={itemTitle}
         containerHeight={isCategory ? 200 : 250}
         priority
         imageClassNames={`object-cover ${isCategory ? 'rounded-full' : 'rounded-lg'}`}
-        containerClassNames={` duration-700 hover:scale-110 ${isCategory ? 'rounded-full' : 'rounded-lg'}`}
+        containerClassNames={`duration-700 hover:scale-110 ${isCategory ? 'rounded-full' : 'rounded-lg'}`}
       />
+      <span className="sr-only">{itemTitle}</span>
     </Link>
   )
 }

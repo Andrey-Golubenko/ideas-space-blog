@@ -21,8 +21,6 @@ export const PATHS = {
   adminCategories: '/admin/admin-categories',
   adminEditCategory: '/admin/admin-categories/edit-category',
 
-  adminSettings: '/admin/admin-settings',
-
   newCategory: '/admin/admin-categories/new-category',
 
   signIn: '/auth',

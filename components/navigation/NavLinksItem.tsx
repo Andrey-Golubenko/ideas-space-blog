@@ -1,7 +1,8 @@
 'use client'
 
-import { signOut } from 'next-auth/react'
 import Link from 'next/link'
+import { signOut } from 'next-auth/react'
+
 import useActive from '~/hooks/useActive'
 import { PATHS } from '~/utils/constants'
 
@@ -22,7 +23,7 @@ const NavMenuItem = ({
 
   return (
     <li
-      className={`pl-1.5${isMobile ? ' w-full border-b border-b-white' : ''}`}
+      className={`pl-4${isMobile ? ' w-full border-b border-b-white' : ''}`}
       key={href}
     >
       <Link

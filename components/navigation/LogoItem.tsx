@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import Image from 'next/image'
 
-import { PATHS, IMAGES_PATHS } from '~/utils/constants'
+import LogoImage from '~/public/images/logo.svg'
+import { PATHS } from '~/utils/constants'
 
 interface ILogoItemProps {
   logoClassNames?: string
@@ -11,16 +11,17 @@ const LogoItem = ({ logoClassNames }: ILogoItemProps) => {
   return (
     <Link
       href={PATHS.home}
-      className={logoClassNames || ''}
+      className={`${logoClassNames || ''} flex`}
     >
-      <Image
-        src={IMAGES_PATHS.logo}
-        alt="Logo"
-        priority
-        width={80}
-        height={80}
-        className="h-16 w-44"
-      />
+      <h1 className="mr-2 flex w-max items-center justify-center whitespace-nowrap text-[hsl(var(--logo-color))]">
+        Ideas space
+      </h1>
+      <span>
+        <LogoImage
+          className="size-10"
+          fill="hsl(var(--logo-color))"
+        />
+      </span>
     </Link>
   )
 }

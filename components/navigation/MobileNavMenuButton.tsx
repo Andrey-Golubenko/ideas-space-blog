@@ -15,10 +15,12 @@ import IconClose from '~/public/icons/icon-close.svg'
 interface IMobileNavMenuButtonProps {
   isOpen: boolean
   setIsOpen: Dispatch<SetStateAction<boolean>>
+  buttonClassNames?: string
 }
 const MobileNavMenuButton = ({
   isOpen,
-  setIsOpen
+  setIsOpen,
+  buttonClassNames
 }: IMobileNavMenuButtonProps) => {
   const [autoAnimateRef] = useAutoAnimate()
 
@@ -28,7 +30,15 @@ const MobileNavMenuButton = ({
       const navMenu = document.getElementById('nav-menu')
       const navMenuButton = document.getElementById('nav-menu-button')
 
-      if (navMenu && navMenu.contains(target) && target.tagName === 'A') {
+      const targetNameLink = target.tagName === 'A'
+      const targetNameSVG = target.tagName === 'path'
+      const targetNameHeading = target.tagName === 'H1'
+
+      if (
+        navMenu &&
+        navMenu.contains(target) &&
+        (targetNameLink || targetNameSVG || targetNameHeading)
+      ) {
         setIsOpen(false)
         return
       }
@@ -65,7 +75,7 @@ const MobileNavMenuButton = ({
   return (
     <Button
       id="nav-menu-button"
-      className="ml-4 p-0"
+      className={`${buttonClassNames ?? ''} ml-4 p-0`}
       variant="outline"
       onClick={handleClick}
       ref={autoAnimateRef}
