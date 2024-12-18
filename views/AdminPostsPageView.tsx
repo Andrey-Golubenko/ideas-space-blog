@@ -1,9 +1,6 @@
-import Link from 'next/link'
-import { Plus } from 'lucide-react'
-
 import { Heading } from '~/components/ui/heading'
 import { Separator } from '~/components/ui/separator'
-import { Button } from '~/components/ui/button'
+import AddNewItemButton from '~/components/shared/AddNewItemButton'
 import PostsTable from '~/components/admin/AdminPosts/PostsTable'
 import { PATHS } from '~/utils/constants'
 import { type IRCWithSearchParamsKeyProps } from '~/types'
@@ -19,11 +16,10 @@ const AdminPostsPageView = ({
           description="Manage posts"
         />
 
-        <Button asChild>
-          <Link href={PATHS.adminNewPost}>
-            <Plus className="mr-2 h-4 w-4" /> Add New
-          </Link>
-        </Button>
+        <AddNewItemButton
+          label="Add New"
+          path={PATHS.adminNewPost}
+        />
       </div>
 
       <Separator />
