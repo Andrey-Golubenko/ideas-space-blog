@@ -11,8 +11,7 @@ export const PUBLIC_ROUTES = [
   PATHS.blog,
   PATHS.posts,
   PATHS.categories,
-  PATHS.about,
-  PATHS.signIn,
+  PATHS.logIn,
   PATHS.emailVerification,
   PATHS.commonError
 ]

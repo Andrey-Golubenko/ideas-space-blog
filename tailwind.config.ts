@@ -28,6 +28,10 @@ const config = {
       }
     },
     extend: {
+      backgroundImage: {
+        'custom-gradient':
+          'radial-gradient(ellipse at top, hsl(var(--custom-gradient-from)), hsl(var(--custom-gradient-to)))' // from-sky-500 to-blue-800
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

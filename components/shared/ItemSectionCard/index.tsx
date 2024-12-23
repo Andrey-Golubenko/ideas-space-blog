@@ -6,8 +6,8 @@ import { type Categories } from '@prisma/client'
 import { useItemType } from '~/hooks/useItemType'
 import { useItemProps } from '~/hooks/useItemProps'
 import { Card } from '~/components/ui/card'
-import SectionItemCardImage from '~/components/shared/SectionItemCard/SectionItemCardImage'
-import SectionItemCardHeader from '~/components/shared/SectionItemCard/SectionItemCardHeader'
+import SectionItemCardImage from '~/components/shared/ItemSectionCard/SectionItemCardImage'
+import SectionItemCardHeader from '~/components/shared/ItemSectionCard/SectionItemCardHeader'
 
 interface ICategoriesSectionItemProps {
   item?: Categories

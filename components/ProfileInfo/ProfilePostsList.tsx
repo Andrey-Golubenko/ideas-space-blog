@@ -4,11 +4,12 @@ import { useEffect } from 'react'
 import { type User } from 'next-auth'
 
 import useStore from '~/store'
-import PostsHeaderCard from '~/components/profileInfo/PostsHeaderCard'
+import PostsHeaderCard from '~/components/ProfileInfo/PostsHeaderCard'
 import WithPostData from '~/components/hoc/WithPostData'
 import WithSkeletonsList from '~/components/hoc/WithSkeletonsList'
 import ItemCard from '~/components/shared/ItemCard'
 import SkeletonPostCard from '~/components/shared/ItemCard/SkeletonPostCard'
+import NoItemsCard from '~/components/posts/NoItemsCard'
 
 interface IProfilePostsListProps {
   currentUser?: UserDTO & User
@@ -33,6 +34,14 @@ const ProfilePostsList = ({ currentUser }: IProfilePostsListProps) => {
       getPostsByUserId(userId)
     }
   }, [userId, getPostsByUserId])
+
+  if (typeof posts === 'string') {
+    return (
+      <div className="mb-10">
+        <NoItemsCard itemName="posts" />
+      </div>
+    )
+  }
 
   return (
     <div className="justify-centerpy-10 flex flex-col items-center xs:w-[90%]">

@@ -39,6 +39,7 @@ export const deletePost = async (postId: string): TActionReturn => {
       where: { id: postId }
     })
 
+    revalidatePath(PATHS.home)
     revalidatePath(PATHS.blog)
     revalidatePath(PATHS.adminPosts)
 

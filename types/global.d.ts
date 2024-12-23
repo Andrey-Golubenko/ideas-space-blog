@@ -1,4 +1,4 @@
-import { Categories, Post, PrismaClient, UserRole } from '@prisma/client'
+import { type Post, PrismaClient, UserRole } from '@prisma/client'
 
 declare global {
   var prisma: PrismaClient | undefined

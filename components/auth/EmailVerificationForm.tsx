@@ -2,13 +2,13 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-
 import { BeatLoader } from 'react-spinners'
-import { PATHS } from '~/utils/constants'
+
 import { emailVerification } from '~/actions/email-verification'
 import FormSuccess from '~/components/FormSuccess'
 import FormError from '~/components/FormError'
 import AuthCardWrapper from '~/components/shared/CardWrapper/AuthCardWrapper'
+import { PATHS } from '~/utils/constants'
 
 const EmailVerificationForm = () => {
   const [error, setError] = useState<string | undefined>()
@@ -25,8 +25,8 @@ const EmailVerificationForm = () => {
 
     emailVerification(token)
       .then((data) => {
-        setSuccess(data.success)
-        setError(data.error)
+        setSuccess(data?.success)
+        setError(data?.error)
       })
       .catch(() => {
         return setError('Somthing went wrong!')

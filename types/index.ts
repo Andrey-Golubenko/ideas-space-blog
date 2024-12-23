@@ -10,6 +10,7 @@ import { type Post, type Categories } from '@prisma/client'
 import type { TZDate } from '@date-fns/tz'
 // eslint-disable-next-line import/no-cycle
 import {
+  LogInSchema,
   ManagePostSchema,
   NewPasswordSchema,
   RegisterSchema,
@@ -40,10 +41,14 @@ export type TActionReturn = Promise<
   | null
 >
 
-export type PostsData = {
-  posts: Post[]
-  postsCount: number
-}
+export type PostsData =
+  | {
+      posts: Post[]
+      postsCount: number
+    }
+  | string
+
+export type TManageLoginForm = z.infer<typeof LogInSchema>
 
 export type TManageRegisterForm = z.infer<typeof RegisterSchema>
 

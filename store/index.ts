@@ -30,10 +30,10 @@ import {
 } from '~/types'
 
 interface IUseStore {
-  posts: Post[]
+  posts: Post[] | string
   postsCount: number | null
   singlePost: FullPost | {}
-  recentPosts: Post[] | null | []
+  recentPosts: Post[] | null | string
 
   categories: Categories[] | null | []
   editableCategory: Categories | {}
@@ -97,8 +97,11 @@ const useStore = createWithEqualityFn<
             })
 
             const data = await fetchPosts()
-            const { posts, postsCount } = data
 
+            const posts = typeof data === 'string' ? data : data?.posts
+
+            const postsCount =
+              typeof data === 'string' ? null : data?.postsCount
             set((state) => {
               return { ...state, posts, postsCount, isLoading: false }
             })
@@ -110,7 +113,11 @@ const useStore = createWithEqualityFn<
             })
 
             const data = await fetchPostsBySearch(search)
-            const { posts, postsCount } = data
+
+            const posts = typeof data === 'string' ? data : data?.posts
+
+            const postsCount =
+              typeof data === 'string' ? null : data?.postsCount
 
             set((state) => {
               return { ...state, posts, postsCount, isLoading: false }
@@ -124,7 +131,10 @@ const useStore = createWithEqualityFn<
 
             const data = await fetchPostsByUserId(userId)
 
-            const { posts, postsCount } = data
+            const posts = typeof data === 'string' ? data : data?.posts
+
+            const postsCount =
+              typeof data === 'string' ? null : data?.postsCount
 
             set((state) => {
               return { ...state, posts, postsCount, isLoading: false }

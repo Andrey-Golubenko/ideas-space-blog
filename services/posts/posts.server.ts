@@ -5,6 +5,7 @@ import { cache } from 'react'
 import { db } from '~/libs/db'
 import { type Post } from '@prisma/client'
 import {
+  type PostsData,
   type IFetchPostsFunctionProps,
   type TDeserializedPost
 } from '~/types'
@@ -51,9 +52,9 @@ export const getSinglePost = cache(
 )
 
 export const getPostsByCategory = cache(
-  async (categoryId: string): Promise<Post[] | null> => {
+  async (categoryId: string): Promise<PostsData | null> => {
     try {
-      const posts = await db.post.findMany({
+      const dbPosts = await db.post.findMany({
         where: {
           categories: {
             some: { categoryId }
@@ -61,11 +62,11 @@ export const getPostsByCategory = cache(
         }
       })
 
-      if (!posts || !posts.length) {
-        return null
-      }
+      const data = dbPosts?.length
+        ? { posts: dbPosts, postsCount: dbPosts.length }
+        : 'It seems there are no posts yet.'
 
-      return posts
+      return data
     } catch (error) {
       console.error('Error fetching posts by category:', error)
 
@@ -75,7 +76,7 @@ export const getPostsByCategory = cache(
 )
 
 export const fetchRecentPosts = async (): Promise<{
-  recentPosts: Post[]
+  recentPosts: Post[] | string
 }> => {
   try {
     const posts = await db.post.findMany({
@@ -84,7 +85,7 @@ export const fetchRecentPosts = async (): Promise<{
     })
 
     if (!posts || !posts.length) {
-      return { recentPosts: [] }
+      return { recentPosts: 'It seems there are no posts yet.' }
     }
 
     return { recentPosts: posts }

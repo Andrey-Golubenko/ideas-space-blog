@@ -38,13 +38,10 @@ const CellAction = ({ postId }: ICellActionProps) => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
-  const postToProcessing = useMemo(() => {
-    return (
-      dataTablePosts.find((post) => {
-        return post?.id === postId
-      }) ?? null
-    )
-  }, [dataTablePosts, postId])
+  const postToProcessing =
+    dataTablePosts.find((post) => {
+      return post?.id === postId
+    }) ?? null
 
   const handleOnUpdate = useCallback(() => {
     if (postToProcessing) {
@@ -58,11 +55,9 @@ const CellAction = ({ postId }: ICellActionProps) => {
     setOpen(true)
   }, [])
 
-  const imageUrls = useMemo(() => {
-    return postToProcessing ? postToProcessing?.imageUrls : []
-  }, [postToProcessing])
+  const imageUrls = postToProcessing ? postToProcessing?.imageUrls : []
 
-  const onConfirm = useCallback(() => {
+  const onConfirm = () => {
     startTransition(async () => {
       if (postId) {
         if (imageUrls?.length) {
@@ -73,8 +68,6 @@ const CellAction = ({ postId }: ICellActionProps) => {
             )
           } catch (error) {
             console.error('Error destroying images:', error)
-
-            toast.error('Failed to delete images from cloud storage.')
 
             return
           }
@@ -110,7 +103,7 @@ const CellAction = ({ postId }: ICellActionProps) => {
         }
       }
     })
-  }, [getDataTablePosts, imageUrls, postId])
+  }
 
   return (
     <>

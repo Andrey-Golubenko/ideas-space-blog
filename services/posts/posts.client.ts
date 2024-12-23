@@ -6,7 +6,7 @@ export const fetchPosts = async (): Promise<PostsData> => {
       `${process.env.NEXT_PUBLIC_APP_URL}/api/posts`,
       {
         next: {
-          revalidate: 600 // sec
+          revalidate: 60 // sec
         }
       }
     )
@@ -16,10 +16,6 @@ export const fetchPosts = async (): Promise<PostsData> => {
     }
 
     const data: PostsData = await response.json()
-
-    if (!data?.posts?.length) {
-      throw new Error('Ivalid posts data received!')
-    }
 
     return data
   } catch (error) {
@@ -39,7 +35,7 @@ export const fetchPostsBySearch = async (
       `${process.env.NEXT_PUBLIC_APP_URL}/api/posts?q=${search}`,
       {
         next: {
-          revalidate: 600
+          revalidate: 60
         }
       }
     )
@@ -50,10 +46,6 @@ export const fetchPostsBySearch = async (
       )
 
     const data: PostsData = await response.json()
-
-    if (!data?.posts.length) {
-      throw new Error('Invalid posts data received!')
-    }
 
     return data
   } catch (error) {
@@ -85,10 +77,6 @@ export const fetchPostsByUserId = async (
     }
 
     const data: PostsData = await respons.json()
-
-    if (!data?.posts.length) {
-      throw new Error('Invalid post data received!')
-    }
 
     return data
   } catch (error) {

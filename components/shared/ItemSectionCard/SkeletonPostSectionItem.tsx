@@ -5,8 +5,8 @@ import { type Post } from '@prisma/client'
 import { useItemProps } from '~/hooks/useItemProps'
 import { Card } from '~/components/ui/card'
 import { Skeleton } from '~/components/ui/skeleton'
-import SectionItemCardImage from '~/components/shared/SectionItemCard/SectionItemCardImage'
-import SectionItemCardHeader from '~/components/shared/SectionItemCard/SectionItemCardHeader'
+import SectionItemCardImage from '~/components/shared/ItemSectionCard/SectionItemCardImage'
+import SectionItemCardHeader from '~/components/shared/ItemSectionCard/SectionItemCardHeader'
 import PostMeta from '~/components/posts/PostMeta'
 
 interface ISkeletonPostSectionItemProps {

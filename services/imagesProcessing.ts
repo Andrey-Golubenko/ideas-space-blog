@@ -48,6 +48,7 @@ export const destroyImagesInCloudinary = async (
   try {
     const imageDeleteResultsPromises = imageUrls.map((url) => {
       const imageName = getImageNameFromUrl(url)
+
       return deleteImagesFromCloudinary(imageName!, storageFolder)
     })
 

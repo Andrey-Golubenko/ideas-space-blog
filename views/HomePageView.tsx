@@ -21,7 +21,7 @@ const HomePageView = () => {
         <CategoriesSection />
       </section>
 
-      <section className="-mt-3 h-full w-full rounded-xl bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-500 to-blue-800 px-6 py-20 shadow-[0_0_20px_rgba(252,252,252,.5)_inset] md:px-16">
+      <section className="-mt-3 h-full w-full rounded-xl bg-custom-gradient px-6 py-20 shadow-[0_0_20px_rgba(252,252,252,.5)_inset] md:px-16">
         <RecentPostsList />
       </section>
     </>

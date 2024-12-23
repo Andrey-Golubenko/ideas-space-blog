@@ -108,6 +108,10 @@ body {
 
 @layer base {
   :root {
+
+    --custom-gradient-from: 200, 100%, 50%; /* HSL sky-500 */
+    --custom-gradient-to: 220, 90%, 40%; /* HSL blue-800 */
+
     --logo-color: 193 77% 61%;
 
     --background: 0 0% 100%;

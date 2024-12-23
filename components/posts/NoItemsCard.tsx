@@ -9,7 +9,7 @@ interface INoItemsCardProps {
 
 const NoItemsCard = ({ itemName }: INoItemsCardProps) => {
   return (
-    <Card className="flex min-h-96 flex-col items-center justify-center">
+    <Card className="flex min-h-96 w-full flex-col items-center justify-center">
       <CardHeader>
         <CardHeaderContent
           title="🔭  Search results"
@@ -18,7 +18,7 @@ const NoItemsCard = ({ itemName }: INoItemsCardProps) => {
       </CardHeader>
       <CardContent>
         <p className="text-center text-xl">
-          {`Unfartunatly, we did not find any ${itemName}.`}
+          {`Unfartunatly, we did not find any ${itemName} yet.`}
         </p>
       </CardContent>
     </Card>

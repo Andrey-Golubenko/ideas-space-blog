@@ -7,8 +7,9 @@ import { Card, CardContent, CardHeader } from '~/components/ui/card'
 import CardHeaderContent from '~/components/shared/CardWrapper/CardHeaderContent'
 import WithPostData from '~/components/hoc/WithPostData'
 import WithSkeletonsList from '~/components/hoc/WithSkeletonsList'
-import SectionItemCard from '~/components/shared/SectionItemCard'
-import SkeletonPostSectionItem from '~/components/shared/SectionItemCard/SkeletonPostSectionItem'
+import SectionItemCard from '~/components/shared/ItemSectionCard'
+import SkeletonPostSectionItem from '~/components/shared/ItemSectionCard/SkeletonPostSectionItem'
+import NoItemsCard from '~/components/posts/NoItemsCard'
 
 const RecentPostsList = () => {
   const [recentPosts, getRecentPosts, isLoading] = useStore((state) => {
@@ -16,11 +17,11 @@ const RecentPostsList = () => {
   })
 
   useEffect(() => {
-    if (!recentPosts) getRecentPosts()
+    getRecentPosts()
   }, [getRecentPosts])
 
   return (
-    <Card className="bg-slate-100 px-2 sm:px-10">
+    <Card className="bg-slate-100 px-2 pb-2 sm:px-10 sm:pb-10">
       <CardHeader className="pb-10 pt-12">
         <CardHeaderContent
           title="Recent posts"
@@ -28,17 +29,21 @@ const RecentPostsList = () => {
         />
       </CardHeader>
       <CardContent className="px-0 pb-0 sm:px-6">
-        <WithPostData
-          posts={recentPosts}
-          postsCount={recentPosts ? recentPosts?.length : null}
-          isLoading={isLoading}
-        >
-          <WithSkeletonsList>
-            <SkeletonPostSectionItem />
-          </WithSkeletonsList>
+        {typeof recentPosts === 'string' ? (
+          <NoItemsCard itemName="recent posts" />
+        ) : (
+          <WithPostData
+            posts={recentPosts || []}
+            postsCount={recentPosts ? recentPosts?.length : null}
+            isLoading={isLoading}
+          >
+            <WithSkeletonsList>
+              <SkeletonPostSectionItem />
+            </WithSkeletonsList>
 
-          <SectionItemCard />
-        </WithPostData>
+            <SectionItemCard />
+          </WithPostData>
+        )}
       </CardContent>
     </Card>
   )

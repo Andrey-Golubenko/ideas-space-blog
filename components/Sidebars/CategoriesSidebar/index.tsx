@@ -22,9 +22,7 @@ const CategoriesSidebar = () => {
   })
 
   useEffect(() => {
-    if (!categories?.length) {
-      getAllCategories()
-    }
+    getAllCategories()
   }, [])
 
   const params = useParams()

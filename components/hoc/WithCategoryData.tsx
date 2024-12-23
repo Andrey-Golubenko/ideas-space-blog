@@ -19,7 +19,7 @@ const WithCategoryData = ({
   })
 
   useEffect(() => {
-    if (!categories) getAllCategories()
+    getAllCategories()
   }, [getAllCategories])
 
   const { skeletonItems, restItems, fourthItemInList, noItems } =

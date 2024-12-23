@@ -1,6 +1,7 @@
-import SingleCategoryCard from '~/components/categories/SingleCategoryCard'
 import { fetchSingleCategoryBySlug } from '~/services/categories'
 import { getPostsByCategory } from '~/services/posts/posts.server'
+import SingleCategoryCard from '~/components/categories/SingleCategoryCard'
+import NoItemsCard from '~/components/posts/NoItemsCard'
 
 interface ISingleCategoryPageViewProps {
   categorySlug: string
@@ -11,10 +12,19 @@ const SingleCategoryPageView = async ({
 }: ISingleCategoryPageViewProps) => {
   const singleCategory = await fetchSingleCategoryBySlug(categorySlug)
 
-  const postsByCategory =
-    (await getPostsByCategory(singleCategory?.id || '')) || []
+  const postsByCategory = await getPostsByCategory(
+    singleCategory?.id || ''
+  )
 
-  return <SingleCategoryCard posts={postsByCategory} />
+  if (typeof postsByCategory === 'string') {
+    return <NoItemsCard itemName="posts" />
+  }
+
+  return postsByCategory?.posts ? (
+    <SingleCategoryCard posts={postsByCategory.posts} />
+  ) : (
+    <NoItemsCard itemName="posts" />
+  )
 }
 
 export default SingleCategoryPageView

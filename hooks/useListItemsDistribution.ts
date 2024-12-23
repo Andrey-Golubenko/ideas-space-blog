@@ -1,13 +1,18 @@
 import { type Post, type Categories } from '@prisma/client'
+import { type RefObject } from 'react'
 import { useItemType } from '~/hooks/useItemType'
+import { useContainerWidth } from '~/hooks/useContainerWidth'
 import { useIsMobile } from '~/hooks/useMobile'
 import { type TSkeletonItems } from '~/types'
 
 export const useListItemsDistribution = (
   items: Post[] | Categories[] | null | [],
-  itemsCount?: number | null
+  itemsCount?: number | null,
+  containerRef?: RefObject<HTMLElement>
 ) => {
   const { isMobile, isSmallScreen } = useIsMobile()
+
+  const { isMediumWidth } = useContainerWidth(containerRef)
 
   const { isCategory, isPost } = useItemType(items?.[0])
 
@@ -16,7 +21,7 @@ export const useListItemsDistribution = (
   if (isPost) {
     const [firstItem, secondItem, thirdItem, ...restItems] = items || []
 
-    const shouldPlaceThirdItem = !isMobile && itemsCount! >= 3
+    const shouldPlaceThirdItem = !isMediumWidth && itemsCount! >= 3
 
     const thirdItemInSkeleton = shouldPlaceThirdItem
       ? thirdItem

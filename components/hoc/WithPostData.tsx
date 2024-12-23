@@ -1,6 +1,6 @@
 'use client'
 
-import { cloneElement, type ReactElement } from 'react'
+import { cloneElement, useRef, type ReactElement } from 'react'
 import { usePathname } from 'next/navigation'
 
 import { useListItemsDistribution } from '~/hooks/useListItemsDistribution'
@@ -10,7 +10,7 @@ import { type Post } from '@prisma/client'
 
 interface IWithPostDataProps {
   children: ReactElement[]
-  posts: Post[] | null
+  posts: Post[]
   postsCount: number | null
   isLoading: boolean
 }
@@ -21,6 +21,7 @@ const WithPostData = ({
   postsCount,
   isLoading
 }: IWithPostDataProps) => {
+  const containerRef = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
 
   const publishedPosts =
@@ -32,12 +33,15 @@ const WithPostData = ({
     pathname === PATHS.profile ? posts : publishedPosts
 
   const { skeletonItems, restItems, thirdItemInList, noItems } =
-    useListItemsDistribution(desplayedPosts, postsCount)
+    useListItemsDistribution(desplayedPosts, postsCount, containerRef)
 
   const itemType = { isPost: true, isCategory: false }
 
   return (
-    <section className="mb-8 w-full @container">
+    <section
+      className="mb-8 w-full @container"
+      ref={containerRef}
+    >
       {!noItems ? (
         cloneElement(children[0], {
           skeletonItems,

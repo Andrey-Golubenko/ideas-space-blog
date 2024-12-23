@@ -21,11 +21,13 @@ const SidebarItemSection = ({ item, isActive }: ISidebarItemProps) => {
   const itemLink = isCategory
     ? `${PATHS.categories}/${item?.slug}`
     : item?.path
+
   const itemImage = isCategory ? (
     <SidebarImage imageUrl={item?.imageUrl as string} />
   ) : (
     item?.icon && <item.icon />
   )
+
   const itemTitle = isCategory ? item?.name : item?.title
 
   return (

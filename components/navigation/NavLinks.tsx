@@ -21,7 +21,7 @@ const NavLinks = ({ isLoggedIn, isMobile }: INavMenuProps) => {
         <NavMenuItem
           isMobile={isMobile}
           label="Log in"
-          href={PATHS.signIn}
+          href={PATHS.logIn}
         />
       ) : (
         <PrivateNavLinks isMobile={isMobile} />

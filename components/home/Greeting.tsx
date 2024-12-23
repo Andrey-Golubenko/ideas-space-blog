@@ -3,7 +3,7 @@ import { fontPlayfairDisplay } from '~/utils/constants/fonts'
 
 const Greeting = () => {
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center rounded-xl bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-500 to-blue-800 px-16 py-20 shadow-[0_0_20px_rgba(252,252,252,.7)_inset]">
+    <div className="flex h-full w-full flex-col items-center justify-center rounded-xl bg-custom-gradient px-16 py-20 shadow-[0_0_20px_rgba(252,252,252,.7)_inset]">
       <Card className="bg-slate-100">
         <CardHeader>
           <h2

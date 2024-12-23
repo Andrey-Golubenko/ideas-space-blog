@@ -14,13 +14,16 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const posts: Post[] = await db.post.findMany({
+    const dbPosts: Post[] = await db.post.findMany({
       where: {
         authorId: userId
       }
     })
 
-    const data = { posts, postsCount: posts.length }
+    const data = dbPosts?.length
+      ? { posts: dbPosts, postsCount: dbPosts.length }
+      : 'It seems there are no posts yet.'
+
     return NextResponse.json(data)
   } catch (error) {
     console.error('Error fetching posts:', error)

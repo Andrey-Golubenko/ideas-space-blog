@@ -16,7 +16,7 @@ const SidebarImage = ({ imageUrl }: ISidebarImageProps) => {
       sizes="100%"
       width={40}
       height={40}
-      className="size-10 rounded-md"
+      className="aspect-square size-10 rounded-md"
     />
   )
 }

@@ -8,8 +8,6 @@ export const PATHS = {
   editPost: '/edit-post',
   posts: '/api/posts',
   categories: '/categories',
-  // TODO: Later Delete 'about-page'
-  about: '/about',
   profile: '/profile',
   settings: '/settings',
   admin: '/admin',
@@ -22,8 +20,7 @@ export const PATHS = {
   adminEditCategory: '/admin/admin-categories/edit-category',
   adminNewCategory: '/admin/admin-categories/new-category',
 
-  signIn: '/auth',
-  logIn: '/auth/login',
+  logIn: '/auth',
   register: '/auth/register',
   emailVerification: '/auth/email-verification',
   resetPassword: '/auth/reset-password',
@@ -51,8 +48,7 @@ export const IMAGES_PATHS = {
 export const NAV_LINKS: INavLink[] = [
   { label: 'Home', href: PATHS.home },
   { label: 'Blog', href: PATHS.blog },
-  { label: 'Categories', href: PATHS.categories },
-  { label: 'About', href: PATHS.about }
+  { label: 'Categories', href: PATHS.categories }
 ]
 
 export const PRIVATE_NAV_LINKS: INavLink[] = [

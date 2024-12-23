@@ -9,7 +9,7 @@ import SkeletonPostCard from '~/components/shared/ItemCard/SkeletonPostCard'
 import { type Post } from '@prisma/client'
 
 interface ISingleCategoryCardProps {
-  posts: Post[] | null
+  posts: Post[]
 }
 
 const SingleCategoryCard = ({ posts }: ISingleCategoryCardProps) => {
@@ -24,7 +24,10 @@ const SingleCategoryCard = ({ posts }: ISingleCategoryCardProps) => {
   }, [posts?.length])
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div
+      className="flex flex-col items-center justify-center"
+      id="posts-container"
+    >
       <WithPostData
         posts={posts as Post[]}
         postsCount={postsCount}

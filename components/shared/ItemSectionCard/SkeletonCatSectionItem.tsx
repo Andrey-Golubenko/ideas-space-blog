@@ -4,8 +4,8 @@ import { type Categories } from '@prisma/client'
 
 import { useItemProps } from '~/hooks/useItemProps'
 import { Skeleton } from '~/components/ui/skeleton'
-import SectionItemCardImage from '~/components/shared/SectionItemCard/SectionItemCardImage'
-import SectionItemCardHeader from '~/components/shared/SectionItemCard/SectionItemCardHeader'
+import SectionItemCardImage from '~/components/shared/ItemSectionCard/SectionItemCardImage'
+import SectionItemCardHeader from '~/components/shared/ItemSectionCard/SectionItemCardHeader'
 
 interface ISkeletonCatSectionItemProps {
   item?: Categories
