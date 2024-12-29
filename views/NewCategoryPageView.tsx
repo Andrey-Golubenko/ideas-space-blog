@@ -71,11 +71,11 @@ const NewCategoryPageView = () => {
 
       newCategory(newCategoryValues)
         .then((data) => {
-          setError(data.error)
-          setSuccess(data.success)
+          setError(data?.error)
+          setSuccess(data?.success)
 
-          if (data.success) {
-            toast.success(data.success, {
+          if (data?.success) {
+            toast.success(data?.success, {
               richColors: true,
               closeButton: true,
               duration: 5000

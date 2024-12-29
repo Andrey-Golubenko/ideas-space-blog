@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useMemo, useState, useTransition } from 'react'
+import { useCallback, useState, useTransition } from 'react'
 import { Edit, MoreHorizontal, Trash } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
@@ -70,6 +70,8 @@ const CellAction = ({ postId }: ICellActionProps) => {
             console.error('Error destroying images:', error)
 
             return
+          } finally {
+            setOpen(false)
           }
         }
 

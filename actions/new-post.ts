@@ -63,6 +63,7 @@ export const newPost = async (
       }
     })
 
+    revalidatePath(PATHS.home)
     revalidatePath(PATHS.blog)
     revalidatePath(PATHS.adminPosts)
 

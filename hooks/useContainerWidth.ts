@@ -9,9 +9,9 @@ export const useContainerWidth = (
     if (!containerRef?.current) return
 
     const updateSize = () => {
-      const { offsetWidth: width } = containerRef.current!
+      const width = containerRef?.current?.offsetWidth
 
-      setIsMediumWidth(width < 768)
+      if (width) setIsMediumWidth(width < 768)
     }
 
     const observer = new ResizeObserver(() => {
@@ -26,7 +26,7 @@ export const useContainerWidth = (
     return () => {
       observer.disconnect()
     }
-  }, [containerRef])
+  }, [])
 
   return { isMediumWidth }
 }
