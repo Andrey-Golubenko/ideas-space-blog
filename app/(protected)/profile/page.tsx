@@ -1,5 +1,5 @@
-import ProfileCard from '~/components/profileInfo'
-import ProfilePostsList from '~/components/profileInfo/ProfilePostsList'
+import ProfileCard from '~/components/ProfileInfo'
+import ProfilePostsList from '~/components/ProfileInfo/ProfilePostsList'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
 
 const ProfilePage = async () => {

@@ -1,5 +1,7 @@
 import NavLinks from '~/components/navigation/NavLinks'
 import LogoItem from '~/components/navigation/LogoItem'
+import AddNewItemButton from '~/components/shared/AddNewItemButton'
+import { PATHS } from '~/utils/constants'
 
 const DesktopNavMenu = ({ isLoggedIn, isMobile }: INavMenuProps) => {
   return (
@@ -11,6 +13,14 @@ const DesktopNavMenu = ({ isLoggedIn, isMobile }: INavMenuProps) => {
           isLoggedIn={isLoggedIn}
           isMobile={isMobile}
         />
+        <li>
+          <AddNewItemButton
+            label="Add Post"
+            path={PATHS.blogNewPost}
+            variant="outline"
+            className="rounded-full border border-[hsl(var(--logo-color))] bg-transparent !text-[hsl(var(--logo-color))] hover:bg-black hover:text-[hsl(var(--logo-color))] sm:px-4 sm:py-2"
+          />
+        </li>
       </ul>
     </nav>
   )

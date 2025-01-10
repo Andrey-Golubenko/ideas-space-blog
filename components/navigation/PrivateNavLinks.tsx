@@ -1,7 +1,8 @@
 'use client'
 
-import { PRIVATE_NAV_LINKS } from '~/utils/constants'
 import NavLinksItem from '~/components/navigation/NavLinksItem'
+import NavLinksAvatarItem from '~/components/navigation/NavLinksAvatarItem'
+import { PRIVATE_NAV_LINKS } from '~/utils/constants'
 
 const PrivateNavLinks = ({ isMobile }: { isMobile: boolean }) => {
   return (
@@ -16,12 +17,7 @@ const PrivateNavLinks = ({ isMobile }: { isMobile: boolean }) => {
           />
         )
       })}
-      <NavLinksItem
-        hasOnClick
-        label="Log out"
-        href="#"
-        isMobile={isMobile}
-      />
+      {!isMobile && <NavLinksAvatarItem />}
     </>
   )
 }

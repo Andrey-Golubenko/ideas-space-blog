@@ -1,13 +1,10 @@
 'use client'
 
-import { useCallback, useState, useTransition } from 'react'
+import { useCallback, useState } from 'react'
 import { Edit, MoreHorizontal, Trash } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { toast } from 'sonner'
 
 import useStore from '~/store'
-import { deletePost } from '~/actions/delete-post'
-import { destroyImagesInCloudinary } from '~/services/imagesProcessing'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,8 +13,8 @@ import {
   DropdownMenuTrigger
 } from '~/components/ui/dropdown-menu'
 import { Button } from '~/components/ui/button'
-import AlertModal from '~/components/shared/Modal/AlertModal'
-import { CLOUDINARY_POSTS_IMAGES_FOLDER, PATHS } from '~/utils/constants'
+import DeletePostHandler from '~/components/shared/DeleteHandlers/DeletePostHandler'
+import { PATHS } from '~/utils/constants'
 
 interface ICellActionProps {
   postId: string
@@ -35,13 +32,27 @@ const CellAction = ({ postId }: ICellActionProps) => {
   )
 
   const [open, setOpen] = useState(false)
+
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const postToProcessing =
     dataTablePosts.find((post) => {
       return post?.id === postId
     }) ?? null
+
+  const onPostDeleteSuccess = useCallback(() => {
+    getDataTablePosts({
+      currentPage: 1,
+      limit: 10,
+      categoriesFilter: null,
+      publishedFilter: null,
+      searchQuery: null
+    })
+  }, [])
+
+  const handleOnDelete = useCallback(() => {
+    setOpen(true)
+  }, [])
 
   const handleOnUpdate = useCallback(() => {
     if (postToProcessing) {
@@ -51,72 +62,18 @@ const CellAction = ({ postId }: ICellActionProps) => {
     }
   }, [postId, postToProcessing])
 
-  const handleOnDelete = useCallback(() => {
-    setOpen(true)
-  }, [])
-
   const imageUrls = postToProcessing ? postToProcessing?.imageUrls : []
-
-  const onConfirm = () => {
-    startTransition(async () => {
-      if (postId) {
-        if (imageUrls?.length) {
-          try {
-            await destroyImagesInCloudinary(
-              imageUrls,
-              CLOUDINARY_POSTS_IMAGES_FOLDER
-            )
-          } catch (error) {
-            console.error('Error destroying images:', error)
-
-            return
-          } finally {
-            setOpen(false)
-          }
-        }
-
-        try {
-          const data = await deletePost(postId)
-
-          if (data?.error) {
-            toast.error(data?.error, {
-              richColors: true,
-              closeButton: true
-            })
-          } else if (data?.success) {
-            toast.success(data?.success, {
-              richColors: true,
-              closeButton: true
-            })
-
-            getDataTablePosts({
-              currentPage: 1,
-              limit: 10,
-              categoriesFilter: null,
-              publishedFilter: null,
-              searchQuery: null
-            })
-          }
-        } catch (error) {
-          console.error('Error deleting post:', error)
-          toast.error('Failed to delete post.')
-        } finally {
-          setOpen(false)
-        }
-      }
-    })
-  }
 
   return (
     <>
-      <AlertModal
+      <DeletePostHandler
+        postId={postId}
+        imageUrls={imageUrls || []}
         isOpen={open}
-        onClose={() => {
-          return setOpen(false)
-        }}
-        onConfirm={onConfirm}
-        loading={isPending}
+        setIsOpen={setOpen}
+        onPostDeleteSuccess={onPostDeleteSuccess}
       />
+
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button

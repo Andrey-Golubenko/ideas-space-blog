@@ -30,6 +30,7 @@ import { type TFileError } from '~/types'
 interface IFilesFieldProps {
   name: string
   additionalName: string
+  isWithSingleImage?: boolean
   multiple?: boolean
   type?: string
   filesDuplicates?: string[]
@@ -41,6 +42,7 @@ interface IFilesFieldProps {
 const FilesField = ({
   name,
   additionalName,
+  isWithSingleImage = false,
   multiple = false,
   filesDuplicates,
   setFilesDuplicate,
@@ -79,8 +81,12 @@ const FilesField = ({
     ? imageUrls
     : [imageUrls]
 
+  const shouldHaveOnlyOneImage: boolean =
+    isWithSingleImage && !!imageUrlsArray?.length
+
   const { onDrop } = useOnDrop({
     fieldName: name,
+    shouldHaveOnlyOneImage,
     multiple,
     files,
     imageUrls: imageUrlsArray,

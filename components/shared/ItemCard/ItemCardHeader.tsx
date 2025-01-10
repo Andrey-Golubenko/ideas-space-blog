@@ -22,8 +22,14 @@ const ItemCardHeader = ({
   itemType,
   imagePriority
 }: IItemCardHeaderProps) => {
-  const { itemImage, itemTitle, itemSlug, itemCreatedAt, authorId } =
-    useItemProps(item)
+  const {
+    itemImage,
+    itemTitle,
+    itemSlug,
+    itemCreatedAt,
+    authorId,
+    isPublishes
+  } = useItemProps(item)
 
   const { isPost, isCategory } = itemType
 
@@ -63,6 +69,7 @@ const ItemCardHeader = ({
             <PostMeta
               authorId={authorId}
               itemCreatedAt={itemCreatedAt}
+              isPublished={isPublishes}
             />
           </div>
         )}

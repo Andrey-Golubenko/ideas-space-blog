@@ -5,16 +5,14 @@ import Link from 'next/link'
 import { Button } from '~/components/ui/button'
 import { PATHS } from '~/utils/constants'
 
-interface IChangePostButtonProps {
+interface IEditPostButtonProps {
   postId?: string
-  isPending: boolean
 }
-const EditPostButton = ({ postId, isPending }: IChangePostButtonProps) => {
+const EditPostButton = ({ postId }: IEditPostButtonProps) => {
   return (
     <Button
       variant="outline"
-      disabled={isPending}
-      className={`h-10 w-[45%] min-w-[90px] rounded-lg md:w-[35%] lg:w-[25%] ${!isPending ? 'border border-black/20 bg-blue-200 hover:bg-blue-200/70' : ''}`}
+      className="h-10 w-[45%] min-w-[90px] rounded-lg border border-black/20 bg-blue-200 hover:bg-blue-200/70 md:w-[35%] lg:w-[25%]"
       asChild
     >
       <Link href={`${PATHS.blog}/${postId}${PATHS.editPost}`}>

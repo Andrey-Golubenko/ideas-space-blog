@@ -8,6 +8,7 @@ import { type OnDropType, type TFileError } from '~/types'
 
 interface IuseOnDropProps {
   fieldName: string
+  shouldHaveOnlyOneImage?: boolean
   multiple: boolean
   files?: File[]
   imageUrls: string[]
@@ -18,6 +19,7 @@ interface IuseOnDropProps {
 
 export const useOnDrop = ({
   fieldName,
+  shouldHaveOnlyOneImage = false,
   multiple,
   files,
   imageUrls,
@@ -37,6 +39,11 @@ export const useOnDrop = ({
       if (filesCount > maxFileCount) {
         errors.push({
           message: `You can upload up to ${maxFileCount} files only. Try again please.`
+        })
+      } else if (shouldHaveOnlyOneImage) {
+        errors.push({
+          message:
+            'Should be only 1 image. Try to delete previous image at first.'
         })
       } else {
         droppedFiles.forEach((file) => {

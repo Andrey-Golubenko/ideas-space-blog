@@ -22,10 +22,9 @@ import { type TManagePostForm } from '~/types'
 
 interface IEditPostViewProps {
   isLogged: boolean
-  isAdmin: boolean
 }
 
-const EditPostView = ({ isLogged, isAdmin }: IEditPostViewProps) => {
+const EditPostPageView = ({ isLogged }: IEditPostViewProps) => {
   const [success, setSuccess] = useState<string | undefined>('')
   const [error, setError] = useState<string | undefined>('')
 
@@ -33,21 +32,9 @@ const EditPostView = ({ isLogged, isAdmin }: IEditPostViewProps) => {
 
   const router = useRouter()
 
-  const [posts, dataTablePosts, singlePost, setSinglePost] = useStore(
-    (state) => {
-      return [
-        state.posts,
-        state.dataTablePosts,
-        state.singlePost,
-        state.setSinglePost
-      ]
-    }
-  )
-
-  const initialPost =
-    (isAdmin ? dataTablePosts : posts)?.find((post) => {
-      return post?.id === (singlePost as Post)?.id
-    }) || {}
+  const [singlePost, setSinglePost] = useStore((state) => {
+    return [state.singlePost, state.setSinglePost]
+  })
 
   const {
     id: postId,
@@ -100,16 +87,14 @@ const EditPostView = ({ isLogged, isAdmin }: IEditPostViewProps) => {
 
     startTransition(async () => {
       const newImageUrls = values?.imageUrls || []
-      const initialPostImageUrls = (initialPost as Post)?.imageUrls || []
 
-      const isImageUrlsChanged =
-        (initialPostImageUrls?.length || 0) > (newImageUrls?.length || 0)
+      const initialPostImageUrls = (singlePost as Post)?.imageUrls || []
 
-      if (isImageUrlsChanged) {
-        const deletedImageUrls = initialPostImageUrls?.filter((url) => {
-          return !newImageUrls?.includes(url)
-        })
+      const deletedImageUrls = initialPostImageUrls.filter((url) => {
+        return !newImageUrls.includes(url)
+      })
 
+      if (deletedImageUrls?.length) {
         try {
           await destroyImagesInCloudinary(
             deletedImageUrls,
@@ -181,4 +166,4 @@ const EditPostView = ({ isLogged, isAdmin }: IEditPostViewProps) => {
   )
 }
 
-export default EditPostView
+export default EditPostPageView

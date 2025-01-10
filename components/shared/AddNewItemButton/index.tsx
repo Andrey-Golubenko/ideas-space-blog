@@ -1,22 +1,29 @@
 import Link from 'next/link'
 import { Plus } from 'lucide-react'
-import { Button } from '~/components/ui/button'
+import { Button, ButtonProps } from '~/components/ui/button'
 
-interface IAddNewItemButtonProps {
+interface IAddNewItemButtonProps
+  extends ButtonProps,
+    React.HTMLAttributes<HTMLButtonElement> {
   label: string
   path: string
+  withIcon?: boolean
 }
 
-const AddNewItemButton = ({ label, path }: IAddNewItemButtonProps) => {
+const AddNewItemButton = ({
+  label,
+  path,
+  withIcon = false,
+  ...props
+}: IAddNewItemButtonProps) => {
   return (
     <Button
-      variant="outline"
       size="sm"
       asChild
-      className="ml-auto border border-black/20 bg-blue-200 hover:bg-blue-200/70 sm:px-4 sm:py-2"
+      {...props}
     >
       <Link href={path}>
-        <Plus className="mr-2 h-4 w-4" /> {label}
+        {withIcon && <Plus className="mr-2 h-4 w-4" />} {label}
       </Link>
     </Button>
   )

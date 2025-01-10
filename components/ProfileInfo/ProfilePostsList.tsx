@@ -12,7 +12,7 @@ import SkeletonPostCard from '~/components/shared/ItemCard/SkeletonPostCard'
 import NoItemsCard from '~/components/posts/NoItemsCard'
 
 interface IProfilePostsListProps {
-  currentUser?: UserDTO & User
+  currentUser?: CurrentUser
 }
 
 const ProfilePostsList = ({ currentUser }: IProfilePostsListProps) => {

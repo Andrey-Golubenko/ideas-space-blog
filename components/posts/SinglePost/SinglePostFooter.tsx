@@ -15,22 +15,15 @@ const SinglePostFooter = ({
   singlePostImageUrls,
   isPostManageable
 }: ISinglePostFooterProps) => {
-  const [isPending, startTransition] = useTransition()
-
   return (
     <CardFooter className="w-full pb-16 sm:w-2/3">
       {isPostManageable && (
         <div className="flex w-full flex-row items-center justify-between gap-x-6">
-          <EditPostButton
-            postId={singlePostId}
-            isPending={isPending}
-          />
+          <EditPostButton postId={singlePostId} />
+
           <DeletePostButton
             postId={singlePostId}
             imageUrls={singlePostImageUrls}
-            isPostManageable={isPostManageable}
-            isPending={isPending}
-            startTransition={startTransition}
           />
         </div>
       )}

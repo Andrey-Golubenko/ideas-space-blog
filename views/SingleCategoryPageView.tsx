@@ -23,7 +23,7 @@ const SingleCategoryPageView = async ({
   return postsByCategory?.posts ? (
     <SingleCategoryCard posts={postsByCategory.posts} />
   ) : (
-    <NoItemsCard itemName="posts" />
+    <NoItemsCard itemName="published posts" />
   )
 }
 

@@ -16,7 +16,6 @@ import { SingleCategorySchema } from '~/schemas'
 import { type TManageCategoryForm } from '~/types'
 import {
   CLOUDINARY_CATEGORIES_IMAGES_FOLDER,
-  PATHS
 } from '~/utils/constants'
 
 const NewCategoryPageView = () => {
@@ -81,7 +80,7 @@ const NewCategoryPageView = () => {
               duration: 5000
             })
 
-            router.push(PATHS.categories)
+            router.back()
           }
         })
         .catch(() => {

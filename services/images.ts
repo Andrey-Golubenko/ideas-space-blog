@@ -2,6 +2,7 @@
 
 import { type UploadApiResponse } from 'cloudinary/types'
 import cloudinary from '~/libs/cloudinary/cloudinary.config'
+import { type TActionReturn } from '~/types'
 
 export const uploadImageToCloudinary = async (
   formData: FormData,
@@ -50,16 +51,7 @@ export const uploadImageToCloudinary = async (
 export const deleteImagesFromCloudinary = async (
   imageName: string,
   storageFolder: string
-): Promise<
-  | {
-      error: string
-      success?: undefined
-    }
-  | {
-      success: string
-      error?: undefined
-    }
-> => {
+): TActionReturn => {
   try {
     const deleteResult = await cloudinary.uploader.destroy(
       `${storageFolder}/${imageName}`,
@@ -71,14 +63,14 @@ export const deleteImagesFromCloudinary = async (
 
     if (deleteResult.result !== 'ok') {
       return {
-        error: `Failed to delete image: ${imageName}`
+        error: `Failed to delete image: ${imageName}. Try again a little bit later.`
       }
     }
 
-    return { success: 'Images was successfully deleted' }
+    return { success: `Image was successfully deleted: ${imageName}` }
   } catch (error) {
     return {
-      error: `Failed to delete image: ${(error as Error).message}`
+      error: `Failed to delete image: ${imageName}. Try again a little bit later.`
     }
   }
 }

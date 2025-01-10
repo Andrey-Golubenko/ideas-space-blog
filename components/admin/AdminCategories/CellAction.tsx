@@ -1,12 +1,11 @@
 'use client'
 
-import { useCallback, useState, useTransition } from 'react'
-import { Edit, MoreHorizontal, Trash } from 'lucide-react'
+import { useCallback, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { Edit, MoreHorizontal, Trash } from 'lucide-react'
 import { toast } from 'sonner'
 
 import useStore from '~/store'
-import { deleteCategory } from '~/actions/delete-category'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +14,7 @@ import {
   DropdownMenuTrigger
 } from '~/components/ui/dropdown-menu'
 import { Button } from '~/components/ui/button'
-import AlertModal from '~/components/shared/Modal/AlertModal'
+import DeleteCategoryHandler from '~/components/shared/DeleteHandlers/DeleteCategoryHandler'
 import { PATHS } from '~/utils/constants'
 
 interface ICellActionProps {
@@ -36,16 +35,25 @@ const CellAction = ({ categoryId }: ICellActionProps) => {
   })
 
   const [open, setOpen] = useState(false)
+
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
+
+  const categoryToProcessing =
+    dataTableCategories.find((category) => {
+      return category?.id === categoryId
+    }) ?? null
+
+  const onCategoryDeleteSuccess = useCallback(() => {
+    getDataTableCategories({
+      currentPage: 1,
+      limit: 10,
+      searchQuery: null
+    })
+  }, [])
 
   const handleOnUpdate = useCallback(() => {
-    const currentCategory = dataTableCategories?.find((category) => {
-      return category?.id === categoryId
-    })
-
-    if (currentCategory) {
-      setEditableCategory(currentCategory)
+    if (categoryToProcessing) {
+      setEditableCategory(categoryToProcessing)
 
       router.push(`${PATHS.adminEditCategory}`)
     } else {
@@ -60,44 +68,18 @@ const CellAction = ({ categoryId }: ICellActionProps) => {
     setOpen(true)
   }, [])
 
-  const onConfirm = useCallback(() => {
-    startTransition(async () => {
-      try {
-        const data = await deleteCategory(categoryId)
-
-        if (data?.error) {
-          toast.error(data?.error, { richColors: true, closeButton: true })
-        } else if (data?.success) {
-          toast.success(data?.success, {
-            richColors: true,
-            closeButton: true
-          })
-
-          setOpen(false)
-
-          await getDataTableCategories({
-            currentPage: 1,
-            limit: 10,
-            searchQuery: null
-          })
-        }
-      } catch (error) {
-        console.error('Error deleting user:', error)
-
-        toast.error('Failed to delete user.')
-      }
-    })
-  }, [getDataTableCategories, categoryId])
+  const imageUrl = categoryToProcessing
+    ? categoryToProcessing?.imageUrl
+    : ''
 
   return (
     <>
-      <AlertModal
+      <DeleteCategoryHandler
+        categoryId={categoryId}
+        imageUrl={imageUrl || ''}
         isOpen={open}
-        onClose={() => {
-          return setOpen(false)
-        }}
-        onConfirm={onConfirm}
-        loading={isPending}
+        setIsOpen={setOpen}
+        onCategorytDeleteSuccess={onCategoryDeleteSuccess}
       />
 
       <DropdownMenu modal={false}>

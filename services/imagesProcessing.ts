@@ -1,5 +1,4 @@
 import { type Dispatch, type SetStateAction } from 'react'
-import { toast } from 'sonner'
 
 import {
   uploadImageToCloudinary,
@@ -43,7 +42,8 @@ export const saveImagesToCloudinary = async (
 
 export const destroyImagesInCloudinary = async (
   imageUrls: string[],
-  storageFolder: string
+  storageFolder: string,
+  setComplDelOpen?: (value: boolean) => void
 ) => {
   try {
     const imageDeleteResultsPromises = imageUrls.map((url) => {
@@ -56,16 +56,20 @@ export const destroyImagesInCloudinary = async (
       imageDeleteResultsPromises
     )
 
-    imageDeleteResults.forEach((result) => {
-      if (result?.error) {
-        toast.error(result?.error, {
-          richColors: true,
-          closeButton: true
-        })
-
-        throw new Error(result?.error)
-      }
+    const deletedWithErrors = imageDeleteResults.filter((result) => {
+      return result?.error
     })
+
+    if (deletedWithErrors.length && setComplDelOpen) {
+      setComplDelOpen(true)
+      imageDeleteResults.forEach((result) => {
+        if (result?.error) {
+          // TODO: Add logErrorFunction
+
+          throw new Error(result?.error)
+        }
+      })
+    }
   } catch (error) {
     console.error('Error when deleting images:', error)
     throw error

@@ -58,6 +58,7 @@ const CategoryManageForm = ({
           <FilesField
             name="file"
             additionalName="imageUrl"
+            isWithSingleImage
             validateErrors={form.formState.errors.file}
             isPending={isDisabled}
           />

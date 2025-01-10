@@ -6,6 +6,8 @@ import WithPostData from '~/components/hoc/WithPostData'
 import WithSkeletonsList from '~/components/hoc/WithSkeletonsList'
 import ItemCard from '~/components/shared/ItemCard'
 import SkeletonPostCard from '~/components/shared/ItemCard/SkeletonPostCard'
+import NoItemsCard from '~/components/posts/NoItemsCard'
+import { isEmptyOrUnpublished } from '~/utils/helpers'
 import { type Post } from '@prisma/client'
 
 interface ISingleCategoryCardProps {
@@ -22,6 +24,12 @@ const SingleCategoryCard = ({ posts }: ISingleCategoryCardProps) => {
       return !prev
     })
   }, [posts?.length])
+
+  const noItems = isEmptyOrUnpublished(posts as Post[])
+
+  if (noItems) {
+    return <NoItemsCard itemName="published posts" />
+  }
 
   return (
     <div

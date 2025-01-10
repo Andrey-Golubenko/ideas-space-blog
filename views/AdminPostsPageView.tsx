@@ -19,6 +19,9 @@ const AdminPostsPageView = ({
         <AddNewItemButton
           label="Add New"
           path={PATHS.adminNewPost}
+          variant="outline"
+          withIcon
+          className="ml-auto border border-black/20 bg-blue-200 hover:bg-blue-200/70 sm:px-4 sm:py-2"
         />
       </div>
 

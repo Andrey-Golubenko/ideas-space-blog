@@ -6,7 +6,7 @@ const ProtectedLayout = ({
   children: React.ReactNode
 }>) => {
   return (
-    <main className="-mb-3 flex basis-full flex-col items-center justify-center bg-custom-gradient">
+    <main className="-mb-3 flex basis-full flex-col items-center justify-center bg-custom-gradient pt-10">
       <NavBar />
       {children}
     </main>

@@ -1,18 +1,12 @@
-import { UserRole } from '@prisma/client'
-import EditPostView from '~/views/EditPostView'
+import EditPostPageView from '~/views/EditPostPageView'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
 
 const AdminEditPostPage = async () => {
   const user = await getCurrentUser()
 
-  const isAdmin = user?.role === UserRole.ADMIN
-
   return (
     <div className="@container">
-      <EditPostView
-        isLogged={!!user}
-        isAdmin={isAdmin}
-      />
+      <EditPostPageView isLogged={!!user} />
     </div>
   )
 }

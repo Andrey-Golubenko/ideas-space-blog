@@ -10,6 +10,7 @@ import { UserRole, type Categories } from '@prisma/client'
 import useStore from '~/store'
 import { useCleaningItem } from '~/hooks/useCleaningItem'
 import { Card, CardHeader, CardContent } from '~/components/ui/card'
+import CategoryManageForm from '~/components/shared/CategoryManageForm'
 import WithRole from '~/components/hoc/WithRole'
 import { editCategory } from '~/actions/edit-category'
 import {
@@ -17,7 +18,6 @@ import {
   saveImagesToCloudinary
 } from '~/services/imagesProcessing'
 import { CLOUDINARY_CATEGORIES_IMAGES_FOLDER } from '~/utils/constants'
-import CategoryManageForm from '~/components/shared/CategoryManageForm'
 import { SingleCategorySchema } from '~/schemas'
 import { type TManageCategoryForm } from '~/types'
 
@@ -28,19 +28,9 @@ const EditCategoryPageView = () => {
 
   const [isPending, startTransition] = useTransition()
 
-  const [dataTableCategories, editableCategory, setEditableCategory] =
-    useStore((state) => {
-      return [
-        state.dataTableCategories,
-        state.editableCategory,
-        state.setEditableCategory
-      ]
-    })
-
-  const initialCategory: Categories | {} =
-    dataTableCategories?.find((category) => {
-      return category?.id === (editableCategory as Categories)?.id
-    }) || {}
+  const [editableCategory, setEditableCategory] = useStore((state) => {
+    return [state.editableCategory, state.setEditableCategory]
+  })
 
   const {
     id: editableCategoryId,
@@ -81,15 +71,17 @@ const EditCategoryPageView = () => {
     setSuccess('')
 
     startTransition(async () => {
-      const isImageUrlExist = !!values?.imageUrl
+      const initialImageUrl: string | null = (
+        editableCategory as Categories
+      )?.imageUrl as string
 
-      const deletedImageUrl: string = (initialCategory as Categories)
-        ?.imageUrl as string
+      const isImageUrlChanged: boolean =
+        initialImageUrl !== values?.imageUrl
 
-      if (!isImageUrlExist && !!deletedImageUrl) {
+      if (initialImageUrl && isImageUrlChanged) {
         try {
           await destroyImagesInCloudinary(
-            [deletedImageUrl],
+            [initialImageUrl],
             CLOUDINARY_CATEGORIES_IMAGES_FOLDER
           )
         } catch {
@@ -121,7 +113,7 @@ const EditCategoryPageView = () => {
 
       const newCategoryValues: Omit<TManageCategoryForm, 'file'> = {
         ...restValues,
-        imageUrl: isImageUrlExist ? imageUrl : newImageUrl
+        imageUrl: newImageUrl
       }
 
       editCategory(newCategoryValues, editableCategoryId)

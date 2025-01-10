@@ -49,7 +49,7 @@ const WithPostData = ({
           itemType
         })
       ) : (
-        <NoItemsCard itemName="posts" />
+        <NoItemsCard itemName="published posts" />
       )}
 
       {!isLoading && (restItems?.length > 0 || thirdItemInList) && (

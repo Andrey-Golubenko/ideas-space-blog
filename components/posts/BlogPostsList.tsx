@@ -8,6 +8,8 @@ import WithSkeletonsList from '~/components/hoc/WithSkeletonsList'
 import ItemCard from '~/components/shared/ItemCard'
 import SkeletonPostCard from '~/components/shared/ItemCard/SkeletonPostCard'
 import NoItemsCard from '~/components/posts/NoItemsCard'
+import { isEmptyOrUnpublished } from '~/utils/helpers'
+import { type Post } from '@prisma/client'
 
 const BlogPostsList = () => {
   const [posts, postsCount, isLoading, getAllPosts] = useStore((state) => {
@@ -23,13 +25,15 @@ const BlogPostsList = () => {
     getAllPosts()
   }, [getAllPosts])
 
-  if (typeof posts === 'string') {
-    return <NoItemsCard itemName="posts" />
+  const noItems = isEmptyOrUnpublished(posts as Post[])
+
+  if (noItems) {
+    return <NoItemsCard itemName="published posts" />
   }
 
   return (
     <WithPostData
-      posts={posts}
+      posts={posts as Post[]}
       postsCount={postsCount}
       isLoading={isLoading}
     >

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { ReloadIcon } from '@radix-ui/react-icons'
 
 import { Button } from '~/components/ui/button'
 import { Modal } from '~/components/ui/modal'
@@ -9,14 +10,18 @@ interface IAlertModalProps {
   isOpen: boolean
   onClose: () => void
   onConfirm: () => void
-  loading: boolean
+  loading?: boolean
+  modalTitle?: string
+  modalDescription?: string
 }
 
 const AlertModal = ({
   isOpen,
   onClose,
   onConfirm,
-  loading
+  loading,
+  modalTitle = 'Are you sure?',
+  modalDescription = 'This action cannot be undone.'
 }: IAlertModalProps) => {
   const [isMounted, setIsMounted] = useState(false)
 
@@ -30,12 +35,12 @@ const AlertModal = ({
 
   return (
     <Modal
-      title="Are you sure?"
-      description="This action cannot be undone."
+      title={modalTitle}
+      description={modalDescription}
       isOpen={isOpen}
       onClose={onClose}
     >
-      <div className="flex w-full items-center justify-end space-x-2 pt-6">
+      <div className="flex w-full items-center justify-end space-x-6 pt-6">
         <Button
           disabled={loading}
           variant="outline"
@@ -48,7 +53,14 @@ const AlertModal = ({
           variant="destructive"
           onClick={onConfirm}
         >
-          Continue
+          {loading ? (
+            <div className="flex items-center">
+              <ReloadIcon className="mr-4 h-5 w-5 animate-spin" />
+              <span>Deleting</span>
+            </div>
+          ) : (
+            'Continue'
+          )}
         </Button>
       </div>
     </Modal>

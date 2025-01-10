@@ -29,14 +29,20 @@ const MobileNavMenuButton = ({
       const target = event.target as HTMLElement
       const navMenu = document.getElementById('nav-menu')
       const navMenuButton = document.getElementById('nav-menu-button')
+      const userAvatar = document.getElementById('user-avatar')
 
       const targetNameLink = target.tagName === 'A'
       const targetNameSVG = target.tagName === 'path'
       const targetNameHeading = target.tagName === 'H1'
 
+      if (userAvatar && userAvatar.contains(target)) {
+        return
+      }
+
       if (
         navMenu &&
         navMenu.contains(target) &&
+        targetNameLink &&
         (targetNameLink || targetNameSVG || targetNameHeading)
       ) {
         setIsOpen(false)

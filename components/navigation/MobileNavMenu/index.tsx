@@ -3,11 +3,14 @@
 import { useEffect, useState } from 'react'
 
 import NavLinks from '~/components/navigation/NavLinks'
-import MobileNavMenuButton from '~/components/navigation/MobileNavMenuButton'
+import MobileNavMenuButton from '~/components/navigation/MobileNavMenu/MobileNavMenuButton'
 import LogoItem from '~/components/navigation/LogoItem'
 import { Separator } from '~/components/ui/separator'
+import MobileNavMenuHeader from '~/components/navigation/MobileNavMenu/MobileNavMenuHeader'
+import AddNewItemButton from '~/components/shared/AddNewItemButton'
+import { PATHS } from '~/utils/constants'
 
-const MobileNavMenu = ({ isLoggedIn, isMobile }: INavMenuProps) => {
+const MobileNavMenu = ({ user, isMobile }: INavMenuProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   useEffect(() => {
@@ -32,6 +35,14 @@ const MobileNavMenu = ({ isLoggedIn, isMobile }: INavMenuProps) => {
         />
 
         <LogoItem logoClassNames="col-start-2 justify-self-center" />
+
+        <AddNewItemButton
+          label="Add Post"
+          path={PATHS.blogNewPost}
+          variant="outline"
+          size="sm"
+          className="col-start-3 ml-auto mr-4 w-8/12 rounded-full border border-[hsl(var(--logo-color))] bg-transparent text-[hsl(var(--logo-color))] hover:bg-[hsl(var(--logo-color))] sm:py-2"
+        />
       </div>
 
       <div
@@ -42,13 +53,13 @@ const MobileNavMenu = ({ isLoggedIn, isMobile }: INavMenuProps) => {
         id="nav-menu"
         className={`fixed inset-y-0 -right-1 z-50 flex h-screen w-[60%] transform flex-col items-center rounded-none  border-l-[3px] border-white bg-[#2C2C32] shadow-[-2px_0_0_0_#000] transition-transform duration-500 ease-in-out ${isOpen ? '-translate-x-0' : 'translate-x-full'}`}
       >
-        <LogoItem logoClassNames="pt-6 pb-4" />
+        <MobileNavMenuHeader user={user} />
 
         <Separator className="w-full" />
 
         <ul className=" flex h-screen w-[60vw] flex-col items-start space-y-10 pl-10 pt-10 text-[15px]">
           <NavLinks
-            isLoggedIn={isLoggedIn}
+            isLoggedIn={!!user}
             isMobile={isMobile}
           />
         </ul>

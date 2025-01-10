@@ -3,6 +3,7 @@ import {
   PUBLIC_ROUTES_EXCEPTIONS,
   PUBLIC_ROUTES_WITH_DYNAMIC_SEGMENT
 } from '~/utils/constants/routes'
+import { type Post } from '@prisma/client'
 
 export const isPublicRoute = (pathname: string): boolean => {
   const isDynamicRoute =
@@ -83,4 +84,19 @@ export const getImageNames = (imageUrls: string[]) => {
     }) || []
 
   return existingImageNames
+}
+
+export const isEmptyOrUnpublished = (posts: Post[]): boolean => {
+  const oneUnpublished = Array.isArray(posts)
+    ? posts?.filter((post) => {
+        return !post.published
+      })?.length === posts?.length
+    : false
+
+  return (
+    !posts ||
+    posts?.length === 0 ||
+    typeof posts === 'string' ||
+    oneUnpublished
+  )
 }

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 import {
   Avatar,
@@ -11,14 +12,21 @@ import { getUserById } from '~/services/user'
 
 import { CalendarIcon } from '@radix-ui/react-icons'
 import { FaUser } from 'react-icons/fa'
+import { PATHS } from '~/utils/constants'
 
 interface IPostMetaProps {
   authorId: string
   itemCreatedAt: string
+  isPublished?: boolean
 }
 
-const PostMeta = ({ authorId, itemCreatedAt }: IPostMetaProps) => {
+const PostMeta = ({
+  authorId,
+  itemCreatedAt,
+  isPublished
+}: IPostMetaProps) => {
   const [postAuthor, setPostAuthor] = useState<UserDTO | null>(null)
+  const pathname = usePathname()
 
   useEffect(() => {
     if (authorId) {
@@ -31,6 +39,8 @@ const PostMeta = ({ authorId, itemCreatedAt }: IPostMetaProps) => {
       author()
     }
   }, [authorId])
+
+  const isProfile = pathname.includes(PATHS.profile)
 
   return (
     <div className="mb-4 w-full">
@@ -49,7 +59,7 @@ const PostMeta = ({ authorId, itemCreatedAt }: IPostMetaProps) => {
         </span>
       </div>
 
-      <p className="flex items-center pl-3">
+      <p className="mb-2 flex items-center pl-3">
         <CalendarIcon
           height="17px"
           width="17px"
@@ -62,6 +72,15 @@ const PostMeta = ({ authorId, itemCreatedAt }: IPostMetaProps) => {
           {itemCreatedAt}
         </time>
       </p>
+
+      {isProfile && (
+        <p className="flex items-center pl-3">
+          <span className="mr-2">State: </span>
+          <span className="text-sm tracking-wider text-red-800">
+            {isPublished ? 'Published' : 'Draft'}
+          </span>
+        </p>
+      )}
     </div>
   )
 }

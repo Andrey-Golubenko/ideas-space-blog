@@ -17,12 +17,12 @@ import {
 } from '~/components/ui/avatar'
 import LogoutButton from '~/components/auth/LogoutButton'
 
-const UserButton = () => {
+const UserAvatarButton = () => {
   const user = useCurrentUser()
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger>
+    <DropdownMenu modal={false}>
+      <DropdownMenuTrigger className="cursor-pointer focus-visible:outline-none">
         <Avatar>
           <AvatarImage src={(user?.image as string) || ''} />
           <AvatarFallback className="bg-sky-500">
@@ -42,4 +42,4 @@ const UserButton = () => {
   )
 }
 
-export default UserButton
+export default UserAvatarButton

@@ -31,11 +31,12 @@ export const Modal: React.FC<ModalProps> = ({
 
   return (
     <Dialog
+      modal
       open={isOpen}
       onOpenChange={onChange}
     >
       <DialogContent>
-        <DialogHeader>
+        <DialogHeader className="space-y-4">
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>

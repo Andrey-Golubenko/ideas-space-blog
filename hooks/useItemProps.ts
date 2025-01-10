@@ -13,6 +13,7 @@ export const useItemProps = (item?: TListItem) => {
   let itemSlug = ''
   let itemCreatedAt = ''
   let authorId = ''
+  let isPublishes = false
 
   if (isPost) {
     const post = item as Post
@@ -30,6 +31,8 @@ export const useItemProps = (item?: TListItem) => {
     itemSlug = post?.id ?? ''
 
     authorId = post?.authorId ?? ''
+
+    isPublishes = post?.published ?? false
 
     itemCreatedAt =
       new Date(post?.createdAt)?.toLocaleDateString('de') ?? ''
@@ -57,6 +60,7 @@ export const useItemProps = (item?: TListItem) => {
     itemContent,
     itemSlug,
     authorId,
+    isPublishes,
     itemCreatedAt
   }
 }
