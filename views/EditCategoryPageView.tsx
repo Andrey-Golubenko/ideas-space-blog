@@ -14,8 +14,8 @@ import CategoryManageForm from '~/components/shared/CategoryManageForm'
 import WithRole from '~/components/hoc/WithRole'
 import { editCategory } from '~/actions/edit-category'
 import {
-  destroyImagesInCloudinary,
-  saveImagesToCloudinary
+  destroyImagesInCld,
+  saveImagesToCld
 } from '~/services/imagesProcessing'
 import { CLOUDINARY_CATEGORIES_IMAGES_FOLDER } from '~/utils/constants'
 import { SingleCategorySchema } from '~/schemas'
@@ -80,7 +80,7 @@ const EditCategoryPageView = () => {
 
       if (initialImageUrl && isImageUrlChanged) {
         try {
-          await destroyImagesInCloudinary(
+          await destroyImagesInCld(
             [initialImageUrl],
             CLOUDINARY_CATEGORIES_IMAGES_FOLDER
           )
@@ -94,7 +94,7 @@ const EditCategoryPageView = () => {
       const newImage = values?.file || []
 
       if (newImage?.length) {
-        const cloudinaryUrls = await saveImagesToCloudinary(
+        const cloudinaryUrls = await saveImagesToCld(
           newImage,
           CLOUDINARY_CATEGORIES_IMAGES_FOLDER,
           setError

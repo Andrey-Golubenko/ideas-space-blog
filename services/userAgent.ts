@@ -1,19 +1,21 @@
 'use server'
 
 import { headers } from 'next/headers'
-/**
- * Safari and other WebKit-based browsers sometimes interpret the Expires value of cookie as local time. Chrome and others Blick-based browsers, does not do this and always uses UTC.
- * @returns boolean, is the browser based on the WebKit engine
- */
 
-export const isWebKitDetermine = async () => {
+/**
+ * Function to determine if the browser is based on the WebKit engine.
+ * Safari and other WebKit-based browsers sometimes interpret the `Expires` value of cookies as local time.
+ * Chrome and other Blink-based browsers, however, always use UTC.
+ * @returns Promise<boolean> - Returns `true` if the browser is based on the WebKit engine, otherwise `false`.
+ */
+export const isWebKitDetermine = async (): Promise<boolean> => {
   const headersList = headers()
 
   const userAgent = headersList.get('user-agent') ?? ''
 
   const lowerUA = userAgent.toLowerCase()
 
-  // WebKit browsers include Safari, iOS Chrome and others
+  // WebKit browsers include Safari, iOS Chrome, and others
   const isWebKit = lowerUA.includes('applewebkit')
 
   // We exclude Blink browsers (Chrome, Edge, Opera), but leave iOS Chrome
@@ -26,10 +28,15 @@ export const isWebKitDetermine = async () => {
   const isGecko = lowerUA.includes('gecko') && lowerUA.includes('firefox')
   const isPresto = lowerUA.includes('presto') || lowerUA.includes('opera')
 
-  // WebKit = Apple WebKit, but not Blink, Gecko or Presto
+  // WebKit = Apple WebKit, but not Blink, Gecko, or Presto
   return isWebKit && !isBlink && !isGecko && !isPresto
 }
 
+/**
+ * Function to determine the name of the browser based on the user agent string.
+ * @param userAgent - A string representing the user agent of the browser. If `null`, the function returns 'other'.
+ * @returns Promise<string> - Returns the name of the browser: 'chrome', 'safari', 'firefox', 'edge', or 'other'.
+ */
 export const getBrowserName = async (
   userAgent: string | null
 ): Promise<string> => {

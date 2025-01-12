@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { v4 as uuidv4 } from 'uuid'
 
 import { db } from '~/libs/db'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
@@ -31,8 +32,10 @@ export const newPost = async (
     return { error: 'Unauthorized!' }
   }
 
-  const { title, content, imageUrls, published, categories } =
+  const { id, title, content, imageUrls, published, categories } =
     validatedFields.data
+
+  const postId = id || uuidv4()
 
   const uncategorizedCategory = await fetchUncategorizedCategory()
 
@@ -43,6 +46,7 @@ export const newPost = async (
   try {
     await db.post.create({
       data: {
+        id: postId,
         title,
         content,
         imageUrls,
@@ -68,7 +72,9 @@ export const newPost = async (
     revalidatePath(PATHS.adminPosts)
 
     return { success: 'New post has been successfully created!' }
-  } catch {
+  } catch (error) {
+    console.error('Error creating post:', error)
+
     return { error: 'Failed to create a new post!' }
   }
 }

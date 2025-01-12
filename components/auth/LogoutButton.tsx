@@ -5,6 +5,7 @@ import { logOut } from '~/actions/logout'
 interface ILogoutButtonProps {
   children?: React.ReactNode
 }
+
 const LogoutButton: React.FC<ILogoutButtonProps> = ({ children }) => {
   const handleClick = () => {
     logOut()

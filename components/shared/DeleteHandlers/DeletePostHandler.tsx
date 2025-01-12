@@ -9,8 +9,10 @@ import {
 } from 'react'
 import { toast } from 'sonner'
 
+import useStore from '~/store'
 import { deletePost } from '~/actions/delete-post'
-import { destroyImagesInCloudinary } from '~/services/imagesProcessing'
+import { destroyImagesInCld } from '~/services/imagesProcessing'
+import { deletePostFolderInCld } from '~/services/images'
 import AlertModal from '~/components/shared/Modal/AlertModal'
 import { CLOUDINARY_POSTS_IMAGES_FOLDER } from '~/utils/constants'
 
@@ -29,6 +31,10 @@ const DeletePostHandler = ({
   setIsOpen,
   onPostDeleteSuccess
 }: IDeletePostHandlerProps) => {
+  const [deleteSinglePost] = useStore((state) => {
+    return [state.deleteSinglePost]
+  })
+
   const [complDelOpen, setComplDelOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
 
@@ -47,10 +53,16 @@ const DeletePostHandler = ({
           closeButton: true
         })
         onPostDeleteSuccess()
+
+        // delete post from store
+        deleteSinglePost(postId)
       }
     } catch (error) {
       console.error('Error deleting post:', error)
-      toast.error('Failed to delete post.')
+
+      throw new Error(
+        error instanceof Error ? error.message : String(error)
+      )
     } finally {
       setIsOpen(false)
       setComplDelOpen(false)
@@ -62,10 +74,14 @@ const DeletePostHandler = ({
       if (postId) {
         if (imageUrls?.length) {
           try {
-            await destroyImagesInCloudinary(
+            await destroyImagesInCld(
               imageUrls,
-              CLOUDINARY_POSTS_IMAGES_FOLDER,
+              `${CLOUDINARY_POSTS_IMAGES_FOLDER}/${postId}`,
               setComplDelOpen
+            )
+
+            await deletePostFolderInCld(
+              `${CLOUDINARY_POSTS_IMAGES_FOLDER}/${postId}`
             )
           } catch (error) {
             console.error('Error destroying images:', error)

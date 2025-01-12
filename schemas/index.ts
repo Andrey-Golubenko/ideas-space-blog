@@ -53,6 +53,7 @@ export const SingleTrucatedCategorySchema = z.object({
 })
 
 export const ManagePostSchema = z.object({
+  id: z.optional(z.string()),
   title: z.string({
     message: 'Value must be a string!'
   }),

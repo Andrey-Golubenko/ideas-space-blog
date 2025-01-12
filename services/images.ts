@@ -4,10 +4,16 @@ import { type UploadApiResponse } from 'cloudinary/types'
 import cloudinary from '~/libs/cloudinary/cloudinary.config'
 import { type TActionReturn } from '~/types'
 
-export const uploadImageToCloudinary = async (
+/**
+ * Function to upload an image to the cloud-based service (Cloudinary).
+ * @param formData - A FormData object containing the file to be uploaded.
+ * @param storageFolder - The name of the folder on Cloudinary where the image will be stored.
+ * @returns Promise<{ url: string } | { error: string }> - A promise that resolves to an object containing the URL of the uploaded image or an error message in case of failure.
+ */
+export const uploadImageToCld = async (
   formData: FormData,
   storageFolder: string
-) => {
+): Promise<{ url: string } | { error: string }> => {
   try {
     const file = formData.get('file')
     const fileName = (file as File)?.name.split('.').shift()
@@ -48,7 +54,13 @@ export const uploadImageToCloudinary = async (
   }
 }
 
-export const deleteImagesFromCloudinary = async (
+/**
+ * Function to delete an image from the cloud-based service (Cloudinary).
+ * @param imageName - The name of the image to be deleted.
+ * @param storageFolder - The name of the folder on Cloudinary where the image is stored.
+ * @returns TActionReturn - An object containing a success message if the deletion was successful or an error message in case of failure.
+ */
+export const deleteImagesFromCld = async (
   imageName: string,
   storageFolder: string
 ): TActionReturn => {
@@ -69,8 +81,31 @@ export const deleteImagesFromCloudinary = async (
 
     return { success: `Image was successfully deleted: ${imageName}` }
   } catch (error) {
+    console.error('Error when deleting image:', error)
+
     return {
       error: `Failed to delete image: ${imageName}. Try again a little bit later.`
+    }
+  }
+}
+
+/**
+ * Function to delete a folder from the cloud-based service (Cloudinary).
+ * @param pathToFolder - The path to the folder to be deleted on Cloudinary.
+ * @returns TActionReturn - An object containing a success message if the folder was successfully deleted or an error message in case of failure.
+ */
+export const deletePostFolderInCld = async (
+  pathToFolder: string
+): TActionReturn => {
+  try {
+    await cloudinary.api.delete_folder(pathToFolder)
+
+    return { success: `Folder for posts images was successfully deleted` }
+  } catch (error) {
+    console.error('Error when deleting post-folder:', error)
+
+    return {
+      error: `Failed to delete folder for posts images. Try again later.`
     }
   }
 }

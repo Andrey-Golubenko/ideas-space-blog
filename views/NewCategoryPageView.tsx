@@ -11,12 +11,10 @@ import { Card, CardHeader, CardContent } from '~/components/ui/card'
 import WithRole from '~/components/hoc/WithRole'
 import CategoryManageForm from '~/components/shared/CategoryManageForm'
 import { newCategory } from '~/actions/new-category'
-import { saveImagesToCloudinary } from '~/services/imagesProcessing'
+import { saveImagesToCld } from '~/services/imagesProcessing'
 import { SingleCategorySchema } from '~/schemas'
 import { type TManageCategoryForm } from '~/types'
-import {
-  CLOUDINARY_CATEGORIES_IMAGES_FOLDER,
-} from '~/utils/constants'
+import { CLOUDINARY_CATEGORIES_IMAGES_FOLDER } from '~/utils/constants'
 
 const NewCategoryPageView = () => {
   const router = useRouter()
@@ -46,7 +44,7 @@ const NewCategoryPageView = () => {
       const newImage = values?.file || []
 
       if (newImage?.length) {
-        const cloudinaryUrls = await saveImagesToCloudinary(
+        const cloudinaryUrls = await saveImagesToCld(
           newImage,
           CLOUDINARY_CATEGORIES_IMAGES_FOLDER,
           setError

@@ -53,7 +53,7 @@ model Account {
 }
 
 model Post {
-  id                    String              @id @default(cuid())
+  id                    String              @id
   title                 String              @db.VarChar(100) 
   content               String              @db.VarChar(1000) 
   published             Boolean             @default(false)
@@ -67,7 +67,7 @@ model Post {
   
   categories            PostCategories[] 
 
-  @@unique([authorId, title])
+  @@unique([id, authorId, title])
 }
 
 model Categories {

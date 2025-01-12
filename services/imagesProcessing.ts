@@ -1,12 +1,16 @@
 import { type Dispatch, type SetStateAction } from 'react'
 
-import {
-  uploadImageToCloudinary,
-  deleteImagesFromCloudinary
-} from '~/services/images'
+import { uploadImageToCld, deleteImagesFromCld } from '~/services/images'
 import { getImageNameFromUrl } from '~/utils/helpers'
 
-export const saveImagesToCloudinary = async (
+/**
+ * Function for saving images on a cloud-based service (Cloudinary).
+ * @param files - An array of files to save on Cloudinary.
+ * @param storageFolder - The name of the folder where images will be saved on Cloudinary.
+ * @param setError - A function to handle errors during the process of saving images on Cloudinary.
+ * @returns Promise<string[] | null> - A promise that resolves to an array of URLs for the saved images or null in case of an error.
+ */
+export const saveImagesToCld = async (
   files: File[],
   storageFolder: string,
   setError: Dispatch<SetStateAction<string | undefined>>
@@ -19,13 +23,13 @@ export const saveImagesToCloudinary = async (
 
       formData.append('file', file, file.name)
 
-      return uploadImageToCloudinary(formData, storageFolder)
+      return uploadImageToCld(formData, storageFolder)
     })
 
     const uploadResults = await Promise.all(uploadPromises)
 
     uploadResults.forEach((result) => {
-      if (result?.error) {
+      if ('error' in result) {
         throw new Error(result?.error)
       }
 
@@ -40,7 +44,13 @@ export const saveImagesToCloudinary = async (
   }
 }
 
-export const destroyImagesInCloudinary = async (
+/**
+ * Function for deleting images on a cloud-based service (Cloudinary).
+ * @param imageUrls - An array of URLs of images to delete.
+ * @param storageFolder - The name of the folder on Cloudinary where the images are stored.
+ * @param setComplDelOpen - (Optional) A function to open a modal window to confirm or decline the complete deletion of a post if some images were not deleted successfully.
+ */
+export const destroyImagesInCld = async (
   imageUrls: string[],
   storageFolder: string,
   setComplDelOpen?: (value: boolean) => void
@@ -49,7 +59,7 @@ export const destroyImagesInCloudinary = async (
     const imageDeleteResultsPromises = imageUrls.map((url) => {
       const imageName = getImageNameFromUrl(url)
 
-      return deleteImagesFromCloudinary(imageName!, storageFolder)
+      return deleteImagesFromCld(imageName!, storageFolder)
     })
 
     const imageDeleteResults = await Promise.all(
@@ -64,8 +74,6 @@ export const destroyImagesInCloudinary = async (
       setComplDelOpen(true)
       imageDeleteResults.forEach((result) => {
         if (result?.error) {
-          // TODO: Add logErrorFunction
-
           throw new Error(result?.error)
         }
       })

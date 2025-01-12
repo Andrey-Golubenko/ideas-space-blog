@@ -13,8 +13,8 @@ import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
 import PostManageForm from '~/components/shared/PostManageForm'
 import { editPost } from '~/actions/edit-post'
 import {
-  destroyImagesInCloudinary,
-  saveImagesToCloudinary
+  destroyImagesInCld,
+  saveImagesToCld
 } from '~/services/imagesProcessing'
 import { CLOUDINARY_POSTS_IMAGES_FOLDER } from '~/utils/constants'
 import { ManagePostSchema } from '~/schemas'
@@ -96,9 +96,9 @@ const EditPostPageView = ({ isLogged }: IEditPostViewProps) => {
 
       if (deletedImageUrls?.length) {
         try {
-          await destroyImagesInCloudinary(
+          await destroyImagesInCld(
             deletedImageUrls,
-            CLOUDINARY_POSTS_IMAGES_FOLDER
+            `${CLOUDINARY_POSTS_IMAGES_FOLDER}/${postId}`
           )
         } catch {
           return
@@ -110,9 +110,9 @@ const EditPostPageView = ({ isLogged }: IEditPostViewProps) => {
       let newImageUrlsFromFiles: string[] | null = []
 
       if (uploadedFiles?.length) {
-        newImageUrlsFromFiles = await saveImagesToCloudinary(
+        newImageUrlsFromFiles = await saveImagesToCld(
           uploadedFiles,
-          CLOUDINARY_POSTS_IMAGES_FOLDER,
+          `${CLOUDINARY_POSTS_IMAGES_FOLDER}/${postId}`,
           setError
         )
 

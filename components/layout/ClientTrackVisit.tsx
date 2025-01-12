@@ -1,8 +1,9 @@
 'use client'
 
-import { type Session } from 'next-auth'
 import { useEffect } from 'react'
+
 import { trackVisit } from '~/actions/track-visit'
+import { type Session } from 'next-auth'
 
 interface IClientTrackVisitProps {
   session: Session | null

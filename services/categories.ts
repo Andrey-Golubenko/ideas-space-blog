@@ -3,61 +3,65 @@
 import { cache } from 'react'
 
 import { db } from '~/libs/db'
-import { type Categories } from '@prisma/client'
 import { DEFAULT_CATEGORY } from '~/utils/constants'
+import { type Categories } from '@prisma/client'
 import {
   type IFetchDataFunctionProps,
   type TTRuncatedCategories
 } from '~/types'
 
-export const fetchAllCategories = cache(
-  async (): Promise<{
-    categories: {
-      id: string
-      name: string
-      slug: string
-      imageUrl: string | null
-      description: string | null
-    }[]
-  }> => {
-    try {
-      const categories = await db.categories.findMany({
-        where: {
-          slug: {
-            not: `${DEFAULT_CATEGORY.slug}`
-          }
+export const fetchAllCategories = async (): Promise<{
+  categories: {
+    id: string
+    name: string
+    slug: string
+    imageUrl: string | null
+    description: string | null
+  }[]
+}> => {
+  try {
+    const categories = await db.categories.findMany({
+      where: {
+        slug: {
+          not: `${DEFAULT_CATEGORY.slug}`
         }
-      })
-
-      if (!categories || !categories?.length) {
-        return { categories: [] }
       }
+    })
 
-      return { categories }
-    } catch (error) {
-      throw new Error('Failed to get categories!')
+    if (!categories || !categories?.length) {
+      return { categories: [] }
     }
-  }
-)
 
-export const fetchAllCategoriesTruncated = cache(
-  async (): Promise<TTRuncatedCategories[] | [] | null> => {
-    try {
-      const categories = await db.categories.findMany({
-        select: {
-          id: true,
-          name: true,
-          slug: true
+    return { categories }
+  } catch (error) {
+    throw new Error('Failed to get categories!')
+  }
+}
+
+export const fetchAllCategoriesTruncated = async (): Promise<
+  TTRuncatedCategories[] | [] | null
+> => {
+  try {
+    const categories = await db.categories.findMany({
+      where: {
+        slug: {
+          not: `${DEFAULT_CATEGORY.slug}`
         }
-      })
+      },
+      select: {
+        id: true,
+        name: true,
+        slug: true
+      }
+    })
 
-      return categories ?? []
-    } catch (error) {
-      console.error('Failed to fetch categories!', error)
-      return null
-    }
+    return categories ?? []
+  } catch (error) {
+    console.error('Failed to fetch categories!', error)
+
+    return null
   }
-)
+}
 
 export const fetchCurrentPageOfFilteredCategories = async ({
   limit,
@@ -166,29 +170,25 @@ export const fetchSinglePostCategories = cache(
   }
 )
 
-export const fetchUncategorizedCategory = cache(
-  async (): Promise<{
-    id: string
-    name: string
-    slug: string
-    imageUrl: string | null
-    description: string | null
-  } | null> => {
-    try {
-      const uncategorizedCategory = await db.categories.findUnique({
-        where: {
-          slug: `${DEFAULT_CATEGORY.slug}`
-        }
-      })
+export const fetchUncategorizedCategory = async (): Promise<{
+  id: string
+  name: string
+  slug: string
+  imageUrl: string | null
+  description: string | null
+} | null> => {
+  try {
+    const uncategorizedCategory = await db.categories.findUnique({
+      where: {
+        slug: `${DEFAULT_CATEGORY.slug}`
+      }
+    })
 
-      return uncategorizedCategory
-    } catch (error) {
-      throw new Error(
-        `Failed to fetch '${DEFAULT_CATEGORY.name}' category!`
-      )
-    }
+    return uncategorizedCategory
+  } catch (error) {
+    throw new Error(`Failed to fetch '${DEFAULT_CATEGORY.name}' category!`)
   }
-)
+}
 
 export const fetchPostsIdsInCategory = cache(
   async (

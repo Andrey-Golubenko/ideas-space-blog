@@ -7,8 +7,9 @@ import {
 } from 'react'
 import { toast } from 'sonner'
 
+import useStore from '~/store'
 import { deleteCategory } from '~/actions/delete-category'
-import { destroyImagesInCloudinary } from '~/services/imagesProcessing'
+import { destroyImagesInCld } from '~/services/imagesProcessing'
 import AlertModal from '~/components/shared/Modal/AlertModal'
 import { CLOUDINARY_CATEGORIES_IMAGES_FOLDER } from '~/utils/constants'
 
@@ -27,6 +28,10 @@ const DeleteCategoryHandler = ({
   setIsOpen,
   onCategorytDeleteSuccess
 }: IDeleteCategoryHandlerProps) => {
+  const [deleteSingleCategory] = useStore((state) => {
+    return [state.deleteSingleCategory]
+  })
+
   const [complDelOpen, setComplDelOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
 
@@ -45,11 +50,16 @@ const DeleteCategoryHandler = ({
             closeButton: true
           })
           onCategorytDeleteSuccess()
+
+          // delete category from store
+          deleteSingleCategory(categoryId)
         }
       } catch (error) {
         console.error('Error deleting category:', error)
 
-        toast.error('Failed to delete category.')
+        throw new Error(
+          error instanceof Error ? error.message : String(error)
+        )
       } finally {
         setIsOpen(false)
         setComplDelOpen(false)
@@ -62,7 +72,7 @@ const DeleteCategoryHandler = ({
       if (categoryId) {
         if (imageUrl?.length) {
           try {
-            await destroyImagesInCloudinary(
+            await destroyImagesInCld(
               [imageUrl],
               CLOUDINARY_CATEGORIES_IMAGES_FOLDER,
               setComplDelOpen

@@ -53,9 +53,10 @@ interface IUseStore {
   getSinglePostById: (postId: string) => void
   setSinglePost: (post: FullPost | {} | TDeserializedPost) => void
   getRecentPosts: () => Promise<void>
+  deleteSinglePost: (postId: string) => void
 
   getAllCategories: () => Promise<void>
-  setCategories: (categories: Categories[]) => void
+  deleteSingleCategory: (categoryId: string) => void
   setEditableCategory: (category: Categories | {}) => void
 
   getDataTableUsers: (props: IFetchUsersFunctionProps) => void
@@ -177,6 +178,19 @@ const useStore = createWithEqualityFn<
             })
           },
 
+          // After deliting one category
+          deleteSinglePost: (postId: string) => {
+            set((state) => {
+              const posts = Array.isArray(state?.posts)
+                ? (state?.posts as Post[])?.filter((post) => {
+                    return post.id !== postId
+                  })
+                : []
+
+              return { ...state, posts }
+            })
+          },
+
           getAllCategories: async () => {
             set((state) => {
               return { ...state, isLoading: true }
@@ -195,8 +209,14 @@ const useStore = createWithEqualityFn<
           },
 
           // After deliting one category
-          setCategories: (categories: Categories[]) => {
+          deleteSingleCategory: (categoryId: string) => {
             set((state) => {
+              const categories = Array.isArray(state?.categories)
+                ? state?.categories?.filter((category) => {
+                    return category.id !== categoryId
+                  })
+                : []
+
               return { ...state, categories }
             })
           },

@@ -1,6 +1,7 @@
 'use server'
 
-import { startOfMonth } from 'date-fns'
+import { endOfDay, startOfMonth } from 'date-fns'
+import { tz } from '@date-fns/tz'
 import { db } from '~/libs/db'
 import { getVisitsByDate } from '~/services/userVisits/visitsByDate'
 import { getBrowserStats } from '~/services/userVisits/browserStats'
@@ -9,8 +10,14 @@ export const fetchUsersVisits = async (
   startDate?: Date,
   endDate?: Date
 ) => {
+  const timeZone = Intl.DateTimeFormat()?.resolvedOptions()?.timeZone
+
   const start = startDate ?? startOfMonth(new Date())
-  const end = endDate ?? new Date()
+  const end =
+    endDate ??
+    endOfDay(new Date(), {
+      in: tz(timeZone)
+    })
 
   try {
     const userVisits = await db.dailyVisit.findMany({

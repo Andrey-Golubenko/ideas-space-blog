@@ -79,6 +79,7 @@ export const deleteCategory = async (
     return { success: 'The category was successfully deleted!' }
   } catch (error) {
     console.error('Error while deleting category:', error)
+
     return { error: 'Failed to delete category!' }
   }
 }

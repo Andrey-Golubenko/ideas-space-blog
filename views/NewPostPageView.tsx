@@ -5,12 +5,13 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
+import { v4 as uuidv4 } from 'uuid'
 
 import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
 import PostManageForm from '~/components/shared/PostManageForm'
 import { newPost } from '~/actions/new-post'
 import { CLOUDINARY_POSTS_IMAGES_FOLDER } from '~/utils/constants'
-import { saveImagesToCloudinary } from '~/services/imagesProcessing'
+import { saveImagesToCld } from '~/services/imagesProcessing'
 import { ManagePostSchema } from '~/schemas'
 import { TManagePostForm } from '~/types'
 
@@ -42,14 +43,16 @@ const NewPostPageView = ({ isLogged }: INewPostPageViewProps) => {
     setSuccess('')
 
     startTransition(async () => {
+      const postid = uuidv4()
+
       let imageUrls: string[] | null = []
 
       const newImages = values?.files || []
 
       if (newImages?.length) {
-        imageUrls = await saveImagesToCloudinary(
+        imageUrls = await saveImagesToCld(
           newImages,
-          CLOUDINARY_POSTS_IMAGES_FOLDER,
+          `${CLOUDINARY_POSTS_IMAGES_FOLDER}/${postid}`,
           setError
         )
 
@@ -62,6 +65,7 @@ const NewPostPageView = ({ isLogged }: INewPostPageViewProps) => {
 
       const newPostValues = {
         ...restValues,
+        id: postid,
         imageUrls
       }
 

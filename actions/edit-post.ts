@@ -91,6 +91,9 @@ export const editPost = async (
     })
 
     revalidatePath(`${PATHS.blog}/${postId}`)
+    revalidatePath(`${PATHS.adminPosts}`)
+    revalidatePath(PATHS.home)
+    revalidatePath(PATHS.blog)
 
     return { success: 'Post has been successfully edited!' }
   } catch {
