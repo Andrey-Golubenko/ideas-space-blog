@@ -1,21 +1,30 @@
-import { Session } from 'next-auth'
+import Link from 'next/link'
+import { type Session } from 'next-auth'
 
-import { Card, CardContent, CardHeader } from '~/components/ui/card'
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter
+} from '~/components/ui/card'
 import { Badge } from '~/components/ui/badge'
-import ProfileInfoItem from './ProfileInfoItem'
+import ProfileInfoItem from '~/components/profile/ProfileInfoItem'
+import { Button } from '~/components/ui/button'
+import { PATHS } from '~/utils/constants'
 
-interface IProfileProps {
+interface IProfileInfoProps {
   user?: Session['user']
   label: string
 }
 
-const ProfileCard = ({ user, label }: IProfileProps) => {
+const ProfileInfo = ({ user, label }: IProfileInfoProps) => {
   return (
-    <Card className="rouded-xl pb-20 shadow-md">
+    <Card className="rouded-xl h-full pb-20 shadow-md">
       <CardHeader>
         <p className="text-center text-2xl font-semibold">{label}</p>
       </CardHeader>
-      <CardContent className="space-y-4">
+
+      <CardContent className="space-y-4 md:p-2 md:pt-0  lg:p-6 lg:pt-0 ">
         <ProfileInfoItem
           label="ID"
           item={user?.id}
@@ -45,8 +54,18 @@ const ProfileCard = ({ user, label }: IProfileProps) => {
           }
         />
       </CardContent>
+
+      <CardFooter>
+        <Button
+          asChild
+          variant="outline"
+          className="w-full border border-black/20 bg-blue-200 hover:bg-blue-200/70"
+        >
+          <Link href={PATHS.settings}>Edit profile</Link>
+        </Button>
+      </CardFooter>
     </Card>
   )
 }
 
-export default ProfileCard
+export default ProfileInfo

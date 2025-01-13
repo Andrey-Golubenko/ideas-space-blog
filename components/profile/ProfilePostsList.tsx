@@ -1,15 +1,14 @@
 'use client'
 
 import { useEffect } from 'react'
-import { type User } from 'next-auth'
 
 import useStore from '~/store'
-import PostsHeaderCard from '~/components/ProfileInfo/PostsHeaderCard'
 import WithPostData from '~/components/hoc/WithPostData'
 import WithSkeletonsList from '~/components/hoc/WithSkeletonsList'
 import ItemCard from '~/components/shared/ItemCard'
 import SkeletonPostCard from '~/components/shared/ItemCard/SkeletonPostCard'
 import NoItemsCard from '~/components/posts/NoItemsCard'
+import ProfilePostsHeaderCard from '~/components/profile/ProfilePostsHeaderCard'
 
 interface IProfilePostsListProps {
   currentUser?: CurrentUser
@@ -37,28 +36,32 @@ const ProfilePostsList = ({ currentUser }: IProfilePostsListProps) => {
 
   if (typeof posts === 'string') {
     return (
-      <div className="mb-10">
+      <>
+        <ProfilePostsHeaderCard />
+
         <NoItemsCard itemName="posts" />
-      </div>
+      </>
     )
   }
 
   return (
-    <div className="justify-centerpy-10 flex flex-col items-center xs:w-[90%]">
-      <PostsHeaderCard />
+    <>
+      <ProfilePostsHeaderCard />
 
       <WithPostData
         posts={posts}
         postsCount={postsCount}
         isLoading={isLoading}
+        dataContainerClasses="mb-0"
+        postsGridClasses="mb-0"
       >
-        <WithSkeletonsList>
+        <WithSkeletonsList postsGridClasses="mb-0">
           <SkeletonPostCard />
         </WithSkeletonsList>
 
         <ItemCard />
       </WithPostData>
-    </div>
+    </>
   )
 }
 

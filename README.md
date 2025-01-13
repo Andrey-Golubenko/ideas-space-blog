@@ -1,26 +1,6 @@
-# Next 14
+# Ideas Space Blog
 
-## Server and client components
 
-![React components](/public/example-1.webp)
+## Overview
 
-### Attachment Rules
-
-- you cannot import a server component inside a client component
-- you can drop server components into client components as `children`
-
-![Sample page](/public/example-2.avif)
-
-Use client components when:
-
-- it is necessary to use hooks
-- when event handlers are needed for user actions
-- when using the browser API
-- when the class component is used
-
-Use server components when:
-
-- you receive data through the server API
-- when you need direct access to backend resources
-- when sensitive information is used (API keys, tokens, etc.)
-- when heavy dependencies are used
+Ideas Space Blog is a modern blog platform built using Next.js 14, leveraging both server and client components for optimal performance and flexibility. This repository showcases how to effectively use these components in a Next.js application.

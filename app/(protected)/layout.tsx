@@ -1,4 +1,4 @@
-import NavBar from '~/components/NavBar'
+import UserProfileBar from '~/components/UserProfileBar'
 
 const ProtectedLayout = ({
   children
@@ -7,7 +7,7 @@ const ProtectedLayout = ({
 }>) => {
   return (
     <main className="-mb-3 flex basis-full flex-col items-center justify-center bg-custom-gradient pt-10">
-      <NavBar />
+      <UserProfileBar />
       {children}
     </main>
   )

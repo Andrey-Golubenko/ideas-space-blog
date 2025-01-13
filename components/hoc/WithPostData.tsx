@@ -13,13 +13,17 @@ interface IWithPostDataProps {
   posts: Post[]
   postsCount: number | null
   isLoading: boolean
+  dataContainerClasses?: string
+  postsGridClasses?: string
 }
 
 const WithPostData = ({
   children,
   posts,
   postsCount,
-  isLoading
+  isLoading,
+  dataContainerClasses,
+  postsGridClasses
 }: IWithPostDataProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
@@ -39,7 +43,7 @@ const WithPostData = ({
 
   return (
     <section
-      className="mb-8 w-full @container"
+      className={`mb-8 w-full @container ${dataContainerClasses || ''}`}
       ref={containerRef}
     >
       {!noItems ? (
@@ -53,7 +57,9 @@ const WithPostData = ({
       )}
 
       {!isLoading && (restItems?.length > 0 || thirdItemInList) && (
-        <div className="mb-5 grid w-full grid-cols-1 gap-5 @md:grid-cols-2 @3xl:grid-cols-3">
+        <div
+          className={`mb-5 grid w-full grid-cols-1 gap-5 @md:grid-cols-2 @3xl:grid-cols-3 ${postsGridClasses || ''}`}
+        >
           {[...restItems, thirdItemInList]?.map((item) => {
             if (item) {
               return cloneElement(children[1], {
