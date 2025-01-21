@@ -9,8 +9,8 @@ import { useDataTableCategories } from '~/hooks/useDataTableCategories'
 import { columns } from '~/components/admin/AdminCategories/columns'
 import DataTable from '~/components/ui/table/DataTable'
 import { DataTableSkeleton } from '~/components/ui/table/DataTableSkeleton'
-import DataTableSearch from '~/components/ui/table/DataTableSearch'
-import DataTableResetFilter from '~/components/ui/table/DataTableResetFilter'
+import DataSearch from '~/components/shared/DataManagement/DataSearch'
+import DataResetFilter from '~/components/shared/DataManagement/DataResetFilter'
 import { type IRCWithSearchParamsKeyProps } from '~/types'
 
 const CategoriesTable = ({
@@ -53,18 +53,19 @@ const CategoriesTable = ({
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-4">
-        <DataTableSearch
+        <DataSearch
           searchKey="name"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           setPage={setPage}
         />
 
-        <DataTableResetFilter
+        <DataResetFilter
           isFilterActive={isAnyFilterActive}
           onReset={resetFilters}
         />
       </div>
+
       {isLoading ? (
         <DataTableSkeleton
           columnCount={5}

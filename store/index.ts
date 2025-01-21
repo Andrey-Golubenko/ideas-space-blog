@@ -5,7 +5,6 @@ import { type Categories, type Post } from '@prisma/client'
 
 import {
   fetchPosts,
-  fetchPostsBySearch,
   fetchPostsByUserId,
   fetchSinglePostById
 } from '~/services/posts/posts.client'
@@ -14,7 +13,7 @@ import {
   fetchCurrentPageOfFilteredCategories
 } from '~/services/categories'
 import {
-  fetchCurrentPageOfFilteredPosts,
+  fetchFilteredTablePostsWithPag,
   fetchRecentPosts
 } from '~/services/posts/posts.server'
 import { fetchUsersVisits } from '~/services/userVisits/visitsData'
@@ -42,13 +41,13 @@ interface IUseStore {
   browserStats: IBrowserStats[] | null
 
   dataTablePosts: TDeserializedPost[]
+  dataTablePostsCount: number | null
   dataTableUsers: TDeserializedUser[] | []
   dataTableCategories: Categories[]
 
   isLoading: boolean
 
-  getAllPosts: () => Promise<void>
-  getPostsBySearch: (search: string) => Promise<void>
+  getFilteredPostsWithPag: (props: IFetchPostsFunctionProps) => void
   getPostsByUserId: (userId: string) => Promise<void>
   getSinglePostById: (postId: string) => void
   setSinglePost: (post: FullPost | {} | TDeserializedPost) => void
@@ -88,32 +87,29 @@ const useStore = createWithEqualityFn<
 
           dataTableUsers: [],
           dataTablePosts: [],
+          dataTablePostsCount: null,
           dataTableCategories: [],
 
           isLoading: false,
 
-          getAllPosts: async () => {
+          getFilteredPostsWithPag: async ({
+            limit,
+            offset,
+            categoriesFilter,
+            publishedFilter,
+            searchQuery
+          }: IFetchPostsFunctionProps) => {
             set((state) => {
               return { ...state, isLoading: true }
             })
 
-            const data = await fetchPosts()
-
-            const posts = typeof data === 'string' ? data : data?.posts
-
-            const postsCount =
-              typeof data === 'string' ? null : data?.postsCount
-            set((state) => {
-              return { ...state, posts, postsCount, isLoading: false }
+            const data = await fetchPosts({
+              limit,
+              offset,
+              categoriesFilter,
+              publishedFilter,
+              searchQuery
             })
-          },
-
-          getPostsBySearch: async (search: string) => {
-            set((state) => {
-              return { ...state, isLoading: true }
-            })
-
-            const data = await fetchPostsBySearch(search)
 
             const posts = typeof data === 'string' ? data : data?.posts
 
@@ -279,16 +275,16 @@ const useStore = createWithEqualityFn<
           getDataTablePosts: async ({
             limit,
             offset,
-            searchQuery,
             categoriesFilter,
-            publishedFilter
+            publishedFilter,
+            searchQuery
           }: IFetchPostsFunctionProps) => {
             set((state) => {
               return { ...state, isLoading: true }
             })
 
             try {
-              const posts = await fetchCurrentPageOfFilteredPosts({
+              const data = await fetchFilteredTablePostsWithPag({
                 limit,
                 offset,
                 searchQuery,
@@ -296,9 +292,15 @@ const useStore = createWithEqualityFn<
                 publishedFilter
               })
 
+              const { posts, postsCount } = data!
+
               if (posts) {
                 set((state) => {
-                  return { ...state, dataTablePosts: posts }
+                  return {
+                    ...state,
+                    dataTablePosts: posts,
+                    dataTablePostsCount: postsCount
+                  }
                 })
               }
             } catch (error) {

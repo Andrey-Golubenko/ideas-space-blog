@@ -4,13 +4,13 @@ import { cloneElement, useRef, type ReactElement } from 'react'
 import { usePathname } from 'next/navigation'
 
 import { useListItemsDistribution } from '~/hooks/useListItemsDistribution'
-import NoItemsCard from '~/components/posts/NoItemsCard'
 import { PATHS } from '~/utils/constants'
 import { type Post } from '@prisma/client'
+import { type TDeserializedPost } from '~/types'
 
 interface IWithPostDataProps {
   children: ReactElement[]
-  posts: Post[]
+  posts: (Post | TDeserializedPost)[]
   postsCount: number | null
   isLoading: boolean
   dataContainerClasses?: string
@@ -36,7 +36,7 @@ const WithPostData = ({
   const desplayedPosts =
     pathname === PATHS.profile ? posts : publishedPosts
 
-  const { skeletonItems, restItems, thirdItemInList, noItems } =
+  const { skeletonItems, restItems, thirdItemInList } =
     useListItemsDistribution(desplayedPosts, postsCount, containerRef)
 
   const itemType = { isPost: true, isCategory: false }
@@ -46,15 +46,11 @@ const WithPostData = ({
       className={`mb-8 w-full @container ${dataContainerClasses || ''}`}
       ref={containerRef}
     >
-      {!noItems ? (
-        cloneElement(children[0], {
-          skeletonItems,
-          isLoading,
-          itemType
-        })
-      ) : (
-        <NoItemsCard itemName="published posts" />
-      )}
+      {cloneElement(children[0], {
+        skeletonItems,
+        isLoading,
+        itemType
+      })}
 
       {!isLoading && (restItems?.length > 0 || thirdItemInList) && (
         <div

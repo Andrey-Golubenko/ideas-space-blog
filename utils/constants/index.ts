@@ -88,6 +88,8 @@ export const SCREEN_SM = 480
 
 export const SCREEN_MD = 768
 
+export const SCREEN_LG = 976
+
 export const SLUG_MODEL = /^[a-z-]+$/
 
 export const DEFAULT_CATEGORY = {
@@ -106,6 +108,9 @@ export const PUBLISHED_OPTIONS = [
   { value: 'published', label: 'Published' },
   { value: 'draft', label: 'Draft' }
 ]
+
+export const POSTS_PER_PAGE = 9
+export const ITEMS_PER_PAGE_DEFAULT_LIMIT = 10
 
 // TODO: For storage as an example
 enum InitCategoriesName {

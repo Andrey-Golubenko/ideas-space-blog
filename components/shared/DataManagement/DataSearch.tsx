@@ -1,12 +1,12 @@
 'use client'
 
 import { useTransition } from 'react'
-import { Options } from 'nuqs'
+import { type Options } from 'nuqs'
 
 import { Input } from '~/components/ui/input'
 import { cn } from '~/libs/utils'
 
-interface IDataTableSearchProps {
+interface IDataSearchProps {
   searchKey: string
   searchQuery: string
   setSearchQuery: (
@@ -19,12 +19,12 @@ interface IDataTableSearchProps {
   ) => Promise<URLSearchParams>
 }
 
-const DataTableSearch = ({
+const DataSearch = ({
   searchKey,
   searchQuery,
   setSearchQuery,
   setPage
-}: IDataTableSearchProps) => {
+}: IDataSearchProps) => {
   const [isLoading, startTransition] = useTransition()
 
   const handleSearch = (value: string) => {
@@ -45,4 +45,4 @@ const DataTableSearch = ({
   )
 }
 
-export default DataTableSearch
+export default DataSearch

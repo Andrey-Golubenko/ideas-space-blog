@@ -5,21 +5,27 @@ import { parseAsInteger, useQueryState } from 'nuqs'
 
 import useStore from '~/store'
 import { useDataTablePosts } from '~/hooks/useDataTablePosts'
-import { usePostsTableFilters } from '~/hooks/usePostsTableFilters'
+import { useDataPostsFilters } from '~/hooks/useDataPostsFilters'
 import { useCategoriesOptions } from '~/hooks/useCategoriesOptions'
 import { columns } from '~/components/admin/AdminPosts/columns'
 import DataTable from '~/components/ui/table/DataTable'
 import { DataTableSkeleton } from '~/components/ui/table/DataTableSkeleton'
-import DataTableSearch from '~/components/ui/table/DataTableSearch'
-import DataTableFilterBox from '~/components/ui/table/DataTableFilterBox'
-import DataTableResetFilter from '~/components/ui/table/DataTableResetFilter'
+import DataSearch from '~/components/shared/DataManagement/DataSearch'
+import DataFilterBox from '~/components/shared/DataManagement/DataFilterBox'
+import DataResetFilter from '~/components/shared/DataManagement/DataResetFilter'
 import { PUBLISHED_OPTIONS } from '~/utils/constants'
 import { type IRCWithSearchParamsKeyProps } from '~/types'
 
 const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
-  const [dataTablePosts, isLoading] = useStore((state) => {
-    return [state.dataTablePosts, state.isLoading]
-  })
+  const [dataTablePosts, dataTablePostsCount, isLoading] = useStore(
+    (state) => {
+      return [
+        state.dataTablePosts,
+        state.dataTablePostsCount,
+        state.isLoading
+      ]
+    }
+  )
 
   const [currentPage, setCurrentPage] = useQueryState(
     'page',
@@ -43,7 +49,7 @@ const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
     searchQuery,
     setPage,
     setSearchQuery
-  } = usePostsTableFilters()
+  } = useDataPostsFilters()
 
   const dataTablePostsProps = useMemo(() => {
     return {
@@ -61,39 +67,40 @@ const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
     searchQuery
   ])
 
-  const { categoriesOptions } = useCategoriesOptions()
-
   useDataTablePosts(dataTablePostsProps)
+
+  const { categoriesOptions } = useCategoriesOptions()
 
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-4">
-        <DataTableSearch
+        <DataSearch
           searchKey="name"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           setPage={setPage}
         />
 
-        <DataTableFilterBox
+        <DataFilterBox
           title="Category"
           options={categoriesOptions}
           filterValue={categoriesFilter}
           setFilterValue={setCategoriesFilter}
         />
 
-        <DataTableFilterBox
+        <DataFilterBox
           title="Published"
           options={PUBLISHED_OPTIONS}
           filterValue={publishedFilter}
           setFilterValue={setPublishedFilter}
         />
 
-        <DataTableResetFilter
+        <DataResetFilter
           isFilterActive={isAnyFilterActive}
           onReset={resetFilters}
         />
       </div>
+
       {isLoading ? (
         <DataTableSkeleton
           columnCount={5}
@@ -110,10 +117,10 @@ const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
           }
         >
           <DataTable
-            key={dataTablePosts?.length}
+            key={dataTablePostsCount}
             columns={columns}
             data={dataTablePosts}
-            totalItems={dataTablePosts?.length}
+            totalItems={dataTablePostsCount}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
             pageSize={pageSize}

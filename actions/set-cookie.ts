@@ -4,7 +4,7 @@ import { cookies } from 'next/headers'
 import { endOfDay } from 'date-fns'
 import { tz } from '@date-fns/tz'
 import { isWebKitDetermine } from '~/services/userAgent'
-import { type FullTZDate } from '~/types'
+import { type TFullTZDate } from '~/types'
 
 export const setCookieWithExpiry = async (
   name: string,
@@ -20,7 +20,7 @@ export const setCookieWithExpiry = async (
     : (
         endOfDay(new Date(), {
           in: tz(timeZone)
-        }) as FullTZDate
+        }) as TFullTZDate
       )?.internal
 
   const now = new Date()

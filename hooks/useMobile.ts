@@ -1,16 +1,21 @@
 import { useState, useEffect } from 'react'
+import { SCREEN_LG, SCREEN_MD } from '~/utils/constants'
 
 export const useIsMobile = (): {
   isMobile: boolean
   isSmallScreen: boolean
+  isTablet: boolean
 } => {
   const [isMobile, setIsMobile] = useState<boolean>(false)
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false)
+  const [isTablet, setIsTablet] = useState<boolean>(false)
 
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth
-      setIsMobile(width < 860)
+      // setIsMobile(width < 860)
+      setIsMobile(width < SCREEN_MD)
+      setIsTablet(SCREEN_MD < width && width < SCREEN_LG)
       setIsSmallScreen(width < 854)
     }
 
@@ -26,5 +31,5 @@ export const useIsMobile = (): {
     }
   }, [])
 
-  return { isMobile, isSmallScreen }
+  return { isMobile, isSmallScreen, isTablet }
 }

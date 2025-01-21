@@ -18,7 +18,7 @@ import {
 } from '~/components/ui/dropdown-menu'
 import { Button } from '~/components/ui/button'
 import AlertModal from '~/components/shared/Modal/AlertModal'
-import { PATHS } from '~/utils/constants'
+import { ITEMS_PER_PAGE_DEFAULT_LIMIT, PATHS } from '~/utils/constants'
 
 interface ICellActionProps {
   userId: string
@@ -63,7 +63,7 @@ const CellAction = ({ userId }: ICellActionProps) => {
 
           await getDataTableUsers({
             currentPage: 1,
-            limit: 10,
+            limit: ITEMS_PER_PAGE_DEFAULT_LIMIT,
             providerFilter: null,
             searchQuery: null
           })

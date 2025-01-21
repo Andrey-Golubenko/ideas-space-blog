@@ -30,7 +30,7 @@ interface FilterOption {
   icon?: ComponentType<{ className?: string }>
 }
 
-interface IFilterBoxProps {
+interface IDataFilterBoxProps {
   title: string
   options: FilterOption[]
   setFilterValue: (
@@ -40,12 +40,12 @@ interface IFilterBoxProps {
   filterValue: string
 }
 
-const DataTableFilterBox = ({
+const DataFilterBox = ({
   title,
   options,
   setFilterValue,
   filterValue
-}: IFilterBoxProps) => {
+}: IDataFilterBoxProps) => {
   const selectedValuesSet = useMemo(() => {
     if (!filterValue) return new Set<string>()
     const values = filterValue.split('.')
@@ -191,4 +191,4 @@ const DataTableFilterBox = ({
   )
 }
 
-export default DataTableFilterBox
+export default DataFilterBox

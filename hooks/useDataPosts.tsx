@@ -2,41 +2,39 @@ import { useCallback, useEffect } from 'react'
 import { useDebounce } from 'use-debounce'
 
 import useStore from '~/store'
-import { ITEMS_PER_PAGE_DEFAULT_LIMIT } from '~/utils/constants'
+import { POSTS_PER_PAGE } from '~/utils/constants'
 import { type IFetchPostsFunctionProps } from '~/types'
 
-export const useDataTablePosts = ({
-  currentPage,
+export const useDataPosts = ({
+  page,
   limit,
   categoriesFilter,
   publishedFilter,
   searchQuery
 }: IFetchPostsFunctionProps) => {
-  const [getDataTablePosts] = useStore((state) => {
-    return [state.getDataTablePosts]
+  const [getFilteredPostsWithPag] = useStore((state) => {
+    return [state.getFilteredPostsWithPag]
   })
 
   const [debouncedSearchQuery] = useDebounce(searchQuery, 700)
 
-  const offset = currentPage
-    ? (currentPage - 1) * limit
-    : ITEMS_PER_PAGE_DEFAULT_LIMIT
+  const offset = page ? (page - 1) * limit : POSTS_PER_PAGE
 
   const fetchPosts = useCallback(async () => {
-    await getDataTablePosts({
+    await getFilteredPostsWithPag({
       limit,
       offset,
-      searchQuery: debouncedSearchQuery,
       categoriesFilter,
-      publishedFilter
+      publishedFilter,
+      searchQuery: debouncedSearchQuery
     })
   }, [
-    categoriesFilter,
-    debouncedSearchQuery,
-    getDataTablePosts,
     limit,
     offset,
-    publishedFilter
+    categoriesFilter,
+    debouncedSearchQuery,
+    publishedFilter,
+    getFilteredPostsWithPag
   ])
 
   useEffect(() => {

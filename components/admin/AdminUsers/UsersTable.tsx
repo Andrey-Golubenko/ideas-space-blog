@@ -8,9 +8,9 @@ import { useUsersTableFilters } from '~/hooks/useUsersTableFilters'
 import { useDataTableUsers } from '~/hooks/useDataTableUsers'
 import DataTable from '~/components/ui/table/DataTable'
 import { columns } from '~/components/admin/AdminUsers/columns'
-import DataTableFilterBox from '~/components/ui/table/DataTableFilterBox'
-import DataTableResetFilter from '~/components/ui/table/DataTableResetFilter'
-import DataTableSearch from '~/components/ui/table/DataTableSearch'
+import DataFilterBox from '~/components/shared/DataManagement/DataFilterBox'
+import DataResetFilter from '~/components/shared/DataManagement/DataResetFilter'
+import DataSearch from '~/components/shared/DataManagement/DataSearch'
 import { DataTableSkeleton } from '~/components/ui/table/DataTableSkeleton'
 import { AUTH_OPTIONS } from '~/utils/constants'
 import { type IRCWithSearchParamsKeyProps } from '~/types'
@@ -56,23 +56,26 @@ const UsersTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-4">
-        <DataTableSearch
+        <DataSearch
           searchKey="name"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           setPage={setPage}
         />
-        <DataTableFilterBox
+
+        <DataFilterBox
           title="Provider type"
           options={AUTH_OPTIONS}
           setFilterValue={setAuthProviderFilter}
           filterValue={authProviderFilter}
         />
-        <DataTableResetFilter
+
+        <DataResetFilter
           isFilterActive={isAnyFilterActive}
           onReset={resetFilters}
         />
       </div>
+
       {isLoading ? (
         <DataTableSkeleton
           columnCount={5}

@@ -1,9 +1,15 @@
-import { type PostsData } from '~/types'
+import { IFetchPostsFunctionProps, type PostsData } from '~/types'
 
-export const fetchPosts = async (): Promise<PostsData> => {
+export const fetchPosts = async ({
+  limit,
+  offset,
+  categoriesFilter,
+  publishedFilter,
+  searchQuery
+}: IFetchPostsFunctionProps): Promise<PostsData> => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/posts`,
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/posts?limit=${limit}&offset=${offset}&categories=${categoriesFilter}&published=${publishedFilter}&q=${searchQuery}`,
       {
         next: {
           revalidate: 60 // sec
@@ -14,36 +20,6 @@ export const fetchPosts = async (): Promise<PostsData> => {
     if (!response.ok) {
       throw new Error('Unable fetch posts!')
     }
-
-    const data: PostsData = await response.json()
-
-    return data
-  } catch (error) {
-    console.error(error)
-
-    throw new Error(
-      (error as Error)?.message || 'An unknown error occurred!'
-    )
-  }
-}
-
-export const fetchPostsBySearch = async (
-  search: string
-): Promise<PostsData> => {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/posts?q=${search}`,
-      {
-        next: {
-          revalidate: 60
-        }
-      }
-    )
-
-    if (!response.ok)
-      throw new Error(
-        'Unable fetch posts! An unexpected error has occurred!'
-      )
 
     const data: PostsData = await response.json()
 

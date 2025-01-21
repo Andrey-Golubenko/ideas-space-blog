@@ -11,7 +11,7 @@ import {
 import { createVisit } from '~/actions/create-visit'
 import { setCookieWithExpiry } from '~/actions/set-cookie'
 import { type Session } from 'next-auth'
-import { FullTZDate } from '~/types'
+import { TFullTZDate } from '~/types'
 
 export const trackVisit = async (
   session: Session | null,
@@ -23,7 +23,7 @@ export const trackVisit = async (
   const today: Date = (
     startOfDay(new Date(), {
       in: tz(timeZone)
-    }) as FullTZDate
+    }) as TFullTZDate
   )?.internal
 
   const ipAddress = headersList.get('x-forwarded-for') ?? ''

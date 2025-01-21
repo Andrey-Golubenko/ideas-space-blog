@@ -4,6 +4,7 @@ import {
   PUBLIC_ROUTES_WITH_DYNAMIC_SEGMENT
 } from '~/utils/constants/routes'
 import { type Post } from '@prisma/client'
+import { type TDeserializedPost } from '~/types'
 
 export const isPublicRoute = (pathname: string): boolean => {
   const isDynamicRoute =
@@ -86,17 +87,14 @@ export const getImageNames = (imageUrls: string[]) => {
   return existingImageNames
 }
 
-export const isEmptyOrUnpublished = (posts: Post[]): boolean => {
+export const isEmptyOrUnpublished = (
+  posts: (Post | TDeserializedPost)[] | string
+): boolean => {
   const oneUnpublished = Array.isArray(posts)
-    ? posts?.filter((post) => {
+    ? !!posts?.filter((post) => {
         return !post.published
-      })?.length === posts?.length
+      })?.length
     : false
 
-  return (
-    !posts ||
-    posts?.length === 0 ||
-    typeof posts === 'string' ||
-    oneUnpublished
-  )
+  return oneUnpublished || typeof posts === 'string'
 }

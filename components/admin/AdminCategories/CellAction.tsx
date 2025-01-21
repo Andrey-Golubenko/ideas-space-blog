@@ -15,7 +15,7 @@ import {
 } from '~/components/ui/dropdown-menu'
 import { Button } from '~/components/ui/button'
 import DeleteCategoryHandler from '~/components/shared/DeleteHandlers/DeleteCategoryHandler'
-import { PATHS } from '~/utils/constants'
+import { ITEMS_PER_PAGE_DEFAULT_LIMIT, PATHS } from '~/utils/constants'
 
 interface ICellActionProps {
   categoryId: string
@@ -46,7 +46,7 @@ const CellAction = ({ categoryId }: ICellActionProps) => {
   const onCategoryDeleteSuccess = useCallback(() => {
     getDataTableCategories({
       currentPage: 1,
-      limit: 10,
+      limit: ITEMS_PER_PAGE_DEFAULT_LIMIT,
       searchQuery: null
     })
   }, [])

@@ -3,10 +3,10 @@ import { type RefObject } from 'react'
 import { useItemType } from '~/hooks/useItemType'
 import { useContainerWidth } from '~/hooks/useContainerWidth'
 import { useIsMobile } from '~/hooks/useMobile'
-import { type TSkeletonItems } from '~/types'
+import { type TSkeletonItems, type TDeserializedPost } from '~/types'
 
 export const useListItemsDistribution = (
-  items: Post[] | Categories[] | null | [],
+  items: (Post | TDeserializedPost)[] | Categories[] | null | [],
   itemsCount?: number | null,
   containerRef?: RefObject<HTMLElement>
 ) => {

@@ -7,7 +7,7 @@ type DataTableResetFilterProps = {
   onReset: () => void
 }
 
-const DataTableResetFilter = ({
+const DataResetFilter = ({
   isFilterActive,
   onReset
 }: DataTableResetFilterProps) => {
@@ -25,4 +25,4 @@ const DataTableResetFilter = ({
   )
 }
 
-export default DataTableResetFilter
+export default DataResetFilter

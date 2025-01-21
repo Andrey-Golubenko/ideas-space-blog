@@ -14,7 +14,7 @@ import {
 } from '~/components/ui/dropdown-menu'
 import { Button } from '~/components/ui/button'
 import DeletePostHandler from '~/components/shared/DeleteHandlers/DeletePostHandler'
-import { PATHS } from '~/utils/constants'
+import { ITEMS_PER_PAGE_DEFAULT_LIMIT, PATHS } from '~/utils/constants'
 
 interface ICellActionProps {
   postId: string
@@ -43,7 +43,7 @@ const CellAction = ({ postId }: ICellActionProps) => {
   const onPostDeleteSuccess = useCallback(() => {
     getDataTablePosts({
       currentPage: 1,
-      limit: 10,
+      limit: ITEMS_PER_PAGE_DEFAULT_LIMIT,
       categoriesFilter: null,
       publishedFilter: null,
       searchQuery: null

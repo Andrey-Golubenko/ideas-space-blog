@@ -21,7 +21,7 @@ const SkeletonCatSectionItem = ({
   const { itemImage, itemTitle, itemSlug } = useItemProps(item)
 
   return (
-    <div className="flex min-h-max flex-col items-center justify-center !border-0 !bg-transparent shadow-none">
+    <article className="flex min-h-max flex-col items-center justify-center !border-0 !bg-transparent shadow-none">
       {hasContent ? (
         <SectionItemCardImage
           itemSlug={itemSlug}
@@ -42,7 +42,7 @@ const SkeletonCatSectionItem = ({
       ) : (
         <Skeleton className="mb-6 h-8 w-5/6" />
       )}
-    </div>
+    </article>
   )
 }
 

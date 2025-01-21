@@ -6,9 +6,9 @@ import {
 } from 'lucide-react'
 
 import { PATHS } from '~/utils/constants'
-import { IAdminSidebarItem } from '~/types'
+import { TAdminSidebarItem } from '~/types'
 
-export const adminDashboard: IAdminSidebarItem[] = [
+export const adminDashboard: TAdminSidebarItem[] = [
   {
     title: 'Dashboard',
     icon: LayoutDashboard,

@@ -8,10 +8,10 @@ import {
 } from '~/components/ui/sidebar'
 import SidebarImage from '~/components/Sidebars/SidebarImage'
 import { PATHS } from '~/utils/constants'
-import { type IAdminSidebarItem } from '~/types'
+import { type TAdminSidebarItem } from '~/types'
 
 interface ISidebarItemProps {
-  item: Categories | IAdminSidebarItem
+  item: Categories | TAdminSidebarItem
   isActive: boolean
 }
 

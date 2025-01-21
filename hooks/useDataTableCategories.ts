@@ -1,6 +1,8 @@
 import { useCallback, useEffect } from 'react'
+import { useDebounce } from 'use-debounce'
 
 import useStore from '~/store'
+import { ITEMS_PER_PAGE_DEFAULT_LIMIT } from '~/utils/constants'
 import { type IFetchDataFunctionProps } from '~/types'
 
 export const useDataTableCategories = ({
@@ -12,15 +14,19 @@ export const useDataTableCategories = ({
     return [state.getDataTableCategories]
   })
 
-  const offset = currentPage ? (currentPage - 1) * limit : 10
+  const [debouncedSearchQuery] = useDebounce(searchQuery, 700)
+
+  const offset = currentPage
+    ? (currentPage - 1) * limit
+    : ITEMS_PER_PAGE_DEFAULT_LIMIT
 
   const fetchCategories = useCallback(async () => {
     await getDataTableCategories({
       limit,
       offset,
-      searchQuery
+      searchQuery: debouncedSearchQuery
     })
-  }, [getDataTableCategories, limit, offset, searchQuery])
+  }, [getDataTableCategories, limit, offset, debouncedSearchQuery])
 
   useEffect(() => {
     fetchCategories()

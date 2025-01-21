@@ -52,10 +52,10 @@ const ProfilePostsList = ({ currentUser }: IProfilePostsListProps) => {
         posts={posts}
         postsCount={postsCount}
         isLoading={isLoading}
-        dataContainerClasses="mb-0"
-        postsGridClasses="mb-0"
+        dataContainerClasses="!mb-0"
+        postsGridClasses="!mb-0"
       >
-        <WithSkeletonsList postsGridClasses="mb-0">
+        <WithSkeletonsList postsGridClasses="!mb-0">
           <SkeletonPostCard />
         </WithSkeletonsList>
 

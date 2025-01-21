@@ -13,11 +13,9 @@ export const fetchUsersVisits = async (
   const timeZone = Intl.DateTimeFormat()?.resolvedOptions()?.timeZone
 
   const start = startDate ?? startOfMonth(new Date())
-  const end =
-    endDate ??
-    endOfDay(new Date(), {
-      in: tz(timeZone)
-    })
+  const end = endOfDay(endDate ?? new Date(), {
+    in: tz(timeZone)
+  })
 
   try {
     const userVisits = await db.dailyVisit.findMany({

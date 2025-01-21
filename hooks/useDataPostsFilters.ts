@@ -2,9 +2,10 @@
 
 import { useCallback, useMemo } from 'react'
 import { useQueryState } from 'nuqs'
+
 import { searchParams } from '~/libs/searchparams'
 
-export const usePostsTableFilters = () => {
+export const useDataPostsFilters = () => {
   const [searchQuery, setSearchQuery] = useQueryState(
     'q',
     searchParams.q

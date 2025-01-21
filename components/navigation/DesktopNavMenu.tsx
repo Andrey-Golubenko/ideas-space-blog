@@ -13,7 +13,7 @@ const DesktopNavMenu = ({ isLoggedIn, isMobile }: INavMenuProps) => {
           isLoggedIn={isLoggedIn}
           isMobile={isMobile}
         />
-        <li>
+        <li className="pl-4">
           <AddNewItemButton
             label="Add Post"
             path={PATHS.blogNewPost}

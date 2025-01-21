@@ -9,7 +9,7 @@ interface INoItemsCardProps {
 
 const NoItemsCard = ({ itemName }: INoItemsCardProps) => {
   return (
-    <Card className="flex min-h-96 w-full flex-grow flex-col items-center justify-center">
+    <Card className="flex min-h-96 w-full flex-grow flex-col items-center justify-center border-0 shadow-none">
       <CardHeader>
         <CardHeaderContent
           title="🔭  Search results"

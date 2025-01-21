@@ -1,13 +1,7 @@
-import PostSearch from '~/components/posts/PostSearchForm'
-import BlogPostsList from '~/components/posts/BlogPostsList'
+import BlogPageView from '~/views/BlogPageView'
 
 const BlogPage = () => {
-  return (
-    <div className="page-wrapper w-full">
-      <PostSearch />
-      <BlogPostsList />
-    </div>
-  )
+  return <BlogPageView />
 }
 
 export default BlogPage

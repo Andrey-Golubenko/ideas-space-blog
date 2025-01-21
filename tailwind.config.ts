@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 import type { Config } from 'tailwindcss'
-import { SCREEN_MD, SCREEN_SM } from './utils/constants'
+import { SCREEN_LG, SCREEN_MD, SCREEN_SM } from './utils/constants'
 
 const config = {
   darkMode: ['class'],
@@ -16,7 +16,7 @@ const config = {
       xs: '240px',
       sm: `${SCREEN_SM}px`,
       md: `${SCREEN_MD}px`,
-      lg: '976px',
+      lg: `${SCREEN_LG}px`,
       xl: '1024px',
       '2xl': '1440px'
     },

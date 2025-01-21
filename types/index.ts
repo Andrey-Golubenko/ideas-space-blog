@@ -62,7 +62,7 @@ export type TManageCategoryForm = z.infer<typeof SingleCategorySchema>
 
 export type TManageUserForm = z.infer<typeof SettingsSchema>
 
-export type TListItem = Post | Categories | null
+export type TListItem = (Post | TDeserializedPost) | Categories | null
 
 export type TItemType = { isPost?: boolean; isCategory?: boolean }
 
@@ -152,7 +152,7 @@ export interface IRCWithSearchParamsKeyProps {
   searchParamsKey: string
 }
 
-export type IAdminSidebarItem = {
+export type TAdminSidebarItem = {
   title: string
   icon: ForwardRefExoticComponent<
     Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>
@@ -160,7 +160,7 @@ export type IAdminSidebarItem = {
   path: string
 }
 
-export type FullTZDate = TZDate & { internal: Date }
+export type TFullTZDate = TZDate & { internal: Date }
 
 export type TVisitsByDate = Record<
   string,
@@ -183,12 +183,13 @@ export interface IFetchDataFunctionProps {
   limit: number
   searchQuery: string | null
   currentPage?: number
+  page?: number
   offset?: number
 }
 
 export interface IFetchPostsFunctionProps extends IFetchDataFunctionProps {
   categoriesFilter: string | null
-  publishedFilter: string | null
+  publishedFilter?: string | null
 }
 
 export interface IFetchUsersFunctionProps extends IFetchDataFunctionProps {
@@ -208,12 +209,7 @@ export type TTRuncatedCategories = {
   name: string
 }
 
-export type TDeserializedPost = {
-  id: string
-  imageUrls: string[] | null
-  title: string | null
-  content: string
+export type TDeserializedPost = Omit<Post, 'authorId' | 'updatedAt'> & {
   author: string | null
   categories: TCategoryOptions[] | null
-  published: boolean
 }

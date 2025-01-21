@@ -30,61 +30,69 @@ const DataTableFooter = <TData,>({
   pageSizeOptions = [10, 20, 30, 40, 50],
   totalItems
 }: IDataTableFooterProps<TData>) => {
+  const hasItems = totalItems > 0
+
   return (
-    <div className="flex flex-col items-center justify-end gap-2 space-x-2 py-4 md:flex-row">
-      <div className="flex w-full items-center justify-between gap-x-8">
+    <div className="flex flex-col items-center justify-end gap-4 py-4 md:flex-row">
+      <div
+        className={`flex w-full flex-wrap items-center justify-between gap-x-8 gap-y-4 ${hasItems ? '' : ''}`}
+      >
         <div className="flex-1 text-sm text-muted-foreground">
-          {totalItems > 0 ? (
+          {hasItems ? (
             <>
-              Showing{' '}
-              {paginationState.pageIndex * paginationState.pageSize + 1} to{' '}
-              {Math.min(
-                (paginationState.pageIndex + 1) * paginationState.pageSize,
-                totalItems
-              )}{' '}
-              of {totalItems} entries
+              <p className="flex whitespace-nowrap">
+                Showing{' '}
+                {paginationState.pageIndex * paginationState.pageSize + 1}{' '}
+                to{' '}
+                {Math.min(
+                  (paginationState.pageIndex + 1) *
+                    paginationState.pageSize,
+                  totalItems
+                )}
+              </p>
+              <p className="flex whitespace-nowrap">
+                of {totalItems} entries
+              </p>
             </>
           ) : (
-            'No entries found'
+            <p className="flex whitespace-nowrap">No entries found</p>
           )}
         </div>
 
-        <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6 lg:gap-8">
-          <div className="flex items-center gap-x-2">
-            <p className="whitespace-nowrap text-sm font-medium">
-              Rows per page
-            </p>
+        <div className="flex flex-1 flex-nowrap items-center gap-2 sm:flex-row sm:gap-6 lg:gap-8">
+          <p className="whitespace-nowrap text-sm font-medium">
+            Rows per page
+          </p>
 
-            <Select
-              value={`${paginationState.pageSize}`}
-              onValueChange={(value) => {
-                table.setPageSize(Number(value))
-              }}
-            >
-              <SelectTrigger className="h-8 w-[70px]">
-                <SelectValue placeholder={paginationState.pageSize} />
-              </SelectTrigger>
+          <Select
+            value={`${paginationState.pageSize}`}
+            onValueChange={(value) => {
+              table.setPageSize(Number(value))
+            }}
+          >
+            <SelectTrigger className="h-8 w-[70px]">
+              <SelectValue placeholder={paginationState.pageSize} />
+            </SelectTrigger>
 
-              <SelectContent side="top">
-                {pageSizeOptions.map((pageSizeItem) => {
-                  return (
-                    <SelectItem
-                      key={pageSizeItem}
-                      value={`${pageSizeItem}`}
-                    >
-                      {pageSizeItem}
-                    </SelectItem>
-                  )
-                })}
-              </SelectContent>
-            </Select>
-          </div>
+            <SelectContent side="top">
+              {pageSizeOptions.map((pageSizeItem) => {
+                return (
+                  <SelectItem
+                    key={pageSizeItem}
+                    value={`${pageSizeItem}`}
+                  >
+                    {pageSizeItem}
+                  </SelectItem>
+                )
+              })}
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
-      <div className="flex w-full flex-wrap items-center  justify-end gap-2">
-        <div className="flex w-[150px] items-center justify-center text-sm font-medium">
-          {totalItems > 0 ? (
+      <div className="flex w-full flex-wrap items-center justify-center gap-4 max-[361px]:justify-start">
+        <div className="mr-4 flex items-center justify-center whitespace-nowrap text-sm font-medium">
+          {hasItems ? (
             <>
               Page {paginationState.pageIndex + 1} of{' '}
               {table.getPageCount()}
