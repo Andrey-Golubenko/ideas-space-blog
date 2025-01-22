@@ -1,5 +1,5 @@
 import { SidebarProvider, SidebarTrigger } from '~/components/ui/sidebar'
-import CategoriesSidebar from '~/components/Sidebars/CategoriesSidebar'
+import CategoriesSidebar from '~/components/sidebar/CategoriesSidebar'
 
 const SingleCategoryLayoute = ({
   children

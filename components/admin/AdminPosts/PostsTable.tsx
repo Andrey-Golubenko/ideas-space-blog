@@ -6,7 +6,7 @@ import { parseAsInteger, useQueryState } from 'nuqs'
 import useStore from '~/store'
 import { useDataTablePosts } from '~/hooks/useDataTablePosts'
 import { useDataPostsFilters } from '~/hooks/useDataPostsFilters'
-import { useCategoriesOptions } from '~/hooks/useCategoriesOptions'
+import { useCategoriesFilterOptions } from '~/hooks/useCategoriesFilterOption'
 import { columns } from '~/components/admin/AdminPosts/columns'
 import DataTable from '~/components/ui/table/DataTable'
 import { DataTableSkeleton } from '~/components/ui/table/DataTableSkeleton'
@@ -69,7 +69,7 @@ const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
 
   useDataTablePosts(dataTablePostsProps)
 
-  const { categoriesOptions } = useCategoriesOptions()
+  const { categoriesOptions } = useCategoriesFilterOptions()
 
   return (
     <div className="space-y-4">
@@ -86,6 +86,7 @@ const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
           options={categoriesOptions}
           filterValue={categoriesFilter}
           setFilterValue={setCategoriesFilter}
+          setPage={setPage}
         />
 
         <DataFilterBox
@@ -93,6 +94,7 @@ const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
           options={PUBLISHED_OPTIONS}
           filterValue={publishedFilter}
           setFilterValue={setPublishedFilter}
+          setPage={setPage}
         />
 
         <DataResetFilter

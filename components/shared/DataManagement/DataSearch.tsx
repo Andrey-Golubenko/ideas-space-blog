@@ -34,6 +34,7 @@ const DataSearch = ({
 
   return (
     <Input
+      name="search"
       placeholder={`Search ${searchKey}...`}
       value={searchQuery ?? ''}
       onChange={(event) => {

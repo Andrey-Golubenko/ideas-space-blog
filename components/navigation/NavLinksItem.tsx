@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { signOut } from 'next-auth/react'
 
-import useActive from '~/hooks/useActive'
+import { useIsActive } from '~/hooks/useIsActive'
 import { PATHS } from '~/utils/constants'
 
 interface INavMenuItemProps {
@@ -19,7 +19,7 @@ const NavMenuItem = ({
   isMobile,
   hasOnClick
 }: INavMenuItemProps) => {
-  const isActive = useActive()
+  const isActive = useIsActive()
 
   return (
     <li

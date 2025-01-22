@@ -1,22 +1,26 @@
 import { useState, useEffect } from 'react'
 import { SCREEN_LG, SCREEN_MD } from '~/utils/constants'
 
-export const useIsMobile = (): {
+/**
+ * useScreen - A custom React hook for determining the current screen width
+ * and adapting to mobile and tablet breakpoints.
+ *
+ * @returns {Object} An object representing the current screen state:
+ * - `isMobile` (`boolean`): `true` if the screen width is less than `SCREEN_MD`.
+ * - `isTablet` (`boolean`): `true` if the screen width is between `SCREEN_MD` and `SCREEN_LG`.
+ */
+export const useScreen = (): {
   isMobile: boolean
-  isSmallScreen: boolean
   isTablet: boolean
 } => {
   const [isMobile, setIsMobile] = useState<boolean>(false)
-  const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false)
   const [isTablet, setIsTablet] = useState<boolean>(false)
 
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth
-      // setIsMobile(width < 860)
       setIsMobile(width < SCREEN_MD)
       setIsTablet(SCREEN_MD < width && width < SCREEN_LG)
-      setIsSmallScreen(width < 854)
     }
 
     // Checking the screen width at the first render
@@ -31,5 +35,5 @@ export const useIsMobile = (): {
     }
   }, [])
 
-  return { isMobile, isSmallScreen, isTablet }
+  return { isMobile, isTablet }
 }

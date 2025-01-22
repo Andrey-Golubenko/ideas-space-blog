@@ -10,7 +10,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/thumbs'
 
 import LoadableImage from '~/components/shared/LoadableImage'
-import { useIsMobile } from '~/hooks/useMobile'
+import { useScreen } from '~/hooks/useScreen'
 
 interface ISinglePostAliderProps {
   imageUrls: string[]
@@ -18,7 +18,7 @@ interface ISinglePostAliderProps {
 
 const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
-  const { isMobile } = useIsMobile()
+  const { isMobile } = useScreen()
 
   const imagesCount = imageUrls?.length ?? 0
 

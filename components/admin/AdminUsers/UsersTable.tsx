@@ -68,6 +68,7 @@ const UsersTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
           options={AUTH_OPTIONS}
           setFilterValue={setAuthProviderFilter}
           filterValue={authProviderFilter}
+          setPage={setPage}
         />
 
         <DataResetFilter

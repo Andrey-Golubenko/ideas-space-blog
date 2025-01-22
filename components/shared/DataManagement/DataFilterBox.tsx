@@ -33,18 +33,23 @@ interface FilterOption {
 interface IDataFilterBoxProps {
   title: string
   options: FilterOption[]
+  filterValue: string
   setFilterValue: (
     value: string | ((old: string) => string | null) | null,
     options?: Options | undefined
   ) => Promise<URLSearchParams>
-  filterValue: string
+  setPage: (
+    value: number | ((old: number) => number | null) | null,
+    options?: Options | undefined
+  ) => Promise<URLSearchParams>
 }
 
 const DataFilterBox = ({
   title,
   options,
+  filterValue,
   setFilterValue,
-  filterValue
+  setPage
 }: IDataFilterBoxProps) => {
   const selectedValuesSet = useMemo(() => {
     if (!filterValue) return new Set<string>()
@@ -64,6 +69,7 @@ const DataFilterBox = ({
       newSet.add(value)
     }
     setFilterValue(Array.from(newSet).join('.') || null)
+    setPage(1) // Reset page to 1 when filter changes
   }
 
   const resetFilter = () => {

@@ -17,6 +17,23 @@ interface IuseOnDropProps {
   setValue: UseFormSetValue<FieldValues>
 }
 
+/**
+ * useOnDrop - A React hook for handling file drop events with validation, duplicate checks,
+ * and file management in forms using `react-hook-form`.
+ *
+ * @param {Object} props - The properties required by the hook.
+ * @param {string} props.fieldName - The form field name to associate the uploaded files with.
+ * @param {boolean} [props.shouldHaveOnlyOneImage=false] - Determines if only a single image is allowed.
+ * @param {boolean} props.multiple - Specifies whether multiple files can be uploaded.
+ * @param {File[]} [props.files] - The current list of uploaded files.
+ * @param {string[]} props.imageUrls - Existing image URLs for duplicate checks.
+ * @param {Dispatch<SetStateAction<[] | TFileError[]>>} props.setFilesErrors - State updater for file errors.
+ * @param {Dispatch<SetStateAction<[] | string[]>>} [props.setFilesDuplicate] - State updater for duplicate file names.
+ * @param {UseFormSetValue<FieldValues>} props.setValue - `react-hook-form`'s `setValue` function for updating form state.
+ *
+ * @returns {Object} An object containing:
+ * - `onDrop` (`Function`): The handler function to process dropped files, validate them, and update the form state.
+ */
 export const useOnDrop = ({
   fieldName,
   shouldHaveOnlyOneImage = false,

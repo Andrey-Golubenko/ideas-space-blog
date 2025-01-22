@@ -1,5 +1,3 @@
-import { useTransition } from 'react'
-
 import { CardFooter } from '~/components/ui/card'
 import DeletePostButton from '~/components/posts/SinglePost/DeletePostButton'
 import EditPostButton from '~/components/posts/SinglePost/EditPostButton'

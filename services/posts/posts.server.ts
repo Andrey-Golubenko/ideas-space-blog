@@ -132,7 +132,7 @@ export const fetchFilteredTablePostsWithPag = async ({
           ? {
               some: {
                 category: {
-                  id: { in: catFilters }
+                  slug: { in: catFilters }
                 }
               }
             }
@@ -177,7 +177,7 @@ export const fetchFilteredTablePostsWithPag = async ({
           ? {
               some: {
                 category: {
-                  id: { in: catFilters }
+                  slug: { in: catFilters }
                 }
               }
             }
@@ -249,7 +249,7 @@ export const fetchFilteredPostsWithPag = async ({
           ? {
               some: {
                 category: {
-                  id: { in: catFilters }
+                  slug: { in: catFilters }
                 }
               }
             }
@@ -295,7 +295,7 @@ export const fetchFilteredPostsWithPag = async ({
           ? {
               some: {
                 category: {
-                  id: { in: catFilters }
+                  slug: { in: catFilters }
                 }
               }
             }

@@ -13,8 +13,8 @@ import {
   SidebarGroupLabel,
   SidebarMenu
 } from '~/components/ui/sidebar'
-import SidebarItemSection from '~/components/Sidebars/SidebarItemSection'
-import SidebarHeaderSection from '~/components/Sidebars/SidebarHeaderSection'
+import SidebarItemSection from '~/components/sidebar/SidebarItemSection'
+import SidebarHeaderSection from '~/components/sidebar/SidebarHeaderSection'
 
 const CategoriesSidebar = () => {
   const [categories, getAllCategories] = useStore((state) => {

@@ -4,6 +4,20 @@ import { toUpperCaseFirstChar } from '~/utils/helpers'
 import { type Post, type Categories } from '@prisma/client'
 import { type TListItem } from '~/types'
 
+/**
+ * useItemProps - A custom hook for extracting and structuring the properties of a given element, depending on the type of element.
+ *
+ * @param {TListItem} [item] - The item to extract properties from. It can be a post or a category.
+ *
+ * @returns {Object} An object containing:
+ * - `itemImage` (`string`): The image URL of the item, or a default "no image" path if unavailable.
+ * - `itemTitle` (`string`): The title or name of the item with the first character capitalized.
+ * - `itemContent` (`string`): A truncated version of the item's content or description (up to 120 characters for posts).
+ * - `itemSlug` (`string`): The slug or ID of the item.
+ * - `authorId` (`string`): The author's ID (available only for posts).
+ * - `isPublishes` (`boolean`): Indicates whether the post is published (available only for posts).
+ * - `itemCreatedAt` (`string`): The creation date of the item, formatted as a locale date string in German (only for posts).
+ */
 export const useItemProps = (item?: TListItem) => {
   const { isCategory, isPost } = useItemType(item)
 
