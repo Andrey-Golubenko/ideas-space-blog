@@ -96,13 +96,13 @@ const DataFilterBox = ({
 
               <Badge
                 variant="secondary"
-                className="rounded-sm px-1 font-normal lg:hidden"
+                className="rounded-sm px-1 font-normal 1xl:hidden"
               >
                 {selectedValuesSet.size}
               </Badge>
 
-              <div className="hidden space-x-1 lg:flex">
-                {selectedValuesSet.size > 2 ? (
+              <div className="hidden space-x-1 1xl:flex">
+                {selectedValuesSet.size > 1 ? (
                   <Badge
                     variant="secondary"
                     className="rounded-sm px-1 font-normal"
@@ -117,9 +117,11 @@ const DataFilterBox = ({
                         key={value}
                         className="rounded-sm px-1 font-normal"
                       >
-                        {options.find((option) => {
-                          return option.value === value
-                        })?.label || value}
+                        {
+                          options.find((option) => {
+                            return option.value === value
+                          })?.label
+                        }
                       </Badge>
                     )
                   })

@@ -9,7 +9,7 @@ import {
 } from 'react'
 import { toast } from 'sonner'
 
-import useStore from '~/store'
+import useGlobalStore from '~/store'
 import { deletePost } from '~/actions/delete-post'
 import { destroyImagesInCld } from '~/services/imagesProcessing'
 import { deletePostFolderInCld } from '~/services/images'
@@ -31,7 +31,7 @@ const DeletePostHandler = ({
   setIsOpen,
   onPostDeleteSuccess
 }: IDeletePostHandlerProps) => {
-  const [deleteSinglePost] = useStore((state) => {
+  const [deleteSinglePost] = useGlobalStore((state) => {
     return [state.deleteSinglePost]
   })
 

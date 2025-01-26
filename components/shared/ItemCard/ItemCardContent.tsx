@@ -15,7 +15,7 @@ const ItemCardContent = ({
   const { isCategory } = itemType
 
   return (
-    <CardContent className="pb-10 text-justify">
+    <CardContent className="pb-6 text-justify">
       <div
         className={`rounded-xl py-2 ${isCategory ? '' : 'bg-slate-100 px-4'}`}
       >

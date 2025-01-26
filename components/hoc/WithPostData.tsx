@@ -5,12 +5,11 @@ import { usePathname } from 'next/navigation'
 
 import { useListItemsDistribution } from '~/hooks/useListItemsDistribution'
 import { PATHS } from '~/utils/constants'
-import { type Post } from '@prisma/client'
 import { type TDeserializedPost } from '~/types'
 
 interface IWithPostDataProps {
   children: ReactElement[]
-  posts: (Post | TDeserializedPost)[]
+  posts: TDeserializedPost[]
   postsCount: number | null
   isLoading: boolean
   dataContainerClasses?: string
@@ -38,7 +37,7 @@ interface IWithPostDataProps {
  * @param {ReactElement[]} props.children - Two child components:
  *   1. `WithSkeletonsList` to handle skeleton loading.
  *   2. The component used for displaying individual items (e.g., `ItemCard`).
- * @param {(Post | TDeserializedPost)[]} props.posts - The list of posts to display.
+ * @param {(TDeserializedPost)[]} props.posts - The list of posts to display.
  * @param {number | null} props.postsCount - The total number of posts to manage display logic.
  * @param {boolean} props.isLoading - Whether the posts are still being loaded.
  * @param {string} [props.dataContainerClasses] - Custom CSS classes for the data container.
@@ -72,7 +71,7 @@ const WithPostData = ({
 
   return (
     <section
-      className={`mb-8 w-full @container ${dataContainerClasses || ''}`}
+      className={`mb-8 w-full @container ${dataContainerClasses ?? ''}`}
       ref={containerRef}
     >
       {cloneElement(children[0], {

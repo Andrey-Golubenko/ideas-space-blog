@@ -6,6 +6,7 @@ import DataPaginationManage from './DataPaginationManage'
 
 interface IDataPaginationProps {
   totalItems: number
+  postsPerPage: number
   currentPage: number
   setCurrentPage: (
     value: number | ((old: number) => number | null) | null,
@@ -16,6 +17,7 @@ interface IDataPaginationProps {
 
 const DataPagination = ({
   totalItems,
+  postsPerPage,
   currentPage,
   setCurrentPage,
   isLoading
@@ -25,10 +27,12 @@ const DataPagination = ({
       <DataPaginationInfo
         totalItems={totalItems}
         currentPage={currentPage}
+        postsPerPage={postsPerPage}
       />
 
       <DataPaginationManage
         totalItems={totalItems}
+        postsPerPage={postsPerPage}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         isLoading={isLoading}

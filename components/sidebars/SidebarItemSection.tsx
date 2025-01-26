@@ -6,7 +6,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from '~/components/ui/sidebar'
-import SidebarImage from '~/components/sidebar/SidebarImage'
+import SidebarImage from '~/components/sidebars/SidebarImage'
 import { PATHS } from '~/utils/constants'
 import { type TAdminSidebarItem } from '~/types'
 

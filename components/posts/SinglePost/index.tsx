@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 
-import useStore from '~/store'
+import useGlobalStore from '~/store'
 import { Card } from '~/components/ui/card'
 import { Skeleton } from '~/components/ui/skeleton'
 import SinglePostHeader from '~/components/posts/SinglePost/SinglePostHeader'
@@ -23,7 +23,7 @@ const SinglePostCard = ({
   serverSinglePost
 }: ISinglePostCardProps) => {
   const [singlePost, getSinglePostById, setSinglePost, isLoading] =
-    useStore((state) => {
+    useGlobalStore((state) => {
       return [
         state.singlePost,
         state.getSinglePostById,

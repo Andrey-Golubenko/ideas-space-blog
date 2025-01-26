@@ -7,7 +7,7 @@ import {
 } from 'react'
 import { toast } from 'sonner'
 
-import useStore from '~/store'
+import useGlobalStore from '~/store'
 import { deleteCategory } from '~/actions/delete-category'
 import { destroyImagesInCld } from '~/services/imagesProcessing'
 import AlertModal from '~/components/shared/Modal/AlertModal'
@@ -28,7 +28,7 @@ const DeleteCategoryHandler = ({
   setIsOpen,
   onCategorytDeleteSuccess
 }: IDeleteCategoryHandlerProps) => {
-  const [deleteSingleCategory] = useStore((state) => {
+  const [deleteSingleCategory] = useGlobalStore((state) => {
     return [state.deleteSingleCategory]
   })
 

@@ -46,7 +46,7 @@ export const columns: ColumnDef<TDeserializedUser>[] = [
     cell: ({ row }) => {
       return (
         <Avatar>
-          <AvatarImage src={row.getValue('image') || ''} />
+          <AvatarImage src={row.getValue('image') ?? ''} />
           <AvatarFallback className="bg-sky-500">
             <FaUser className="text-white" />
           </AvatarFallback>
@@ -66,7 +66,7 @@ export const columns: ColumnDef<TDeserializedUser>[] = [
     accessorKey: 'provider',
     header: 'AUTH PROVIDER',
     cell: ({ row }) => {
-      const provider = row.getValue<string | null>('provider')
+      const provider = row.getValue<string | null>('provider') ?? ''
 
       const formattedProvider = provider
         ? provider.charAt(0).toUpperCase() +

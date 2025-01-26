@@ -18,6 +18,7 @@ const config = {
       md: `${SCREEN_MD}px`,
       lg: `${SCREEN_LG}px`,
       xl: '1024px',
+      '1xl': '1280px',
       '2xl': '1440px'
     },
     container: {

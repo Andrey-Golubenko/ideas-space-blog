@@ -4,7 +4,8 @@ import { useCallback, useState } from 'react'
 import { Edit, MoreHorizontal, Trash } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
-import useStore from '~/store'
+import useGlobalStore from '~/store'
+import { useDataPostsFilters } from '~/hooks/useDataPostsFilters'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,40 +15,31 @@ import {
 } from '~/components/ui/dropdown-menu'
 import { Button } from '~/components/ui/button'
 import DeletePostHandler from '~/components/shared/DeleteHandlers/DeletePostHandler'
-import { ITEMS_PER_PAGE_DEFAULT_LIMIT, PATHS } from '~/utils/constants'
+import { PATHS } from '~/utils/constants'
+import { type TDeserializedPost } from '~/types'
 
 interface ICellActionProps {
   postId: string
 }
 
 const CellAction = ({ postId }: ICellActionProps) => {
-  const [dataTablePosts, getDataTablePosts, setSinglePost] = useStore(
-    (state) => {
-      return [
-        state.dataTablePosts,
-        state.getDataTablePosts,
-        state.setSinglePost
-      ]
-    }
-  )
+  const [posts, setSinglePost] = useGlobalStore((state) => {
+    return [state.posts, state.setSinglePost]
+  })
 
   const [open, setOpen] = useState(false)
 
   const router = useRouter()
 
   const postToProcessing =
-    dataTablePosts.find((post) => {
+    (posts as TDeserializedPost[]).find((post) => {
       return post?.id === postId
     }) ?? null
 
+  const { setPage } = useDataPostsFilters()
+
   const onPostDeleteSuccess = useCallback(() => {
-    getDataTablePosts({
-      currentPage: 1,
-      limit: ITEMS_PER_PAGE_DEFAULT_LIMIT,
-      categoriesFilter: null,
-      publishedFilter: null,
-      searchQuery: null
-    })
+    setPage(1)
   }, [])
 
   const handleOnDelete = useCallback(() => {

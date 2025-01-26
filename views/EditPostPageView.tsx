@@ -5,20 +5,19 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
-import { type Post } from '@prisma/client'
 
-import useStore from '~/store'
-import { useCleaningItem } from '~/hooks/useCleaningItem'
-import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
-import PostManageForm from '~/components/shared/PostManageForm'
+import useGlobalStore from '~/store'
 import { editPost } from '~/actions/edit-post'
 import {
   destroyImagesInCld,
   saveImagesToCld
 } from '~/services/imagesProcessing'
+import { useCleaningItem } from '~/hooks/useCleaningItem'
+import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
+import PostManageForm from '~/components/shared/PostManageForm'
 import { CLOUDINARY_POSTS_IMAGES_FOLDER } from '~/utils/constants'
 import { ManagePostSchema } from '~/schemas'
-import { type TManagePostForm } from '~/types'
+import { type TDeserializedPost, type TManagePostForm } from '~/types'
 
 interface IEditPostViewProps {
   isLogged: boolean
@@ -32,7 +31,7 @@ const EditPostPageView = ({ isLogged }: IEditPostViewProps) => {
 
   const router = useRouter()
 
-  const [singlePost, setSinglePost] = useStore((state) => {
+  const [singlePost, setSinglePost] = useGlobalStore((state) => {
     return [state.singlePost, state.setSinglePost]
   })
 
@@ -88,7 +87,8 @@ const EditPostPageView = ({ isLogged }: IEditPostViewProps) => {
     startTransition(async () => {
       const newImageUrls = values?.imageUrls || []
 
-      const initialPostImageUrls = (singlePost as Post)?.imageUrls || []
+      const initialPostImageUrls =
+        (singlePost as TDeserializedPost)?.imageUrls || []
 
       const deletedImageUrls = initialPostImageUrls.filter((url) => {
         return !newImageUrls.includes(url)

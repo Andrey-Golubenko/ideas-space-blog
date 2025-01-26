@@ -11,7 +11,8 @@ export const searchParams = {
   q: parseAsString,
   authProvider: parseAsString,
   categories: parseAsString,
-  published: parseAsString
+  published: parseAsString,
+  author: parseAsString
 }
 
 export const searchParamsCache = createSearchParamsCache(searchParams)

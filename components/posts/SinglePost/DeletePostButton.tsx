@@ -3,7 +3,7 @@
 import { useCallback, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-import useStore from '~/store'
+import useGlobalStore from '~/store'
 import { Button } from '~/components/ui/button'
 import DeletePostHandler from '~/components/shared/DeleteHandlers/DeletePostHandler'
 import { PATHS } from '~/utils/constants'
@@ -17,7 +17,7 @@ const DeletePostButton = ({
   postId,
   imageUrls
 }: IPostDeleteButtonProps) => {
-  const [setSinglePost] = useStore((state) => {
+  const [setSinglePost] = useGlobalStore((state) => {
     return [state.setSinglePost]
   })
 

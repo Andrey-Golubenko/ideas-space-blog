@@ -3,27 +3,28 @@
 import { Suspense, useMemo } from 'react'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
-import useStore from '~/store'
+import useGlobalStore from '~/store'
 import { useCategoriesTableFilters } from '~/hooks/useCategoriesTableFilters'
-import { useDataTableCategories } from '~/hooks/useDataTableCategories'
+import { useDataCategories } from '~/hooks/useDataCategories'
 import { columns } from '~/components/admin/AdminCategories/columns'
 import DataTable from '~/components/ui/table/DataTable'
 import { DataTableSkeleton } from '~/components/ui/table/DataTableSkeleton'
 import DataSearch from '~/components/shared/DataManagement/DataSearch'
 import DataResetFilter from '~/components/shared/DataManagement/DataResetFilter'
+import { type Categories } from '@prisma/client'
 import { type IRCWithSearchParamsKeyProps } from '~/types'
 
 const CategoriesTable = ({
   searchParamsKey
 }: IRCWithSearchParamsKeyProps) => {
-  const [dataTableCategories, isLoading] = useStore((state) => {
-    return [state.dataTableCategories, state.isLoading]
-  })
-
-  const [currentPage, setCurrentPage] = useQueryState(
-    'page',
-    parseAsInteger.withOptions({ shallow: false }).withDefault(1)
+  const [categories, categoriesCount, isLoading] = useGlobalStore(
+    (state) => {
+      return [state.categories, state.categoriesCount, state.isLoading]
+    }
   )
+
+  const noItems = typeof categories === 'string'
+  const displayedCategories = noItems ? [] : categories
 
   const [pageSize, setPageSize] = useQueryState(
     'limit',
@@ -33,22 +34,23 @@ const CategoriesTable = ({
   )
 
   const {
-    isAnyFilterActive,
-    resetFilters,
     searchQuery,
+    setSearchQuery,
+    page,
     setPage,
-    setSearchQuery
+    isAnyFilterActive,
+    resetFilters
   } = useCategoriesTableFilters()
 
   const dataTableCategoriesProps = useMemo(() => {
     return {
-      currentPage,
+      page,
       limit: pageSize,
       searchQuery
     }
-  }, [currentPage, pageSize, searchQuery])
+  }, [page, pageSize, searchQuery])
 
-  useDataTableCategories(dataTableCategoriesProps)
+  useDataCategories(dataTableCategoriesProps)
 
   return (
     <div className="space-y-4">
@@ -82,12 +84,12 @@ const CategoriesTable = ({
           }
         >
           <DataTable
-            key={dataTableCategories?.length}
+            key={categoriesCount}
             columns={columns}
-            data={dataTableCategories}
-            totalItems={dataTableCategories?.length}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
+            data={displayedCategories as Categories[]}
+            totalItems={categoriesCount}
+            currentPage={page}
+            setCurrentPage={setPage}
             pageSize={pageSize}
             setPageSize={setPageSize}
           />

@@ -3,7 +3,6 @@ import {
   PUBLIC_ROUTES_EXCEPTIONS,
   PUBLIC_ROUTES_WITH_DYNAMIC_SEGMENT
 } from '~/utils/constants/routes'
-import { type Post } from '@prisma/client'
 import { type TDeserializedPost } from '~/types'
 
 /**
@@ -150,13 +149,15 @@ export const getImageNames = (imageUrls: string[]) => {
  * @returns {boolean} - `true` if the posts list is empty or contains unpublished posts, otherwise `false`.
  */
 export const isEmptyOrUnpublished = (
-  posts: (Post | TDeserializedPost)[] | string
+  posts: TDeserializedPost[] | string
 ): boolean => {
+  const noItems = typeof posts === 'string'
+
   const oneUnpublished = Array.isArray(posts)
     ? !!posts?.filter((post) => {
         return !post.published
       })?.length
     : false
 
-  return oneUnpublished || typeof posts === 'string'
+  return oneUnpublished || noItems
 }

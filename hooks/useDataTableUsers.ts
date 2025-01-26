@@ -1,8 +1,8 @@
 import { useCallback, useEffect } from 'react'
 import { useDebounce } from 'use-debounce'
 
-import useStore from '~/store'
-import { ITEMS_PER_PAGE_DEFAULT_LIMIT } from '~/utils/constants'
+import useGlobalStore from '~/store'
+import { DEFAULT_TABLE_ITEMS_PER_PAGE } from '~/utils/constants'
 import { type IFetchUsersFunctionProps } from '~/types'
 
 export const useDataTableUsers = ({
@@ -11,7 +11,7 @@ export const useDataTableUsers = ({
   providerFilter,
   searchQuery
 }: IFetchUsersFunctionProps) => {
-  const [getDataTableUsers] = useStore((state) => {
+  const [getDataTableUsers] = useGlobalStore((state) => {
     return [state.getDataTableUsers]
   })
 
@@ -19,7 +19,7 @@ export const useDataTableUsers = ({
 
   const offset = currentPage
     ? (currentPage - 1) * limit
-    : ITEMS_PER_PAGE_DEFAULT_LIMIT
+    : DEFAULT_TABLE_ITEMS_PER_PAGE
 
   const fetchUsers = useCallback(async () => {
     await getDataTableUsers({

@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import { type DateRange } from 'react-day-picker'
 
-import useStore from '~/store'
+import useGlobalStore from '~/store'
 import DateRangePicker from '~/components/shared/DateRangePicker'
 import { Button } from '~/components/ui/button'
 
@@ -11,7 +11,7 @@ const AdminDashboardHeader = () => {
     to: undefined
   })
 
-  const [getUsersVisits] = useStore((state) => {
+  const [getUsersVisits] = useGlobalStore((state) => {
     return [state.getUsersVisits]
   })
 

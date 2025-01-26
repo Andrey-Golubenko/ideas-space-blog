@@ -1,23 +1,16 @@
 import { persist, devtools, createJSONStorage } from 'zustand/middleware'
 import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
-import { type Categories, type Post } from '@prisma/client'
 
 import {
   fetchPosts,
-  fetchPostsByUserId,
   fetchSinglePostById
 } from '~/services/posts/posts.client'
-import {
-  fetchAllCategories,
-  fetchCurrentPageOfFilteredCategories
-} from '~/services/categories'
-import {
-  fetchFilteredTablePostsWithPag,
-  fetchRecentPosts
-} from '~/services/posts/posts.server'
+import { fetchFilteredCategoriesWithPag } from '~/services/categories'
+import { fetchRecentPosts } from '~/services/posts/posts.server'
 import { fetchUsersVisits } from '~/services/userVisits/visitsData'
 import { fetchCurrentPageOfFilteredUsers } from '~/services/user'
+import { type Categories } from '@prisma/client'
 import {
   type TDeserializedPost,
   type IBrowserStats,
@@ -28,46 +21,41 @@ import {
   type IFetchDataFunctionProps
 } from '~/types'
 
-interface IUseStore {
-  posts: Post[] | string
+interface IUseGlobalStore {
+  posts: TDeserializedPost[] | string
   postsCount: number | null
   singlePost: FullPost | {}
-  recentPosts: Post[] | null | string
+  recentPosts: TDeserializedPost[] | null | string
 
-  categories: Categories[] | null | []
+  categories: Categories[] | string
+  categoriesCount: number | null
   editableCategory: Categories | {}
 
   usersVisits: IUserVisit[] | null
   browserStats: IBrowserStats[] | null
 
-  dataTablePosts: TDeserializedPost[]
-  dataTablePostsCount: number | null
   dataTableUsers: TDeserializedUser[] | []
-  dataTableCategories: Categories[]
 
   isLoading: boolean
 
   getFilteredPostsWithPag: (props: IFetchPostsFunctionProps) => void
-  getPostsByUserId: (userId: string) => Promise<void>
   getSinglePostById: (postId: string) => void
-  setSinglePost: (post: FullPost | {} | TDeserializedPost) => void
   getRecentPosts: () => Promise<void>
+  setSinglePost: (post: FullPost | {} | TDeserializedPost) => void
   deleteSinglePost: (postId: string) => void
 
-  getAllCategories: () => Promise<void>
-  deleteSingleCategory: (categoryId: string) => void
+  getFilteredCategoriesWithPag: (props: IFetchDataFunctionProps) => void
   setEditableCategory: (category: Categories | {}) => void
+  deleteSingleCategory: (categoryId: string) => void
 
   getDataTableUsers: (props: IFetchUsersFunctionProps) => void
-  getDataTablePosts: (props: IFetchPostsFunctionProps) => void
-  getDataTableCategories: (props: IFetchDataFunctionProps) => void
 
   getUsersVisits: (startDate?: Date, endDate?: Date) => void
 }
 
-const useStore = createWithEqualityFn<
-  IUseStore,
-  [['zustand/devtools', never], ['zustand/persist', IUseStore]]
+const useGlobalStore = createWithEqualityFn<
+  IUseGlobalStore,
+  [['zustand/devtools', never], ['zustand/persist', IUseGlobalStore]]
 >(
   devtools(
     // persist() - to enable state persistence across page reloads or browser sessions
@@ -79,16 +67,14 @@ const useStore = createWithEqualityFn<
           singlePost: {},
           recentPosts: null,
 
-          categories: null,
+          categories: [],
+          categoriesCount: null,
           editableCategory: {},
 
           usersVisits: [],
           browserStats: [],
 
           dataTableUsers: [],
-          dataTablePosts: [],
-          dataTablePostsCount: null,
-          dataTableCategories: [],
 
           isLoading: false,
 
@@ -97,6 +83,7 @@ const useStore = createWithEqualityFn<
             offset,
             categoriesFilter,
             publishedFilter,
+            authorFilter,
             searchQuery
           }: IFetchPostsFunctionProps) => {
             set((state) => {
@@ -108,25 +95,9 @@ const useStore = createWithEqualityFn<
               offset,
               categoriesFilter,
               publishedFilter,
+              authorFilter,
               searchQuery
             })
-
-            const posts = typeof data === 'string' ? data : data?.posts
-
-            const postsCount =
-              typeof data === 'string' ? null : data?.postsCount
-
-            set((state) => {
-              return { ...state, posts, postsCount, isLoading: false }
-            })
-          },
-
-          getPostsByUserId: async (userId: string) => {
-            set((state) => {
-              return { ...state, isLoading: true }
-            })
-
-            const data = await fetchPostsByUserId(userId)
 
             const posts = typeof data === 'string' ? data : data?.posts
 
@@ -174,11 +145,11 @@ const useStore = createWithEqualityFn<
             })
           },
 
-          // After deliting one category
+          // After deliting one post
           deleteSinglePost: (postId: string) => {
             set((state) => {
               const posts = Array.isArray(state?.posts)
-                ? (state?.posts as Post[])?.filter((post) => {
+                ? (state?.posts as TDeserializedPost[])?.filter((post) => {
                     return post.id !== postId
                   })
                 : []
@@ -187,21 +158,38 @@ const useStore = createWithEqualityFn<
             })
           },
 
-          getAllCategories: async () => {
+          getFilteredCategoriesWithPag: async ({
+            limit,
+            offset,
+            searchQuery
+          }: IFetchDataFunctionProps) => {
             set((state) => {
               return { ...state, isLoading: true }
             })
 
-            const data = await fetchAllCategories()
-            const { categories } = data
+            try {
+              const data = await fetchFilteredCategoriesWithPag({
+                limit,
+                offset,
+                searchQuery
+              })
 
-            set((state) => {
-              return {
-                ...state,
-                categories,
-                isLoading: false
-              }
-            })
+              const categories =
+                typeof data === 'string' ? data : data?.categories
+
+              const categoriesCount =
+                typeof data === 'string' ? null : data?.categoriesCount
+
+              set((state) => {
+                return { ...state, categories, categoriesCount }
+              })
+            } catch (error) {
+              console.error('Error fetching categories:', error)
+            } finally {
+              set((state) => {
+                return { ...state, isLoading: false }
+              })
+            }
           },
 
           // After deliting one category
@@ -270,77 +258,6 @@ const useStore = createWithEqualityFn<
                 return { ...state, isLoading: false }
               })
             }
-          },
-
-          getDataTablePosts: async ({
-            limit,
-            offset,
-            categoriesFilter,
-            publishedFilter,
-            searchQuery
-          }: IFetchPostsFunctionProps) => {
-            set((state) => {
-              return { ...state, isLoading: true }
-            })
-
-            try {
-              const data = await fetchFilteredTablePostsWithPag({
-                limit,
-                offset,
-                searchQuery,
-                categoriesFilter,
-                publishedFilter
-              })
-
-              const { posts, postsCount } = data!
-
-              if (posts) {
-                set((state) => {
-                  return {
-                    ...state,
-                    dataTablePosts: posts,
-                    dataTablePostsCount: postsCount
-                  }
-                })
-              }
-            } catch (error) {
-              console.error('Error fetching posts:', error)
-            } finally {
-              set((state) => {
-                return { ...state, isLoading: false }
-              })
-            }
-          },
-
-          getDataTableCategories: async ({
-            limit,
-            offset,
-            searchQuery
-          }: IFetchDataFunctionProps) => {
-            set((state) => {
-              return { ...state, isLoading: true }
-            })
-
-            try {
-              const categories =
-                await fetchCurrentPageOfFilteredCategories({
-                  limit,
-                  offset,
-                  searchQuery
-                })
-
-              if (categories) {
-                set((state) => {
-                  return { ...state, dataTableCategories: categories }
-                })
-              }
-            } catch (error) {
-              console.error('Error fetching posts:', error)
-            } finally {
-              set((state) => {
-                return { ...state, isLoading: false }
-              })
-            }
           }
         }
       },
@@ -355,4 +272,4 @@ const useStore = createWithEqualityFn<
   )
 )
 
-export default useStore
+export default useGlobalStore

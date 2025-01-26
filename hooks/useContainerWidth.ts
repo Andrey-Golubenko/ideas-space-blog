@@ -6,7 +6,8 @@ import { useState, useEffect, type RefObject } from 'react'
  * @param {RefObject<HTMLElement>} [containerRef] - A React reference to the container element whose width is being observed.
  *
  * @returns {Object} An object containing:
- * - `isContainerMobile` (`boolean`): Indicates whether the container's width is 768px or less.
+ * - `isContainerAtOrBelowMobile` (`boolean`): Indicates whether the container's width is 768px or less.
+ * - `isContainerBelowMobile` (`boolean`): Indicates whether the container's width is less that 768px.
  * - `isContainerMedium` (`boolean`): Indicates whether the container's width is 896px or more.
  *
  * This hook uses a `ResizeObserver` to monitor changes to the container's width and updates the state accordingly. It cleans up the observer on unmount.
@@ -14,11 +15,16 @@ import { useState, useEffect, type RefObject } from 'react'
 export const useContainerWidth = (
   containerRef?: RefObject<HTMLElement>
 ): {
-  isContainerMobile: boolean
+  isContainerAtOrBelowMobile: boolean
+  isContainerBelowMobile: boolean
   isContainerMedium: boolean
 } => {
-  const [isContainerMobile, setIsContainerMobile] =
+  const [isContainerBelowMobile, setIsContainerBelowMobile] =
     useState<boolean>(false)
+
+  const [isContainerAtOrBelowMobile, setIsContainerAtOrBelowMobile] =
+    useState<boolean>(false)
+
   const [isContainerMedium, setIsContainerMedium] =
     useState<boolean>(false)
 
@@ -28,7 +34,8 @@ export const useContainerWidth = (
     const updateSize = () => {
       const width = containerRef?.current?.offsetWidth
 
-      if (width) setIsContainerMobile(width <= 768)
+      if (width) setIsContainerBelowMobile(width < 768)
+      if (width) setIsContainerAtOrBelowMobile(width <= 768)
       if (width) setIsContainerMedium(width >= 896)
     }
 
@@ -46,5 +53,9 @@ export const useContainerWidth = (
     }
   }, [containerRef])
 
-  return { isContainerMobile, isContainerMedium }
+  return {
+    isContainerAtOrBelowMobile,
+    isContainerBelowMobile,
+    isContainerMedium
+  }
 }

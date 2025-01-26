@@ -23,6 +23,11 @@ export const useDataPostsFilters = () => {
     searchParams.published.withOptions({ shallow: false }).withDefault('')
   )
 
+  const [authorFilter, setAuthorFilter] = useQueryState(
+    'author',
+    searchParams.author.withOptions({ shallow: false }).withDefault('')
+  )
+
   const [page, setPage] = useQueryState(
     'page',
     searchParams.page.withDefault(1)
@@ -32,13 +37,25 @@ export const useDataPostsFilters = () => {
     setSearchQuery(null)
     setCategoriesFilter(null)
     setPublishedFilter(null)
+    setAuthorFilter(null)
 
     setPage(1)
-  }, [setSearchQuery, setCategoriesFilter, setPublishedFilter, setPage])
+  }, [
+    setSearchQuery,
+    setCategoriesFilter,
+    setPublishedFilter,
+    setAuthorFilter,
+    setPage
+  ])
 
   const isAnyFilterActive = useMemo(() => {
-    return !!searchQuery || !!categoriesFilter || !!publishedFilter
-  }, [searchQuery, categoriesFilter, publishedFilter])
+    return (
+      !!searchQuery ||
+      !!categoriesFilter ||
+      !!publishedFilter ||
+      !!authorFilter
+    )
+  }, [searchQuery, categoriesFilter, publishedFilter, authorFilter])
 
   return {
     searchQuery,
@@ -47,6 +64,8 @@ export const useDataPostsFilters = () => {
     setCategoriesFilter,
     publishedFilter,
     setPublishedFilter,
+    authorFilter,
+    setAuthorFilter,
     page,
     setPage,
     resetFilters,

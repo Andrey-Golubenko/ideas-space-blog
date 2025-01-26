@@ -1,21 +1,21 @@
-import { POSTS_PER_PAGE } from '~/utils/constants'
-
 interface IDataPaginationInfoProps {
   totalItems: number
   currentPage: number
+  postsPerPage: number
 }
 
 const DataPaginationInfo = ({
   totalItems,
-  currentPage
+  currentPage,
+  postsPerPage
 }: IDataPaginationInfoProps) => {
   return (
     <div className="flex-1 text-sm font-medium">
       {totalItems > 0 ? (
         <>
           <p className="flex whitespace-nowrap">
-            Showing {currentPage * POSTS_PER_PAGE - 8} to{' '}
-            {Math.min(currentPage * POSTS_PER_PAGE, totalItems)}
+            Showing {currentPage * postsPerPage - postsPerPage + 1} to{' '}
+            {Math.min(currentPage * postsPerPage, totalItems)}
           </p>
           <p className="flex whitespace-nowrap">of {totalItems} entries</p>
         </>

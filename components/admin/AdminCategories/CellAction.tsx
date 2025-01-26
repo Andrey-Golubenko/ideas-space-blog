@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation'
 import { Edit, MoreHorizontal, Trash } from 'lucide-react'
 import { toast } from 'sonner'
 
-import useStore from '~/store'
+import useGlobalStore from '~/store'
+import { useCategoriesTableFilters } from '~/hooks/useCategoriesTableFilters'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,40 +16,31 @@ import {
 } from '~/components/ui/dropdown-menu'
 import { Button } from '~/components/ui/button'
 import DeleteCategoryHandler from '~/components/shared/DeleteHandlers/DeleteCategoryHandler'
-import { ITEMS_PER_PAGE_DEFAULT_LIMIT, PATHS } from '~/utils/constants'
+import { PATHS } from '~/utils/constants'
+import { type Categories } from '@prisma/client'
 
 interface ICellActionProps {
   categoryId: string
 }
 
 const CellAction = ({ categoryId }: ICellActionProps) => {
-  const [
-    dataTableCategories,
-    setEditableCategory,
-    getDataTableCategories
-  ] = useStore((state) => {
-    return [
-      state.dataTableCategories,
-      state.setEditableCategory,
-      state.getDataTableCategories
-    ]
+  const [categories, setEditableCategory] = useGlobalStore((state) => {
+    return [state.categories, state.setEditableCategory]
   })
 
   const [open, setOpen] = useState(false)
 
   const router = useRouter()
 
+  const { setPage } = useCategoriesTableFilters()
+
   const categoryToProcessing =
-    dataTableCategories.find((category) => {
+    (categories as Categories[])?.find((category) => {
       return category?.id === categoryId
     }) ?? null
 
   const onCategoryDeleteSuccess = useCallback(() => {
-    getDataTableCategories({
-      currentPage: 1,
-      limit: ITEMS_PER_PAGE_DEFAULT_LIMIT,
-      searchQuery: null
-    })
+    setPage(1)
   }, [])
 
   const handleOnUpdate = useCallback(() => {

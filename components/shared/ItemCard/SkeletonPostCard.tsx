@@ -12,7 +12,7 @@ import { Skeleton } from '~/components/ui/skeleton'
 import ItemCardHeader from '~/components/shared/ItemCard/ItemCardHeader'
 import ItemCardContent from '~/components/shared/ItemCard/ItemCardContent'
 import ItemCardFooter from '~/components/shared/ItemCard/ItemCardFooter'
-import { TListItem } from '~/types'
+import { type TListItem } from '~/types'
 
 interface IPostCardSkeletonProps {
   item?: TListItem
@@ -37,10 +37,18 @@ const SkeletonPostCard = ({ item, isLoading }: IPostCardSkeletonProps) => {
       ) : (
         <>
           <CardHeader className="p-0">
-            <Skeleton className="mb-4 min-h-[260px] w-full" />
+            <Skeleton className="mb-4 min-h-[280px] w-full" />
           </CardHeader>
-          <CardHeader className="pb-8 pt-3">
+          <CardHeader className="pb-2 pt-3">
             <Skeleton className="h-7 w-full" />
+          </CardHeader>
+          <CardHeader className="flex-row items-center space-y-0 pb-1 pt-2">
+            <Skeleton className="mr-4 size-10 rounded-full" />
+            <Skeleton className="h-3 w-[40%]" />
+          </CardHeader>
+          <CardHeader className="ml-1 flex-row items-center space-y-0 pb-6 pt-2">
+            <Skeleton className="mr-4 size-6" />
+            <Skeleton className="h-3 w-[30%]" />
           </CardHeader>
         </>
       )}

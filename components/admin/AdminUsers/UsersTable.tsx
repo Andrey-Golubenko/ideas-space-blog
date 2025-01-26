@@ -3,7 +3,7 @@
 import { Suspense, useMemo } from 'react'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
-import useStore from '~/store'
+import useGlobalStore from '~/store'
 import { useUsersTableFilters } from '~/hooks/useUsersTableFilters'
 import { useDataTableUsers } from '~/hooks/useDataTableUsers'
 import DataTable from '~/components/ui/table/DataTable'
@@ -16,7 +16,7 @@ import { AUTH_OPTIONS } from '~/utils/constants'
 import { type IRCWithSearchParamsKeyProps } from '~/types'
 
 const UsersTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
-  const [dataTableUsers, isLoading] = useStore((state) => {
+  const [dataTableUsers, isLoading] = useGlobalStore((state) => {
     return [state.dataTableUsers, state.isLoading]
   })
 

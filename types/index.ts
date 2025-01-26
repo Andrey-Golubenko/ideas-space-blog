@@ -43,7 +43,7 @@ export type TActionReturn = Promise<
 
 export type PostsData =
   | {
-      posts: Post[]
+      posts: TDeserializedPost[]
       postsCount: number
     }
   | string
@@ -62,7 +62,7 @@ export type TManageCategoryForm = z.infer<typeof SingleCategorySchema>
 
 export type TManageUserForm = z.infer<typeof SettingsSchema>
 
-export type TListItem = (Post | TDeserializedPost) | Categories | null
+export type TListItem = TDeserializedPost | Categories | null
 
 export type TItemType = { isPost?: boolean; isCategory?: boolean }
 
@@ -181,15 +181,16 @@ export interface IBrowserStats {
 
 export interface IFetchDataFunctionProps {
   limit: number
-  searchQuery: string | null
+  searchQuery?: string | null
   currentPage?: number
   page?: number
   offset?: number
 }
 
 export interface IFetchPostsFunctionProps extends IFetchDataFunctionProps {
-  categoriesFilter: string | null
+  categoriesFilter?: string | null
   publishedFilter?: string | null
+  authorFilter?: string | null
 }
 
 export interface IFetchUsersFunctionProps extends IFetchDataFunctionProps {
@@ -210,7 +211,12 @@ export type TTRuncatedCategories = {
   slug: string
 }
 
+export type TTRuncatedAuthors = {
+  id: string
+  name: string
+}
+
 export type TDeserializedPost = Omit<Post, 'authorId' | 'updatedAt'> & {
-  author: string | null
+  author: TTRuncatedAuthors | string | null
   categories: TCategoryOptions[] | null
 }

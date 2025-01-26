@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 
-import useStore from '~/store'
+import useGlobalStore from '~/store'
 import { Card, CardContent, CardHeader } from '~/components/ui/card'
 import CardHeaderContent from '~/components/shared/CardWrapper/CardHeaderContent'
 import WithPostData from '~/components/hoc/WithPostData'
@@ -11,18 +11,20 @@ import SectionItemCard from '~/components/shared/ItemSectionCard'
 import SkeletonPostSectionItem from '~/components/shared/ItemSectionCard/SkeletonPostSectionItem'
 import NoItemsCard from '~/components/posts/NoItemsCard'
 import { isEmptyOrUnpublished } from '~/utils/helpers'
-import { type Post } from '@prisma/client'
+import { type TDeserializedPost } from '~/types'
 
-const RecentPostsList = () => {
-  const [recentPosts, getRecentPosts, isLoading] = useStore((state) => {
-    return [state.recentPosts, state.getRecentPosts, state.isLoading]
-  })
+const RecentPostsSection = () => {
+  const [recentPosts, getRecentPosts, isLoading] = useGlobalStore(
+    (state) => {
+      return [state.recentPosts, state.getRecentPosts, state.isLoading]
+    }
+  )
 
   useEffect(() => {
     getRecentPosts()
   }, [getRecentPosts])
 
-  const noItems = isEmptyOrUnpublished(recentPosts as Post[])
+  const noItems = isEmptyOrUnpublished(recentPosts as TDeserializedPost[])
 
   return (
     <Card className="bg-slate-100 px-2 pb-2 sm:px-10 sm:pb-10">
@@ -37,7 +39,7 @@ const RecentPostsList = () => {
           <NoItemsCard itemName="published recent posts" />
         ) : (
           <WithPostData
-            posts={(recentPosts as Post[]) || []}
+            posts={(recentPosts as TDeserializedPost[]) || []}
             postsCount={recentPosts ? recentPosts?.length : null}
             isLoading={isLoading}
           >
@@ -53,4 +55,4 @@ const RecentPostsList = () => {
   )
 }
 
-export default RecentPostsList
+export default RecentPostsSection

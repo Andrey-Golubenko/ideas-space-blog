@@ -1,8 +1,8 @@
 import { useItemType } from '~/hooks/useItemType'
 import { IMAGES_PATHS } from '~/utils/constants'
 import { toUpperCaseFirstChar } from '~/utils/helpers'
-import { type Post, type Categories } from '@prisma/client'
-import { type TListItem } from '~/types'
+import { type Categories } from '@prisma/client'
+import { type TDeserializedPost, type TListItem } from '~/types'
 
 /**
  * useItemProps - A custom hook for extracting and structuring the properties of a given element, depending on the type of element.
@@ -30,7 +30,7 @@ export const useItemProps = (item?: TListItem) => {
   let isPublishes = false
 
   if (isPost) {
-    const post = item as Post
+    const post = item as TDeserializedPost
 
     itemImage = post?.imageUrls?.length
       ? post?.imageUrls[0]
@@ -44,7 +44,7 @@ export const useItemProps = (item?: TListItem) => {
 
     itemSlug = post?.id ?? ''
 
-    authorId = post?.authorId ?? ''
+    authorId = (post?.author as { id: string; name: string })?.id ?? ''
 
     isPublishes = post?.published ?? false
 

@@ -43,7 +43,7 @@ const PostMeta = ({
   const isProfile = pathname.includes(PATHS.profile)
 
   return (
-    <div className="mb-4 w-full">
+    <div className="mb-2 w-full">
       <div className="mb-2 flex items-center">
         <Avatar className="mr-2 border border-slate-300">
           <AvatarImage
@@ -75,7 +75,7 @@ const PostMeta = ({
 
       {isProfile && (
         <p className="flex items-center pl-3">
-          <span className="mr-2">State: </span>
+          <span className="mr-2">Status: </span>
           <span className="text-sm tracking-wider text-red-800">
             {isPublished ? 'Published' : 'Draft'}
           </span>

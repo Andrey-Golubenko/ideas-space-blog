@@ -1,5 +1,5 @@
 import { SidebarHeader } from '~/components/ui/sidebar'
-import SidebarLogoContainer from '~/components/sidebar/SidebarLogoContainer'
+import SidebarLogoContainer from '~/components/sidebars/SidebarLogoContainer'
 
 interface ISidebarHeaderSectionProps {
   sidebarType: {

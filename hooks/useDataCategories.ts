@@ -1,32 +1,30 @@
 import { useCallback, useEffect } from 'react'
 import { useDebounce } from 'use-debounce'
 
-import useStore from '~/store'
-import { ITEMS_PER_PAGE_DEFAULT_LIMIT } from '~/utils/constants'
+import useGlobalStore from '~/store'
+import { DEFAULT_TABLE_ITEMS_PER_PAGE } from '~/utils/constants'
 import { type IFetchDataFunctionProps } from '~/types'
 
-export const useDataTableCategories = ({
-  currentPage,
+export const useDataCategories = ({
+  page,
   limit,
   searchQuery
 }: IFetchDataFunctionProps) => {
-  const [getDataTableCategories] = useStore((state) => {
-    return [state.getDataTableCategories]
+  const [getFilteredCategoriesWithPag] = useGlobalStore((state) => {
+    return [state.getFilteredCategoriesWithPag]
   })
 
   const [debouncedSearchQuery] = useDebounce(searchQuery, 700)
 
-  const offset = currentPage
-    ? (currentPage - 1) * limit
-    : ITEMS_PER_PAGE_DEFAULT_LIMIT
+  const offset = page ? (page - 1) * limit : DEFAULT_TABLE_ITEMS_PER_PAGE
 
   const fetchCategories = useCallback(async () => {
-    await getDataTableCategories({
+    await getFilteredCategoriesWithPag({
       limit,
       offset,
       searchQuery: debouncedSearchQuery
     })
-  }, [getDataTableCategories, limit, offset, debouncedSearchQuery])
+  }, [getFilteredCategoriesWithPag, limit, offset, debouncedSearchQuery])
 
   useEffect(() => {
     fetchCategories()

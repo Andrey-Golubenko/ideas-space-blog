@@ -109,8 +109,11 @@ export const PUBLISHED_OPTIONS = [
   { value: 'draft', label: 'Draft' }
 ]
 
-export const POSTS_PER_PAGE = 9
-export const ITEMS_PER_PAGE_DEFAULT_LIMIT = 10
+// Count of items per page for different lists with pagination
+export const DEFAULT_POSTS_PER_PAGE = 9
+export const PROFILE_POSTS_PER_PAGE = 3
+export const SINGLE_CAT_POSTS_PER_PAGE = 4
+export const DEFAULT_TABLE_ITEMS_PER_PAGE = 10
 
 // TODO: For storage as an example
 enum InitCategoriesName {

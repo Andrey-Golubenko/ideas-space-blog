@@ -5,7 +5,7 @@ import { Edit, MoreHorizontal, Trash } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
-import useStore from '~/store'
+import useGlobalStore from '~/store'
 import { useCurrentUser } from '~/hooks/useCurrentUser'
 import { deleteUser } from '~/actions/delete-user'
 import { logOut } from '~/actions/logout'
@@ -18,14 +18,14 @@ import {
 } from '~/components/ui/dropdown-menu'
 import { Button } from '~/components/ui/button'
 import AlertModal from '~/components/shared/Modal/AlertModal'
-import { ITEMS_PER_PAGE_DEFAULT_LIMIT, PATHS } from '~/utils/constants'
+import { DEFAULT_TABLE_ITEMS_PER_PAGE, PATHS } from '~/utils/constants'
 
 interface ICellActionProps {
   userId: string
 }
 
 const CellAction = ({ userId }: ICellActionProps) => {
-  const [getDataTableUsers] = useStore((state) => {
+  const [getDataTableUsers] = useGlobalStore((state) => {
     return [state.getDataTableUsers]
   })
 
@@ -63,7 +63,7 @@ const CellAction = ({ userId }: ICellActionProps) => {
 
           await getDataTableUsers({
             currentPage: 1,
-            limit: ITEMS_PER_PAGE_DEFAULT_LIMIT,
+            limit: DEFAULT_TABLE_ITEMS_PER_PAGE,
             providerFilter: null,
             searchQuery: null
           })

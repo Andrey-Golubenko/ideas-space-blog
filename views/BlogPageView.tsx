@@ -2,9 +2,10 @@
 
 import { useMemo } from 'react'
 
-import useStore from '~/store'
+import useGlobalStore from '~/store'
 import { useDataPostsFilters } from '~/hooks/useDataPostsFilters'
 import { useCategoriesFilterOptions } from '~/hooks/useCategoriesFilterOption'
+import { useAuthorsFilterOptions } from '~/hooks/useAuthorsFilterOption'
 import { useDataPosts } from '~/hooks/useDataPosts'
 import { Card } from '~/components/ui/card'
 import BlogPostsList from '~/components/posts/BlogPostsList'
@@ -13,10 +14,14 @@ import DataResetFilter from '~/components/shared/DataManagement/DataResetFilter'
 import DataFilterBox from '~/components/shared/DataManagement/DataFilterBox'
 import DataPagination from '~/components/shared/DataManagement/DataPagination'
 import { isEmptyOrUnpublished } from '~/utils/helpers'
-import { POSTS_PER_PAGE } from '~/utils/constants'
+import { DEFAULT_POSTS_PER_PAGE } from '~/utils/constants'
+import {
+  type IFetchPostsFunctionProps,
+  type TDeserializedPost
+} from '~/types'
 
 const BlogPageView = () => {
-  const [posts, postsCount, isLoading] = useStore((state) => {
+  const [posts, postsCount, isLoading] = useGlobalStore((state) => {
     return [state.posts, state.postsCount, state.isLoading]
   })
 
@@ -25,6 +30,8 @@ const BlogPageView = () => {
     setSearchQuery,
     categoriesFilter,
     setCategoriesFilter,
+    authorFilter,
+    setAuthorFilter,
     isAnyFilterActive,
     resetFilters,
     page,
@@ -33,14 +40,19 @@ const BlogPageView = () => {
 
   const { categoriesOptions } = useCategoriesFilterOptions()
 
-  const dataPostsProps = useMemo(() => {
+  const { authorsOptions } = useAuthorsFilterOptions()
+
+  const postsPerPage = DEFAULT_POSTS_PER_PAGE
+
+  const dataPostsProps: IFetchPostsFunctionProps = useMemo(() => {
     return {
       page,
-      limit: POSTS_PER_PAGE,
+      limit: postsPerPage,
       categoriesFilter,
+      authorFilter,
       searchQuery
     }
-  }, [page, categoriesFilter, searchQuery])
+  }, [page, categoriesFilter, authorFilter, searchQuery])
 
   useDataPosts(dataPostsProps)
 
@@ -48,17 +60,17 @@ const BlogPageView = () => {
 
   return (
     <div className="page-wrapper w-full pt-14">
-      <Card className="mb-5 grid w-full grid-cols-1 flex-wrap items-center justify-around gap-x-8 gap-y-4 px-6 py-3 min-[375px]:grid-cols-2 md:grid-cols-4">
+      <Card className="mb-5 grid w-full grid-cols-1 flex-wrap items-center justify-around gap-x-8 gap-y-4 px-6 py-3 min-[375px]:grid-cols-2 md:grid-cols-5">
         <div className="col-span-1 min-[375px]:col-span-2 md:[&_div]:w-full md:[&_input]:!max-w-full ">
           <DataSearch
-            searchKey="name"
+            searchKey="title"
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             setPage={setPage}
           />
         </div>
 
-        <div className="col-span-1 grid place-content-center max-[375px]:grid-cols-1 min-[375px]:place-content-start">
+        <div className="col-span-1 grid grid-cols-2 place-content-between gap-3 max-[375px]:grid-cols-1 min-[375px]:col-span-2">
           <DataFilterBox
             title="Category"
             options={categoriesOptions}
@@ -66,9 +78,17 @@ const BlogPageView = () => {
             setFilterValue={setCategoriesFilter}
             setPage={setPage}
           />
+
+          <DataFilterBox
+            title="Author"
+            options={authorsOptions}
+            filterValue={authorFilter}
+            setFilterValue={setAuthorFilter}
+            setPage={setPage}
+          />
         </div>
 
-        <div className="col-span-1 grid place-content-center max-[375px]:grid-cols-1 min-[375px]:place-content-end">
+        <div className="col-span-1 grid grid-cols-1 place-content-start ">
           <DataResetFilter
             isFilterActive={isAnyFilterActive}
             onReset={resetFilters}
@@ -77,7 +97,7 @@ const BlogPageView = () => {
       </Card>
 
       <BlogPostsList
-        data={posts}
+        data={posts as TDeserializedPost[]}
         totalItems={postsCount}
         noItems={noItems}
         isLoading={isLoading}
@@ -86,6 +106,7 @@ const BlogPageView = () => {
       {!noItems && (
         <DataPagination
           totalItems={postsCount ?? 0}
+          postsPerPage={postsPerPage}
           currentPage={page}
           setCurrentPage={setPage}
           isLoading={isLoading}

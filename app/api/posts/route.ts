@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 import { fetchFilteredPostsWithPag } from '~/services/posts/posts.server'
-import { POSTS_PER_PAGE } from '~/utils/constants'
-import { type Post } from '@prisma/client'
+import { DEFAULT_POSTS_PER_PAGE } from '~/utils/constants'
+import {
+  type IFetchPostsFunctionProps,
+  type TDeserializedPost
+} from '~/types'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
@@ -11,19 +14,21 @@ export async function GET(request: NextRequest) {
   const offset = searchParams.get('offset')
   const categoriesFilter = searchParams.get('categories')
   const publishedFilter = searchParams.get('published')
+  const authorFilter = searchParams.get('authors')
   const searchQuery = searchParams.get('q')
 
-  const dataPostsProps = {
-    limit: Number(limit) ?? POSTS_PER_PAGE,
+  const dataPostsProps: IFetchPostsFunctionProps = {
+    limit: Number(limit) ?? DEFAULT_POSTS_PER_PAGE,
     offset: Number(offset) ?? 0,
     categoriesFilter,
     publishedFilter,
+    authorFilter,
     searchQuery
   }
 
   try {
     const dbPosts: {
-      posts: Post[]
+      posts: TDeserializedPost[]
       postsCount: number
     } | null = await fetchFilteredPostsWithPag(dataPostsProps)
 

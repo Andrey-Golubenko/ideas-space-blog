@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { Label, Pie, PieChart } from 'recharts'
 
-import useStore from '~/store'
+import useGlobalStore from '~/store'
 import {
   Card,
   CardContent,
@@ -43,7 +43,7 @@ const chartConfig = {
 } satisfies ChartConfig
 
 const UsersAgentsGraph = () => {
-  const [browserStats] = useStore((state) => {
+  const [browserStats] = useGlobalStore((state) => {
     return [state.browserStats]
   })
 

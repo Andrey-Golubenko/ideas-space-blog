@@ -3,9 +3,7 @@
 import { cache } from 'react'
 
 import { db } from '~/libs/db'
-import { type Post } from '@prisma/client'
 import {
-  type PostsData,
   type IFetchPostsFunctionProps,
   type TDeserializedPost
 } from '~/types'
@@ -51,36 +49,37 @@ export const getSinglePost = cache(
   }
 )
 
-export const getPostsByCategory = cache(
-  async (categoryId: string): Promise<PostsData | null> => {
-    try {
-      const dbPosts = await db.post.findMany({
-        where: {
-          categories: {
-            some: { categoryId }
-          }
-        }
-      })
-
-      const data = dbPosts?.length
-        ? { posts: dbPosts, postsCount: dbPosts.length }
-        : 'It seems there are no posts yet.'
-
-      return data
-    } catch (error) {
-      console.error('Error fetching posts by category:', error)
-
-      return null
-    }
-  }
-)
-
 export const fetchRecentPosts = async (): Promise<{
-  recentPosts: Post[] | string
+  recentPosts: TDeserializedPost[] | string
 }> => {
   try {
     const posts = await db.post.findMany({
       take: 3,
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        imageUrls: true,
+        published: true,
+        createdAt: true,
+        author: {
+          select: {
+            id: true,
+            name: true
+          }
+        },
+        categories: {
+          select: {
+            category: {
+              select: {
+                id: true,
+                name: true,
+                slug: true
+              }
+            }
+          }
+        }
+      },
       orderBy: { createdAt: 'desc' }
     })
 
@@ -88,7 +87,22 @@ export const fetchRecentPosts = async (): Promise<{
       return { recentPosts: 'It seems there are no posts yet.' }
     }
 
-    return { recentPosts: posts }
+    const deserializedPosts: TDeserializedPost[] = posts.map((post) => {
+      return {
+        ...post,
+        author: post.author
+          ? { id: post.author.id, name: post.author.name || '' }
+          : null,
+        categories: post.categories.map((category) => {
+          return {
+            categoryId: category.category.id,
+            categoryName: category.category.name,
+            categorySlug: category.category.slug
+          }
+        })
+      }
+    })
+    return { recentPosts: deserializedPosts }
   } catch (error) {
     console.error('Error fetching recent posts:', error)
 
@@ -97,33 +111,36 @@ export const fetchRecentPosts = async (): Promise<{
 }
 
 /**
- * Fetches a paginated and filtered list of posts from the database for tables.
+Fetches paginated and filtered posts from the database for a post list and a post table.
  *
  * @param {Object} param - The function parameters.
- * @param {number} param.limit - The number of posts to fetch.
- * @param {number} param.offset - The starting position for fetching posts.
- * @param {string} [param.categoriesFilter] - A dot-separated list of category IDs to filter posts by.
+ * @param {number} param.limit - The maximum number of posts to fetch.
+ * @param {number} param.offset - The starting position for fetching posts (used for pagination).
+ * @param {string} [param.categoriesFilter] - A dot-separated string of category IDs to filter posts by.
+ * @param {string} [param.authFilter] - A dot-separated string of author IDs to filter posts by.
  * @param {string} [param.publishedFilter] - A string indicating the publish status filter (`"draft"` or `"published"`).
- * @param {string} [param.searchQuery] - A search query to filter posts by title.
+ * @param {string} [param.searchQuery] - A search query to filter posts by title (case insensitive).
  * @returns {Promise<{posts: TDeserializedPost[], postsCount: number} | null>}
- * A promise that resolves to an object containing the filtered posts and the total count of posts,
+ * A promise that resolves to an object containing the filtered posts and their total count,
  * or `null` if an error occurs.
  */
-export const fetchFilteredTablePostsWithPag = async ({
+export const fetchFilteredPostsWithPag = async ({
   limit,
   offset,
   categoriesFilter,
   publishedFilter,
+  authorFilter,
   searchQuery
 }: IFetchPostsFunctionProps): Promise<{
   posts: TDeserializedPost[]
   postsCount: number
 } | null> => {
-  const catFilters = categoriesFilter?.split('.') || []
+  const catFilters = categoriesFilter?.split('.')
+  const authFilters = authorFilter?.split('.')
   const isPublishFilter = publishedFilter !== 'draft'
 
   try {
-    const filteredPosts = await db.post.findMany({
+    const dbPosts = await db.post.findMany({
       where: {
         title: searchQuery
           ? { contains: searchQuery, mode: 'insensitive' }
@@ -137,7 +154,8 @@ export const fetchFilteredTablePostsWithPag = async ({
               }
             }
           : undefined,
-        published: publishedFilter ? isPublishFilter : undefined
+        published: publishedFilter ? isPublishFilter : undefined,
+        authorId: authorFilter ? { in: authFilters } : undefined
       },
       take: limit,
       skip: offset as number,
@@ -151,6 +169,7 @@ export const fetchFilteredTablePostsWithPag = async ({
         createdAt: true,
         author: {
           select: {
+            id: true,
             name: true
           }
         },
@@ -168,123 +187,9 @@ export const fetchFilteredTablePostsWithPag = async ({
       }
     })
 
-    const postsCount = await db.post.count({
-      where: {
-        title: searchQuery
-          ? { contains: searchQuery, mode: 'insensitive' }
-          : undefined,
-        categories: categoriesFilter
-          ? {
-              some: {
-                category: {
-                  slug: { in: catFilters }
-                }
-              }
-            }
-          : undefined,
-        published: publishedFilter ? isPublishFilter : undefined
-      }
-    })
-
-    const posts: TDeserializedPost[] = filteredPosts.map((post) => {
-      const { author, categories, ...restValues } = post
-
-      const authorName = author?.name
-
-      const formatedCategories = categories.map((singleCategory) => {
-        return {
-          categoryId: singleCategory?.category?.id,
-          categoryName: singleCategory?.category?.name,
-          categorySlug: singleCategory?.category?.slug
-        }
-      })
-
-      return {
-        ...restValues,
-        author: authorName,
-        categories: formatedCategories
-      }
-    })
-
-    return { posts, postsCount }
-  } catch (error) {
-    console.error('Failed to fetch filtered posts:', error)
-    return null
-  }
-}
-
-/**
-Fetches paginated and filtered posts from the database for a simple post list.
- *
- * @param {Object} param - The function parameters.
- * @param {number} param.limit - The maximum number of posts to fetch.
- * @param {number} param.offset - The starting position for fetching posts (used for pagination).
- * @param {string} [param.categoriesFilter] - A dot-separated string of category IDs to filter posts by.
- * @param {string} [param.publishedFilter] - A string indicating the publish status filter (`"draft"` or `"published"`).
- * @param {string} [param.searchQuery] - A search query to filter posts by title (case insensitive).
- * @returns {Promise<{posts: Post[], postsCount: number} | null>}
- * A promise that resolves to an object containing the filtered posts and their total count,
- * or `null` if an error occurs.
- */
-export const fetchFilteredPostsWithPag = async ({
-  limit,
-  offset,
-  categoriesFilter,
-  publishedFilter,
-  searchQuery
-}: IFetchPostsFunctionProps): Promise<{
-  posts: Post[]
-  postsCount: number
-} | null> => {
-  const catFilters = categoriesFilter?.split('.') || []
-  const isPublishFilter = publishedFilter !== 'draft'
-
-  try {
-    const filteredPosts = await db.post.findMany({
-      where: {
-        title: searchQuery
-          ? { contains: searchQuery, mode: 'insensitive' }
-          : undefined,
-        categories: categoriesFilter
-          ? {
-              some: {
-                category: {
-                  slug: { in: catFilters }
-                }
-              }
-            }
-          : undefined,
-        published: publishedFilter ? isPublishFilter : undefined
-      },
-      take: limit,
-      skip: offset as number,
-      orderBy: { createdAt: 'asc' },
-      select: {
-        id: true,
-        title: true,
-        content: true,
-        imageUrls: true,
-        published: true,
-        createdAt: true,
-        updatedAt: true,
-        author: {
-          select: {
-            id: true
-          }
-        },
-        categories: {
-          select: {
-            category: {
-              select: {
-                id: true,
-                name: true,
-                slug: true
-              }
-            }
-          }
-        }
-      }
-    })
+    if (dbPosts?.length <= 0) {
+      return { posts: [], postsCount: 0 }
+    }
 
     const postsCount = await db.post.count({
       where: {
@@ -304,10 +209,12 @@ export const fetchFilteredPostsWithPag = async ({
       }
     })
 
-    const posts: Post[] = filteredPosts.map((post) => {
+    const posts: TDeserializedPost[] = dbPosts.map((post) => {
       const { author, categories, ...restValues } = post
 
-      const authorId = author?.id
+      const authorData = author
+        ? { id: author.id, name: author.name || '' }
+        : null
 
       const formatedCategories = categories.map((singleCategory) => {
         return {
@@ -319,7 +226,7 @@ export const fetchFilteredPostsWithPag = async ({
 
       return {
         ...restValues,
-        authorId,
+        author: authorData,
         categories: formatedCategories
       }
     })

@@ -3,10 +3,11 @@
 import { Suspense, useMemo } from 'react'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
-import useStore from '~/store'
-import { useDataTablePosts } from '~/hooks/useDataTablePosts'
+import useGlobalStore from '~/store'
+import { useDataPosts } from '~/hooks/useDataPosts'
 import { useDataPostsFilters } from '~/hooks/useDataPostsFilters'
 import { useCategoriesFilterOptions } from '~/hooks/useCategoriesFilterOption'
+import { useAuthorsFilterOptions } from '~/hooks/useAuthorsFilterOption'
 import { columns } from '~/components/admin/AdminPosts/columns'
 import DataTable from '~/components/ui/table/DataTable'
 import { DataTableSkeleton } from '~/components/ui/table/DataTableSkeleton'
@@ -14,23 +15,18 @@ import DataSearch from '~/components/shared/DataManagement/DataSearch'
 import DataFilterBox from '~/components/shared/DataManagement/DataFilterBox'
 import DataResetFilter from '~/components/shared/DataManagement/DataResetFilter'
 import { PUBLISHED_OPTIONS } from '~/utils/constants'
-import { type IRCWithSearchParamsKeyProps } from '~/types'
+import {
+  type TDeserializedPost,
+  type IRCWithSearchParamsKeyProps
+} from '~/types'
 
 const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
-  const [dataTablePosts, dataTablePostsCount, isLoading] = useStore(
-    (state) => {
-      return [
-        state.dataTablePosts,
-        state.dataTablePostsCount,
-        state.isLoading
-      ]
-    }
-  )
+  const [posts, postsCount, isLoading] = useGlobalStore((state) => {
+    return [state.posts, state.postsCount, state.isLoading]
+  })
 
-  const [currentPage, setCurrentPage] = useQueryState(
-    'page',
-    parseAsInteger.withOptions({ shallow: false }).withDefault(1)
-  )
+  const noItem = typeof posts === 'string'
+  const displayedPosts = noItem ? [] : posts
 
   const [pageSize, setPageSize] = useQueryState(
     'limit',
@@ -44,32 +40,39 @@ const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
     setCategoriesFilter,
     publishedFilter,
     setPublishedFilter,
-    isAnyFilterActive,
-    resetFilters,
+    authorFilter,
+    setAuthorFilter,
     searchQuery,
+    setSearchQuery,
+    page,
     setPage,
-    setSearchQuery
+    isAnyFilterActive,
+    resetFilters
   } = useDataPostsFilters()
+
+  const { categoriesOptions } = useCategoriesFilterOptions()
+
+  const { authorsOptions } = useAuthorsFilterOptions()
 
   const dataTablePostsProps = useMemo(() => {
     return {
-      currentPage,
+      page,
       limit: pageSize,
       categoriesFilter,
       publishedFilter,
+      authorFilter,
       searchQuery
     }
   }, [
-    currentPage,
+    page,
     pageSize,
     categoriesFilter,
     publishedFilter,
+    authorFilter,
     searchQuery
   ])
 
-  useDataTablePosts(dataTablePostsProps)
-
-  const { categoriesOptions } = useCategoriesFilterOptions()
+  useDataPosts(dataTablePostsProps)
 
   return (
     <div className="space-y-4">
@@ -97,6 +100,14 @@ const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
           setPage={setPage}
         />
 
+        <DataFilterBox
+          title="Author"
+          options={authorsOptions}
+          filterValue={authorFilter}
+          setFilterValue={setAuthorFilter}
+          setPage={setPage}
+        />
+
         <DataResetFilter
           isFilterActive={isAnyFilterActive}
           onReset={resetFilters}
@@ -119,12 +130,12 @@ const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
           }
         >
           <DataTable
-            key={dataTablePostsCount}
+            key={postsCount}
             columns={columns}
-            data={dataTablePosts}
-            totalItems={dataTablePostsCount}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
+            data={displayedPosts as TDeserializedPost[]}
+            totalItems={postsCount}
+            currentPage={page}
+            setCurrentPage={setPage}
             pageSize={pageSize}
             setPageSize={setPageSize}
           />

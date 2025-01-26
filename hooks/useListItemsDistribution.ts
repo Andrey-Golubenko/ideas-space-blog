@@ -1,8 +1,8 @@
 import { type RefObject } from 'react'
 
-import { type Post, type Categories } from '@prisma/client'
 import { useItemType } from '~/hooks/useItemType'
 import { useContainerWidth } from '~/hooks/useContainerWidth'
+import { type Categories } from '@prisma/client'
 import { type TSkeletonItems, type TDeserializedPost } from '~/types'
 
 /**
@@ -21,12 +21,15 @@ import { type TSkeletonItems, type TDeserializedPost } from '~/types'
  * - `noItems` (`boolean`): Indicates whether there are no items available despite a provided `itemsCount`.
  */
 export const useListItemsDistribution = (
-  items: (Post | TDeserializedPost)[] | Categories[] | null | [],
+  items: TDeserializedPost[] | Categories[] | null | [],
   itemsCount?: number | null,
   containerRef?: RefObject<HTMLElement>
 ) => {
-  const { isContainerMobile, isContainerMedium } =
-    useContainerWidth(containerRef)
+  const {
+    isContainerAtOrBelowMobile,
+    isContainerBelowMobile,
+    isContainerMedium
+  } = useContainerWidth(containerRef)
 
   const { isCategory, isPost } = useItemType(items?.[0])
 
@@ -36,7 +39,7 @@ export const useListItemsDistribution = (
     const [firstItem, secondItem, thirdItem, ...restItems] = items || []
 
     const shouldPlaceThirdItem: boolean =
-      !isContainerMobile && itemsCount! >= 3
+      !isContainerBelowMobile && itemsCount! >= 3
 
     const thirdItemInSkeleton = shouldPlaceThirdItem
       ? thirdItem
@@ -63,7 +66,7 @@ export const useListItemsDistribution = (
       items || []
 
     const shouldPlaceFourthItem: boolean =
-      (isContainerMobile || isContainerMedium) && itemsCount! >= 4
+      (isContainerAtOrBelowMobile || isContainerMedium) && itemsCount! >= 4
 
     const fourthItemInSkeleton = shouldPlaceFourthItem
       ? fourthItem

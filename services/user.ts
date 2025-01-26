@@ -4,7 +4,8 @@ import { db } from '~/libs/db'
 import { type User } from '@prisma/client'
 import {
   type TDeserializedUser,
-  type IFetchUsersFunctionProps
+  type IFetchUsersFunctionProps,
+  type TTRuncatedAuthors
 } from '~/types'
 
 export const fetchCurrentPageOfFilteredUsers = async ({
@@ -57,6 +58,29 @@ export const fetchCurrentPageOfFilteredUsers = async ({
     return users
   } catch (error) {
     console.error('Failed to fetch filtered users:', error)
+    return null
+  }
+}
+
+export const fetchAllAuthorsTruncated = async (): Promise<
+  TTRuncatedAuthors[] | null
+> => {
+  try {
+    const dbAuthors = await db.user.findMany({
+      select: {
+        id: true,
+        name: true
+      }
+    })
+
+    const authors = dbAuthors.filter((author) => {
+      return author.name !== null
+    }) as TTRuncatedAuthors[]
+
+    return authors
+  } catch (error) {
+    console.error('Failed to fetch authors!', error)
+
     return null
   }
 }

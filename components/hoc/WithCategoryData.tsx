@@ -1,127 +1,79 @@
 'use client'
 
-import {
-  cloneElement,
-  useEffect,
-  useRef,
-  type ReactNode,
-  type ReactElement
-} from 'react'
+import { cloneElement, useRef, type ReactElement } from 'react'
 
-import useStore from '~/store'
 import { useListItemsDistribution } from '~/hooks/useListItemsDistribution'
-import NoItemsCard from '~/components/posts/NoItemsCard'
+import { type Categories } from '@prisma/client'
+
+interface IWithCategoryDataProps {
+  children: ReactElement[]
+  categories: Categories[]
+  categoriesCount: number | null
+  isLoading: boolean
+  dataContainerClasses?: string
+  postsGridClasses?: string
+}
 
 /**
  * @component WithCategoryData
  *
- * A client-side high-order component that manages the display of categories with skeleton loading and dynamic grid rendering.
+ * A client-side high-order component to manage the display of categories with skeleton loading and dynamic grid rendering.
  *
- * This component fetches all categories using a global store, calculates the appropriate items to display
- * (including skeletons or placeholders), and dynamically renders a grid of category items. It also gracefully
- * handles scenarios where no categories are available by displaying a fallback component.
+ * This component takes a list of categories, their count, and a loading state to display skeletons initially,
+ * transforming them into actual category elements once the data is loaded. It dynamically adjusts the layout and handles fallback scenarios when no categories are present.
  *
- * ### Props
+ * The primary functionality includes:
+ * - Distribution of skeleton items and actual categories for rendering.
+ * - Dynamic grid layout adjustments based on container size and provided configurations.
+ * - Graceful handling of scenarios with no available categories by rendering a fallback component.
  *
- * @prop {ReactNode[]} children
- * - An array of ReactNode elements. The first child is expected to handle skeleton loading (`WithSkeletonsList`),
- *   and the second child is used to render each individual category (`CategoryCard` or similar component).
+ * The first child passed to this component is expected to be the `WithSkeletonsList` component, which manages the skeleton rendering logic.
+ * The second child is the individual category/item component rendered after the data is loaded.
  *
- * ### Features
+ * @param {IWithCategoryDataProps} props - The component props.
+ * @param {ReactElement[]} props.children - Two child components:
+ *   1. `WithSkeletonsList` to handle skeleton loading.
+ *   2. The component used for displaying individual items (e.g., `CategoryCard`).
+ * @param {Categories[]} props.categories - The list of categories to display.
+ * @param {number | null} props.categoriesCount - The total number of categories to manage display logic.
+ * @param {boolean} props.isLoading - Whether the categories are still being loaded.
+ * @param {string} [props.dataContainerClasses] - Custom CSS classes for the data container.
+ * @param {string} [props.postsGridClasses] - Custom CSS classes for the grid layout of categories.
  *
- * - Automatically fetches categories from a global store on mount.
- * - Supports skeleton loading for a smooth user experience.
- * - Dynamically adjusts the grid layout based on the category type and available items.
- * - Displays a fallback `NoItemsCard` if no categories are found.
- *
- * ### Usage
- *
- * ```tsx
- * <WithCategoryData>
- *   <WithSkeletonsList>
- *     <SkeletonCategoryCard />
- *   </WithSkeletonsList>
- *   <CategoryCard />
- * </WithCategoryData>
- * ```
- *
- * ### Internal Logic
- *
- * - **Skeletons and Loading**:
- *   The first child (`WithSkeletonsList`) receives props for `skeletonItems`, `isLoading`, and `itemType`
- *   to manage skeleton loading during data fetch.
- *
- * - **Dynamic Grid Rendering**:
- *   Categories are dynamically displayed in a responsive grid. The grid structure is adjusted based on the
- *   type of items being rendered (`isCategory` in this case).
- *
- * - **Fallback for Empty Data**:
- *   If no categories are available, the component renders a `NoItemsCard` with a descriptive message.
- *
- * ### Example
- *
- * ```tsx
- * <WithCategoryData>
- *   <WithSkeletonsList>
- *     <SkeletonCategoryCard />
- *   </WithSkeletonsList>
- *   <CategoryCard />
- * </WithCategoryData>
- * ```
- *
- * - The first child (`WithSkeletonsList`) is used to manage the display of skeletons.
- * - The second child (`CategoryCard`) renders each category item once the data is loaded.
- *
- * ### Notes
- * - The `cloneElement` function is used to inject additional props into the children components, such as
- *   `skeletonItems`, `isLoading`, and individual category data.
- * - The `NoItemsCard` component is displayed when no categories are available to show a meaningful fallback message.
- *
- * @returns {JSX.Element} A section element containing skeletons, categories, or a fallback.
+ * @returns {JSX.Element} - The rendered `WithCategoryData` component.
  */
 const WithCategoryData = ({
-  children
-}: Readonly<{ children: ReactNode[] }>) => {
+  children,
+  categories,
+  categoriesCount,
+  isLoading,
+  dataContainerClasses,
+  postsGridClasses
+}: IWithCategoryDataProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const [categories, getAllCategories, isLoading] = useStore((state) => {
-    return [state.categories, state.getAllCategories, state.isLoading]
-  })
-
-  useEffect(() => {
-    getAllCategories()
-  }, [getAllCategories])
-
-  const { skeletonItems, restItems, fourthItemInList, noItems } =
-    useListItemsDistribution(categories, categories?.length, containerRef)
+  const { skeletonItems, restItems, fourthItemInList } =
+    useListItemsDistribution(categories, categoriesCount, containerRef)
 
   const itemType = { isPost: false, isCategory: true }
 
   return (
     <section
-      className="my-20 w-full @container"
+      className={`my-20 w-full @container ${dataContainerClasses ?? ''}`}
       ref={containerRef}
     >
-      {!noItems ? (
-        // Passing skeletonItems and isLoading as a props in children
-
-        cloneElement(children[0] as ReactElement, {
-          skeletonItems,
-          isLoading,
-          itemType
-        })
-      ) : (
-        <NoItemsCard itemName="categories" />
-      )}
+      {cloneElement(children[0] as ReactElement, {
+        skeletonItems,
+        isLoading,
+        itemType
+      })}
 
       {!isLoading && (restItems?.length > 0 || fourthItemInList) && (
         <div
-          className={`mb-5 grid w-full grid-cols-1 gap-5 @lg:grid-cols-2 @3xl:grid-cols-3 ${itemType?.isPost ? '' : '@4xl:grid-cols-4'}`}
+          className={`mb-5 grid w-full grid-cols-1 gap-5 @lg:grid-cols-2 @3xl:grid-cols-3 @4xl:grid-cols-4 ${postsGridClasses || ''}`}
         >
           {[fourthItemInList, ...restItems]?.map((item) => {
             if (item) {
-              // Passing the key and item as a props in children
-
               return cloneElement(children[1] as ReactElement, {
                 key: item?.id,
                 item

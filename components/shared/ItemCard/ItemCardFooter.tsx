@@ -16,7 +16,7 @@ const PostCardFooter = ({ itemSlug, itemType }: IItemCardFooterProps) => {
   const { isPost, isCategory } = itemType
 
   return (
-    <CardFooter className="ml-auto mt-auto flex-col justify-end">
+    <CardFooter className="ml-auto mt-auto flex-col justify-end pb-0">
       <Button
         variant="link"
         className="mb-5 ml-auto font-normal"

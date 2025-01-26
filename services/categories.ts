@@ -10,34 +10,6 @@ import {
   type TTRuncatedCategories
 } from '~/types'
 
-export const fetchAllCategories = async (): Promise<{
-  categories: {
-    id: string
-    name: string
-    slug: string
-    imageUrl: string | null
-    description: string | null
-  }[]
-}> => {
-  try {
-    const categories = await db.categories.findMany({
-      where: {
-        slug: {
-          not: `${DEFAULT_CATEGORY.slug}`
-        }
-      }
-    })
-
-    if (!categories || !categories?.length) {
-      return { categories: [] }
-    }
-
-    return { categories }
-  } catch (error) {
-    throw new Error('Failed to get categories!')
-  }
-}
-
 export const fetchAllCategoriesTruncated = async (): Promise<
   TTRuncatedCategories[] | [] | null
 > => {
@@ -63,13 +35,38 @@ export const fetchAllCategoriesTruncated = async (): Promise<
   }
 }
 
-export const fetchCurrentPageOfFilteredCategories = async ({
+export const fetchFilteredCategoriesWithPag = async ({
   limit,
   offset,
   searchQuery
-}: IFetchDataFunctionProps) => {
+}: IFetchDataFunctionProps): Promise<
+  | {
+      categories: Categories[]
+      categoriesCount: number
+    }
+  | string
+  | null
+> => {
   try {
-    const filteredCategories: Categories[] = await db.categories.findMany({
+    const categories: Categories[] =
+      (await db.categories.findMany({
+        where: {
+          slug: {
+            not: `${DEFAULT_CATEGORY.slug}`
+          },
+          name: searchQuery
+            ? { contains: searchQuery, mode: 'insensitive' }
+            : undefined
+        },
+        take: limit,
+        skip: offset as number
+      })) ?? []
+
+    if (categories?.length <= 0) {
+      return 'It seems there are no categories yet.'
+    }
+
+    const categoriesCount: number = await db.categories.count({
       where: {
         slug: {
           not: `${DEFAULT_CATEGORY.slug}`
@@ -82,9 +79,9 @@ export const fetchCurrentPageOfFilteredCategories = async ({
       skip: offset as number
     })
 
-    return filteredCategories
+    return { categories, categoriesCount }
   } catch (error) {
-    console.error('Failed to fetch filtered posts:', error)
+    console.error('Failed to fetch categories:', error)
     return null
   }
 }
@@ -109,63 +106,6 @@ export const fetchSingleCategoryById = cache(
       return category
     } catch (error) {
       throw new Error('Failed to fetch category!')
-    }
-  }
-)
-
-export const fetchSingleCategoryBySlug = cache(
-  async (
-    categorySlug: string
-  ): Promise<{
-    id: string
-    name: string
-    slug: string
-    imageUrl: string | null
-    description: string | null
-  } | null> => {
-    try {
-      const category = await db.categories.findUnique({
-        where: {
-          slug: categorySlug
-        }
-      })
-
-      return category
-    } catch (error) {
-      throw new Error('Failed to get category!')
-    }
-  }
-)
-
-export const fetchSinglePostCategories = cache(
-  async (
-    postId: string
-  ): Promise<
-    {
-      id: string
-      name: string
-      slug: string
-      imageUrl: string | null
-      description: string | null
-    }[]
-  > => {
-    try {
-      const singlePostCategories = await db.postCategories.findMany({
-        where: {
-          postId
-        },
-        include: {
-          category: true
-        }
-      })
-
-      const categories = singlePostCategories.map((postCategory) => {
-        return postCategory.category
-      })
-
-      return categories
-    } catch (error) {
-      throw new Error('Failed to get categories!')
     }
   }
 )

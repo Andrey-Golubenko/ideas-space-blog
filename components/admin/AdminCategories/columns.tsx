@@ -57,7 +57,7 @@ export const columns: ColumnDef<Categories>[] = [
     accessorKey: 'name',
     header: 'NAME',
     cell({ row }) {
-      const name = row.getValue<string | null>('name')
+      const name = row.getValue<string | null>('name') ?? ''
 
       return (
         <span className="line-clamp-2 max-w-48 whitespace-nowrap">
@@ -70,7 +70,7 @@ export const columns: ColumnDef<Categories>[] = [
     accessorKey: 'description',
     header: 'DESCRIPTION',
     cell: ({ row }) => {
-      const description = row.getValue<string | null>('description')
+      const description = row.getValue<string | null>('description') ?? ''
 
       return <span className="line-clamp-2">{description}</span>
     }

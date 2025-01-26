@@ -11,8 +11,8 @@ import {
   SidebarGroupLabel,
   SidebarMenu
 } from '~/components/ui/sidebar'
-import SidebarItemSection from '~/components/sidebar/SidebarItemSection'
-import SidebarHeaderSection from '~/components/sidebar/SidebarHeaderSection'
+import SidebarItemSection from '~/components/sidebars/SidebarItemSection'
+import SidebarHeaderSection from '~/components/sidebars/SidebarHeaderSection'
 import { adminDashboard } from '~/utils/constants/data'
 
 const AdminSidebar = () => {

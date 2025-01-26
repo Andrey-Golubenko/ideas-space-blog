@@ -5,11 +5,12 @@ export const fetchPosts = async ({
   offset,
   categoriesFilter,
   publishedFilter,
+  authorFilter,
   searchQuery
 }: IFetchPostsFunctionProps): Promise<PostsData> => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/posts?limit=${limit}&offset=${offset}&categories=${categoriesFilter}&published=${publishedFilter}&q=${searchQuery}`,
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/posts?limit=${limit}&offset=${offset}&categories=${categoriesFilter}&published=${publishedFilter}&authors${authorFilter}&q=${searchQuery}`,
       {
         next: {
           revalidate: 60 // sec
@@ -22,37 +23,6 @@ export const fetchPosts = async ({
     }
 
     const data: PostsData = await response.json()
-
-    return data
-  } catch (error) {
-    console.error(error)
-
-    throw new Error(
-      (error as Error)?.message || 'An unknown error occurred!'
-    )
-  }
-}
-
-export const fetchPostsByUserId = async (
-  userId: string
-): Promise<PostsData> => {
-  try {
-    const respons = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/profile?q=${userId}`,
-      {
-        next: {
-          revalidate: 600
-        }
-      }
-    )
-
-    if (!respons.ok) {
-      throw new Error(
-        'Unable fetch posts! An unexpected error has occured!'
-      )
-    }
-
-    const data: PostsData = await respons.json()
 
     return data
   } catch (error) {

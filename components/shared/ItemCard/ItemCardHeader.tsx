@@ -65,7 +65,7 @@ const ItemCardHeader = ({
         </h2>
 
         {isPost && (
-          <div className="w-full pt-4">
+          <div className="w-full pt-2">
             <PostMeta
               authorId={authorId}
               itemCreatedAt={itemCreatedAt}

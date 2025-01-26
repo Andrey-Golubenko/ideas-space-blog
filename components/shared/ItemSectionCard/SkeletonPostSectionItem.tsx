@@ -1,16 +1,15 @@
 'use client'
 
-import { type Post } from '@prisma/client'
-
 import { useItemProps } from '~/hooks/useItemProps'
 import { Card } from '~/components/ui/card'
 import { Skeleton } from '~/components/ui/skeleton'
 import SectionItemCardImage from '~/components/shared/ItemSectionCard/SectionItemCardImage'
 import SectionItemCardHeader from '~/components/shared/ItemSectionCard/SectionItemCardHeader'
 import PostMeta from '~/components/posts/PostMeta'
+import { type TDeserializedPost } from '~/types'
 
 interface ISkeletonPostSectionItemProps {
-  item?: Post
+  item?: TDeserializedPost
   isLoading?: boolean
 }
 

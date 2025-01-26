@@ -1,5 +1,5 @@
 import { SidebarProvider, SidebarTrigger } from '~/components/ui/sidebar'
-import AdminSidebar from '~/components/sidebar/AdminSidebar'
+import AdminSidebar from '~/components/sidebars/AdminSidebar'
 
 const AdminLayoute = ({
   children

@@ -7,10 +7,10 @@ import {
 import { type Options } from 'nuqs'
 
 import { Button } from '~/components/ui/button'
-import { POSTS_PER_PAGE } from '~/utils/constants'
 
 interface IDataPaginationManageProps {
   totalItems: number
+  postsPerPage: number
   currentPage: number
   setCurrentPage: (
     value: number | ((old: number) => number | null) | null,
@@ -21,18 +21,19 @@ interface IDataPaginationManageProps {
 
 const DataPaginationManage = ({
   totalItems,
+  postsPerPage,
   currentPage,
   setCurrentPage,
   isLoading
 }: IDataPaginationManageProps) => {
-  const totalPages = Math.ceil(totalItems / POSTS_PER_PAGE)
+  const totalPages = Math.ceil(totalItems / postsPerPage)
 
   return (
     <div className="flex w-full flex-wrap items-center justify-end gap-2">
       <div className="flex items-center justify-center text-sm font-medium">
         {totalItems > 0 ? (
           <>
-            Page {currentPage} of {Math.ceil(totalItems / POSTS_PER_PAGE)}
+            Page {currentPage} of {totalPages}
           </>
         ) : (
           'No pages'

@@ -7,26 +7,26 @@ import SkeletonPostCard from '~/components/shared/ItemCard/SkeletonPostCard'
 import NoItemsCard from '~/components/posts/NoItemsCard'
 import { type TDeserializedPost } from '~/types'
 
-interface IProfilePostsListProps<TData> {
-  data: TData[]
+interface ISingleCategoryPostsListProps<TData> {
+  data: TData[] | string
   totalItems: number | null
   noItems: boolean
   isLoading: boolean
 }
 
-const ProfilePostsList = ({
+const SingleCategoryPostsList = ({
   data,
   totalItems,
   noItems = false,
   isLoading
-}: IProfilePostsListProps<TDeserializedPost>) => {
+}: ISingleCategoryPostsListProps<TDeserializedPost>) => {
   if (noItems) {
-    return <NoItemsCard itemName="posts" />
+    return <NoItemsCard itemName="published posts" />
   }
 
   return (
     <WithPostData
-      posts={data}
+      posts={data as TDeserializedPost[]}
       postsCount={totalItems}
       isLoading={isLoading}
       dataContainerClasses="!mb-0"
@@ -40,4 +40,4 @@ const ProfilePostsList = ({
   )
 }
 
-export default ProfilePostsList
+export default SingleCategoryPostsList

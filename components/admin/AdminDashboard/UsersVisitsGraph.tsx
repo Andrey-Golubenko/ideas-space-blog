@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
 
-import useStore from '~/store'
+import useGlobalStore from '~/store'
 import {
   type ChartConfig,
   ChartContainer,
@@ -36,7 +36,7 @@ const UsersVisitsGraph = () => {
   const [activeChart, setActiveChart] =
     useState<keyof typeof chartConfig>('desktop')
 
-  const [usersVisits, getUsersVisits] = useStore((state) => {
+  const [usersVisits, getUsersVisits] = useGlobalStore((state) => {
     return [state.usersVisits, state.getUsersVisits]
   })
 

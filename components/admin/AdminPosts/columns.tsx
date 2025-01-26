@@ -6,7 +6,7 @@ import { Checkbox } from '~/components/ui/checkbox'
 import CellAction from '~/components/admin/AdminPosts/CellAction'
 import LoadableImage from '~/components/shared/LoadableImage'
 import { IMAGES_PATHS } from '~/utils/constants'
-import { type TDeserializedPost } from '~/types'
+import { type TTRuncatedAuthors, type TDeserializedPost } from '~/types'
 
 export const columns: ColumnDef<TDeserializedPost>[] = [
   {
@@ -40,12 +40,13 @@ export const columns: ColumnDef<TDeserializedPost>[] = [
     accessorKey: 'imageUrls',
     header: 'IMAGE',
     cell: ({ row }) => {
-      const imageUrl =
-        row.getValue<string[]>('imageUrls')[0] ?? IMAGES_PATHS.noImages
+      const imageUrls = row.getValue<string[]>('imageUrls') ?? []
+
+      const singleImageUrl = imageUrls?.[0] ?? IMAGES_PATHS.noImages
 
       return (
         <LoadableImage
-          src={imageUrl}
+          src={singleImageUrl}
           alt={row.getValue('title') ?? 'Post'}
           containerHeight={44}
           containerClassNames="aspect-square !w-11 rounded-lg"
@@ -57,7 +58,7 @@ export const columns: ColumnDef<TDeserializedPost>[] = [
     accessorKey: 'title',
     header: 'TITLE',
     cell({ row }) {
-      const title = row.getValue<string | null>('title')
+      const title = row.getValue<string | null>('title') ?? ''
 
       return (
         <span className="line-clamp-2 max-w-48 whitespace-nowrap">
@@ -96,7 +97,7 @@ export const columns: ColumnDef<TDeserializedPost>[] = [
     accessorKey: 'content',
     header: 'CONTENT',
     cell: ({ row }) => {
-      const content = row.getValue<string | null>('content')
+      const content = row.getValue<string | null>('content') ?? ''
 
       return <span className="line-clamp-2">{content}</span>
     }
@@ -105,10 +106,13 @@ export const columns: ColumnDef<TDeserializedPost>[] = [
     accessorKey: 'author',
     header: 'AUTHOR',
     cell: ({ row }) => {
-      const author = row.getValue<string | null>('author')
+      const author = row.getValue<TTRuncatedAuthors | null>('author') ?? {
+        id: '',
+        name: ''
+      }
 
       const formattedAuthor = author
-        ? author
+        ? author?.name
             ?.split(' ')
             .map((word) => {
               return (
@@ -125,7 +129,7 @@ export const columns: ColumnDef<TDeserializedPost>[] = [
     accessorKey: 'published',
     header: 'PUBLISHED',
     cell: ({ row }) => {
-      const isPublished = row?.original?.published
+      const isPublished = row?.original?.published ?? false
 
       return <span>{isPublished ? '✅' : '❌'}</span>
     }

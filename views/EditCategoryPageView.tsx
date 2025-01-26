@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { UserRole, type Categories } from '@prisma/client'
 
-import useStore from '~/store'
+import useGlobalStore from '~/store'
 import { useCleaningItem } from '~/hooks/useCleaningItem'
 import { Card, CardHeader, CardContent } from '~/components/ui/card'
 import CategoryManageForm from '~/components/shared/CategoryManageForm'
@@ -28,9 +28,11 @@ const EditCategoryPageView = () => {
 
   const [isPending, startTransition] = useTransition()
 
-  const [editableCategory, setEditableCategory] = useStore((state) => {
-    return [state.editableCategory, state.setEditableCategory]
-  })
+  const [editableCategory, setEditableCategory] = useGlobalStore(
+    (state) => {
+      return [state.editableCategory, state.setEditableCategory]
+    }
+  )
 
   const {
     id: editableCategoryId,

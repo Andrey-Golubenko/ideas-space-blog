@@ -2,7 +2,7 @@ import Greeting from '~/components/home/Greeting'
 import HeroBanner from '~/components/home/HeroBanner'
 import HeroContnen from '~/components/home/HeroContnen'
 import CategoriesSection from '~/components/home/CategoriesSection'
-import RecentPostsList from '~/components/posts/RecentPostsList'
+import RecentPostsSection from '~/components/home/RecentPostsSection'
 
 const HomePageView = () => {
   return (
@@ -22,7 +22,7 @@ const HomePageView = () => {
       </section>
 
       <section className="-mt-3 h-full w-full rounded-xl bg-custom-gradient px-6 py-20 shadow-[0_0_20px_rgba(252,252,252,.5)_inset] md:px-16">
-        <RecentPostsList />
+        <RecentPostsSection />
       </section>
     </>
   )

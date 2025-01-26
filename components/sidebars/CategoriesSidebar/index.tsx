@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useMemo } from 'react'
 import { useParams } from 'next/navigation'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 
-import useStore from '~/store'
+import useGlobalStore from '~/store'
+import { useDataCategories } from '~/hooks/useDataCategories'
 import {
   Sidebar,
   SidebarContent,
@@ -13,17 +14,25 @@ import {
   SidebarGroupLabel,
   SidebarMenu
 } from '~/components/ui/sidebar'
-import SidebarItemSection from '~/components/sidebar/SidebarItemSection'
-import SidebarHeaderSection from '~/components/sidebar/SidebarHeaderSection'
+import SidebarItemSection from '~/components/sidebars/SidebarItemSection'
+import SidebarHeaderSection from '~/components/sidebars/SidebarHeaderSection'
 
 const CategoriesSidebar = () => {
-  const [categories, getAllCategories] = useStore((state) => {
-    return [state.categories, state.getAllCategories]
+  const [categories] = useGlobalStore((state) => {
+    return [state.categories, state.categoriesCount, state.isLoading]
   })
 
-  useEffect(() => {
-    getAllCategories()
+  const noItems = typeof categories === 'string'
+  const displayedCategories = noItems ? [] : categories
+
+  const dataCategoriesProps = useMemo(() => {
+    return {
+      page: 1,
+      limit: 12
+    }
   }, [])
+
+  useDataCategories(dataCategoriesProps)
 
   const params = useParams()
 
@@ -46,8 +55,8 @@ const CategoriesSidebar = () => {
 
           <SidebarGroupContent>
             <SidebarMenu ref={autoAnimateRef}>
-              {!!categories?.length &&
-                categories?.map((category) => {
+              {!!displayedCategories?.length &&
+                displayedCategories?.map((category) => {
                   const isActive = params?.slug === category?.slug
 
                   return (
