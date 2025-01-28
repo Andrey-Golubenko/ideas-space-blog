@@ -1,7 +1,7 @@
-import EmailVerificationForm from '~/components/auth/EmailVerificationForm'
+import EmailVerificationPageView from '~/views/EmailVerificationPageView'
 
 const EmailVerificationPage = () => {
-  return <EmailVerificationForm />
+  return <EmailVerificationPageView />
 }
 
 export default EmailVerificationPage

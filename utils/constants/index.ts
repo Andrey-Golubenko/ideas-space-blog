@@ -7,9 +7,11 @@ export const PATHS = {
   blogNewPost: '/blog/new-post',
   editPost: '/edit-post',
   posts: '/api/posts',
+
   categories: '/categories',
   profile: '/profile',
   settings: '/settings',
+
   admin: '/admin',
   adminUsers: '/admin/admin-users',
   adminEditUsers: '/admin/admin-users/edit-user-',
@@ -31,14 +33,11 @@ export const PATHS = {
 
   authActionsPref: '/api/auth',
 
-  apiAdmin: '/api/admin',
-
   libSession: '/api/auth/session',
   libSignIn: '/api/auth/signin'
 }
 
 export const IMAGES_PATHS = {
-  logo: '/images/logo.svg',
   noImages: '/images/image-placeholder.svg',
   heroBanner: '/images/hero-banner.webp',
   errorBanner: '/images/error-banner.svg',
@@ -53,7 +52,6 @@ export const NAV_LINKS: INavLink[] = [
 
 export const PRIVATE_NAV_LINKS: INavLink[] = [
   { label: 'Profile', href: PATHS.profile },
-  { label: 'Admin', href: PATHS.admin },
   { label: 'Settings', href: PATHS.settings }
 ]
 

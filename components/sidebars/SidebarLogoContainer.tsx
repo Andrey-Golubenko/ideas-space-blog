@@ -1,4 +1,4 @@
-import LogoImage from '~/public/images/logo.svg'
+import LogoImage from '~/public/icons/logo.svg'
 
 interface SidebarLogoContainerProps {
   sizes: string

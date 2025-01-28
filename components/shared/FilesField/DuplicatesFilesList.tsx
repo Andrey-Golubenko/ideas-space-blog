@@ -1,4 +1,4 @@
-import FormError from '~/components/FormError'
+import NotificationError from '~/components/notifications/NotificationError'
 
 interface IDuplicatesFilesListProps {
   filesDuplicates: string[]
@@ -17,7 +17,7 @@ const DuplicatesFilesList = ({
 
   return (
     <div>
-      <FormError message={message} />
+      <NotificationError message={message} />
     </div>
   )
 }

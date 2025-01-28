@@ -63,7 +63,7 @@ const ProfilePageView = ({ user }: IProfilePageViewProps) => {
   const noItems = isEmptyOrUnpublished(posts)
 
   return (
-    <div className="grid w-full grid-cols-1 items-stretch justify-between gap-x-5 px-5 pb-8 pt-4 md:grid-cols-3 md:px-4 md:pb-8 lg:p-10 lg:pt-4 ">
+    <div className="grid min-h-svh w-full grid-cols-1 items-stretch justify-between gap-x-5 px-5 pb-8 pt-4 md:grid-cols-3 md:px-4 md:pb-8 lg:p-10 lg:pt-4 ">
       <div className="col-start-1 h-full pb-4 md:pb-0">
         <ProfileInfo
           user={user}
@@ -71,10 +71,10 @@ const ProfilePageView = ({ user }: IProfilePageViewProps) => {
         />
       </div>
 
-      <div className="col-start-1 flex h-full w-full flex-col items-center justify-center md:col-start-2 md:col-end-4">
+      <div className="col-start-1 flex h-full w-full flex-col items-center justify-between md:col-start-2 md:col-end-4">
         <ProfilePostsHeaderCard />
 
-        <div className="page-wrapper w-full pt-4">
+        <div className="page-wrapper w-full flex-grow pt-4">
           <Card className="mb-5 grid w-full grid-cols-1 flex-wrap items-center justify-around gap-x-5 gap-y-4 px-3 py-3 min-[375px]:grid-cols-2 min-[1080px]:grid-cols-4">
             <div className="col-span-1 min-[375px]:col-span-2 md:[&_div]:w-full md:[&_input]:!max-w-full ">
               <DataSearch

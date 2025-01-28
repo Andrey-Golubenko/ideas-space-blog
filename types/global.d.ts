@@ -30,6 +30,7 @@ declare global {
     isMobile: boolean
     user?: CurrentUser
     isLoggedIn?: boolean
+    isAdmin?: boolean
   }
 }
 

@@ -10,7 +10,7 @@ import MobileNavMenuHeader from '~/components/navigation/MobileNavMenu/MobileNav
 import AddNewItemButton from '~/components/shared/AddNewItemButton'
 import { PATHS } from '~/utils/constants'
 
-const MobileNavMenu = ({ user, isMobile }: INavMenuProps) => {
+const MobileNavMenu = ({ user, isMobile, isAdmin }: INavMenuProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   useEffect(() => {
@@ -61,6 +61,7 @@ const MobileNavMenu = ({ user, isMobile }: INavMenuProps) => {
           <NavLinks
             isLoggedIn={!!user}
             isMobile={isMobile}
+            isAdmin={isAdmin}
           />
         </ul>
       </nav>

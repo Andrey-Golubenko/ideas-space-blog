@@ -35,7 +35,7 @@ export const PUBLIC_ROUTES_WITH_DYNAMIC_SEGMENT = [
 
 /**
  * An array of routes that are used for authentication.
- * These routes will redirect logged in ussers to '/settings'.
+ * These routes will redirect logged-in ussers to '/settings'.
  * @type {string []}
  */
 export const AUTH_ROUTES = [
@@ -47,6 +47,22 @@ export const AUTH_ROUTES = [
 
   // route for automatically generated (by next-auth library) login-form
   PATHS.libSignIn
+]
+
+/**
+ * An array of routes that are used only with ADMIN role.
+ * @type {string []}
+ */
+export const ADMIN_ROUTES = [
+  PATHS.admin,
+  PATHS.adminPosts,
+  PATHS.adminUsers,
+  PATHS.adminCategories,
+  PATHS.adminEditCategory,
+  PATHS.adminEditPost,
+  PATHS.adminEditUsers,
+  PATHS.adminNewPost,
+  PATHS.adminNewCategory
 ]
 
 /**

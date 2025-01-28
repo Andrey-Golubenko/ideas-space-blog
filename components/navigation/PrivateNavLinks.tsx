@@ -2,9 +2,14 @@
 
 import NavLinksItem from '~/components/navigation/NavLinksItem'
 import NavLinksAvatarItem from '~/components/navigation/NavLinksAvatarItem'
-import { PRIVATE_NAV_LINKS } from '~/utils/constants'
+import { PATHS, PRIVATE_NAV_LINKS } from '~/utils/constants'
 
-const PrivateNavLinks = ({ isMobile }: { isMobile: boolean }) => {
+interface IPrivateNavLinksProps {
+  isMobile: boolean
+  isAdmin?: boolean
+}
+
+const PrivateNavLinks = ({ isMobile, isAdmin }: IPrivateNavLinksProps) => {
   return (
     <>
       {PRIVATE_NAV_LINKS.map(({ label, href }) => {
@@ -17,6 +22,13 @@ const PrivateNavLinks = ({ isMobile }: { isMobile: boolean }) => {
           />
         )
       })}
+      {isAdmin && (
+        <NavLinksItem
+          label="Admin"
+          href={PATHS.admin}
+          isMobile={isMobile}
+        />
+      )}
       {!isMobile && <NavLinksAvatarItem />}
     </>
   )

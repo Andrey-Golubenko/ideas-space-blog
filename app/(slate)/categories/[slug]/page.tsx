@@ -12,7 +12,10 @@ export async function generateMetadata({
   const categoryName = toUpperCaseFirstChar(slug.split('-').join(' '))
 
   return {
-    title: categoryName
+    title: `Ideas space : ${categoryName}`,
+    description:
+      'Displaying a single blog category and posts related to it',
+    robots: { index: true, follow: true }
   }
 }
 

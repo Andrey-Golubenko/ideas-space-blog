@@ -17,7 +17,7 @@ import {
 } from 'react-hook-form'
 import { v4 as uuidv4 } from 'uuid'
 
-import FormError from '~/components/FormError'
+import NotificationError from '~/components/notifications/NotificationError'
 import DuplicatesFilesList from '~/components/shared/FilesField/DuplicatesFilesList'
 import FilesList from '~/components/shared/FilesField/FilesList'
 import {
@@ -193,7 +193,7 @@ const FilesField = ({
             : message
 
           return (
-            <FormError
+            <NotificationError
               key={key}
               message={completeMessage}
             />

@@ -10,8 +10,8 @@ import TextAreaField from '~/components/shared/TextAreaField'
 import FilesField from '~/components/shared/FilesField'
 import SwitchField from '~/components/shared/SwitchField'
 import MultiSelectField from '~/components/shared/MultiSelectField'
-import FormError from '~/components/FormError'
-import FormSuccess from '~/components/FormSuccess'
+import NotificationError from '~/components/notifications/NotificationError'
+import NotificationSuccess from '~/components/notifications/NotificationSuccess'
 import LoadableButton from '~/components/shared/LoadableButton'
 import { type TManagePostForm } from '~/types'
 
@@ -89,8 +89,8 @@ const PostManageForm = ({
           />
         </div>
 
-        <FormError message={error} />
-        <FormSuccess message={success} />
+        <NotificationError message={error} />
+        <NotificationSuccess message={success} />
 
         <LoadableButton
           type="submit"

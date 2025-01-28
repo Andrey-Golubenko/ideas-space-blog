@@ -5,7 +5,8 @@ import AdminUsersPageView from '~/views/AdminUsersPageView'
 import { type IPageWithSearchParamsProps } from '~/types'
 
 export const metadata: Metadata = {
-  title: 'Admin : Users'
+  title: 'Ideas space : Admin : Users',
+  description: 'Manage users in the blog admin panel'
 }
 
 const AdminUsersPage = ({ searchParams }: IPageWithSearchParamsProps) => {

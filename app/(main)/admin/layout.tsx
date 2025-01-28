@@ -1,5 +1,7 @@
+import { UserRole } from '@prisma/client'
 import { SidebarProvider, SidebarTrigger } from '~/components/ui/sidebar'
 import AdminSidebar from '~/components/sidebars/AdminSidebar'
+import WithRole from '~/components/hoc/WithRole'
 
 const AdminLayoute = ({
   children
@@ -15,7 +17,7 @@ const AdminLayoute = ({
             className="mb-8"
             tooltip="Toggle Sidebar"
           />
-          {children}
+          <WithRole allowedRole={UserRole.ADMIN}>{children}</WithRole>
         </div>
       </div>
     </SidebarProvider>

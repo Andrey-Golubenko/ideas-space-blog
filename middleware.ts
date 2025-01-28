@@ -1,19 +1,22 @@
 import NextAuth from 'next-auth'
+import { getToken } from 'next-auth/jwt'
 import { NextResponse, userAgent } from 'next/server'
 
 import authConfig from '~/libs/auth/auth.config'
 import {
   AUTH_ROUTES,
   API_AUTH_PREFIX,
-  DEFAULT_LOGIN_REDIRECT
+  DEFAULT_LOGIN_REDIRECT,
+  ADMIN_ROUTES
 } from '~/utils/constants/routes'
 import { PATHS } from '~/utils/constants'
 import { isPublicRoute } from '~/utils/helpers'
+import { UserRole } from '@prisma/client'
 
 const { auth } = NextAuth(authConfig)
 
 // Our Middleware
-export default auth((request) => {
+export default auth(async (request) => {
   // User agent detection
   const ua = userAgent(request)
 
@@ -21,15 +24,24 @@ export default auth((request) => {
 
   const ipAddress = request.headers.get('x-forwarded-for') || 'localhost'
 
+  // @ts-ignore
+  const token = await getToken({
+    req: request,
+    secret: process.env.AUTH_SECRET as string
+  })
+
   // Authentication logic
   const { nextUrl } = request
   const { pathname } = nextUrl
   const isLoggedIn = !!request?.auth
+  const isAdmin = token?.role === UserRole.ADMIN
 
   const isApiAuthRoute = pathname.startsWith(API_AUTH_PREFIX)
   const isAuthRoute = AUTH_ROUTES.includes(pathname)
+  const isAdminRoute = ADMIN_ROUTES.includes(pathname)
 
   let response = NextResponse.next()
+
   response.headers.set('x-device-type', isMobile ? 'mobile' : 'desktop')
   response.headers.set('x-forwarded-for', ipAddress)
 
@@ -62,6 +74,12 @@ export default auth((request) => {
     )
 
     return response
+  }
+
+  if (isLoggedIn && !isAdmin && isAdminRoute) {
+    response = NextResponse.redirect(
+      new URL(DEFAULT_LOGIN_REDIRECT, nextUrl)
+    )
   }
 
   return response

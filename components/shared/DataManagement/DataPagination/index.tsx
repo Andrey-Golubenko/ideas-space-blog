@@ -23,7 +23,7 @@ const DataPagination = ({
   isLoading
 }: IDataPaginationProps) => {
   return (
-    <Card className="flex w-full items-center justify-around px-6 py-3">
+    <Card className="mt-auto flex w-full items-center justify-around px-6 py-3">
       <DataPaginationInfo
         totalItems={totalItems}
         currentPage={currentPage}

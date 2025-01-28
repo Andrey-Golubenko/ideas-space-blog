@@ -1,10 +1,10 @@
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons'
 
-interface IFormErrorProps {
+interface INotificationErrorProps {
   message?: string
 }
 
-const FormError = ({ message }: IFormErrorProps) => {
+const NotificationError = ({ message }: INotificationErrorProps) => {
   if (!message) return null
 
   return (
@@ -16,4 +16,4 @@ const FormError = ({ message }: IFormErrorProps) => {
     </div>
   )
 }
-export default FormError
+export default NotificationError

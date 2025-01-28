@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import LogoImage from '~/public/images/logo.svg'
+import LogoImage from '~/public/icons/logo.svg'
 import { PATHS } from '~/utils/constants'
 
 interface ILogoItemProps {

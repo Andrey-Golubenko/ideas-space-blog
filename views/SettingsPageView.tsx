@@ -2,7 +2,7 @@ import { Card, CardHeader, CardContent } from '~/components/ui/card'
 import SettingsForm from '~/components/auth/SettingsForm'
 import { auth } from '~/libs/auth/auth'
 
-const SettingsCard = async () => {
+const SettingsPageView = async () => {
   const session = await auth()
 
   return (
@@ -17,4 +17,4 @@ const SettingsCard = async () => {
   )
 }
 
-export default SettingsCard
+export default SettingsPageView

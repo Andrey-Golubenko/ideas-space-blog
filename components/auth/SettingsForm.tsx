@@ -7,8 +7,9 @@ import type { Session } from 'next-auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Form } from '~/components/ui/form'
-import FormError from '~/components/FormError'
-import FormSuccess from '~/components/FormSuccess'
+import NotificationError from '~/components/notifications/NotificationError'
+import NotificationSuccess from '~/components/notifications/NotificationSuccess'
+import NotificationInfo from '~/components/notifications/NotificationInfo'
 import TextField from '~/components/shared/TextField'
 import PasswordField from '~/components/shared/PasswordField'
 import SelectField from '~/components/shared/SelectField'
@@ -34,6 +35,7 @@ const SettingsForm = ({ session }: ISettingsFormProps) => {
 
   const form = useForm<z.infer<typeof SettingsSchema>>({
     defaultValues: {
+      id: user?.id,
       name: user?.name as string | undefined,
       email: user?.email,
       password: '',
@@ -45,18 +47,21 @@ const SettingsForm = ({ session }: ISettingsFormProps) => {
   })
 
   const onHandleSubmit = (values: z.infer<typeof SettingsSchema>) => {
-    const preparedValues = emptyStringToUndefined(values)
+    const preparedValues = {
+      ...emptyStringToUndefined(values),
+      id: user?.id as string
+    }
 
     startTransition(() => {
       editUser(preparedValues)
         .then((data) => {
-          if (data.error) {
-            setError(data.error)
+          if (data?.error) {
+            setError(data?.error)
           }
 
-          if (data.success) {
+          if (data?.success) {
             update()
-            setSuccess(data.success)
+            setSuccess(data?.success)
           }
         })
         .catch(() => {
@@ -108,6 +113,8 @@ const SettingsForm = ({ session }: ISettingsFormProps) => {
             </>
           )}
 
+          <NotificationInfo message="Field 'Role' is used for demonstration purposes only to simplify the introduction of the project and will be deleted soon." />
+
           <SelectField
             name="role"
             label="Role"
@@ -127,8 +134,8 @@ const SettingsForm = ({ session }: ISettingsFormProps) => {
           )}
         </div>
 
-        <FormError message={error} />
-        <FormSuccess message={success} />
+        <NotificationError message={error} />
+        <NotificationSuccess message={success} />
 
         <LoadableButton
           type="submit"

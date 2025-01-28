@@ -5,8 +5,9 @@ import { type ColumnDef } from '@tanstack/react-table'
 import { Checkbox } from '~/components/ui/checkbox'
 import CellAction from '~/components/admin/AdminPosts/CellAction'
 import LoadableImage from '~/components/shared/LoadableImage'
-import { IMAGES_PATHS } from '~/utils/constants'
+import { IMAGES_PATHS, PATHS } from '~/utils/constants'
 import { type TTRuncatedAuthors, type TDeserializedPost } from '~/types'
+import Link from 'next/link'
 
 export const columns: ColumnDef<TDeserializedPost>[] = [
   {
@@ -40,17 +41,23 @@ export const columns: ColumnDef<TDeserializedPost>[] = [
     accessorKey: 'imageUrls',
     header: 'IMAGE',
     cell: ({ row }) => {
+      const post = row.original as TDeserializedPost
+
+      const postId = post.id
+
       const imageUrls = row.getValue<string[]>('imageUrls') ?? []
 
       const singleImageUrl = imageUrls?.[0] ?? IMAGES_PATHS.noImages
 
       return (
-        <LoadableImage
-          src={singleImageUrl}
-          alt={row.getValue('title') ?? 'Post'}
-          containerHeight={44}
-          containerClassNames="aspect-square !w-11 rounded-lg"
-        />
+        <Link href={`${PATHS.blog}/${postId}`}>
+          <LoadableImage
+            src={singleImageUrl}
+            alt={row.getValue('title') ?? 'Post'}
+            containerHeight={44}
+            containerClassNames="aspect-square !w-11 rounded-lg"
+          />
+        </Link>
       )
     }
   },

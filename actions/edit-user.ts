@@ -37,10 +37,10 @@ export const editUser = async (values: TManageUserForm): TActionReturn => {
     values.isTwoFactorEnabled = undefined
   }
 
-  if (values.email && values.email !== user.email && !isAdmin) {
-    const existingUser = await getUserByEmail(values.email)
+  if (values?.email && values?.email !== user?.email && !isAdmin) {
+    const existingUser = await getUserByEmail(values?.email)
 
-    if (existingUser && existingUser.id !== user.id) {
+    if (existingUser && existingUser?.id !== user?.id) {
       return { error: 'Email is already in use!' }
     }
 
@@ -54,10 +54,10 @@ export const editUser = async (values: TManageUserForm): TActionReturn => {
     return { success: 'Verification email sent!' }
   }
 
-  if (values.password && values.newPassword && dbUser.password) {
+  if (values?.password && values?.newPassword && dbUser?.password) {
     const passwordMatch = await bcrypt.compare(
-      values.password,
-      dbUser.password
+      values?.password,
+      dbUser?.password
     )
 
     if (!passwordMatch) {

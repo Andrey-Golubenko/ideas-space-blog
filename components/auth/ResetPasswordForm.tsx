@@ -6,8 +6,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Form } from '~/components/ui/form'
 import AuthCardWrapper from '~/components/shared/CardWrapper/AuthCardWrapper'
-import FormError from '~/components/FormError'
-import FormSuccess from '~/components/FormSuccess'
+import NotificationError from '~/components/notifications/NotificationError'
+import NotificationSuccess from '~/components/notifications/NotificationSuccess'
 import TextField from '~/components/shared/TextField'
 import LoadableButton from '~/components/shared/LoadableButton'
 import { passwordReset } from '~/actions/reset-password'
@@ -22,10 +22,10 @@ const ResetPasswordForm = () => {
   const [isPending, startTransition] = useTransition()
 
   const form = useForm<TManageResetPasswordForm>({
-    resolver: zodResolver(ResetSchema),
     defaultValues: {
       email: ''
-    }
+    },
+    resolver: zodResolver(ResetSchema)
   })
 
   const onSubmit = (values: TManageResetPasswordForm) => {
@@ -62,8 +62,8 @@ const ResetPasswordForm = () => {
             />
           </div>
 
-          <FormError message={error} />
-          <FormSuccess message={success} />
+          <NotificationError message={error} />
+          <NotificationSuccess message={success} />
 
           <LoadableButton
             type="submit"

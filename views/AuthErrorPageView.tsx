@@ -2,7 +2,7 @@ import { ExclamationTriangleIcon } from '@radix-ui/react-icons'
 import AuthCardWrapper from '~/components/shared/CardWrapper/AuthCardWrapper'
 import { PATHS } from '~/utils/constants'
 
-function ErrorCard() {
+const AuthErrorPageView = () => {
   return (
     <AuthCardWrapper
       headerLabel="Somthing went wrong!"
@@ -16,4 +16,4 @@ function ErrorCard() {
   )
 }
 
-export default ErrorCard
+export default AuthErrorPageView

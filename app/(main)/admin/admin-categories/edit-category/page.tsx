@@ -1,7 +1,7 @@
 import EditCategoryPageView from '~/views/EditCategoryPageView'
 
-const EditategoryPage = () => {
+const EditCategoryPage = () => {
   return <EditCategoryPageView />
 }
 
-export default EditategoryPage
+export default EditCategoryPage

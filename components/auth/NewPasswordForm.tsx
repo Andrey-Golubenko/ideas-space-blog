@@ -7,8 +7,8 @@ import { useSearchParams } from 'next/navigation'
 
 import { Form } from '~/components/ui/form'
 import AuthCardWrapper from '~/components/shared/CardWrapper/AuthCardWrapper'
-import FormError from '~/components/FormError'
-import FormSuccess from '~/components/FormSuccess'
+import NotificationError from '~/components/notifications/NotificationError'
+import NotificationSuccess from '~/components/notifications/NotificationSuccess'
 import PasswordField from '~/components/shared/PasswordField'
 import LoadableButton from '~/components/shared/LoadableButton'
 import { newPassword } from '~/actions/new-password'
@@ -63,8 +63,8 @@ const NewPasswordForm = () => {
               isPending={isPending}
             />
           </div>
-          <FormError message={error} />
-          <FormSuccess message={success} />
+          <NotificationError message={error} />
+          <NotificationSuccess message={success} />
 
           <LoadableButton
             type="submit"

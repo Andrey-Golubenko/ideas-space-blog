@@ -1,4 +1,4 @@
-import UserProfileBar from '~/components/UserProfileBar'
+import UserProfileBar from '~/components/shared/UserProfileBar'
 
 const ProtectedLayout = ({
   children

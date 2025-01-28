@@ -5,7 +5,8 @@ import AdminCategoriesPageView from '~/views/AdminCategoriesPageView'
 import { type IPageWithSearchParamsProps } from '~/types'
 
 export const metadata: Metadata = {
-  title: 'Admin : Categories'
+  title: 'Ideas space : Admin : Categories',
+  description: 'Manage categories in the blog admin panel'
 }
 
 const AdminCategoriesPage = ({

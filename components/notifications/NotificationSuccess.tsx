@@ -1,10 +1,10 @@
 import { CheckCircledIcon } from '@radix-ui/react-icons'
 
-interface IFormSuccessProps {
+interface INotificationSuccessProps {
   message?: string
 }
 
-const FormSuccess = ({ message }: IFormSuccessProps) => {
+const NotificationSuccess = ({ message }: INotificationSuccessProps) => {
   if (!message) return null
 
   return (
@@ -14,4 +14,4 @@ const FormSuccess = ({ message }: IFormSuccessProps) => {
     </div>
   )
 }
-export default FormSuccess
+export default NotificationSuccess

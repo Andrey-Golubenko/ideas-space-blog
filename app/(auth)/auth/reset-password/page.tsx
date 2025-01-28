@@ -1,7 +1,7 @@
-import ResetPasswordForm from '~/components/auth/ResetPasswordForm'
+import ResetPasswordPageView from '~/views/ResetPasswordPageView'
 
 const ResetPasswordPage = () => {
-  return <ResetPasswordForm />
+  return <ResetPasswordPageView />
 }
 
 export default ResetPasswordPage

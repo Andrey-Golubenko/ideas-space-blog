@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { UserRole } from '@prisma/client'
 
 import {
   Sidebar,
@@ -13,6 +14,7 @@ import {
 } from '~/components/ui/sidebar'
 import SidebarItemSection from '~/components/sidebars/SidebarItemSection'
 import SidebarHeaderSection from '~/components/sidebars/SidebarHeaderSection'
+import WithRole from '~/components/hoc/WithRole'
 import { adminDashboard } from '~/utils/constants/data'
 
 const AdminSidebar = () => {
@@ -35,22 +37,24 @@ const AdminSidebar = () => {
             Overview
           </SidebarGroupLabel>
 
-          <SidebarGroupContent>
-            <SidebarMenu ref={autoAnimateRef}>
-              {!!adminDashboard?.length &&
-                adminDashboard?.map((item) => {
-                  const isActive = pathname === item?.path
+          <WithRole allowedRole={UserRole.ADMIN}>
+            <SidebarGroupContent>
+              <SidebarMenu ref={autoAnimateRef}>
+                {!!adminDashboard?.length &&
+                  adminDashboard?.map((item) => {
+                    const isActive = pathname === item?.path
 
-                  return (
-                    <SidebarItemSection
-                      key={item?.title}
-                      item={item}
-                      isActive={isActive}
-                    />
-                  )
-                })}
-            </SidebarMenu>
-          </SidebarGroupContent>
+                    return (
+                      <SidebarItemSection
+                        key={item?.title}
+                        item={item}
+                        isActive={isActive}
+                      />
+                    )
+                  })}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </WithRole>
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>

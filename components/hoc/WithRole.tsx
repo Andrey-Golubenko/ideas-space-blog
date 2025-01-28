@@ -1,10 +1,11 @@
 'use client'
 
 import { UserRole } from '@prisma/client'
-import FormError from '~/components/FormError'
 import { useCurrentUser } from '~/hooks/useCurrentUser'
+import BeatLoader from 'react-spinners/BeatLoader'
+import NotificationInfo from '~/components/notifications/NotificationInfo'
 
-interface IGateRoleProps {
+interface IWithRoleProps {
   children: React.ReactNode
   allowedRole: UserRole
 }
@@ -12,73 +13,61 @@ interface IGateRoleProps {
 /**
  * @component WithRole
  *
- * A client-side component that acts as a role-based access control gate. It conditionally renders its children
+ * A client-side component to manage role-based access control by conditionally rendering content
  * based on the current user's role.
  *
- * ### Props
+ * The component takes the required role and renders its children only if the current user's role
+ * matches the allowed role. Otherwise, it displays an error message.
  *
- * @prop {React.ReactNode} children
- * - The content to render if the user's role matches the required role.
+ * The primary functionality includes:
+ * - Verifying the current user's role using the `useCurrentUser` hook.
+ * - Displaying children components when the user has the required role.
+ * - Showing a `NotificationError` component with an appropriate message when the user's role does not match.
  *
- * @prop {UserRole} allowedRole
- * - The specific role required to access the content. This should match one of the roles defined in the `UserRole` enum.
+ * @param {IWithRoleProps} props - The component props.
+ * @param {React.ReactNode} props.children - The content to display if the user's role is allowed.
+ * @param {UserRole} props.allowedRole - The specific role required to access the content.
  *
- * ### Features
- *
- * - Verifies the current user's role using the `useCurrentUser` hook.
- * - If the user does not have the required role, a `FormError` component is displayed with an appropriate error message.
- * - If the user has the required role, the component renders its children.
+ * @returns {JSX.Element} - The rendered content if the user has the allowed role, or an error message otherwise.
  *
  * ### Usage
- *
  * ```tsx
+ * import { UserRole } from '@prisma/client';
+ *
  * <WithRole allowedRole={UserRole.ADMIN}>
  *   <AdminPanel />
  * </WithRole>
  * ```
  *
- * - In this example, the `AdminPanel` component will only render if the current user's role is `ADMIN`.
- * - If the user's role does not match, an error message will be shown instead.
- *
- * ### Internal Logic
- *
- * - **Role Check**:
- *   The `useCurrentUser` hook retrieves the current user's data, including their role.
- *   The `userRole` is then compared to the `allowedRole` passed as a prop.
- *
- * - **Access Denied**:
- *   If the user's role does not match the required role, a `FormError` component is displayed with a message
- *   informing the user that they lack the necessary permissions.
- *
- * - **Access Granted**:
- *   If the user's role matches the required role, the `children` content is rendered.
- *
- * ### Example
- *
- * ```tsx
- * <WithRole allowedRole={UserRole.USER}>
- *   <UserDashboard />
- * </WithRole>
- * ```
- *
- * - In this example, the `UserDashboard` component will only render if the current user's role is `USER`.
- * - If the role check fails, the user will see an error message.
+ * In this example:
+ * - The `AdminPanel` component is rendered only if the current user's role is `ADMIN`.
+ * - If the user's role does not match, an error message is displayed instead.
  *
  * ### Notes
- *
- * - The `UserRole` enum should align with the roles defined in your application (e.g., `ADMIN`, `USER`, etc.).
- * - This component is useful for implementing secure role-based access control in client-side rendered applications.
- *
- * @returns {JSX.Element} The children content if the user has the required role, or an error message otherwise.
+ * - Ensure that the `UserRole` enum is correctly aligned with the roles used in your application (e.g., `ADMIN`, `USER`).
+ * - This component simplifies role-based access control in client-side rendered applications.
  */
-const WithRole = ({ children, allowedRole }: IGateRoleProps) => {
+const WithRole = ({ children, allowedRole }: IWithRoleProps) => {
   const user = useCurrentUser()
 
   const userRole = user?.role
 
+  if (!userRole) {
+    return (
+      <div className="flex w-full flex-col items-center justify-center gap-5 pt-32">
+        <p>Checking your access rights.</p>
+        <BeatLoader className="h-5 items-center justify-center gap-x-3" />
+      </div>
+    )
+  }
+
   if (userRole !== allowedRole) {
     return (
-      <FormError message="You do not have permission to view this content!" />
+      <div className="mt-20">
+        <NotificationInfo
+          message={`You do not have permission to view this content! Change your role to ${allowedRole} and try again.`}
+        />
+      </div>
     )
   }
 

@@ -15,7 +15,9 @@ export async function generateMetadata({
   const singlePost = await getSinglePost(slug)
 
   return {
-    title: singlePost?.title
+    title: `Ideas space : ${singlePost?.title}`,
+    description: 'Displaying a single blog post',
+    robots: { index: true, follow: true }
   }
 }
 

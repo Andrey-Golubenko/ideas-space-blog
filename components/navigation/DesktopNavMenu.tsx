@@ -3,15 +3,20 @@ import LogoItem from '~/components/navigation/LogoItem'
 import AddNewItemButton from '~/components/shared/AddNewItemButton'
 import { PATHS } from '~/utils/constants'
 
-const DesktopNavMenu = ({ isLoggedIn, isMobile }: INavMenuProps) => {
+const DesktopNavMenu = ({
+  isLoggedIn,
+  isMobile,
+  isAdmin
+}: INavMenuProps) => {
   return (
     <nav className="flex w-full items-center justify-between px-16">
       <LogoItem logoClassNames="mr-14 h-10 w-10 " />
 
       <ul className="flex items-center justify-center space-x-8">
         <NavLinks
-          isLoggedIn={isLoggedIn}
           isMobile={isMobile}
+          isLoggedIn={isLoggedIn}
+          isAdmin={isAdmin}
         />
         <li className="pl-4">
           <AddNewItemButton

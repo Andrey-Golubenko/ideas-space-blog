@@ -6,13 +6,13 @@ import useGlobalStore from '~/store'
 import { useDataPostsFilters } from '~/hooks/useDataPostsFilters'
 import { useDataPosts } from '~/hooks/useDataPosts'
 import { useAuthorsFilterOptions } from '~/hooks/useAuthorsFilterOption'
-import { isEmptyOrUnpublished } from '~/utils/helpers'
 import { Card } from '~/components/ui/card'
 import DataFilterBox from '~/components/shared/DataManagement/DataFilterBox'
 import DataPagination from '~/components/shared/DataManagement/DataPagination'
 import DataResetFilter from '~/components/shared/DataManagement/DataResetFilter'
 import DataSearch from '~/components/shared/DataManagement/DataSearch'
 import SingleCategoryPostsList from '~/components/categories/SingleCategoryPostsList'
+import { isEmptyOrUnpublished } from '~/utils/helpers'
 import { SINGLE_CAT_POSTS_PER_PAGE } from '~/utils/constants'
 import { type IFetchPostsFunctionProps } from '~/types'
 
@@ -57,7 +57,7 @@ const SingleCategoryPageView = ({
   const noItems = isEmptyOrUnpublished(posts)
 
   return (
-    <div className="page-wrapper w-full pt-4">
+    <div className="page-wrapper h-full w-full pt-4">
       <Card className="mb-5 grid w-full grid-cols-1 flex-wrap items-center justify-around gap-x-5 gap-y-4 px-3 py-3 min-[375px]:grid-cols-2 min-[1080px]:grid-cols-4">
         <div className="col-span-1 min-[375px]:col-span-2 md:[&_div]:w-full md:[&_input]:!max-w-full ">
           <DataSearch

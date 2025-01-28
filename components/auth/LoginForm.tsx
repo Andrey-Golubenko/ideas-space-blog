@@ -3,8 +3,8 @@
 import { type UseFormReturn } from 'react-hook-form'
 
 import { Form } from '~/components/ui/form'
-import FormError from '~/components/FormError'
-import FormSuccess from '~/components/FormSuccess'
+import NotificationError from '~/components/notifications/NotificationError'
+import NotificationSuccess from '~/components/notifications/NotificationSuccess'
 import PasswordField from '~/components/shared/PasswordField'
 import TextField from '~/components/shared/TextField'
 import LoadableButton from '~/components/shared/LoadableButton'
@@ -66,8 +66,8 @@ const LoginForm = ({
             </>
           )}
         </div>
-        <FormError message={error || urlError} />
-        <FormSuccess message={success} />
+        <NotificationError message={error || urlError} />
+        <NotificationSuccess message={success} />
 
         <LoadableButton
           type="submit"
