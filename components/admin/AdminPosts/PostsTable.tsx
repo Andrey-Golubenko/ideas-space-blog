@@ -117,7 +117,7 @@ const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
       {isLoading ? (
         <DataTableSkeleton
           columnCount={5}
-          rowCount={10}
+          rowCount={7}
         />
       ) : (
         <Suspense

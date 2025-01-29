@@ -66,24 +66,23 @@ const NewCategoryPageView = () => {
         imageUrl
       }
 
-      newCategory(newCategoryValues)
-        .then((data) => {
-          setError(data?.error)
-          setSuccess(data?.success)
+      const data = await newCategory(newCategoryValues)
 
-          if (data?.success) {
-            toast.success(data?.success, {
-              richColors: true,
-              closeButton: true,
-              duration: 5000
-            })
+      if (data?.success) {
+        setSuccess(data?.success)
 
-            router.back()
-          }
+        toast.success(data?.success, {
+          richColors: true,
+          closeButton: true,
+          duration: 5000
         })
-        .catch(() => {
-          return setError('Somthing went wrong!')
-        })
+
+        router.back()
+      }
+
+      if (data?.error) {
+        setError(data?.error)
+      }
     })
   }
 

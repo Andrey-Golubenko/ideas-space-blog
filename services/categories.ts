@@ -10,31 +10,20 @@ import {
   type TTRuncatedCategories
 } from '~/types'
 
-export const fetchAllCategoriesTruncated = async (): Promise<
-  TTRuncatedCategories[] | [] | null
-> => {
-  try {
-    const categories = await db.categories.findMany({
-      where: {
-        slug: {
-          not: `${DEFAULT_CATEGORY.slug}`
-        }
-      },
-      select: {
-        id: true,
-        name: true,
-        slug: true
-      }
-    })
-
-    return categories ?? []
-  } catch (error) {
-    console.error('Failed to fetch categories!', error)
-
-    return null
-  }
-}
-
+/**
+ * Fetches filtered categories with pagination.
+ *
+ * This function retrieves a list of categories from the database, applying optional search filtering
+ * and pagination constraints. It excludes the default category from the results.
+ *
+ * @param {Object} params - The function parameters.
+ * @param {number} params.limit - The number of categories to retrieve.
+ * @param {number} params.offset - The offset for pagination.
+ * @param {string} [params.searchQuery] - An optional search query to filter categories by name.
+ * @returns {Promise<{ categories: Categories[], categoriesCount: number } | string | null>}
+ * Returns an object containing the filtered categories and their total count. If no categories are found,
+ * returns a message string. If an error occurs, returns `null`.
+ */
 export const fetchFilteredCategoriesWithPag = async ({
   limit,
   offset,
@@ -82,6 +71,41 @@ export const fetchFilteredCategoriesWithPag = async ({
     return { categories, categoriesCount }
   } catch (error) {
     console.error('Failed to fetch categories:', error)
+    return null
+  }
+}
+
+/**
+ * Fetches a list of all categories with truncated details.
+ *
+ * This function retrieves all categories from the database, selecting only their `id`, `name`, and `slug`.
+ * It excludes the default category from the results.
+ *
+ * @returns {Promise<TTRuncatedCategories[] | [] | null>}
+ * Returns an array of truncated category objects. If no categories are found, returns an empty array.
+ * If an error occurs, returns `null`.
+ */
+export const fetchAllCategoriesTruncated = async (): Promise<
+  TTRuncatedCategories[] | [] | null
+> => {
+  try {
+    const categories = await db.categories.findMany({
+      where: {
+        slug: {
+          not: `${DEFAULT_CATEGORY.slug}`
+        }
+      },
+      select: {
+        id: true,
+        name: true,
+        slug: true
+      }
+    })
+
+    return categories ?? []
+  } catch (error) {
+    console.error('Failed to fetch categories!', error)
+
     return null
   }
 }

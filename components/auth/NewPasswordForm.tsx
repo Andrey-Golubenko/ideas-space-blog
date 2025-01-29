@@ -36,11 +36,16 @@ const NewPasswordForm = () => {
     setError('')
     setSuccess('')
 
-    startTransition(() => {
-      newPassword(values, token!).then((data) => {
-        setError(data?.error)
+    startTransition(async () => {
+      const data = await newPassword(values, token!)
+
+      if (data?.success) {
         setSuccess(data?.success)
-      })
+      }
+
+      if (data?.error) {
+        setError(data?.error)
+      }
     })
   }
 

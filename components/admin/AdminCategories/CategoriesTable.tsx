@@ -70,8 +70,8 @@ const CategoriesTable = ({
 
       {isLoading ? (
         <DataTableSkeleton
-          columnCount={5}
-          rowCount={10}
+          columnCount={3}
+          rowCount={7}
         />
       ) : (
         <Suspense

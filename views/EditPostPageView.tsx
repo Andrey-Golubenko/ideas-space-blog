@@ -130,22 +130,25 @@ const EditPostPageView = ({ isLogged }: IEditPostViewProps) => {
         imageUrls: [...newImageUrlsFromFiles, ...newImageUrls]
       }
 
-      editPost(newPostValues, postId as string).then((data) => {
-        setError(data?.error)
+      const data = await editPost(newPostValues, postId as string)
+
+      if (data?.success) {
         setSuccess(data?.success)
 
-        if (data?.success) {
-          toast.success(data?.success, {
-            richColors: true,
-            closeButton: true,
-            duration: 5000
-          })
+        toast.success(data?.success, {
+          richColors: true,
+          closeButton: true,
+          duration: 5000
+        })
 
-          setSinglePost({})
+        setSinglePost({})
 
-          router.back()
-        }
-      })
+        router.back()
+      }
+
+      if (data?.error) {
+        setError(data?.error)
+      }
     })
   }
 

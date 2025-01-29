@@ -118,26 +118,28 @@ const EditCategoryPageView = () => {
         imageUrl: newImageUrl
       }
 
-      editCategory(newCategoryValues, editableCategoryId)
-        .then((data) => {
-          setError(data?.error)
-          setSuccess(data?.success)
+      const data = await editCategory(
+        newCategoryValues,
+        editableCategoryId
+      )
 
-          if (data?.success) {
-            toast.success(data?.success, {
-              richColors: true,
-              closeButton: true,
-              duration: 5000
-            })
+      if (data?.success) {
+        setSuccess(data?.success)
 
-            setEditableCategory({})
-
-            router.back()
-          }
+        toast.success(data?.success, {
+          richColors: true,
+          closeButton: true,
+          duration: 5000
         })
-        .catch(() => {
-          return setError('Somthing went wrong!')
-        })
+
+        setEditableCategory({})
+
+        router.back()
+      }
+
+      if (data?.error) {
+        setError(data?.error)
+      }
     })
   }
 

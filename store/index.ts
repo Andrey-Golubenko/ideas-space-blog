@@ -9,7 +9,7 @@ import {
 import { fetchFilteredCategoriesWithPag } from '~/services/categories'
 import { fetchRecentPosts } from '~/services/posts/posts.server'
 import { fetchUsersVisits } from '~/services/userVisits/visitsData'
-import { fetchCurrentPageOfFilteredUsers } from '~/services/user'
+import { fetchFilteredUsersWithPag } from '~/services/user'
 import { type Categories } from '@prisma/client'
 import {
   type TDeserializedPost,
@@ -31,10 +31,11 @@ interface IUseGlobalStore {
   categoriesCount: number | null
   editableCategory: Categories | {}
 
+  users: TDeserializedUser[] | string
+  usersCount: number | null
+
   usersVisits: IUserVisit[] | null
   browserStats: IBrowserStats[] | null
-
-  dataTableUsers: TDeserializedUser[] | []
 
   isLoading: boolean
 
@@ -48,7 +49,8 @@ interface IUseGlobalStore {
   setEditableCategory: (category: Categories | {}) => void
   deleteSingleCategory: (categoryId: string) => void
 
-  getDataTableUsers: (props: IFetchUsersFunctionProps) => void
+  getFilteredUsersWithPag: (props: IFetchUsersFunctionProps) => void
+  deleteSingleUser: (userId: string) => void
 
   getUsersVisits: (startDate?: Date, endDate?: Date) => void
 }
@@ -71,10 +73,11 @@ const useGlobalStore = createWithEqualityFn<
           categoriesCount: null,
           editableCategory: {},
 
+          users: [],
+          usersCount: null,
+
           usersVisits: [],
           browserStats: [],
-
-          dataTableUsers: [],
 
           isLoading: false,
 
@@ -211,6 +214,55 @@ const useGlobalStore = createWithEqualityFn<
             })
           },
 
+          getFilteredUsersWithPag: async ({
+            limit,
+            offset,
+            searchQuery,
+            providerFilter
+          }: IFetchUsersFunctionProps) => {
+            set((state) => {
+              return { ...state, isLoading: true }
+            })
+
+            try {
+              const data = await fetchFilteredUsersWithPag({
+                limit,
+                offset,
+                searchQuery,
+                providerFilter
+              })
+
+              const users = typeof data === 'string' ? data : data?.users
+
+              const usersCount =
+                typeof data === 'string' ? null : data?.usersCount
+
+              set((state) => {
+                return { ...state, users, usersCount }
+              })
+            } catch (error) {
+              console.error('Error fetching users:', error)
+            } finally {
+              set((state) => {
+                return { ...state, isLoading: false }
+              })
+            }
+          },
+
+          deleteSingleUser: (userId: string) => {
+            set((state) => {
+              const users: TDeserializedUser[] = Array.isArray(
+                state?.users
+              )
+                ? (state?.users as TDeserializedUser[])?.filter((user) => {
+                    return user.id !== userId
+                  })
+                : []
+
+              return { ...state, users }
+            })
+          },
+
           getUsersVisits: async (startDate?: Date, endDate?: Date) => {
             set((state) => {
               return { ...state, isLoading: true }
@@ -226,38 +278,6 @@ const useGlobalStore = createWithEqualityFn<
                 isLoading: false
               }
             })
-          },
-
-          getDataTableUsers: async ({
-            limit,
-            offset,
-            searchQuery,
-            providerFilter
-          }: IFetchUsersFunctionProps) => {
-            set((state) => {
-              return { ...state, isLoading: true }
-            })
-
-            try {
-              const users = await fetchCurrentPageOfFilteredUsers({
-                limit,
-                offset,
-                searchQuery,
-                providerFilter
-              })
-
-              if (users) {
-                set((state) => {
-                  return { ...state, dataTableUsers: users }
-                })
-              }
-            } catch (error) {
-              console.error('Error fetching users:', error)
-            } finally {
-              set((state) => {
-                return { ...state, isLoading: false }
-              })
-            }
           }
         }
       },

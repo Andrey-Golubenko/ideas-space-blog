@@ -8,16 +8,39 @@ import {
   type TTRuncatedAuthors
 } from '~/types'
 
-export const fetchCurrentPageOfFilteredUsers = async ({
+/**
+ * Fetches filtered users with pagination.
+ *
+ * This function retrieves a list of users from the database, applying optional search filtering,
+ * provider-based filtering, and pagination constraints. It also selects relevant user details.
+ *
+ * @param {Object} params - The function parameters.
+ * @param {number} params.limit - The number of users to retrieve.
+ * @param {number} params.offset - The offset for pagination.
+ * @param {string} [params.searchQuery] - An optional search query to filter users by name.
+ * @param {string} [params.providerFilter] - An optional string of provider names separated by dots ("."),
+ * used to filter users based on authentication provider.
+ * @returns {Promise<{ users: TDeserializedUser[], usersCount: number } | string | null>}
+ * Returns an object containing the filtered users and their total count. If no users are found,
+ * returns a message string. If an error occurs, returns `null`.
+ */
+export const fetchFilteredUsersWithPag = async ({
   limit,
   providerFilter,
   searchQuery,
   offset
-}: IFetchUsersFunctionProps) => {
+}: IFetchUsersFunctionProps): Promise<
+  | {
+      users: TDeserializedUser[]
+      usersCount: number
+    }
+  | null
+  | string
+> => {
   const providerFilters = providerFilter?.split('.') || []
 
   try {
-    const filteredUsers = await db.user.findMany({
+    const dbUsers = await db.user.findMany({
       where: {
         name: searchQuery
           ? { contains: searchQuery, mode: 'insensitive' }
@@ -47,7 +70,26 @@ export const fetchCurrentPageOfFilteredUsers = async ({
       }
     })
 
-    const users: TDeserializedUser[] = filteredUsers.map((user) => {
+    if (dbUsers?.length <= 0) {
+      return 'It seems there are no users yet.'
+    }
+
+    const usersCount: number = await db.user.count({
+      where: {
+        name: searchQuery
+          ? { contains: searchQuery, mode: 'insensitive' }
+          : undefined,
+        accounts: providerFilter
+          ? {
+              some: {
+                provider: { in: providerFilters }
+              }
+            }
+          : undefined
+      }
+    })
+
+    const users: TDeserializedUser[] = dbUsers.map((user) => {
       const { accounts, ...restValues } = user
       return {
         ...restValues,
@@ -55,13 +97,22 @@ export const fetchCurrentPageOfFilteredUsers = async ({
       }
     })
 
-    return users
+    return { users, usersCount }
   } catch (error) {
     console.error('Failed to fetch filtered users:', error)
     return null
   }
 }
 
+/**
+ * Fetches a list of all authors with truncated details.
+ *
+ * This function retrieves all authors from the database, selecting only their `id` and `name`.
+ * It filters out any authors with a `null` name before returning the data.
+ *
+ * @returns {Promise<TTRuncatedAuthors[] | null>}
+ * Returns an array of truncated author objects. If an error occurs, returns `null`.
+ */
 export const fetchAllAuthorsTruncated = async (): Promise<
   TTRuncatedAuthors[] | null
 > => {

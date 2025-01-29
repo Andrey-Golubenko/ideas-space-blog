@@ -8,108 +8,6 @@ import {
   type TDeserializedPost
 } from '~/types'
 
-export const getSinglePost = cache(
-  async (slug: string): Promise<FullPost | null> => {
-    try {
-      const initPost = await db.post.findUnique({
-        where: { id: slug },
-        include: {
-          categories: {
-            select: {
-              category: {
-                select: {
-                  id: true,
-                  name: true,
-                  slug: true
-                }
-              }
-            }
-          }
-        }
-      })
-
-      if (!initPost) return null
-
-      const categories = initPost.categories.map((singleCategory) => {
-        return {
-          categoryId: singleCategory?.category?.id,
-          categoryName: singleCategory?.category?.name,
-          categorySlug: singleCategory?.category?.slug
-        }
-      })
-
-      const post: FullPost = { ...initPost, categories }
-
-      return post
-    } catch (error) {
-      console.error('Error fetching single post:', error)
-
-      return null
-    }
-  }
-)
-
-export const fetchRecentPosts = async (): Promise<{
-  recentPosts: TDeserializedPost[] | string
-}> => {
-  try {
-    const posts = await db.post.findMany({
-      take: 3,
-      select: {
-        id: true,
-        title: true,
-        content: true,
-        imageUrls: true,
-        published: true,
-        createdAt: true,
-        author: {
-          select: {
-            id: true,
-            name: true
-          }
-        },
-        categories: {
-          select: {
-            category: {
-              select: {
-                id: true,
-                name: true,
-                slug: true
-              }
-            }
-          }
-        }
-      },
-      orderBy: { createdAt: 'desc' }
-    })
-
-    if (!posts || !posts.length) {
-      return { recentPosts: 'It seems there are no posts yet.' }
-    }
-
-    const deserializedPosts: TDeserializedPost[] = posts.map((post) => {
-      return {
-        ...post,
-        author: post.author
-          ? { id: post.author.id, name: post.author.name || '' }
-          : null,
-        categories: post.categories.map((category) => {
-          return {
-            categoryId: category.category.id,
-            categoryName: category.category.name,
-            categorySlug: category.category.slug
-          }
-        })
-      }
-    })
-    return { recentPosts: deserializedPosts }
-  } catch (error) {
-    console.error('Error fetching recent posts:', error)
-
-    throw new Error('Failed to fetch recent posts')
-  }
-}
-
 /**
 Fetches paginated and filtered posts from the database for a post list and a post table.
  *
@@ -235,5 +133,107 @@ export const fetchFilteredPostsWithPag = async ({
   } catch (error) {
     console.error('Failed to fetch filtered posts:', error)
     return null
+  }
+}
+
+export const getSinglePost = cache(
+  async (slug: string): Promise<FullPost | null> => {
+    try {
+      const initPost = await db.post.findUnique({
+        where: { id: slug },
+        include: {
+          categories: {
+            select: {
+              category: {
+                select: {
+                  id: true,
+                  name: true,
+                  slug: true
+                }
+              }
+            }
+          }
+        }
+      })
+
+      if (!initPost) return null
+
+      const categories = initPost.categories.map((singleCategory) => {
+        return {
+          categoryId: singleCategory?.category?.id,
+          categoryName: singleCategory?.category?.name,
+          categorySlug: singleCategory?.category?.slug
+        }
+      })
+
+      const post: FullPost = { ...initPost, categories }
+
+      return post
+    } catch (error) {
+      console.error('Error fetching single post:', error)
+
+      return null
+    }
+  }
+)
+
+export const fetchRecentPosts = async (): Promise<{
+  recentPosts: TDeserializedPost[] | string
+}> => {
+  try {
+    const posts = await db.post.findMany({
+      take: 3,
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        imageUrls: true,
+        published: true,
+        createdAt: true,
+        author: {
+          select: {
+            id: true,
+            name: true
+          }
+        },
+        categories: {
+          select: {
+            category: {
+              select: {
+                id: true,
+                name: true,
+                slug: true
+              }
+            }
+          }
+        }
+      },
+      orderBy: { createdAt: 'desc' }
+    })
+
+    if (!posts || !posts.length) {
+      return { recentPosts: 'It seems there are no posts yet.' }
+    }
+
+    const deserializedPosts: TDeserializedPost[] = posts.map((post) => {
+      return {
+        ...post,
+        author: post.author
+          ? { id: post.author.id, name: post.author.name || '' }
+          : null,
+        categories: post.categories.map((category) => {
+          return {
+            categoryId: category.category.id,
+            categoryName: category.category.name,
+            categorySlug: category.category.slug
+          }
+        })
+      }
+    })
+    return { recentPosts: deserializedPosts }
+  } catch (error) {
+    console.error('Error fetching recent posts:', error)
+
+    throw new Error('Failed to fetch recent posts')
   }
 }

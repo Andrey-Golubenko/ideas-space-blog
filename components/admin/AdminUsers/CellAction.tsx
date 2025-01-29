@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 
 import useGlobalStore from '~/store'
 import { useCurrentUser } from '~/hooks/useCurrentUser'
+import { useUsersTableFilters } from '~/hooks/useUsersTableFilters'
 import { deleteUser } from '~/actions/delete-user'
 import { logOut } from '~/actions/logout'
 import {
@@ -18,25 +19,30 @@ import {
 } from '~/components/ui/dropdown-menu'
 import { Button } from '~/components/ui/button'
 import AlertModal from '~/components/shared/Modal/AlertModal'
-import { DEFAULT_TABLE_ITEMS_PER_PAGE, PATHS } from '~/utils/constants'
+import { PATHS } from '~/utils/constants'
 
 interface ICellActionProps {
   userId: string
 }
 
 const CellAction = ({ userId }: ICellActionProps) => {
-  const [getDataTableUsers] = useGlobalStore((state) => {
-    return [state.getDataTableUsers]
+  const [deleteSingleUser] = useGlobalStore((state) => {
+    return [state.deleteSingleUser]
   })
 
   const [open, setOpen] = useState(false)
+
   const router = useRouter()
+
   const [isPending, startTransition] = useTransition()
+
   const currentUser = useCurrentUser()
+
+  const { setPage } = useUsersTableFilters()
 
   const handleOnUpdate = useCallback(() => {
     router.push(`${PATHS.adminEditUsers}${userId}`)
-  }, [userId])
+  }, [router, userId])
 
   const handleOnDelete = useCallback(() => {
     setOpen(true)
@@ -61,12 +67,9 @@ const CellAction = ({ userId }: ICellActionProps) => {
             await logOut()
           }
 
-          await getDataTableUsers({
-            currentPage: 1,
-            limit: DEFAULT_TABLE_ITEMS_PER_PAGE,
-            providerFilter: null,
-            searchQuery: null
-          })
+          deleteSingleUser(userId)
+
+          setPage(1)
         }
       } catch (error) {
         console.error('Error deleting user:', error)
@@ -74,7 +77,7 @@ const CellAction = ({ userId }: ICellActionProps) => {
         toast.error('Failed to delete user.')
       }
     })
-  }, [currentUser?.id, getDataTableUsers, userId])
+  }, [currentUser?.id, setPage, userId])
 
   return (
     <>

@@ -17,24 +17,25 @@ const EmailVerificationPageView = () => {
   const searchParamms = useSearchParams()
   const token = searchParamms.get('token')
 
-  const onSubmit = () => {
+  const onCheck = async () => {
     if (!token) {
       setError('Missing token!')
       return
     }
 
-    emailVerification(token)
-      .then((data) => {
-        setSuccess(data?.success)
-        setError(data?.error)
-      })
-      .catch(() => {
-        return setError('Somthing went wrong!')
-      })
+    const data = await emailVerification(token)
+
+    if (data?.success) {
+      setSuccess(data?.success)
+    }
+
+    if (data?.error) {
+      setError(data?.error)
+    }
   }
 
   useEffect(() => {
-    onSubmit()
+    onCheck()
   }, [])
 
   return (

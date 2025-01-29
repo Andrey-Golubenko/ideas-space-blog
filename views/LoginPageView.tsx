@@ -39,26 +39,24 @@ const LoginPageView = () => {
     setError('')
     setSuccess('')
 
-    startTransition(() => {
-      logIn(values, callbackUrl)
-        .then((data) => {
-          if (data?.error) {
-            form.reset()
-            setError(data?.error)
-          }
+    startTransition(async () => {
+      const data = await logIn(values, callbackUrl)
 
-          if (data?.success) {
-            form.reset()
-            setSuccess(data?.success)
-          }
+      if (data?.success) {
+        form.reset()
 
-          if (data?.twoFactor) {
-            setShowTwoFactor(true)
-          }
-        })
-        .catch(() => {
-          return setError('Somthing went wrong!')
-        })
+        setSuccess(data?.success)
+      }
+
+      if (data?.error) {
+        form.reset()
+
+        setError(data?.error)
+      }
+
+      if (data?.twoFactor) {
+        setShowTwoFactor(true)
+      }
     })
   }
 

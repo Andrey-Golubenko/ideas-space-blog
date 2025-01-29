@@ -53,29 +53,28 @@ const EditUserPageView = ({ user }: IEditUserPageViewProps) => {
       id: user?.id ?? ''
     }
 
-    startTransition(() => {
-      editUser(preparedValues)
-        .then((data) => {
-          setError(data?.error)
-          setSuccess(data?.success)
+    startTransition(async () => {
+      const data = await editUser(preparedValues)
 
-          if (data?.success) {
-            toast.success(data?.success, {
-              richColors: true,
-              closeButton: true,
-              duration: 5000
-            })
+      if (data?.success) {
+        setSuccess(data?.success)
 
-            if (user?.role !== UserRole.ADMIN) {
-              update()
-            }
-
-            router.push(PATHS.adminUsers)
-          }
+        toast.success(data?.success, {
+          richColors: true,
+          closeButton: true,
+          duration: 5000
         })
-        .catch(() => {
-          return 'Somthing went wrong!'
-        })
+
+        if (user?.role !== UserRole.ADMIN) {
+          update()
+        }
+
+        router.push(PATHS.adminUsers)
+      }
+
+      if (data?.error) {
+        setError(data?.error)
+      }
     })
   }
 

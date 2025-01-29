@@ -5,7 +5,7 @@ import { parseAsInteger, useQueryState } from 'nuqs'
 
 import useGlobalStore from '~/store'
 import { useUsersTableFilters } from '~/hooks/useUsersTableFilters'
-import { useDataTableUsers } from '~/hooks/useDataTableUsers'
+import { useDataUsers } from '~/hooks/useDataUsers'
 import DataTable from '~/components/ui/table/DataTable'
 import { columns } from '~/components/admin/AdminUsers/columns'
 import DataFilterBox from '~/components/shared/DataManagement/DataFilterBox'
@@ -16,14 +16,12 @@ import { AUTH_OPTIONS } from '~/utils/constants'
 import { type IRCWithSearchParamsKeyProps } from '~/types'
 
 const UsersTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
-  const [dataTableUsers, isLoading] = useGlobalStore((state) => {
-    return [state.dataTableUsers, state.isLoading]
+  const [users, usersCount, isLoading] = useGlobalStore((state) => {
+    return [state.users, state.usersCount, state.isLoading]
   })
 
-  const [currentPage, setCurrentPage] = useQueryState(
-    'page',
-    parseAsInteger.withOptions({ shallow: false }).withDefault(1)
-  )
+  const noItems = typeof users === 'string'
+  const displayedUsers = noItems ? [] : users
 
   const [pageSize, setPageSize] = useQueryState(
     'limit',
@@ -38,20 +36,21 @@ const UsersTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
     isAnyFilterActive,
     resetFilters,
     searchQuery,
+    page,
     setPage,
     setSearchQuery
   } = useUsersTableFilters()
 
   const dataTableUsersProps = useMemo(() => {
     return {
-      currentPage,
+      page,
       limit: pageSize,
       providerFilter: authProviderFilter,
       searchQuery
     }
-  }, [currentPage, pageSize, authProviderFilter, searchQuery])
+  }, [page, pageSize, authProviderFilter, searchQuery])
 
-  useDataTableUsers(dataTableUsersProps)
+  useDataUsers(dataTableUsersProps)
 
   return (
     <div className="space-y-4">
@@ -79,8 +78,8 @@ const UsersTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
 
       {isLoading ? (
         <DataTableSkeleton
-          columnCount={5}
-          rowCount={10}
+          columnCount={4}
+          rowCount={7}
         />
       ) : (
         <Suspense
@@ -93,12 +92,12 @@ const UsersTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
           }
         >
           <DataTable
-            key={dataTableUsers?.length}
+            key={usersCount}
             columns={columns}
-            data={dataTableUsers}
-            totalItems={dataTableUsers?.length}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
+            data={displayedUsers}
+            totalItems={usersCount}
+            currentPage={page}
+            setCurrentPage={setPage}
             pageSize={pageSize}
             setPageSize={setPageSize}
           />

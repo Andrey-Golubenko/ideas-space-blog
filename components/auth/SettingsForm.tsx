@@ -52,21 +52,18 @@ const SettingsForm = ({ session }: ISettingsFormProps) => {
       id: user?.id as string
     }
 
-    startTransition(() => {
-      editUser(preparedValues)
-        .then((data) => {
-          if (data?.error) {
-            setError(data?.error)
-          }
+    startTransition(async () => {
+      const data = await editUser(preparedValues)
 
-          if (data?.success) {
-            update()
-            setSuccess(data?.success)
-          }
-        })
-        .catch(() => {
-          return 'Somthing went wrong!'
-        })
+      if (data?.success) {
+        update()
+
+        setSuccess(data?.success)
+      }
+
+      if (data?.error) {
+        setError(data?.error)
+      }
     })
   }
 

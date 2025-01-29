@@ -35,11 +35,16 @@ const RegisterForm = () => {
     setError('')
     setSuccess('')
 
-    startTransition(() => {
-      register(values).then((data) => {
-        setError(data?.error)
+    startTransition(async () => {
+      const data = await register(values)
+
+      if (data?.success) {
         setSuccess(data?.success)
-      })
+      }
+
+      if (data?.error) {
+        setError(data?.error)
+      }
     })
   }
 

@@ -32,11 +32,16 @@ const ResetPasswordForm = () => {
     setError('')
     setSuccess('')
 
-    startTransition(() => {
-      passwordReset(values).then((data) => {
-        setError(data?.error)
+    startTransition(async () => {
+      const data = await passwordReset(values)
+
+      if (data?.success) {
         setSuccess(data?.success)
-      })
+      }
+
+      if (data?.error) {
+        setError(data?.error)
+      }
     })
   }
 
