@@ -4,6 +4,7 @@ import { type ButtonHTMLAttributes } from 'react'
 import { ReloadIcon } from '@radix-ui/react-icons'
 
 import { Button, type ButtonProps } from '~/components/ui/button'
+import { cn } from '~/libs/utils'
 
 interface ILoadableButtonProps extends ButtonProps {
   type: ButtonHTMLAttributes<HTMLButtonElement>['type']
@@ -23,7 +24,7 @@ const LoadableButton = ({
     <Button
       type={type}
       disabled={isDisabled}
-      className={`${buttonClassName} w-full`}
+      className={cn('w-full', buttonClassName)}
       {...props}
     >
       {isDisabled ? (

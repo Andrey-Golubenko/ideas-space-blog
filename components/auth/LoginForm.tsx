@@ -56,6 +56,7 @@ const LoginForm = ({
                 control={form.control}
                 isPending={isPending}
               />
+
               <PasswordField
                 name="password"
                 label="Password"
@@ -66,6 +67,7 @@ const LoginForm = ({
             </>
           )}
         </div>
+
         <NotificationError message={error || urlError} />
         <NotificationSuccess message={success} />
 

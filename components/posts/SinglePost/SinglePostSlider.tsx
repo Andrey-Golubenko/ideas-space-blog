@@ -11,6 +11,7 @@ import 'swiper/css/thumbs'
 
 import LoadableImage from '~/components/shared/LoadableImage'
 import { useScreen } from '~/hooks/useScreen'
+import { cn } from '~/libs/utils'
 
 interface ISinglePostAliderProps {
   imageUrls: string[]
@@ -54,7 +55,10 @@ const SinglePostSlider = ({ imageUrls }: ISinglePostAliderProps) => {
         spaceBetween={10}
         thumbs={{ swiper: thumbsSwiper }}
         modules={[FreeMode, Navigation, Thumbs]}
-        className={`mx-auto !mb-8 ${imageUrls?.length ? 'h-[500px]' : ''}  w-full`}
+        className={cn(
+          'mx-auto !mb-8 w-full',
+          imageUrls?.length && 'h-[500px]'
+        )}
       >
         {!!imageUrls?.length &&
           imageUrls?.map((url, index) => {

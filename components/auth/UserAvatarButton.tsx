@@ -24,10 +24,14 @@ const UserAvatarButton = () => {
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger className="cursor-pointer focus-visible:outline-none">
         <Avatar>
-          <AvatarImage src={(user?.image as string) || ''} />
+          <AvatarImage
+            src={(user?.image as string) || ''}
+            alt="Avatar of ther user"
+          />
           <AvatarFallback className="bg-sky-500">
             <FaUser className="text-white" />
           </AvatarFallback>
+          <span className="sr-only">User</span>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

@@ -5,6 +5,7 @@ import { type Categories } from '@prisma/client'
 
 import { useItemType } from '~/hooks/useItemType'
 import { useItemProps } from '~/hooks/useItemProps'
+import { cn } from '~/libs/utils'
 import { Card } from '~/components/ui/card'
 import SectionItemCardImage from '~/components/shared/ItemSectionCard/SectionItemCardImage'
 import SectionItemCardHeader from '~/components/shared/ItemSectionCard/SectionItemCardHeader'
@@ -24,7 +25,10 @@ const SectionItemCard = ({ item }: ICategoriesSectionItemProps) => {
   return (
     <Card
       ref={autoAnimateRef}
-      className={`flex min-h-max flex-col items-center justify-center ${isCategory ? '!border-0 bg-transparent shadow-none' : ''}`}
+      className={cn(
+        'flex min-h-max flex-col items-center justify-center',
+        isCategory && '!border-0 bg-transparent shadow-none'
+      )}
     >
       <SectionItemCardImage
         itemSlug={itemSlug}

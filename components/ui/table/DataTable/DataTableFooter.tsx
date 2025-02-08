@@ -34,9 +34,7 @@ const DataTableFooter = <TData,>({
 
   return (
     <div className="flex flex-col items-center justify-end gap-4 py-4 md:flex-row">
-      <div
-        className={`flex w-full flex-wrap items-center justify-between gap-x-8 gap-y-4 ${hasItems ? '' : ''}`}
-      >
+      <div className="flex w-full flex-wrap items-center justify-between gap-x-8 gap-y-4">
         <div className="flex-1 text-sm text-muted-foreground">
           {hasItems ? (
             <>

@@ -1,12 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-import { cn } from '~/libs/utils'
 
 import { useItemProps } from '~/hooks/useItemProps'
 import { CardHeader } from '~/components/ui/card'
 import LoadableImage from '~/components/shared/LoadableImage'
 import PostMeta from '~/components/posts/PostMeta'
+import { cn } from '~/libs/utils'
 import { fontPoppins } from '~/utils/constants/fonts'
 import { PATHS } from '~/utils/constants'
 import { type TListItem, type TItemType } from '~/types'
@@ -37,11 +37,16 @@ const ItemCardHeader = ({
     <>
       <Link
         href={
-          (isPost && `${PATHS.blog}/${itemSlug}`) ||
-          (isCategory && `${PATHS.categories}/${itemSlug}`) ||
+          (isPost && itemSlug && `${PATHS.blog}/${itemSlug}`) ||
+          (isCategory && itemSlug && `${PATHS.category(itemSlug)}`) ||
           '#'
         }
-        className={`overflow-hidden border-b ${isCategory ? 'mx-auto mt-6 h-[200px] w-[200px] rounded-full' : 'w-full rounded-md'}`}
+        className={cn(
+          'overflow-hidden border-b',
+          isCategory
+            ? 'mx-auto mt-6 h-[200px] w-[200px] rounded-full'
+            : 'w-full rounded-md'
+        )}
       >
         <LoadableImage
           src={itemImage}

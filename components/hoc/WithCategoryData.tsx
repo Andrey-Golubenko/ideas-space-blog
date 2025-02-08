@@ -3,6 +3,7 @@
 import { cloneElement, useRef, type ReactElement } from 'react'
 
 import { useListItemsDistribution } from '~/hooks/useListItemsDistribution'
+import { cn } from '~/libs/utils'
 import { type Categories } from '@prisma/client'
 
 interface IWithCategoryDataProps {
@@ -59,7 +60,7 @@ const WithCategoryData = ({
 
   return (
     <section
-      className={`my-20 w-full @container ${dataContainerClasses ?? ''}`}
+      className={cn('my-20 w-full @container', dataContainerClasses)}
       ref={containerRef}
     >
       {cloneElement(children[0] as ReactElement, {
@@ -70,7 +71,10 @@ const WithCategoryData = ({
 
       {!isLoading && (restItems?.length > 0 || fourthItemInList) && (
         <div
-          className={`mb-5 grid w-full grid-cols-1 gap-5 @lg:grid-cols-2 @3xl:grid-cols-3 @4xl:grid-cols-4 ${postsGridClasses || ''}`}
+          className={cn(
+            'mb-5 grid w-full grid-cols-1 gap-5 @lg:grid-cols-2 @3xl:grid-cols-3 @4xl:grid-cols-4',
+            postsGridClasses
+          )}
         >
           {[fourthItemInList, ...restItems]?.map((item) => {
             if (item) {

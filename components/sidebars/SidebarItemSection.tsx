@@ -7,6 +7,7 @@ import {
   SidebarMenuItem
 } from '~/components/ui/sidebar'
 import SidebarImage from '~/components/sidebars/SidebarImage'
+import { cn } from '~/libs/utils'
 import { PATHS } from '~/utils/constants'
 import { type TAdminSidebarItem } from '~/types'
 
@@ -19,7 +20,7 @@ const SidebarItemSection = ({ item, isActive }: ISidebarItemProps) => {
   const isCategory = item && 'id' in item
 
   const itemLink = isCategory
-    ? `${PATHS.categories}/${item?.slug}`
+    ? `${PATHS.category(item?.slug)}`
     : item?.path
 
   const itemImage = isCategory ? (
@@ -40,7 +41,13 @@ const SidebarItemSection = ({ item, isActive }: ISidebarItemProps) => {
       >
         <Link
           href={itemLink}
-          className={`w-full gap-3 overflow-hidden text-base group-data-[collapsible=icon]:${isCategory ? '!size-10' : '!size-8'} ${isActive ? 'bg-[rgb(244,244,244)] !text-black ' : ''}`}
+          className={cn(
+            'w-full gap-3 overflow-hidden text-base',
+            isCategory
+              ? 'group-data-[collapsible=icon]:!size-10'
+              : 'group-data-[collapsible=icon]:!size-8',
+            isActive && 'bg-[rgb(244,244,244)] !text-black'
+          )}
         >
           {itemImage}
 

@@ -11,6 +11,7 @@ import {
 } from '~/components/ui/card'
 import CardHeaderContent from '~/components/shared/CardWrapper/CardHeaderContent'
 import BackButton from '~/components/auth/BackButton'
+import { cn } from '~/libs/utils'
 import { PATHS } from '~/utils/constants'
 
 interface ICardWrapperProps {
@@ -35,7 +36,10 @@ const AppCardWrapper = ({
 
   return (
     <Card
-      className={`${isAdminPage ? 'mx-auto my-4 w-4/5 @5xl:w-3/5' : 'my-16'} shadow-md`}
+      className={cn(
+        'shadow-md',
+        isAdminPage ? 'mx-auto my-4 w-4/5 @5xl:w-3/5' : 'my-16'
+      )}
       {...props}
     >
       <CardHeader>

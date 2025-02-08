@@ -5,6 +5,7 @@ import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { CrossCircledIcon } from '@radix-ui/react-icons'
 
 import LoadableImage from '~/components/shared/LoadableImage'
+import { cn } from '~/libs/utils'
 import { getImageNameFromUrl } from '~/utils/helpers'
 
 interface IFilesListProps {
@@ -44,7 +45,10 @@ const FilesList = ({
 
   return (
     <div
-      className={`grid gap-5 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 ${files && 'xs:min-h-[130px] md:min-h-[145px]'}`}
+      className={cn(
+        'grid gap-5 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4',
+        files && 'xs:min-h-[130px] md:min-h-[145px]'
+      )}
       ref={autoAnimateRef}
     >
       {!!imageUrls?.length &&
@@ -64,8 +68,10 @@ const FilesList = ({
               />
               {!isPending && (
                 <CrossCircledIcon
-                  className={`absolute inset-0 h-6 w-6 -translate-x-2/4 -translate-y-2/4 rounded-full bg-white 
-                  ${isPending ? 'cursor-default' : 'cursor-pointer'}`}
+                  className={cn(
+                    'absolute inset-0 h-6 w-6 -translate-x-2/4 -translate-y-2/4 rounded-full bg-white',
+                    isPending ? 'cursor-default' : 'cursor-pointer'
+                  )}
                   onClick={() => {
                     return handleOnImageUrlDelete(imageName)
                   }}
@@ -93,8 +99,10 @@ const FilesList = ({
               />
               {!isPending && (
                 <CrossCircledIcon
-                  className={`absolute inset-0 h-6 w-6 -translate-x-2/4 -translate-y-2/4 rounded-full bg-white 
-                  ${isPending ? 'cursor-default' : 'cursor-pointer'}`}
+                  className={cn(
+                    'absolute inset-0 h-6 w-6 -translate-x-2/4 -translate-y-2/4 rounded-full bg-white',
+                    isPending ? 'cursor-default' : 'cursor-pointer'
+                  )}
                   onClick={() => {
                     return handleOnFileDelete(fileName)
                   }}

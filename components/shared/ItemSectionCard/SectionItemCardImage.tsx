@@ -3,6 +3,7 @@
 import Link from 'next/link'
 
 import LoadableImage from '~/components/shared/LoadableImage'
+import { cn } from '~/libs/utils'
 import { PATHS } from '~/utils/constants'
 import { type TItemType } from '~/types'
 
@@ -25,10 +26,15 @@ const SectionItemCardImage = ({
     <Link
       href={
         (isPost && `${PATHS.blog}/${itemSlug}`) ||
-        (isCategory && `${PATHS.categories}/${itemSlug}`) ||
+        (isCategory && `${PATHS.category(itemSlug)}`) ||
         '#'
       }
-      className={`overflow-hidden ${isCategory ? 'w-[200px] rounded-full' : 'w-full rounded-lg border-b'}`}
+      className={cn(
+        'overflow-hidden',
+        isCategory
+          ? 'w-[200px] rounded-full'
+          : 'w-full rounded-lg border-b'
+      )}
     >
       <LoadableImage
         src={itemImage}

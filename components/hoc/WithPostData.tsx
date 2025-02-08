@@ -4,6 +4,7 @@ import { cloneElement, useRef, type ReactElement } from 'react'
 import { usePathname } from 'next/navigation'
 
 import { useListItemsDistribution } from '~/hooks/useListItemsDistribution'
+import { cn } from '~/libs/utils'
 import { PATHS } from '~/utils/constants'
 import { type TDeserializedPost } from '~/types'
 
@@ -71,7 +72,7 @@ const WithPostData = ({
 
   return (
     <section
-      className={`mb-8 w-full @container ${dataContainerClasses ?? ''}`}
+      className={cn('mb-8 w-full @container', dataContainerClasses)}
       ref={containerRef}
     >
       {cloneElement(children[0], {
@@ -82,7 +83,10 @@ const WithPostData = ({
 
       {!isLoading && (restItems?.length > 0 || thirdItemInList) && (
         <div
-          className={`mb-5 grid w-full grid-cols-1 gap-5 @lg:grid-cols-2 @3xl:grid-cols-3 ${postsGridClasses || ''}`}
+          className={cn(
+            'mb-5 grid w-full grid-cols-1 gap-5 @lg:grid-cols-2 @3xl:grid-cols-3',
+            postsGridClasses
+          )}
         >
           {[thirdItemInList, ...restItems]?.map((item) => {
             if (item) {

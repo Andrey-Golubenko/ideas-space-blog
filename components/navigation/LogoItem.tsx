@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import LogoImage from '~/public/icons/logo.svg'
+import { cn } from '~/libs/utils'
 import { PATHS } from '~/utils/constants'
 
 interface ILogoItemProps {
@@ -11,7 +12,7 @@ const LogoItem = ({ logoClassNames }: ILogoItemProps) => {
   return (
     <Link
       href={PATHS.home}
-      className={`${logoClassNames || ''} flex`}
+      className={cn('flex', logoClassNames)}
     >
       <h1 className="mr-2 flex w-max items-center justify-center whitespace-nowrap text-[hsl(var(--logo-color))]">
         Ideas space

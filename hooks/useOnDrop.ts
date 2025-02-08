@@ -6,7 +6,7 @@ import { getImageNames } from '~/utils/helpers'
 import { SingleFileSchema } from '~/schemas'
 import { type OnDropType, type TFileError } from '~/types'
 
-interface IuseOnDropProps {
+interface IUseOnDropProps {
   fieldName: string
   shouldHaveOnlyOneImage?: boolean
   multiple: boolean
@@ -43,7 +43,7 @@ export const useOnDrop = ({
   setFilesErrors,
   setFilesDuplicate,
   setValue
-}: IuseOnDropProps) => {
+}: IUseOnDropProps) => {
   const onDrop = useCallback<OnDropType & Function>(
     (droppedFiles: File[] = []) => {
       setFilesErrors([])

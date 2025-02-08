@@ -9,6 +9,7 @@ import {
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import { Button } from '~/components/ui/button'
+import { cn } from '~/libs/utils'
 import IconOpen from '~/public/icons/icon-open.svg'
 import IconClose from '~/public/icons/icon-close.svg'
 
@@ -81,7 +82,7 @@ const MobileNavMenuButton = ({
   return (
     <Button
       id="nav-menu-button"
-      className={`${buttonClassNames ?? ''} ml-4 p-0`}
+      className={cn('ml-4 p-0', buttonClassNames)}
       variant="outline"
       onClick={handleClick}
       ref={autoAnimateRef}

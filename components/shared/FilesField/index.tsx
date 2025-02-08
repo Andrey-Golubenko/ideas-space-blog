@@ -17,6 +17,8 @@ import {
 } from 'react-hook-form'
 import { v4 as uuidv4 } from 'uuid'
 
+import { UploadIcon } from '@radix-ui/react-icons'
+import { useOnDrop } from '~/hooks/useOnDrop'
 import NotificationError from '~/components/notifications/NotificationError'
 import DuplicatesFilesList from '~/components/shared/FilesField/DuplicatesFilesList'
 import FilesList from '~/components/shared/FilesField/FilesList'
@@ -24,7 +26,7 @@ import {
   ECCEPTED_IMAGES_EXTENTIONS,
   MAX_FILE_SIZE
 } from '~/utils/constants'
-import { useOnDrop } from '~/hooks/useOnDrop'
+import { cn } from '~/libs/utils'
 import { type TFileError } from '~/types'
 
 interface IFilesFieldProps {
@@ -149,8 +151,10 @@ const FilesField = ({
   return (
     <>
       <div
-        className={`rounded-md bg-slate-100 px-5 py-7 
-          ${isPending ? 'cursor-default' : 'cursor-pointer'}`}
+        className={cn(
+          'flex flex-col items-center gap-y-4 rounded-md border border-dashed border-slate-400/80 bg-slate-50 px-5 py-7 hover:bg-slate-100',
+          isPending ? 'cursor-default' : 'cursor-pointer'
+        )}
         {...(isPending ? undefined : getRootProps())}
       >
         <input
@@ -163,11 +167,15 @@ const FilesField = ({
           {...props}
         />
 
-        <p className="mb-4 text-center text-base font-light leading-7">
+        <div className="mx-auto inline-flex rounded-full border border-dashed border-slate-400/60 p-3">
+          <UploadIcon className="size-7" />
+        </div>
+
+        <p className="text-center text-base font-light leading-7">
           Drag and drop your images here, or click to select files.
         </p>
 
-        <p className="mb-4 text-center text-base font-light italic leading-7">
+        <p className="text-center text-base font-light italic leading-7">
           The image size should be no more than{' '}
           <span className="whitespace-nowrap text-red-700">
             {(MAX_FILE_SIZE / 1024 / 1024)?.toFixed() || 0} Mb
@@ -175,7 +183,7 @@ const FilesField = ({
           .
         </p>
 
-        <p className="mb-4 text-center text-base font-light italic leading-7">
+        <p className="text-center text-base font-light italic leading-7">
           The image extention should be only{' '}
           <span className="text-red-700">
             &quot;{ECCEPTED_IMAGES_EXTENTIONS.join(', ')}&ldquo;

@@ -8,6 +8,7 @@ import LogoItem from '~/components/navigation/LogoItem'
 import { Separator } from '~/components/ui/separator'
 import MobileNavMenuHeader from '~/components/navigation/MobileNavMenu/MobileNavMenuHeader'
 import AddNewItemButton from '~/components/shared/AddNewItemButton'
+import { cn } from '~/libs/utils'
 import { PATHS } from '~/utils/constants'
 
 const MobileNavMenu = ({ user, isMobile, isAdmin }: INavMenuProps) => {
@@ -41,17 +42,25 @@ const MobileNavMenu = ({ user, isMobile, isAdmin }: INavMenuProps) => {
           path={PATHS.blogNewPost}
           variant="outline"
           size="sm"
-          className="col-start-3 ml-auto mr-4 w-8/12 rounded-full border border-[hsl(var(--logo-color))] bg-transparent text-[hsl(var(--logo-color))] hover:bg-[hsl(var(--logo-color))] sm:py-2"
+          className="col-start-3 ml-auto mr-4 w-8/12 rounded-full border border-[hsl(var(--logo-color))] bg-[hsl(var(--layout-button))] text-[hsl(var(--logo-color))] hover:bg-[hsl(var(--logo-color))] sm:py-2"
         />
       </div>
 
       <div
-        className={`z-45 duration-400 fixed inset-0 h-screen w-screen bg-black/70 transition-opacity ease-in-out ${isOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
+        className={cn(
+          'fixed inset-0 z-[9999999999] h-full w-full bg-black/70 transition-opacity duration-500 ease-in-out',
+          isOpen
+            ? 'pointer-events-auto opacity-100'
+            : 'pointer-events-none opacity-0'
+        )}
       />
 
       <nav
         id="nav-menu"
-        className={`fixed inset-y-0 -right-1 z-50 flex h-screen w-[60%] transform flex-col items-center rounded-none  border-l-[3px] border-white bg-[#2C2C32] shadow-[-2px_0_0_0_#000] transition-transform duration-500 ease-in-out ${isOpen ? '-translate-x-0' : 'translate-x-full'}`}
+        className={cn(
+          'fixed inset-y-0 -right-1 z-[9999999999] flex h-full w-[60%] transform flex-col items-center rounded-none  border-l-[3px] border-white bg-[#2C2C32] shadow-[-2px_0_0_0_#000] transition-transform duration-500 ease-in-out',
+          isOpen ? '-translate-x-0' : 'translate-x-full'
+        )}
       >
         <MobileNavMenuHeader user={user} />
 

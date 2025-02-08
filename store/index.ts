@@ -37,6 +37,9 @@ interface IUseGlobalStore {
   usersVisits: IUserVisit[] | null
   browserStats: IBrowserStats[] | null
 
+  cookiesConsent: boolean
+  isConsentModalOpen: boolean
+
   isLoading: boolean
 
   getFilteredPostsWithPag: (props: IFetchPostsFunctionProps) => void
@@ -53,6 +56,9 @@ interface IUseGlobalStore {
   deleteSingleUser: (userId: string) => void
 
   getUsersVisits: (startDate?: Date, endDate?: Date) => void
+
+  setCookiesConsent: (cookiesConsent: boolean) => void
+  setIsConsentModalOpen: (open: boolean) => void
 }
 
 const useGlobalStore = createWithEqualityFn<
@@ -78,6 +84,9 @@ const useGlobalStore = createWithEqualityFn<
 
           usersVisits: [],
           browserStats: [],
+
+          cookiesConsent: false,
+          isConsentModalOpen: false,
 
           isLoading: false,
 
@@ -277,6 +286,18 @@ const useGlobalStore = createWithEqualityFn<
                 browserStats: visitsData?.browserStats ?? [],
                 isLoading: false
               }
+            })
+          },
+
+          setCookiesConsent: (cookiesConsent: boolean) => {
+            set((state) => {
+              return { ...state, cookiesConsent }
+            })
+          },
+
+          setIsConsentModalOpen: (open: boolean) => {
+            set((state) => {
+              return { ...state, isConsentModalOpen: open }
             })
           }
         }

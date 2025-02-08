@@ -12,6 +12,7 @@ import { Card, CardHeader, CardContent } from '~/components/ui/card'
 import WithRole from '~/components/hoc/WithRole'
 import UserManageForm from '~/components/shared/UserManageForm'
 import { editUser } from '~/actions/edit-user'
+import { cn } from '~/libs/utils'
 import { emptyStringToUndefined } from '~/utils/helpers'
 import { PATHS } from '~/utils/constants'
 import { SettingsSchema } from '~/schemas'
@@ -80,7 +81,10 @@ const EditUserPageView = ({ user }: IEditUserPageViewProps) => {
 
   return (
     <Card
-      className={`${isAdminPage ? 'mx-auto my-4 w-4/5 @5xl:w-3/5' : 'my-16'} flex min-h-[420px] flex-col shadow-md`}
+      className={cn(
+        'flex min-h-[420px] flex-col shadow-md',
+        isAdminPage ? 'mx-auto my-4 w-4/5 @5xl:w-3/5' : 'my-16'
+      )}
     >
       <CardHeader>
         <p className="text-center text-2xl font-semibold">

@@ -1,4 +1,5 @@
 import LogoImage from '~/public/icons/logo.svg'
+import { cn } from '~/libs/utils'
 
 interface SidebarLogoContainerProps {
   sizes: string
@@ -8,7 +9,10 @@ const SidebarLogoContainer = ({ sizes }: SidebarLogoContainerProps) => {
   return (
     <>
       <div
-        className={`size-${sizes} flex aspect-square items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground`}
+        className={cn(
+          `size-${sizes}`,
+          'flex aspect-square items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground'
+        )}
       >
         <LogoImage
           className="size-6"

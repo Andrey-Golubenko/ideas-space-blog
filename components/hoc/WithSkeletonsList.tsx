@@ -1,5 +1,6 @@
 import { cloneElement, type ReactElement } from 'react'
 
+import { cn } from '~/libs/utils'
 import { type TItemType, type TSkeletonItems } from '~/types'
 
 interface IWithSkeletonsListProps {
@@ -43,7 +44,11 @@ const WithSkeletonsList = ({
 
   return (
     <div
-      className={`mb-5 grid w-full grid-cols-1 gap-5 @lg:grid-cols-2 @3xl:grid-cols-3 ${isPost ? '' : '@4xl:grid-cols-4'} ${postsGridClasses || ''}`}
+      className={cn(
+        'mb-5 grid w-full grid-cols-1 gap-5 @lg:grid-cols-2 @3xl:grid-cols-3',
+        !isPost && '@4xl:grid-cols-4',
+        postsGridClasses
+      )}
     >
       {cloneElement(children as ReactElement, {
         item: firstItem,
