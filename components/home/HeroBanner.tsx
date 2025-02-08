@@ -1,7 +1,7 @@
 'use client'
 
-import { IMAGES_PATHS } from '~/utils/constants'
 import LoadableImage from '~/components/shared/LoadableImage'
+import { IMAGES_PATHS } from '~/utils/constants'
 
 const HeroBanner = () => {
   return (
@@ -9,7 +9,7 @@ const HeroBanner = () => {
       <LoadableImage
         src={IMAGES_PATHS.heroBanner}
         alt="Hero banner"
-        containerHeight={670}
+        containerHeight={600}
         priority
         imageClassNames="!animate-banner-scale object-cover"
       />

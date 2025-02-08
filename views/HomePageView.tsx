@@ -1,16 +1,16 @@
 import Greeting from '~/components/home/Greeting'
 import HeroBanner from '~/components/home/HeroBanner'
-import HeroContnen from '~/components/home/HeroContnen'
+import HeroContent from '~/components/home/HeroContent'
 import CategoriesSection from '~/components/home/CategoriesSection'
 import RecentPostsSection from '~/components/home/RecentPostsSection'
 
 const HomePageView = () => {
   return (
     <>
-      <section className="fixed left-0 top-0 z-[-1] flex h-[670px] w-full items-center justify-center rounded-md">
+      <section className="fixed left-0 top-0 z-[-1] flex h-[600px] w-full items-center justify-center rounded-md">
         <HeroBanner />
 
-        <HeroContnen />
+        <HeroContent />
       </section>
 
       <section className="z-10 -mb-3 mt-[550px] bg-gradient-to-b from-transparent to-slate-100">
