@@ -4,9 +4,8 @@ import { type Session } from 'next-auth'
 
 import useGlobalStore from '~/store'
 import { useDataPostsFilters } from '~/hooks/useDataPostsFilters'
-import { useCategoriesFilterOptions } from '~/hooks/useCategoriesFilterOption'
+import { useCategoriesOptions } from '~/hooks/useCategoriesOptions'
 import { useDataPosts } from '~/hooks/useDataPosts'
-
 import ProfileInfo from '~/components/profile/ProfileInfo'
 import ProfilePostsList from '~/components/profile/ProfilePostsList'
 import DataSearch from '~/components/shared/DataManagement/DataSearch'
@@ -43,7 +42,7 @@ const ProfilePageView = ({ user }: IProfilePageViewProps) => {
     setPage
   } = useDataPostsFilters()
 
-  const { categoriesOptions } = useCategoriesFilterOptions()
+  const { categoriesOptions } = useCategoriesOptions('slug')
 
   const postsPerPage = PROFILE_POSTS_PER_PAGE
   const userId = user?.id

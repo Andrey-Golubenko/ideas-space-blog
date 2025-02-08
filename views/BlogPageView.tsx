@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 
 import useGlobalStore from '~/store'
 import { useDataPostsFilters } from '~/hooks/useDataPostsFilters'
-import { useCategoriesFilterOptions } from '~/hooks/useCategoriesFilterOption'
+import { useCategoriesOptions } from '~/hooks/useCategoriesOptions'
 import { useAuthorsFilterOptions } from '~/hooks/useAuthorsFilterOption'
 import { useDataPosts } from '~/hooks/useDataPosts'
 import { Card } from '~/components/ui/card'
@@ -38,7 +38,7 @@ const BlogPageView = () => {
     setPage
   } = useDataPostsFilters()
 
-  const { categoriesOptions } = useCategoriesFilterOptions()
+  const { categoriesOptions } = useCategoriesOptions('slug')
 
   const { authorsOptions } = useAuthorsFilterOptions()
 

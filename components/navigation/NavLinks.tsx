@@ -1,27 +1,29 @@
 'use client'
 
 import PrivateNavLinks from '~/components/navigation/PrivateNavLinks'
-import NavMenuItem from '~/components/navigation/NavLinksItem'
+import NavLinksItem from '~/components/navigation/NavLinksItem'
 import { NAV_LINKS, PATHS } from '~/utils/constants'
 
 const NavLinks = ({ isLoggedIn, isMobile, isAdmin }: INavMenuProps) => {
   return (
     <>
       {NAV_LINKS.map(({ label, href }) => {
+        if (!label || !href) return null
+
         return (
-          <NavMenuItem
-            isMobile={isMobile}
+          <NavLinksItem
             key={href}
             label={label}
             href={href}
+            isMobile={isMobile}
           />
         )
       })}
       {!isLoggedIn ? (
-        <NavMenuItem
-          isMobile={isMobile}
+        <NavLinksItem
           label="Log in"
           href={PATHS.logIn}
+          isMobile={isMobile}
         />
       ) : (
         <PrivateNavLinks

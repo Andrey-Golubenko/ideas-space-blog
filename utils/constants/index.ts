@@ -1,14 +1,22 @@
 // eslint-disable-next-line import/no-cycle
+import {
+  FaLinkedinIn,
+  FaFacebookF,
+  FaYoutube,
+  FaInstagram
+} from 'react-icons/fa'
 import { type INavLink } from '~/types'
 
 export const PATHS = {
   home: '/',
   blog: '/blog',
   blogNewPost: '/blog/new-post',
-  editPost: '/edit-post',
+  editPost: (postId: string) => `/blog/${postId}/edit-post`,
   posts: '/api/posts',
 
   categories: '/categories',
+  category: (categorySlug: string) => `/categories/${categorySlug}`,
+
   profile: '/profile',
   settings: '/settings',
 
@@ -30,6 +38,9 @@ export const PATHS = {
 
   commonError: '/error',
   authError: '/auth/error',
+
+  impressum: '/impressum',
+  privacyPolicy: '/privacy-policy',
 
   authActionsPref: '/api/auth',
 
@@ -53,6 +64,18 @@ export const NAV_LINKS: INavLink[] = [
 export const PRIVATE_NAV_LINKS: INavLink[] = [
   { label: 'Profile', href: PATHS.profile },
   { label: 'Settings', href: PATHS.settings }
+]
+
+export const FOOTER_NAV_LINKS_LEGAL: INavLink[] = [
+  { label: 'Impressum', href: PATHS.impressum },
+  { label: 'Privacy policy', href: PATHS.privacyPolicy }
+]
+
+export const SOCIAL_NAV_LINKS: INavLink[] = [
+  { icon: FaLinkedinIn, href: 'https://www.linkedin.com/' },
+  { icon: FaFacebookF, href: 'https://www.facebook.com/' },
+  { icon: FaYoutube, href: 'https://www.youtube.com/' },
+  { icon: FaInstagram, href: 'https://www.instagram.com/' }
 ]
 
 export const AUTH_ERRORS = {

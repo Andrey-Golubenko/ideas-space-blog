@@ -25,8 +25,8 @@ const PostCardFooter = ({ itemSlug, itemType }: IItemCardFooterProps) => {
       >
         <Link
           href={
-            (isPost && `${PATHS.blog}/${itemSlug}`) ||
-            (isCategory && `${PATHS.categories}/${itemSlug}`) ||
+            (isPost && itemSlug && `${PATHS.blog}/${itemSlug}`) ||
+            (isCategory && itemSlug && `${PATHS.category(itemSlug)}`) ||
             '#'
           }
           className="hover:no-underline"

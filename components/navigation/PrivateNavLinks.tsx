@@ -13,6 +13,8 @@ const PrivateNavLinks = ({ isMobile, isAdmin }: IPrivateNavLinksProps) => {
   return (
     <>
       {PRIVATE_NAV_LINKS.map(({ label, href }) => {
+        if (!label || !href) return null
+
         return (
           <NavLinksItem
             key={href}

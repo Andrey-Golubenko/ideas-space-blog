@@ -35,7 +35,7 @@ const PostManageForm = ({
 }: IPostManageFormProps & FormHTMLAttributes<HTMLFormElement>) => {
   const [filesDuplicates, setFilesDuplicate] = useState<string[] | []>([])
 
-  const { categoriesOptions } = useCategoriesOptions()
+  const { categoriesOptions } = useCategoriesOptions('id')
 
   return (
     <Form {...form}>

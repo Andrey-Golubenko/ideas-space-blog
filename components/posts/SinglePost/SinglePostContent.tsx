@@ -43,7 +43,7 @@ const SinglePostContent = ({
                   ) : (
                     <Link
                       key={categorySlug}
-                      href={`${PATHS.categories}/${categorySlug}`}
+                      href={`${PATHS.category(categorySlug)}`}
                     >
                       <span className="text-base text-yellow-600/90 hover:text-yellow-600/70">
                         {categoryName}

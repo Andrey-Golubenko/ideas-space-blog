@@ -6,7 +6,7 @@ import { parseAsInteger, useQueryState } from 'nuqs'
 import useGlobalStore from '~/store'
 import { useDataPosts } from '~/hooks/useDataPosts'
 import { useDataPostsFilters } from '~/hooks/useDataPostsFilters'
-import { useCategoriesFilterOptions } from '~/hooks/useCategoriesFilterOption'
+import { useCategoriesOptions } from '~/hooks/useCategoriesOptions'
 import { useAuthorsFilterOptions } from '~/hooks/useAuthorsFilterOption'
 import { columns } from '~/components/admin/AdminPosts/columns'
 import DataTable from '~/components/ui/table/DataTable'
@@ -50,7 +50,7 @@ const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
     resetFilters
   } = useDataPostsFilters()
 
-  const { categoriesOptions } = useCategoriesFilterOptions()
+  const { categoriesOptions } = useCategoriesOptions('slug')
 
   const { authorsOptions } = useAuthorsFilterOptions()
 

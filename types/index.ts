@@ -20,8 +20,9 @@ import {
 } from '~/schemas'
 
 export interface INavLink {
-  label: string
   href: string
+  label?: string
+  icon?: React.ElementType
 }
 
 export type TFileError = {

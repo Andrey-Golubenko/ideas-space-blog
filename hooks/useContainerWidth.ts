@@ -31,24 +31,34 @@ export const useContainerWidth = (
   useEffect(() => {
     if (!containerRef?.current) return
 
-    const updateSize = () => {
-      const width = containerRef?.current?.offsetWidth
+    let timeoutId: NodeJS.Timeout | null = null
 
-      if (width) setIsContainerBelowMobile(width < 768)
-      if (width) setIsContainerAtOrBelowMobile(width <= 768)
-      if (width) setIsContainerMedium(width >= 896)
+    const updateSize = () => {
+      if (!containerRef?.current) return
+      const width = containerRef.current.offsetWidth
+
+      setIsContainerBelowMobile((prev) => {
+        return prev !== width < 768 ? width < 768 : prev
+      })
+      setIsContainerAtOrBelowMobile((prev) => {
+        return prev !== width <= 768 ? width <= 768 : prev
+      })
+      setIsContainerMedium((prev) => {
+        return prev !== width >= 896 ? width >= 896 : prev
+      })
     }
 
     const observer = new ResizeObserver(() => {
-      updateSize()
+      if (timeoutId) clearTimeout(timeoutId)
+      timeoutId = setTimeout(updateSize, 100)
     })
 
-    observer.observe(containerRef?.current)
-
+    observer.observe(containerRef.current)
     updateSize()
 
     // eslint-disable-next-line consistent-return
     return () => {
+      if (timeoutId) clearTimeout(timeoutId)
       observer.disconnect()
     }
   }, [containerRef])
