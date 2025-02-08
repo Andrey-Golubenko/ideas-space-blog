@@ -20,13 +20,13 @@ body {
   color: rgb(var(--foreground-rgb));
 }
 
-.header-link {
-  @apply border-b-2 border-transparent px-1 py-0 pb-2 text-[15px] text-white no-underline transition-all duration-300 hover:border-white hover:underline-offset-4;
+.navigation-link {
+  @apply border-b-2 border-transparent px-1 py-0 pb-2 text-[15px] text-white;
 }
 
 @layer components {
-  .header-link-active {
-    @apply header-link !text-[hsl(var(--logo-color))] hover:border-[hsl(var(--logo-color))];
+  .navigation-link-active {
+    @apply navigation-link !text-[hsl(var(--logo-color))];
   }
 }
 
@@ -114,6 +114,9 @@ body {
     --logo-color: 193 77% 61%;
 
     --background: 0 0% 100%;
+    --layout-background: 210, 18%, 16%;
+    --layout-button: 0, 0%, 100%, 0.05;
+    --trigger-background: 228 14% 20%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;

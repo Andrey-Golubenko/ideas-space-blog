@@ -39,7 +39,7 @@
   },
   "rules": {
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
-    "arrow-body-style": ["warn", "always"],
+    "arrow-body-style": "off",
     "no-param-reassign": "warn",
     "no-var": 0,
     "vars-on-top": 0,

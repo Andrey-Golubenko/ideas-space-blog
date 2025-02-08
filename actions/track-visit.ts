@@ -34,7 +34,7 @@ export const trackVisit = async (
 
   if (session) {
     const { sessionId } = session
-    const previousSessionId = cookieStore.get('previousSessionId')?.value
+    const previousSessionId = cookieStore.get('_prev_session_Id')?.value
 
     if (previousSessionId !== sessionId) {
       const userId = session?.user?.id ?? ''
@@ -51,20 +51,17 @@ export const trackVisit = async (
         })
       }
 
-      setCookieWithExpiry('previousSessionId', sessionId, timeZone)
+      setCookieWithExpiry('_prev_session_Id', sessionId, timeZone)
     }
   }
 
   if (!session) {
-    const previousGastIpAddress = cookieStore.get(
-      'previousGastIpAddress'
-    )?.value
+    const previousGestIpAdress = cookieStore.get('_prevGIA')?.value
 
-    const previousUserAgent = cookieStore.get('previousUserAgent')?.value
+    const previousUserAgent = cookieStore.get('_prevUA')?.value
 
     const isNotPreviousGast: boolean =
-      previousGastIpAddress !== ipAddress &&
-      previousUserAgent !== userAgent
+      previousGestIpAdress !== ipAddress && previousUserAgent !== userAgent
 
     if (isNotPreviousGast) {
       const visit = await checkDailyVisitForGast({
@@ -83,8 +80,8 @@ export const trackVisit = async (
         })
       }
 
-      setCookieWithExpiry('previousGastIpAddress', ipAddress, timeZone)
-      setCookieWithExpiry('previousUserAgent', userAgent, timeZone)
+      setCookieWithExpiry('_prevGIA', ipAddress, timeZone)
+      setCookieWithExpiry('_prevUA', userAgent, timeZone)
     }
   }
 }

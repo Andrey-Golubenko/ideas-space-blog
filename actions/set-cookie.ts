@@ -37,6 +37,6 @@ export const setCookieWithExpiry = async (
     maxAge: secondsUntilEndOfDay,
     expires: expiry,
     sameSite: 'lax',
-    httpOnly: true
+    httpOnly: false
   })
 }

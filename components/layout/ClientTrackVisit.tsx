@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 
+import useGlobalStore from '~/store'
 import { trackVisit } from '~/actions/track-visit'
 import { type Session } from 'next-auth'
 
@@ -10,11 +11,28 @@ interface IClientTrackVisitProps {
 }
 
 const ClientTrackVisit = ({ session }: IClientTrackVisitProps) => {
+  const [cookiesConsent, setCookiesConsent] = useGlobalStore((state) => {
+    return [state.cookiesConsent, state.setCookiesConsent]
+  })
+
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const localStorageConsent = JSON.parse(
+        localStorage?.getItem('cc_cookie') ?? '{}'
+      )
+
+      const hasAnalyticsConsent: boolean = localStorageConsent?.categories
+        ? localStorageConsent?.categories.includes('analytics')
+        : false
+
+      setCookiesConsent(hasAnalyticsConsent)
+    }
+
     const runTrackVisit = async () => {
       try {
-        const timeZone = Intl.DateTimeFormat()?.resolvedOptions()?.timeZone
+        if (!cookiesConsent) return
 
+        const timeZone = Intl.DateTimeFormat()?.resolvedOptions()?.timeZone
         await trackVisit(session, timeZone)
       } catch (error) {
         console.error('Error tracking visit:', error)
@@ -22,7 +40,7 @@ const ClientTrackVisit = ({ session }: IClientTrackVisitProps) => {
     }
 
     runTrackVisit()
-  }, [session])
+  }, [session, setCookiesConsent, cookiesConsent])
 
   return null
 }
