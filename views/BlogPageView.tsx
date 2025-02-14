@@ -3,15 +3,10 @@
 import { useMemo } from 'react'
 
 import useGlobalStore from '~/store'
-import { useDataPostsFilters } from '~/hooks/useDataPostsFilters'
-import { useCategoriesOptions } from '~/hooks/useCategoriesOptions'
-import { useAuthorsFilterOptions } from '~/hooks/useAuthorsFilterOption'
+import { usePostsFilters } from '~/hooks/usePostsFilters'
 import { useDataPosts } from '~/hooks/useDataPosts'
-import { Card } from '~/components/ui/card'
 import BlogPostsList from '~/components/posts/BlogPostsList'
-import DataSearch from '~/components/shared/DataManagement/DataSearch'
-import DataResetFilter from '~/components/shared/DataManagement/DataResetFilter'
-import DataFilterBox from '~/components/shared/DataManagement/DataFilterBox'
+import BlogPostsFiltersBox from '~/components/posts/BlogPostsFiltersBox'
 import DataPagination from '~/components/shared/DataManagement/DataPagination'
 import { isEmptyOrUnpublished } from '~/utils/helpers'
 import { DEFAULT_POSTS_PER_PAGE } from '~/utils/constants'
@@ -25,22 +20,8 @@ const BlogPageView = () => {
     return [state.posts, state.postsCount, state.isLoading]
   })
 
-  const {
-    searchQuery,
-    setSearchQuery,
-    categoriesFilter,
-    setCategoriesFilter,
-    authorFilter,
-    setAuthorFilter,
-    isAnyFilterActive,
-    resetFilters,
-    page,
-    setPage
-  } = useDataPostsFilters()
-
-  const { categoriesOptions } = useCategoriesOptions('slug')
-
-  const { authorsOptions } = useAuthorsFilterOptions()
+  const { searchQuery, categoriesFilter, authorFilter, page, setPage } =
+    usePostsFilters()
 
   const postsPerPage = DEFAULT_POSTS_PER_PAGE
 
@@ -56,45 +37,11 @@ const BlogPageView = () => {
 
   useDataPosts(dataPostsProps)
 
-  const noItems = isEmptyOrUnpublished(posts)
+  const noItems: boolean = isEmptyOrUnpublished(posts)
 
   return (
     <div className="page-wrapper h-full w-full pt-14">
-      <Card className="mb-5 grid w-full grid-cols-1 flex-wrap items-center justify-around gap-x-8 gap-y-4 px-6 py-3 min-[375px]:grid-cols-2 md:grid-cols-5">
-        <div className="col-span-1 min-[375px]:col-span-2 md:[&_div]:w-full md:[&_input]:!max-w-full ">
-          <DataSearch
-            searchKey="title"
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            setPage={setPage}
-          />
-        </div>
-
-        <div className="col-span-1 grid grid-cols-2 place-content-between gap-3 max-[375px]:grid-cols-1 min-[375px]:col-span-2">
-          <DataFilterBox
-            title="Category"
-            options={categoriesOptions}
-            filterValue={categoriesFilter}
-            setFilterValue={setCategoriesFilter}
-            setPage={setPage}
-          />
-
-          <DataFilterBox
-            title="Author"
-            options={authorsOptions}
-            filterValue={authorFilter}
-            setFilterValue={setAuthorFilter}
-            setPage={setPage}
-          />
-        </div>
-
-        <div className="col-span-1 grid grid-cols-1 place-content-start ">
-          <DataResetFilter
-            isFilterActive={isAnyFilterActive}
-            onReset={resetFilters}
-          />
-        </div>
-      </Card>
+      <BlogPostsFiltersBox />
 
       <BlogPostsList
         data={posts as TDeserializedPost[]}

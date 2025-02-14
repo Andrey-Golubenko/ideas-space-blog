@@ -3,14 +3,10 @@
 import { useMemo } from 'react'
 
 import useGlobalStore from '~/store'
-import { useDataPostsFilters } from '~/hooks/useDataPostsFilters'
+import { usePostsFilters } from '~/hooks/usePostsFilters'
 import { useDataPosts } from '~/hooks/useDataPosts'
-import { useAuthorsFilterOptions } from '~/hooks/useAuthorsFilterOption'
-import { Card } from '~/components/ui/card'
-import DataFilterBox from '~/components/shared/DataManagement/DataFilterBox'
 import DataPagination from '~/components/shared/DataManagement/DataPagination'
-import DataResetFilter from '~/components/shared/DataManagement/DataResetFilter'
-import DataSearch from '~/components/shared/DataManagement/DataSearch'
+import SingleCategoryPostsFiltersBox from '~/components/categories/SingleCategoryPostsFiltersBox'
 import SingleCategoryPostsList from '~/components/categories/SingleCategoryPostsList'
 import { isEmptyOrUnpublished } from '~/utils/helpers'
 import { SINGLE_CAT_POSTS_PER_PAGE } from '~/utils/constants'
@@ -27,18 +23,7 @@ const SingleCategoryPageView = ({
     return [state.posts, state.postsCount, state.isLoading]
   })
 
-  const {
-    searchQuery,
-    setSearchQuery,
-    authorFilter,
-    setAuthorFilter,
-    isAnyFilterActive,
-    resetFilters,
-    page,
-    setPage
-  } = useDataPostsFilters()
-
-  const { authorsOptions } = useAuthorsFilterOptions()
+  const { searchQuery, authorFilter, page, setPage } = usePostsFilters()
 
   const postsPerPage = SINGLE_CAT_POSTS_PER_PAGE
 
@@ -54,37 +39,11 @@ const SingleCategoryPageView = ({
 
   useDataPosts(dataPostsProps)
 
-  const noItems = isEmptyOrUnpublished(posts)
+  const noItems: boolean = isEmptyOrUnpublished(posts)
 
   return (
     <div className="page-wrapper h-full w-full pt-4">
-      <Card className="mb-5 grid w-full grid-cols-1 flex-wrap items-center justify-around gap-x-5 gap-y-4 px-3 py-3 min-[375px]:grid-cols-2 min-[1080px]:grid-cols-4">
-        <div className="col-span-1 min-[375px]:col-span-2 md:[&_div]:w-full md:[&_input]:!max-w-full ">
-          <DataSearch
-            searchKey="title"
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            setPage={setPage}
-          />
-        </div>
-
-        <div className="col-span-1 grid place-content-center max-[375px]:grid-cols-1 min-[375px]:place-content-start">
-          <DataFilterBox
-            title="Author"
-            options={authorsOptions}
-            filterValue={authorFilter}
-            setFilterValue={setAuthorFilter}
-            setPage={setPage}
-          />
-        </div>
-
-        <div className="col-span-1 grid place-content-center max-[375px]:grid-cols-1 min-[375px]:place-content-end">
-          <DataResetFilter
-            isFilterActive={isAnyFilterActive}
-            onReset={resetFilters}
-          />
-        </div>
-      </Card>
+      <SingleCategoryPostsFiltersBox />
 
       <SingleCategoryPostsList
         data={posts}

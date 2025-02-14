@@ -1,15 +1,12 @@
 'use client'
 
+import Link from 'next/link'
 import { type ColumnDef } from '@tanstack/react-table'
-import { FaUser } from 'react-icons/fa'
 
 import { Checkbox } from '~/components/ui/checkbox'
 import CellAction from '~/components/admin/AdminUsers/CellAction'
-import {
-  Avatar,
-  AvatarImage,
-  AvatarFallback
-} from '~/components/ui/avatar'
+import UserAvatar from '~/components/shared/UserAvatar'
+import { PATHS } from '~/utils/constants'
 import { type TDeserializedUser } from '~/types'
 
 export const columns: ColumnDef<TDeserializedUser>[] = [
@@ -44,13 +41,17 @@ export const columns: ColumnDef<TDeserializedUser>[] = [
     accessorKey: 'image',
     header: 'IMAGE',
     cell: ({ row }) => {
+      const userId = row?.original?.id
+
+      const userImage: string = row.getValue('image') ?? ''
+
       return (
-        <Avatar>
-          <AvatarImage src={row.getValue('image') ?? ''} />
-          <AvatarFallback className="bg-sky-500">
-            <FaUser className="text-white" />
-          </AvatarFallback>
-        </Avatar>
+        <Link
+          href={PATHS.adminUser(userId)}
+          className="hover:brightness-110"
+        >
+          <UserAvatar userImageUrl={userImage} />
+        </Link>
       )
     }
   },

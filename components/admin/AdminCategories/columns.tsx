@@ -1,12 +1,13 @@
 'use client'
 
+import Link from 'next/link'
 import { type ColumnDef } from '@tanstack/react-table'
 import { type Categories } from '@prisma/client'
 
 import { Checkbox } from '~/components/ui/checkbox'
 import CellAction from '~/components/admin/AdminCategories/CellAction'
 import LoadableImage from '~/components/shared/LoadableImage'
-import { IMAGES_PATHS } from '~/utils/constants'
+import { PATHS, IMAGES_PATHS } from '~/utils/constants'
 
 export const columns: ColumnDef<Categories>[] = [
   {
@@ -40,16 +41,23 @@ export const columns: ColumnDef<Categories>[] = [
     accessorKey: 'imageUrl',
     header: 'IMAGE',
     cell: ({ row }) => {
+      const categorieSlug = row?.original?.slug
+
       const imageUrl =
         row.getValue<string>('imageUrl') ?? IMAGES_PATHS.noImages
 
       return (
-        <LoadableImage
-          src={imageUrl}
-          alt={row.getValue('name') ?? 'Post'}
-          containerHeight={44}
-          containerClassNames="aspect-square !w-11 rounded-lg"
-        />
+        <Link
+          href={`${PATHS.category(categorieSlug)}`}
+          className="hover:brightness-110"
+        >
+          <LoadableImage
+            src={imageUrl}
+            alt={row.getValue('name') ?? 'Post'}
+            containerHeight={44}
+            containerClassNames="aspect-square !w-11 rounded-lg"
+          />
+        </Link>
       )
     }
   },

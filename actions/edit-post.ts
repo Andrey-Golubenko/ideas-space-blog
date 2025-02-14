@@ -90,7 +90,7 @@ export const editPost = async (
       }
     })
 
-    revalidatePath(`${PATHS.blog}/${postId}`)
+    revalidatePath(`${PATHS.post(postId)}`)
     revalidatePath(`${PATHS.adminPosts}`)
     revalidatePath(PATHS.home)
     revalidatePath(PATHS.blog)

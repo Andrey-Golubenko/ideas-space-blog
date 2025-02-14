@@ -9,7 +9,9 @@ import { type INavLink } from '~/types'
 
 export const PATHS = {
   home: '/',
+
   blog: '/blog',
+  post: (postSlug: string) => `/blog/${postSlug}`,
   blogNewPost: '/blog/new-post',
   editPost: (postId: string) => `/blog/${postId}/edit-post`,
   posts: '/api/posts',
@@ -18,17 +20,25 @@ export const PATHS = {
   category: (categorySlug: string) => `/categories/${categorySlug}`,
 
   profile: '/profile',
+  publicProfile: (userId: string) => `/profile/${userId}`,
+
   settings: '/settings',
 
   admin: '/admin',
   adminUsers: '/admin/admin-users',
-  adminEditUsers: '/admin/admin-users/edit-user-',
+  adminUser: (userId: string) => `/admin/admin-users/${userId}`,
+  adminEditUser: (userId: string) =>
+    `/admin/admin-users/${userId}/edit-user`,
+
   adminPosts: '/admin/admin-posts',
+  adminPost: (postId: string) => `/admin/admin-posts/${postId}`,
   adminNewPost: '/admin/admin-posts/new-post',
-  adminEditPost: '/admin/admin-posts/edit-post-',
+  adminEditPost: (postId: string) =>
+    `/admin/admin-posts/${postId}/edit-post`,
+
   adminCategories: '/admin/admin-categories',
-  adminEditCategory: '/admin/admin-categories/edit-category',
   adminNewCategory: '/admin/admin-categories/new-category',
+  adminEditCategory: '/admin/admin-categories/edit-category',
 
   logIn: '/auth',
   register: '/auth/register',
@@ -42,7 +52,10 @@ export const PATHS = {
   impressum: '/impressum',
   privacyPolicy: '/privacy-policy',
 
-  authActionsPref: '/api/auth',
+  categoryPrefix: '/categories/',
+  profilePrefix: '/profile/',
+  adminRoutsPrefix: '/admin',
+  authActionsPrefix: '/api/auth',
 
   libSession: '/api/auth/session',
   libSignIn: '/api/auth/signin'

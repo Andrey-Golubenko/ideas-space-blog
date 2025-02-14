@@ -1,48 +1,41 @@
 'use client'
 
-import { type Session } from 'next-auth'
+import { useMemo } from 'react'
 
 import useGlobalStore from '~/store'
-import { useDataPostsFilters } from '~/hooks/useDataPostsFilters'
-import { useCategoriesOptions } from '~/hooks/useCategoriesOptions'
+import { usePage } from '~/hooks/usePage'
+import { usePostsFilters } from '~/hooks/usePostsFilters'
 import { useDataPosts } from '~/hooks/useDataPosts'
 import ProfileInfo from '~/components/profile/ProfileInfo'
 import ProfilePostsList from '~/components/profile/ProfilePostsList'
-import DataSearch from '~/components/shared/DataManagement/DataSearch'
-import DataResetFilter from '~/components/shared/DataManagement/DataResetFilter'
-import DataFilterBox from '~/components/shared/DataManagement/DataFilterBox'
+import ProfilePostsHeader from '~/components/profile/ProfilePostsHeader'
+import ProfileFiltersBox from '~/components/profile/ProfileFiltersBox'
 import DataPagination from '~/components/shared/DataManagement/DataPagination'
+import { cn } from '~/libs/utils'
 import { isEmptyOrUnpublished } from '~/utils/helpers'
+import { PROFILE_POSTS_PER_PAGE } from '~/utils/constants'
 import {
   type IFetchPostsFunctionProps,
   type TDeserializedPost
 } from '~/types'
-import { Card } from '~/components/ui/card'
-import { useMemo } from 'react'
-import ProfilePostsHeaderCard from '~/components/profile/ProfilePostsHeaderCard'
-import { PROFILE_POSTS_PER_PAGE } from '~/utils/constants'
 
 interface IProfilePageViewProps {
-  user?: Session['user']
+  user?: UserDTO | null
+  hasFullAccess?: boolean
 }
 
-const ProfilePageView = ({ user }: IProfilePageViewProps) => {
+const ProfilePageView = ({
+  user,
+  hasFullAccess = false
+}: IProfilePageViewProps) => {
   const [posts, postsCount, isLoading] = useGlobalStore((state) => {
     return [state.posts, state.postsCount, state.isLoading]
   })
 
-  const {
-    searchQuery,
-    setSearchQuery,
-    categoriesFilter,
-    setCategoriesFilter,
-    isAnyFilterActive,
-    resetFilters,
-    page,
-    setPage
-  } = useDataPostsFilters()
+  const { isAdminPage } = usePage()
 
-  const { categoriesOptions } = useCategoriesOptions('slug')
+  const { searchQuery, categoriesFilter, page, setPage } =
+    usePostsFilters()
 
   const postsPerPage = PROFILE_POSTS_PER_PAGE
   const userId = user?.id
@@ -59,53 +52,41 @@ const ProfilePageView = ({ user }: IProfilePageViewProps) => {
 
   useDataPosts(dataPostsProps)
 
-  const noItems = isEmptyOrUnpublished(posts)
+  const noItems: boolean = isEmptyOrUnpublished(posts)
 
   return (
-    <div className="grid min-h-svh w-full grid-cols-1 items-stretch justify-between gap-x-5 px-5 pb-8 pt-4 md:grid-cols-3 md:px-4 md:pb-8 lg:p-10 lg:pt-4 ">
-      <div className="col-start-1 h-full pb-4 md:pb-0">
+    <div
+      className={cn(
+        'grid min-h-svh w-full grid-cols-1 items-stretch justify-between gap-x-5 px-5 pb-8 pt-4 md:px-4 md:pb-8 lg:p-10 lg:pt-4',
+        !isAdminPage && 'md:grid-cols-3'
+      )}
+    >
+      <div
+        className={cn('col-span-1 h-full pb-4', !isAdminPage && 'md:pb-0')}
+      >
         <ProfileInfo
-          user={user}
           label="User data"
+          user={user}
+          hasFullAccess={hasFullAccess}
         />
       </div>
 
-      <div className="col-start-1 flex h-full w-full flex-col items-center justify-between md:col-start-2 md:col-end-4">
-        <ProfilePostsHeaderCard />
+      <div
+        className={cn(
+          'col-span-1 flex h-full w-full flex-col items-center justify-between',
+          !isAdminPage && 'md:col-span-2'
+        )}
+      >
+        <ProfilePostsHeader hasFullAccess={hasFullAccess} />
 
         <div className="page-wrapper w-full flex-grow pt-4">
-          <Card className="mb-5 grid w-full grid-cols-1 flex-wrap items-center justify-around gap-x-5 gap-y-4 px-3 py-3 min-[375px]:grid-cols-2 min-[1080px]:grid-cols-4">
-            <div className="col-span-1 min-[375px]:col-span-2 md:[&_div]:w-full md:[&_input]:!max-w-full ">
-              <DataSearch
-                searchKey="title"
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-                setPage={setPage}
-              />
-            </div>
-
-            <div className="col-span-1 grid place-content-center max-[375px]:grid-cols-1 min-[375px]:place-content-start">
-              <DataFilterBox
-                title="Category"
-                options={categoriesOptions}
-                filterValue={categoriesFilter}
-                setFilterValue={setCategoriesFilter}
-                setPage={setPage}
-              />
-            </div>
-
-            <div className="col-span-1 grid place-content-center max-[375px]:grid-cols-1 min-[375px]:place-content-end">
-              <DataResetFilter
-                isFilterActive={isAnyFilterActive}
-                onReset={resetFilters}
-              />
-            </div>
-          </Card>
+          <ProfileFiltersBox />
 
           <ProfilePostsList
             data={posts as TDeserializedPost[]}
             totalItems={postsCount}
             noItems={noItems}
+            hasFullAccess={hasFullAccess}
             isLoading={isLoading}
           />
 

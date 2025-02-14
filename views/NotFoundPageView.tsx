@@ -13,31 +13,31 @@ import { IMAGES_PATHS, PATHS } from '~/utils/constants'
 
 const NotFoundPageView = () => {
   return (
-    <Card className="my-20 w-full py-8 sm:w-[80%] lg:w-[70%]">
-      <CardHeader>
+    <Card className="mb-10 mt-20 grid w-[95%] grid-cols-12 p-6 lg:w-[85%]">
+      <CardHeader className="col-span-12">
         <CardHeaderContent
           title="Page is not availaible"
           label="The link you followed may be broken, or the page may have been removed!"
         />
       </CardHeader>
 
-      <CardContent className="px-20 py-14">
+      <CardContent className="col-span-12 mb-6 border-b border-dashed border-b-slate-300 p-8 md:col-span-8 md:border-b-0 md:border-r md:border-r-slate-300 md:px-20 md:py-14">
         <Image
           src={IMAGES_PATHS.notFoudBanner}
           alt="Not found"
           priority
           width={700}
-          height={400}
-          className="h-auto w-full rounded-lg lg:h-[500px]"
+          height={300}
+          className="h-auto w-full rounded-lg lg:h-[300px]"
         />
       </CardContent>
 
-      <CardFooter className="flex w-full flex-col items-center justify-center">
-        <p className="mb-3 text-center text-muted-foreground md:text-xl">
+      <CardFooter className="col-span-12 flex w-full flex-col items-center justify-center md:col-span-4">
+        <p className="mb-3 text-center text-muted-foreground md:text-base">
           Sorry about that!
         </p>
 
-        <p className="mb-8 text-center text-muted-foreground md:text-xl">
+        <p className="mb-8 text-center text-muted-foreground md:text-base">
           Please go to Homepage!
         </p>
 
@@ -46,7 +46,7 @@ const NotFoundPageView = () => {
             size="lg"
             variant="outline"
             asChild
-            className="mb-2 w-full border border-black/20 bg-slate-100 hover:border-black/10 hover:bg-slate-100/60 md:mb-0 md:w-[45%]"
+            className="mb-2 h-8 w-full rounded-lg border border-black/20 bg-blue-200 hover:bg-blue-200/70 md:mb-0"
           >
             <Link href={PATHS.home}>Go Home</Link>
           </Button>

@@ -1,13 +1,14 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { UserRole } from '@prisma/client'
 
+import { usePage } from '~/hooks/usePage'
 import { Card, CardHeader, CardContent } from '~/components/ui/card'
 import WithRole from '~/components/hoc/WithRole'
 import UserManageForm from '~/components/shared/UserManageForm'
@@ -19,21 +20,22 @@ import { SettingsSchema } from '~/schemas'
 import { type TManageUserForm } from '~/types'
 
 interface IEditUserPageViewProps {
-  user: UserDTO | null
+  user: UserDTO | null | undefined
+  label: string
 }
 
-const EditUserPageView = ({ user }: IEditUserPageViewProps) => {
+const EditUserPageView = ({ user, label }: IEditUserPageViewProps) => {
   const router = useRouter()
-  const { update } = useSession()
+
+  const { data, update } = useSession()
+  const currentUser = data?.user
 
   const [error, setError] = useState<string | undefined>()
   const [success, setSuccess] = useState<string | undefined>()
 
   const [isPending, startTransition] = useTransition()
 
-  const pathname = usePathname()
-
-  const isAdminPage = pathname.includes(PATHS.adminEditUsers)
+  const { isAdminPage } = usePage()
 
   const form = useForm<TManageUserForm>({
     defaultValues: {
@@ -55,54 +57,60 @@ const EditUserPageView = ({ user }: IEditUserPageViewProps) => {
     }
 
     startTransition(async () => {
-      const data = await editUser(preparedValues)
+      const result = await editUser(preparedValues)
 
-      if (data?.success) {
-        setSuccess(data?.success)
+      if (result?.success) {
+        setSuccess(result?.success)
 
-        toast.success(data?.success, {
+        toast.success(result?.success, {
           richColors: true,
           closeButton: true,
           duration: 5000
         })
 
-        if (user?.role !== UserRole.ADMIN) {
+        if (user?.id === currentUser?.id) {
           update()
         }
 
-        router.push(PATHS.adminUsers)
+        if (isAdminPage) {
+          router.push(PATHS.adminUsers)
+        }
       }
 
-      if (data?.error) {
-        setError(data?.error)
+      if (result?.error) {
+        setError(result?.error)
       }
     })
   }
+
+  const userForm = (
+    <UserManageForm
+      isUserOAuth={user?.isOAuth ?? false}
+      form={form}
+      handleOnSubmit={handleOnSubmit}
+      label="Edit user"
+      isDisabled={isPending}
+      success={success}
+      error={error}
+    />
+  )
 
   return (
     <Card
       className={cn(
         'flex min-h-[420px] flex-col shadow-md',
-        isAdminPage ? 'mx-auto my-4 w-4/5 @5xl:w-3/5' : 'my-16'
+        isAdminPage && 'mx-auto my-4 w-4/5 @5xl:w-3/5'
       )}
     >
       <CardHeader>
-        <p className="text-center text-2xl font-semibold">
-          👤 Edit the user
-        </p>
+        <p className="text-center text-2xl font-semibold">{label}</p>
       </CardHeader>
       <CardContent className="flex flex-grow flex-col justify-evenly space-y-4">
-        <WithRole allowedRole={UserRole.ADMIN}>
-          <UserManageForm
-            isUserOAuth={user?.isOAuth ?? false}
-            form={form}
-            handleOnSubmit={handleOnSubmit}
-            label="Edit user"
-            isDisabled={isPending}
-            success={success}
-            error={error}
-          />
-        </WithRole>
+        {isAdminPage ? (
+          <WithRole allowedRole={UserRole.ADMIN}>{userForm}</WithRole>
+        ) : (
+          userForm
+        )}
       </CardContent>
     </Card>
   )

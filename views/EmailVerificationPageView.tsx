@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { BeatLoader } from 'react-spinners'
 
 import { emailVerification } from '~/actions/email-verification'
@@ -15,6 +15,9 @@ const EmailVerificationPageView = () => {
   const [success, setSuccess] = useState<string | undefined>()
 
   const searchParamms = useSearchParams()
+
+  const router = useRouter()
+
   const token = searchParamms.get('token')
 
   const onCheck = async () => {
@@ -27,6 +30,8 @@ const EmailVerificationPageView = () => {
 
     if (data?.success) {
       setSuccess(data?.success)
+
+      router.push(PATHS.home)
     }
 
     if (data?.error) {
@@ -44,7 +49,7 @@ const EmailVerificationPageView = () => {
       backButtonLabel="Back to login!"
       backButtonHref={PATHS.logIn}
     >
-      <div className="flex w-full items-center justify-center gap-x-5">
+      <div className="flerx-col flex w-full items-center justify-center gap-4">
         {!success && !error && <BeatLoader className="h-8" />}
         <NotificationSuccess message={success} />
         <NotificationError message={error} />

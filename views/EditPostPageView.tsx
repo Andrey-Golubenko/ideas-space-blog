@@ -15,6 +15,7 @@ import {
 import { useCleaningItem } from '~/hooks/useCleaningItem'
 import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
 import PostManageForm from '~/components/shared/PostManageForm'
+import { checkIfPostExist } from '~/utils/helpers'
 import { CLOUDINARY_POSTS_IMAGES_FOLDER } from '~/utils/constants'
 import { ManagePostSchema } from '~/schemas'
 import { type TDeserializedPost, type TManagePostForm } from '~/types'
@@ -52,7 +53,7 @@ const EditPostPageView = ({ isLogged }: IEditPostViewProps) => {
 
   const isDisabled = isPending || !isLogged
 
-  const isEditablePostExist = !!Object.values(singlePost)?.length
+  const isPostExist = checkIfPostExist(singlePost)
 
   const form = useForm<TManagePostForm>({
     defaultValues: {
@@ -67,7 +68,7 @@ const EditPostPageView = ({ isLogged }: IEditPostViewProps) => {
   })
 
   useEffect(() => {
-    if (Object.values(singlePost)?.length) {
+    if (singlePost) {
       form.reset({
         title,
         content,
@@ -76,7 +77,7 @@ const EditPostPageView = ({ isLogged }: IEditPostViewProps) => {
         categories: categoriesFieldValues
       })
     }
-  }, [isEditablePostExist])
+  }, [isPostExist])
 
   useCleaningItem(setSinglePost)
 

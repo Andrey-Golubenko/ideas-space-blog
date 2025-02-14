@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 
 import useGlobalStore from '~/store'
 import { useCurrentUser } from '~/hooks/useCurrentUser'
-import { useUsersTableFilters } from '~/hooks/useUsersTableFilters'
+import { useUsersFilters } from '~/hooks/useUsersFilters'
 import { deleteUser } from '~/actions/delete-user'
 import { logOut } from '~/actions/logout'
 import {
@@ -38,10 +38,10 @@ const CellAction = ({ userId }: ICellActionProps) => {
 
   const currentUser = useCurrentUser()
 
-  const { setPage } = useUsersTableFilters()
+  const { setPage } = useUsersFilters()
 
   const handleOnUpdate = useCallback(() => {
-    router.push(`${PATHS.adminEditUsers}${userId}`)
+    router.push(`${PATHS.adminEditUser(userId)}`)
   }, [router, userId])
 
   const handleOnDelete = useCallback(() => {

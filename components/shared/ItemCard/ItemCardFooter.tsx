@@ -3,17 +3,31 @@
 import Link from 'next/link'
 
 import { CardFooter } from '~/components/ui/card'
+import { Skeleton } from '~/components/ui/skeleton'
 import { Button } from '~/components/ui/button'
 import { PATHS } from '~/utils/constants'
 import { type TItemType } from '~/types'
 
 interface IItemCardFooterProps {
+  hasContent: boolean
   itemSlug?: string
   itemType: TItemType
 }
 
-const PostCardFooter = ({ itemSlug, itemType }: IItemCardFooterProps) => {
+const PostCardFooter = ({
+  hasContent,
+  itemSlug,
+  itemType
+}: IItemCardFooterProps) => {
   const { isPost, isCategory } = itemType
+
+  if (!hasContent) {
+    return (
+      <CardFooter className="flex justify-end">
+        <Skeleton className="h-2 w-8" />
+      </CardFooter>
+    )
+  }
 
   return (
     <CardFooter className="ml-auto mt-auto flex-col justify-end pb-0">
@@ -25,7 +39,7 @@ const PostCardFooter = ({ itemSlug, itemType }: IItemCardFooterProps) => {
       >
         <Link
           href={
-            (isPost && itemSlug && `${PATHS.blog}/${itemSlug}`) ||
+            (isPost && itemSlug && `${PATHS.post(itemSlug)}`) ||
             (isCategory && itemSlug && `${PATHS.category(itemSlug)}`) ||
             '#'
           }

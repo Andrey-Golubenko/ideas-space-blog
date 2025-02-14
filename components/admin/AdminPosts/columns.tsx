@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { type ColumnDef } from '@tanstack/react-table'
 
 import { Checkbox } from '~/components/ui/checkbox'
@@ -7,7 +8,6 @@ import CellAction from '~/components/admin/AdminPosts/CellAction'
 import LoadableImage from '~/components/shared/LoadableImage'
 import { IMAGES_PATHS, PATHS } from '~/utils/constants'
 import { type TTRuncatedAuthors, type TDeserializedPost } from '~/types'
-import Link from 'next/link'
 
 export const columns: ColumnDef<TDeserializedPost>[] = [
   {
@@ -50,7 +50,10 @@ export const columns: ColumnDef<TDeserializedPost>[] = [
       const singleImageUrl = imageUrls?.[0] ?? IMAGES_PATHS.noImages
 
       return (
-        <Link href={`${PATHS.blog}/${postId}`}>
+        <Link
+          href={`${PATHS.adminPost(postId)}`}
+          className="hover:brightness-110"
+        >
           <LoadableImage
             src={singleImageUrl}
             alt={row.getValue('title') ?? 'Post'}

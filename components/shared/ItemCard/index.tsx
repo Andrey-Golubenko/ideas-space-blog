@@ -1,44 +1,71 @@
 'use client'
 
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { useItemProps } from '~/hooks/useItemProps'
-import { useItemType } from '~/hooks/useItemType'
+import { useListItemProps } from '~/hooks/useListItemProps'
 import { Card } from '~/components/ui/card'
 import ItemCardHeader from '~/components/shared/ItemCard/ItemCardHeader'
 import ItemCardContent from '~/components/shared/ItemCard/ItemCardContent'
 import ItemCardFooter from '~/components/shared/ItemCard/ItemCardFooter'
-import { TListItem } from '~/types'
+import { cn } from '~/libs/utils'
+import { type TItemSize, type TItemType, type TListItem } from '~/types'
 
 interface IItemCardProps {
+  itemType?: TItemType
+  itemSize?: TItemSize
   item?: TListItem
+  isLoading?: boolean
 }
 
-const ItemCard = ({ item }: IItemCardProps) => {
-  const { itemContent, itemSlug } = useItemProps(item)
-
-  const { isPost, isCategory } = useItemType(item)
-
+const ItemCard = ({
+  itemType,
+  itemSize = {
+    isRegular: true,
+    isTruncated: false
+  },
+  item,
+  isLoading
+}: IItemCardProps) => {
   const [autoAnimateRef] = useAutoAnimate()
+
+  const { itemContent, itemSlug } = useListItemProps(item)
+
+  const hasContent = item ? item && !isLoading : false
+
+  const isPost = itemType?.isPost
+  const isCategory = itemType?.isCategory
+
+  const { isRegular, isTruncated } = itemSize
 
   return (
     <Card
       ref={autoAnimateRef}
-      className="flex min-h-max flex-col rounded-md !border-0 shadow-md hover:rounded-t-md"
+      className={cn(
+        'flex min-h-max flex-col !border-0',
+        isPost && 'rounded-md shadow-md hover:rounded-t-md',
+        isCategory && isTruncated && 'bg-transparent shadow-none'
+      )}
     >
       <ItemCardHeader
+        hasContent={hasContent}
         item={item}
         itemType={{ isPost, isCategory }}
       />
 
-      <ItemCardContent
-        itemContent={itemContent}
-        itemType={{ isPost, isCategory }}
-      />
+      {isRegular && !isTruncated && (
+        <>
+          <ItemCardContent
+            hasContent={hasContent}
+            itemContent={itemContent}
+            itemType={{ isPost, isCategory }}
+          />
 
-      <ItemCardFooter
-        itemSlug={itemSlug}
-        itemType={{ isPost, isCategory }}
-      />
+          <ItemCardFooter
+            hasContent={hasContent}
+            itemSlug={itemSlug}
+            itemType={{ isPost, isCategory }}
+          />
+        </>
+      )}
     </Card>
   )
 }

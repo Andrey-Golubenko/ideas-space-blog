@@ -2,16 +2,11 @@ import { type Metadata } from 'next'
 
 import SinglePostPageView from '~/views/SinglePostPageView'
 import { getSinglePost } from '~/services/posts/posts.server'
-
-interface ISinglePostProps {
-  params: {
-    slug: string
-  }
-}
+import { type ISlugPageParamsProps } from '~/types'
 
 export async function generateMetadata({
   params: { slug }
-}: ISinglePostProps): Promise<Metadata> {
+}: ISlugPageParamsProps): Promise<Metadata> {
   const singlePost = await getSinglePost(slug)
 
   return {
@@ -21,7 +16,9 @@ export async function generateMetadata({
   }
 }
 
-const SinglePostPage = async ({ params: { slug } }: ISinglePostProps) => {
+const SinglePostPage = async ({
+  params: { slug }
+}: ISlugPageParamsProps) => {
   return <SinglePostPageView postId={slug} />
 }
 

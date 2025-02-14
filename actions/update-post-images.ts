@@ -62,7 +62,7 @@ export const updatePostImages = async (
       }
     })
 
-    revalidatePath(`${PATHS.blog}/${postId}`)
+    revalidatePath(`${PATHS.post(postId)}`)
     revalidatePath(`${PATHS.adminPosts}`)
 
     return { success: 'Images successfully updated!' }

@@ -4,6 +4,7 @@ import { type UseFormReturn } from 'react-hook-form'
 import { Form } from '~/components/ui/form'
 import NotificationError from '~/components/notifications/NotificationError'
 import NotificationSuccess from '~/components/notifications/NotificationSuccess'
+import NotificationInfo from '~/components/notifications/NotificationInfo'
 import TextField from '~/components/shared/TextField'
 import PasswordField from '~/components/shared/PasswordField'
 import SelectField from '~/components/shared/SelectField'
@@ -74,6 +75,8 @@ const UserManageForm = ({
               />
             </>
           )}
+
+          <NotificationInfo message="The 'Role' field is used only for demonstration purposes to simplify project familiarization and access to the Admin module." />
 
           <SelectField
             name="role"

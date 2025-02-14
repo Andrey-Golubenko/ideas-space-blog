@@ -2,20 +2,12 @@
 
 import { useMemo } from 'react'
 import { useParams } from 'next/navigation'
-import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import useGlobalStore from '~/store'
 import { useDataCategories } from '~/hooks/useDataCategories'
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu
-} from '~/components/ui/sidebar'
-import SidebarItemSection from '~/components/sidebars/SidebarItemSection'
-import SidebarHeaderSection from '~/components/sidebars/SidebarHeaderSection'
+import WithSidebar from '~/components/hoc/WithSidebar'
+
+import SidebarMenuSection from '~/components/sidebars/SidebarMenuSection'
 
 const CategoriesSidebar = () => {
   const [categories] = useGlobalStore((state) => {
@@ -36,42 +28,21 @@ const CategoriesSidebar = () => {
 
   const params = useParams()
 
-  const [autoAnimateRef] = useAutoAnimate()
-
   return (
-    <Sidebar
-      collapsible="icon"
-      className="!absolute h-full overflow-hidden !border-0"
-    >
-      <SidebarHeaderSection
-        sidebarType={{ isAdmin: false, isCategory: true }}
-      />
+    <WithSidebar label="Categories">
+      {!!displayedCategories?.length &&
+        displayedCategories?.map((category) => {
+          const isActive = params?.slug === category?.slug
 
-      <SidebarContent className="overflow-x-hidden">
-        <SidebarGroup className="px-4 py-6">
-          <SidebarGroupLabel className="mb-4 text-base">
-            Categories
-          </SidebarGroupLabel>
-
-          <SidebarGroupContent>
-            <SidebarMenu ref={autoAnimateRef}>
-              {!!displayedCategories?.length &&
-                displayedCategories?.map((category) => {
-                  const isActive = params?.slug === category?.slug
-
-                  return (
-                    <SidebarItemSection
-                      key={category?.id}
-                      item={category}
-                      isActive={isActive}
-                    />
-                  )
-                })}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-    </Sidebar>
+          return (
+            <SidebarMenuSection
+              key={category?.id}
+              item={category}
+              isActive={isActive}
+            />
+          )
+        })}
+    </WithSidebar>
   )
 }
 

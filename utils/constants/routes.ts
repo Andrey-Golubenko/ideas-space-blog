@@ -15,7 +15,7 @@ export const PUBLIC_ROUTES = [
   PATHS.emailVerification,
   PATHS.commonError,
   PATHS.impressum,
-  PATHS.privacyPolicy
+  PATHS.privacyPolicy,
 ]
 
 /**
@@ -23,7 +23,10 @@ export const PUBLIC_ROUTES = [
  * These routes require authentication.
  * @type {string []}
  */
-export const PUBLIC_ROUTES_EXCEPTIONS = [PATHS.blogNewPost]
+export const PUBLIC_ROUTES_EXCEPTIONS = [
+  PATHS.blogNewPost, 
+  PATHS.profile
+]
 
 /**
  * An array of routes that can have additional segment.
@@ -32,7 +35,8 @@ export const PUBLIC_ROUTES_EXCEPTIONS = [PATHS.blogNewPost]
  */
 export const PUBLIC_ROUTES_WITH_DYNAMIC_SEGMENT = [
   PATHS.blog,
-  PATHS.categories
+  PATHS.categories,
+  PATHS.profilePrefix
 ]
 
 /**
@@ -52,27 +56,18 @@ export const AUTH_ROUTES = [
 ]
 
 /**
- * An array of routes that are used only with ADMIN role.
- * @type {string []}
+ * The prefix for routes that are used only with ADMIN role.
+ * Routes that start with this prefix are used only with ADMIN role.
+ * @type {string}
  */
-export const ADMIN_ROUTES = [
-  PATHS.admin,
-  PATHS.adminPosts,
-  PATHS.adminUsers,
-  PATHS.adminCategories,
-  PATHS.adminEditCategory,
-  PATHS.adminEditPost,
-  PATHS.adminEditUsers,
-  PATHS.adminNewPost,
-  PATHS.adminNewCategory
-]
+export const ADMIN_ROUTS_PREFIX = PATHS.adminRoutsPrefix
 
 /**
  * The prefix for API authentication routes.
  * Routes that start with this prefix are used for API authentication purposes.
  * @type {string}
  */
-export const API_AUTH_PREFIX = PATHS.authActionsPref
+export const API_AUTH_PREFIX = PATHS.authActionsPrefix
 
 /**
  * The default redirect path after loggin in.

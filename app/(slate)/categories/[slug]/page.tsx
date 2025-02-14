@@ -1,14 +1,12 @@
 import { type Metadata } from 'next'
+
 import SingleCategoryPageView from '~/views/SingleCategoryPageView'
 import { toUpperCaseFirstChar } from '~/utils/helpers'
-
-interface ISingleCategoryPageProps {
-  params: { slug: string }
-}
+import { type ISlugPageParamsProps } from '~/types'
 
 export async function generateMetadata({
   params: { slug }
-}: ISingleCategoryPageProps): Promise<Metadata> {
+}: ISlugPageParamsProps): Promise<Metadata> {
   const categoryName = toUpperCaseFirstChar(slug.split('-').join(' '))
 
   return {
@@ -21,7 +19,7 @@ export async function generateMetadata({
 
 const SingleCategoryPage = ({
   params: { slug }
-}: ISingleCategoryPageProps) => {
+}: ISlugPageParamsProps) => {
   return <SingleCategoryPageView categorySlug={slug} />
 }
 

@@ -19,6 +19,12 @@ import {
   SingleCategorySchema
 } from '~/schemas'
 
+export interface ISlugPageParamsProps {
+  params: {
+    slug: string
+  }
+}
+
 export interface INavLink {
   href: string
   label?: string
@@ -65,7 +71,15 @@ export type TManageUserForm = z.infer<typeof SettingsSchema>
 
 export type TListItem = TDeserializedPost | Categories | null
 
-export type TItemType = { isPost?: boolean; isCategory?: boolean }
+export type TItemType = {
+  isPost?: boolean
+  isCategory?: boolean
+}
+
+export type TItemSize = {
+  isRegular?: boolean
+  isTruncated?: boolean
+}
 
 export type TSkeletonItems = {
   firstItem?: TListItem

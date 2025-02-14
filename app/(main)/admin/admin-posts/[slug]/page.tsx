@@ -1,14 +1,10 @@
-import EditPostPageView from '~/views/EditPostPageView'
-import { getCurrentUser } from '~/utils/helpers/server.helpers'
+import SinglePostPageView from '~/views/SinglePostPageView'
+import { type ISlugPageParamsProps } from '~/types'
 
-const AdminEditPostPage = async () => {
-  const user = await getCurrentUser()
-
-  return (
-    <div className="@container">
-      <EditPostPageView isLogged={!!user} />
-    </div>
-  )
+const AdminSinglePostPage = ({
+  params: { slug }
+}: ISlugPageParamsProps) => {
+  return <SinglePostPageView postId={slug} />
 }
 
-export default AdminEditPostPage
+export default AdminSinglePostPage

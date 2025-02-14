@@ -10,7 +10,7 @@ export const fetchPosts = async ({
 }: IFetchPostsFunctionProps): Promise<PostsData> => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/posts?limit=${limit}&offset=${offset}&categories=${categoriesFilter}&published=${publishedFilter}&authors${authorFilter}&q=${searchQuery}`,
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/posts?limit=${limit}&offset=${offset}&categories=${categoriesFilter}&published=${publishedFilter}&authors=${authorFilter}&q=${searchQuery}`,
       {
         next: {
           revalidate: 60 // sec

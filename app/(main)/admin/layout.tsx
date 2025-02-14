@@ -10,7 +10,7 @@ const AdminLayoute = ({
 }>) => {
   return (
     <SidebarProvider>
-      <div className="flex w-full items-stretch justify-between gap-x-4 py-2 xs:py-6 sm:py-12">
+      <div className="flex w-full items-stretch justify-between gap-x-4 py-2 xs:pb-6 xs:pt-12 sm:py-12">
         <AdminSidebar />
         <div className="w-full overflow-auto rounded-md bg-white p-2 xs:p-4 sm:p-6">
           <SidebarTrigger

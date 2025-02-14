@@ -1,12 +1,12 @@
 'use client'
 
 import * as React from 'react'
-import { usePathname } from 'next/navigation'
 import { Slot } from '@radix-ui/react-slot'
 import { VariantProps, cva } from 'class-variance-authority'
 import { PanelLeft } from 'lucide-react'
 
 import { useScreen } from '~/hooks/useScreen'
+import { usePage } from '~/hooks/usePage'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Separator } from '~/components/ui/separator'
@@ -23,7 +23,6 @@ import {
   TooltipTrigger
 } from '~/components/ui/tooltip'
 import { cn } from '~/libs/utils'
-import { PATHS } from '~/utils/constants'
 
 const SIDEBAR_COOKIE_NAME = 'sidebar:state'
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -153,9 +152,7 @@ const SidebarProvider = React.forwardRef<
       toggleSidebar
     ])
 
-    const pathname = usePathname()
-
-    const isCategories = pathname.includes(PATHS.categories)
+    const { isCategoriesPage } = usePage()
 
     return (
       <SidebarContext.Provider value={contextValue}>
@@ -165,7 +162,7 @@ const SidebarProvider = React.forwardRef<
               '--sidebar-width': isTablet
                 ? SIDEBAR_WIDTH_TABLET
                 : SIDEBAR_WIDTH,
-              '--sidebar-width-icon': isCategories
+              '--sidebar-width-icon': isCategoriesPage
                 ? SIDEBAR_WIDTH_IMAGES
                 : SIDEBAR_WIDTH_ICON,
               ...style

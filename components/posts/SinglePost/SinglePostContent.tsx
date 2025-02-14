@@ -2,19 +2,36 @@ import Link from 'next/link'
 import { FileTextIcon, CalendarIcon } from 'lucide-react'
 
 import { CardContent } from '~/components/ui/card'
+import { Skeleton } from '~/components/ui/skeleton'
 import { DEFAULT_CATEGORY, PATHS } from '~/utils/constants'
 
 interface ISinglePostContentProps {
+  hasContent: boolean
   singlePostCategories: TCategoryOptions[]
   singlePostCreatedAt: string
   singlePostContent: string
 }
 
 const SinglePostContent = ({
+  hasContent,
   singlePostCategories,
   singlePostCreatedAt,
   singlePostContent
 }: ISinglePostContentProps) => {
+  if (!hasContent) {
+    return (
+      <>
+        <div className="mb-5 flex w-full flex-col items-start justify-start px-5 lg:px-20">
+          <Skeleton className="mb-4 h-5 w-1/2" />
+          <Skeleton className="h-5 w-1/2" />
+        </div>
+        <div className="mb-6 w-full p-6 px-5 pt-0 lg:px-20">
+          <Skeleton className="h-[400px] w-full" />
+        </div>
+      </>
+    )
+  }
+
   return (
     <CardContent className="w-full px-5 pb-12 lg:px-24">
       <div className="mb-5 pl-2">

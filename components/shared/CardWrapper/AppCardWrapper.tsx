@@ -1,8 +1,8 @@
 'use client'
 
 import { type HTMLAttributes } from 'react'
-import { usePathname } from 'next/navigation'
 
+import { usePage } from '~/hooks/usePage'
 import {
   Card,
   CardHeader,
@@ -12,7 +12,6 @@ import {
 import CardHeaderContent from '~/components/shared/CardWrapper/CardHeaderContent'
 import BackButton from '~/components/auth/BackButton'
 import { cn } from '~/libs/utils'
-import { PATHS } from '~/utils/constants'
 
 interface ICardWrapperProps {
   children: React.ReactNode
@@ -30,15 +29,13 @@ const AppCardWrapper = ({
   backButtonHref,
   ...props
 }: ICardWrapperProps & HTMLAttributes<HTMLDivElement>) => {
-  const pathname = usePathname()
-
-  const isAdminPage = pathname.includes(PATHS.admin)
+  const { isAdminPage } = usePage()
 
   return (
     <Card
       className={cn(
         'shadow-md',
-        isAdminPage ? 'mx-auto my-4 w-4/5 @5xl:w-3/5' : 'my-16'
+        isAdminPage ? 'mx-auto my-4 @5xl:w-3/5' : 'my-16'
       )}
       {...props}
     >
@@ -48,7 +45,8 @@ const AppCardWrapper = ({
           label={headerLabel}
         />
       </CardHeader>
-      <CardContent>{children}</CardContent>
+
+      <CardContent className="p-3.5 pt-0">{children}</CardContent>
       {backButtonHref && (
         <CardFooter>
           <BackButton

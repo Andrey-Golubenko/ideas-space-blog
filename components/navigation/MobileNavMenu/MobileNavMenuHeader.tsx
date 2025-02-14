@@ -12,7 +12,7 @@ const MobileNavMenuHeader = ({ user }: MobileNavMenuHeaderProps) => {
         id="user-avatar"
         className="flex w-full items-center justify-center px-4 py-4"
       >
-        <UserAvatarButton />
+        <UserAvatarButton displayedUser={user} />
         <p className="pl-4 text-white">{user?.name}</p>
       </div>
     )

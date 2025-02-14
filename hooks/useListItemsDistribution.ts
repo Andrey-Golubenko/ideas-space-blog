@@ -1,9 +1,19 @@
 import { type RefObject } from 'react'
 
-import { useItemType } from '~/hooks/useItemType'
 import { useContainerWidth } from '~/hooks/useContainerWidth'
 import { type Categories } from '@prisma/client'
-import { type TSkeletonItems, type TDeserializedPost } from '~/types'
+import {
+  type TSkeletonItems,
+  type TDeserializedPost,
+  type TItemType
+} from '~/types'
+
+interface IuseListItemsDistributionProps {
+  itemType: TItemType
+  items: TDeserializedPost[] | Categories[] | null | []
+  itemsCount?: number | null
+  containerRef?: RefObject<HTMLElement>
+}
 
 /**
  * useListItemsDistribution - A custom hook for distributing and managing lists of items (posts or categories)
@@ -20,18 +30,16 @@ import { type TSkeletonItems, type TDeserializedPost } from '~/types'
  * - `fourthItemInList` (`Object | undefined`): The fourth item to display when not placed in the skeleton (for categories).
  * - `noItems` (`boolean`): Indicates whether there are no items available despite a provided `itemsCount`.
  */
-export const useListItemsDistribution = (
-  items: TDeserializedPost[] | Categories[] | null | [],
-  itemsCount?: number | null,
-  containerRef?: RefObject<HTMLElement>
-) => {
-  const {
-    isContainerAtOrBelowMobile,
-    isContainerBelowMobile,
-    isContainerMedium
-  } = useContainerWidth(containerRef)
+export const useListItemsDistribution = ({
+  itemType,
+  items,
+  itemsCount,
+  containerRef
+}: IuseListItemsDistributionProps) => {
+  const { isContainerBelowMobile, isContainerMedium } =
+    useContainerWidth(containerRef)
 
-  const { isCategory, isPost } = useItemType(items?.[0])
+  const { isCategory, isPost } = itemType
 
   const noItems = typeof itemsCount === 'number' && items?.length === 0
 
@@ -66,7 +74,7 @@ export const useListItemsDistribution = (
       items || []
 
     const shouldPlaceFourthItem: boolean =
-      (isContainerAtOrBelowMobile || isContainerMedium) && itemsCount! >= 4
+      (isContainerBelowMobile || isContainerMedium) && itemsCount! >= 4
 
     const fourthItemInSkeleton = shouldPlaceFourthItem
       ? fourthItem

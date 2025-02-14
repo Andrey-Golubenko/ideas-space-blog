@@ -5,10 +5,8 @@ import { useEffect } from 'react'
 import useGlobalStore from '~/store'
 import { Card, CardContent, CardHeader } from '~/components/ui/card'
 import CardHeaderContent from '~/components/shared/CardWrapper/CardHeaderContent'
-import WithPostData from '~/components/hoc/WithPostData'
-import WithSkeletonsList from '~/components/hoc/WithSkeletonsList'
-import SectionItemCard from '~/components/shared/ItemSectionCard'
-import SkeletonPostSectionItem from '~/components/shared/ItemSectionCard/SkeletonPostSectionItem'
+import WithDataList from '~/components/hoc/WithDataList'
+import ItemCard from '~/components/shared/ItemCard'
 import NoItemsCard from '~/components/posts/NoItemsCard'
 import { isEmptyOrUnpublished } from '~/utils/helpers'
 import { type TDeserializedPost } from '~/types'
@@ -24,7 +22,7 @@ const RecentPostsSection = () => {
     getRecentPosts()
   }, [getRecentPosts])
 
-  const noItems = isEmptyOrUnpublished(recentPosts as TDeserializedPost[])
+  const noItems: boolean = isEmptyOrUnpublished(recentPosts)
 
   return (
     <Card className="bg-slate-100 px-2 pb-2 sm:px-10 sm:pb-10">
@@ -38,17 +36,20 @@ const RecentPostsSection = () => {
         {noItems ? (
           <NoItemsCard itemName="published recent posts" />
         ) : (
-          <WithPostData
-            posts={(recentPosts as TDeserializedPost[]) || []}
-            postsCount={recentPosts ? recentPosts?.length : null}
+          <WithDataList
+            itemType={{
+              isPost: true
+            }}
+            itemSize={{
+              isTruncated: true
+            }}
+            // The null and string checks are performed in the function isEmptyOrUnpublished()
+            items={recentPosts as TDeserializedPost[]}
+            itemsCount={3}
             isLoading={isLoading}
           >
-            <WithSkeletonsList>
-              <SkeletonPostSectionItem />
-            </WithSkeletonsList>
-
-            <SectionItemCard />
-          </WithPostData>
+            <ItemCard />
+          </WithDataList>
         )}
       </CardContent>
     </Card>

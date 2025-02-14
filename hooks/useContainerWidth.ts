@@ -6,7 +6,6 @@ import { useState, useEffect, type RefObject } from 'react'
  * @param {RefObject<HTMLElement>} [containerRef] - A React reference to the container element whose width is being observed.
  *
  * @returns {Object} An object containing:
- * - `isContainerAtOrBelowMobile` (`boolean`): Indicates whether the container's width is 768px or less.
  * - `isContainerBelowMobile` (`boolean`): Indicates whether the container's width is less that 768px.
  * - `isContainerMedium` (`boolean`): Indicates whether the container's width is 896px or more.
  *
@@ -15,14 +14,10 @@ import { useState, useEffect, type RefObject } from 'react'
 export const useContainerWidth = (
   containerRef?: RefObject<HTMLElement>
 ): {
-  isContainerAtOrBelowMobile: boolean
   isContainerBelowMobile: boolean
   isContainerMedium: boolean
 } => {
   const [isContainerBelowMobile, setIsContainerBelowMobile] =
-    useState<boolean>(false)
-
-  const [isContainerAtOrBelowMobile, setIsContainerAtOrBelowMobile] =
     useState<boolean>(false)
 
   const [isContainerMedium, setIsContainerMedium] =
@@ -35,14 +30,12 @@ export const useContainerWidth = (
 
     const updateSize = () => {
       if (!containerRef?.current) return
-      const width = containerRef.current.offsetWidth
+      const { width } = containerRef.current.getBoundingClientRect()
 
       setIsContainerBelowMobile((prev) => {
         return prev !== width < 768 ? width < 768 : prev
       })
-      setIsContainerAtOrBelowMobile((prev) => {
-        return prev !== width <= 768 ? width <= 768 : prev
-      })
+
       setIsContainerMedium((prev) => {
         return prev !== width >= 896 ? width >= 896 : prev
       })
@@ -64,7 +57,6 @@ export const useContainerWidth = (
   }, [containerRef])
 
   return {
-    isContainerAtOrBelowMobile,
     isContainerBelowMobile,
     isContainerMedium
   }

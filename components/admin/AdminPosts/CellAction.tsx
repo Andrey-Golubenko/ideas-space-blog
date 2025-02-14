@@ -5,7 +5,7 @@ import { Edit, MoreHorizontal, Trash } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 import useGlobalStore from '~/store'
-import { useDataPostsFilters } from '~/hooks/useDataPostsFilters'
+import { usePostsFilters } from '~/hooks/usePostsFilters'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,7 +36,7 @@ const CellAction = ({ postId }: ICellActionProps) => {
       return post?.id === postId
     }) ?? null
 
-  const { setPage } = useDataPostsFilters()
+  const { setPage } = usePostsFilters()
 
   const onPostDeleteSuccess = useCallback(() => {
     setPage(1)
@@ -50,7 +50,7 @@ const CellAction = ({ postId }: ICellActionProps) => {
     if (postToProcessing) {
       setSinglePost(postToProcessing)
 
-      router.push(`${PATHS.adminEditPost}${postId}`)
+      router.push(`${PATHS.adminEditPost(postId)}`)
     }
   }, [postId, postToProcessing])
 

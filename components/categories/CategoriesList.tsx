@@ -1,9 +1,7 @@
 'use client'
 
-import WithCategoryData from '~/components/hoc/WithCategoryData'
-import WithSkeletonsList from '~/components/hoc/WithSkeletonsList'
+import WithDataList from '~/components/hoc/WithDataList'
 import ItemCard from '~/components/shared/ItemCard'
-import SkeletonCatCard from '~/components/shared/ItemCard/SkeletonCatCard'
 import NoItemsCard from '~/components/posts/NoItemsCard'
 import { type Categories } from '@prisma/client'
 
@@ -25,18 +23,20 @@ const CategoriesList = ({
   }
 
   return (
-    <WithCategoryData
-      categories={data}
-      categoriesCount={totalItems}
+    <WithDataList
+      itemType={{
+        isCategory: true
+      }}
+      itemSize={{
+        isRegular: true
+      }}
+      items={data}
+      itemsCount={totalItems}
       isLoading={isLoading}
       dataContainerClasses="!my-0"
     >
-      <WithSkeletonsList>
-        <SkeletonCatCard />
-      </WithSkeletonsList>
-
       <ItemCard />
-    </WithCategoryData>
+    </WithDataList>
   )
 }
 

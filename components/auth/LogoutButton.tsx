@@ -1,12 +1,17 @@
 'use client'
 
+import { ButtonHTMLAttributes } from 'react'
 import { logOut } from '~/actions/logout'
 
-interface ILogoutButtonProps {
+interface ILogoutButtonProps
+  extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode
 }
 
-const LogoutButton: React.FC<ILogoutButtonProps> = ({ children }) => {
+const LogoutButton: React.FC<ILogoutButtonProps> = ({
+  children,
+  ...props
+}) => {
   const handleClick = () => {
     logOut()
   }
@@ -17,7 +22,7 @@ const LogoutButton: React.FC<ILogoutButtonProps> = ({ children }) => {
       onKeyUp={handleClick}
       role="button"
       tabIndex={0}
-      className="cursor-pointer"
+      {...props}
     >
       {children}
     </span>

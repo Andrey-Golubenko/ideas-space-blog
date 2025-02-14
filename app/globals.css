@@ -30,6 +30,25 @@ body {
   }
 }
 
+/* Vanilla-CookieConsent - overwritten styles */
+.cc-footer {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 1rem !important;
+  padding: 0.5rem 0 !important;
+  font-size: 0.875rem !important; /* text-sm */
+  color: rgb(107 114 128) !important; /* text-gray-500 */
+}
+
+.cc-footer a {
+  transition: all 0.2s ease-in-out !important;
+}
+
+.cc-footer a:hover {
+  color: rgb(55 65 81) !important; /* hover:text-gray-700 */
+}
+
 .page-wrapper {
   @apply flex flex-col items-center justify-center;
 }

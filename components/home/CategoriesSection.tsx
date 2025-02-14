@@ -5,11 +5,9 @@ import { useMemo } from 'react'
 import useGlobalStore from '~/store'
 import { useDataCategories } from '~/hooks/useDataCategories'
 import { Card, CardHeader, CardContent } from '~/components/ui/card'
-import WithCategoryData from '~/components/hoc/WithCategoryData'
-import WithSkeletonsList from '~/components/hoc/WithSkeletonsList'
-import SectionItemCard from '~/components/shared/ItemSectionCard'
+import WithDataList from '~/components/hoc/WithDataList'
+import ItemCard from '~/components/shared/ItemCard'
 import CardHeaderContent from '~/components/shared/CardWrapper/CardHeaderContent'
-import SkeletonCatSectionItem from '~/components/shared/ItemSectionCard/SkeletonCatSectionItem'
 
 const CategoriesSection = () => {
   const [categories, categoriesCount, isLoading] = useGlobalStore(
@@ -40,18 +38,20 @@ const CategoriesSection = () => {
       </CardHeader>
 
       <CardContent>
-        <WithCategoryData
-          categories={displayedCategories}
-          categoriesCount={categoriesCount}
+        <WithDataList
+          itemType={{
+            isCategory: true
+          }}
+          itemSize={{
+            isTruncated: true
+          }}
+          items={displayedCategories}
+          itemsCount={categoriesCount}
           isLoading={isLoading}
           dataContainerClasses="!mb-10 !mt-15"
         >
-          <WithSkeletonsList>
-            <SkeletonCatSectionItem />
-          </WithSkeletonsList>
-
-          <SectionItemCard />
-        </WithCategoryData>
+          <ItemCard />
+        </WithDataList>
       </CardContent>
     </Card>
   )

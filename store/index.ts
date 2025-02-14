@@ -24,7 +24,7 @@ import {
 interface IUseGlobalStore {
   posts: TDeserializedPost[] | string
   postsCount: number | null
-  singlePost: FullPost | {}
+  singlePost: FullPost | null
   recentPosts: TDeserializedPost[] | null | string
 
   categories: Categories[] | string
@@ -72,7 +72,7 @@ const useGlobalStore = createWithEqualityFn<
         return {
           posts: [],
           postsCount: null,
-          singlePost: {},
+          singlePost: null,
           recentPosts: null,
 
           categories: [],

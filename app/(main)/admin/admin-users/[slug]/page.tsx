@@ -1,22 +1,18 @@
+import ProfilePageView from '~/views/ProfilePageView'
 import { getUserById } from '~/services/user'
-import EditUserPageView from '~/views/EditUserPageView'
+import { type ISlugPageParamsProps } from '~/types'
 
-interface IEditUserPageProps {
-  params: {
-    slug: string
-  }
-}
-
-const EditUserPage = async ({ params: { slug } }: IEditUserPageProps) => {
-  const userId = slug?.split('-')?.pop() ?? ''
-
-  const user = await getUserById(userId)
+const AdminUserPage = async ({
+  params: { slug }
+}: ISlugPageParamsProps) => {
+  const user = await getUserById(slug)
 
   return (
-    <div className="@container">
-      <EditUserPageView user={user} />
-    </div>
+    <ProfilePageView
+      user={user}
+      hasFullAccess
+    />
   )
 }
 
-export default EditUserPage
+export default AdminUserPage

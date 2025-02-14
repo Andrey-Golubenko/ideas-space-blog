@@ -6,7 +6,7 @@ import { Edit, MoreHorizontal, Trash } from 'lucide-react'
 import { toast } from 'sonner'
 
 import useGlobalStore from '~/store'
-import { useCategoriesTableFilters } from '~/hooks/useCategoriesTableFilters'
+import { useCategoriesFilters } from '~/hooks/useCategoriesFilters'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,7 +32,7 @@ const CellAction = ({ categoryId }: ICellActionProps) => {
 
   const router = useRouter()
 
-  const { setPage } = useCategoriesTableFilters()
+  const { setPage } = useCategoriesFilters()
 
   const categoryToProcessing =
     (categories as Categories[])?.find((category) => {

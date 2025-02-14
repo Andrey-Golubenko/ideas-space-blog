@@ -7,7 +7,7 @@ import {
   AUTH_ROUTES,
   API_AUTH_PREFIX,
   DEFAULT_LOGIN_REDIRECT,
-  ADMIN_ROUTES
+  ADMIN_ROUTS_PREFIX
 } from '~/utils/constants/routes'
 import { PATHS } from '~/utils/constants'
 import { isPublicRoute } from '~/utils/helpers'
@@ -38,7 +38,7 @@ export default auth(async (request) => {
 
   const isApiAuthRoute = pathname.startsWith(API_AUTH_PREFIX)
   const isAuthRoute = AUTH_ROUTES.includes(pathname)
-  const isAdminRoute = ADMIN_ROUTES.includes(pathname)
+  const isAdminRoute = pathname.startsWith(ADMIN_ROUTS_PREFIX)
 
   let response = NextResponse.next()
 

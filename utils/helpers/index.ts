@@ -149,7 +149,7 @@ export const getImageNames = (imageUrls: string[]) => {
  * @returns {boolean} - `true` if the posts list is empty or contains unpublished posts, otherwise `false`.
  */
 export const isEmptyOrUnpublished = (
-  posts: TDeserializedPost[] | string
+  posts: TDeserializedPost[] | string | null
 ): boolean => {
   const noItems = typeof posts === 'string'
 
@@ -159,5 +159,19 @@ export const isEmptyOrUnpublished = (
       })?.length
     : false
 
-  return oneUnpublished || noItems
+  const isNotExist = posts === null
+
+  return oneUnpublished || noItems || isNotExist
+}
+
+/**
+ * Checks if the given post object exists and is not empty.
+ *
+ * @param {object | null} [obj] - The object to check.
+ * @returns {boolean} `true` if the object exists and is not empty, otherwise `false`.
+ */
+export const checkIfPostExist = (obj?: object | null): boolean => {
+  const isPostExist: boolean = !!obj && Object.keys(obj).length > 0
+
+  return isPostExist
 }
