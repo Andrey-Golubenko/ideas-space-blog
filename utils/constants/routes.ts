@@ -15,7 +15,7 @@ export const PUBLIC_ROUTES = [
   PATHS.emailVerification,
   PATHS.commonError,
   PATHS.impressum,
-  PATHS.privacyPolicy,
+  PATHS.privacyPolicy
 ]
 
 /**
@@ -23,10 +23,7 @@ export const PUBLIC_ROUTES = [
  * These routes require authentication.
  * @type {string []}
  */
-export const PUBLIC_ROUTES_EXCEPTIONS = [
-  PATHS.blogNewPost, 
-  PATHS.profile
-]
+export const PUBLIC_ROUTES_EXCEPTIONS = [PATHS.blogNewPost, PATHS.profile]
 
 /**
  * An array of routes that can have additional segment.

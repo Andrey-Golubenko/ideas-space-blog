@@ -5,6 +5,7 @@ import {
   FaYoutube,
   FaInstagram
 } from 'react-icons/fa'
+import { ChevronRightIcon } from 'lucide-react'
 import { type INavLink } from '~/types'
 
 export const PATHS = {
@@ -59,41 +60,50 @@ export const PATHS = {
 
   libSession: '/api/auth/session',
   libSignIn: '/api/auth/signin'
-}
+} as const
 
 export const IMAGES_PATHS = {
   noImages: '/images/image-placeholder.svg',
   heroBanner: '/images/hero-banner.webp',
+  heroBannerMobil: '/images/hero-baner-mobile.webp',
   errorBanner: '/images/error-banner.svg',
   notFoudBanner: '/images/not-found-banner.svg'
-}
+} as const
 
 export const NAV_LINKS: INavLink[] = [
   { label: 'Home', href: PATHS.home },
   { label: 'Blog', href: PATHS.blog },
   { label: 'Categories', href: PATHS.categories }
-]
+] as const
 
 export const PRIVATE_NAV_LINKS: INavLink[] = [
   { label: 'Profile', href: PATHS.profile },
   { label: 'Settings', href: PATHS.settings }
-]
+] as const
 
 export const FOOTER_NAV_LINKS_LEGAL: INavLink[] = [
-  { label: 'Impressum', href: PATHS.impressum },
-  { label: 'Privacy policy', href: PATHS.privacyPolicy }
-]
+  {
+    label: 'Impressum',
+    icon: ChevronRightIcon,
+    href: PATHS.impressum
+  },
+  {
+    label: 'Privacy policy',
+    icon: ChevronRightIcon,
+    href: PATHS.privacyPolicy
+  }
+] as const
 
 export const SOCIAL_NAV_LINKS: INavLink[] = [
   { icon: FaLinkedinIn, href: 'https://www.linkedin.com/' },
   { icon: FaFacebookF, href: 'https://www.facebook.com/' },
   { icon: FaYoutube, href: 'https://www.youtube.com/' },
   { icon: FaInstagram, href: 'https://www.instagram.com/' }
-]
+] as const
 
 export const AUTH_ERRORS = {
   duplicateCred: 'OAuthAccountNotLinked'
-}
+} as const
 
 export const ONE_HOUR = new Date(new Date().getTime() + 3600 * 1000)
 
@@ -108,21 +118,22 @@ export const ECCEPTED_IMAGES_EXTENTIONS = [
   '.heic',
   '.heif',
   '.webp'
-]
+] as const
 
 export const MAX_FILE_SIZE = 2 * 1024 * 1024 // 2 MB
 
-export const MAX_FILES_COUNT = 8
+export const MAX_FILES_COUNT = 8 as const
 
-export const CLOUDINARY_POSTS_IMAGES_FOLDER = 'blog-posts'
+export const CLOUDINARY_POSTS_IMAGES_FOLDER = 'blog-posts' as const
 
-export const CLOUDINARY_CATEGORIES_IMAGES_FOLDER = 'blog-categories'
+export const CLOUDINARY_CATEGORIES_IMAGES_FOLDER =
+  'blog-categories' as const
 
-export const SCREEN_SM = 480
+export const SCREEN_SM = 480 as const
 
-export const SCREEN_MD = 768
+export const SCREEN_MD = 768 as const
 
-export const SCREEN_LG = 976
+export const SCREEN_LG = 976 as const
 
 export const SLUG_MODEL = /^[a-z-]+$/
 
@@ -130,7 +141,7 @@ export const DEFAULT_CATEGORY = {
   name: 'Uncategorized',
   slug: 'uncategorized',
   description: 'Default category for uncategorized posts.'
-}
+} as const
 
 export const AUTH_OPTIONS = [
   { value: 'github', label: 'GitHub provider' },
@@ -144,10 +155,10 @@ export const PUBLISHED_OPTIONS = [
 ]
 
 // Count of items per page for different lists with pagination
-export const DEFAULT_POSTS_PER_PAGE = 9
-export const PROFILE_POSTS_PER_PAGE = 3
-export const SINGLE_CAT_POSTS_PER_PAGE = 4
-export const DEFAULT_TABLE_ITEMS_PER_PAGE = 10
+export const DEFAULT_POSTS_PER_PAGE = 9 as const
+export const PROFILE_POSTS_PER_PAGE = 3 as const
+export const SINGLE_CAT_POSTS_PER_PAGE = 4 as const
+export const DEFAULT_TABLE_ITEMS_PER_PAGE = 10 as const
 
 // TODO: For storage as an example
 enum InitCategoriesName {

@@ -1,7 +1,8 @@
 import { useState, useEffect, type RefObject } from 'react'
+import { SCREEN_MD } from '~/utils/constants'
 
 /**
- * useContainerWidth - A custom hook to determine the width of a container and classify it into predefined size categories.
+ * useContainer - A custom hook to determine the width of a container and classify it into predefined size categories.
  *
  * @param {RefObject<HTMLElement>} [containerRef] - A React reference to the container element whose width is being observed.
  *
@@ -11,7 +12,7 @@ import { useState, useEffect, type RefObject } from 'react'
  *
  * This hook uses a `ResizeObserver` to monitor changes to the container's width and updates the state accordingly. It cleans up the observer on unmount.
  */
-export const useContainerWidth = (
+export const useContainer = (
   containerRef?: RefObject<HTMLElement>
 ): {
   isContainerBelowMobile: boolean
@@ -33,7 +34,7 @@ export const useContainerWidth = (
       const { width } = containerRef.current.getBoundingClientRect()
 
       setIsContainerBelowMobile((prev) => {
-        return prev !== width < 768 ? width < 768 : prev
+        return prev !== width < SCREEN_MD ? width < SCREEN_MD : prev
       })
 
       setIsContainerMedium((prev) => {

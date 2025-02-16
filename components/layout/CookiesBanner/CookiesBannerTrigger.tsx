@@ -16,7 +16,7 @@ interface IManageCookiesTriggerProps {
   tooltip?: string
 }
 
-const ManageCookiesTrigger = ({ tooltip }: IManageCookiesTriggerProps) => {
+const CookiesBannerTrigger = ({ tooltip }: IManageCookiesTriggerProps) => {
   const [isConsentModalOpen] = useGlobalStore((state) => {
     return [state.isConsentModalOpen]
   })
@@ -69,4 +69,4 @@ const ManageCookiesTrigger = ({ tooltip }: IManageCookiesTriggerProps) => {
   )
 }
 
-export default ManageCookiesTrigger
+export default CookiesBannerTrigger

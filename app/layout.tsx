@@ -10,7 +10,7 @@ import Header from '~/components/layout/Header'
 import Footer from '~/components/layout/Footer'
 import CookiesBanner from '~/components/layout/CookiesBanner'
 import ClientTrackVisit from '~/components/layout/ClientTrackVisit'
-import ManageCookiesTrigger from '~/components/layout/ManageCookiesTrigger'
+import CookiesBannerTrigger from '~/components/layout/CookiesBanner/CookiesBannerTrigger'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -41,7 +41,7 @@ export default async function RootLayout({
         <Providers>
           <CookiesBanner />
 
-          <ManageCookiesTrigger tooltip="Manage cookies preferences" />
+          <CookiesBannerTrigger tooltip="Manage cookies preferences" />
 
           <div className="relative flex h-screen flex-col">
             <Header />

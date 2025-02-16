@@ -6,7 +6,9 @@ import { fontPlayfairDisplay } from '~/utils/constants/fonts'
 const HeroContent = () => {
   const { ref } = useParallax<HTMLDivElement>({
     speed: 15,
-    opacity: [2, 0]
+    opacity: [2, 0],
+    startScroll: -400,
+    endScroll: 400
   })
 
   return (

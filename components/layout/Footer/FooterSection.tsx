@@ -1,20 +1,18 @@
-import { RxComponentPlaceholder } from 'react-icons/rx'
-
 import FooterSectionItem from '~/components/layout/Footer/FooterSectionItem'
 import { cn } from '~/libs/utils'
 import { type INavLink } from '~/types'
+import CategoriesItemsSkeleton from './CategoriesItemsSkeleton'
 
 interface IFooterSectionProps {
   title: string
   sectionItems: INavLink[]
-  withIcons?: boolean
 }
 
-const FooterSection = ({
-  title,
-  sectionItems,
-  withIcons = false
-}: IFooterSectionProps) => {
+const FooterSection = ({ title, sectionItems }: IFooterSectionProps) => {
+  const withIconsLabels = sectionItems.every((item) => {
+    return item?.label && item?.icon
+  })
+
   return (
     <section className="w-full">
       <h4 className="mb-5 text-xl text-white">{title}</h4>
@@ -23,16 +21,16 @@ const FooterSection = ({
         <ul
           className={cn(
             'flex text-sm font-normal text-[hsl(var(--logo-color))]',
-            withIcons
-              ? 'flex-wrap items-center justify-start gap-5'
-              : 'flex-col gap-y-3'
+            withIconsLabels
+              ? 'flex-col gap-y-3'
+              : 'flex-wrap items-center justify-start gap-5'
           )}
         >
-          {sectionItems &&
+          {sectionItems.length > 0 ? (
             sectionItems?.map((item) => {
               const label = item?.label ?? ''
 
-              const Icon = item?.icon ?? RxComponentPlaceholder
+              const Icon = item?.icon
 
               const href = item?.href ?? '#'
 
@@ -42,9 +40,13 @@ const FooterSection = ({
                   label={label}
                   icon={Icon}
                   href={href}
+                  withIconsLabels={withIconsLabels}
                 />
               )
-            })}
+            })
+          ) : (
+            <CategoriesItemsSkeleton />
+          )}
         </ul>
       </nav>
     </section>

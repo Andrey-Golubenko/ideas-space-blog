@@ -43,7 +43,12 @@ const WithSidebar = ({ children, label }: IWithSidebareProps) => {
           </SidebarGroupLabel>
 
           <SidebarGroupContent>
-            <SidebarMenu ref={autoAnimateRef}>{children}</SidebarMenu>
+            <SidebarMenu
+              ref={autoAnimateRef}
+              className={cn(isCategoriesPage && 'gap-3')}
+            >
+              {children}
+            </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>

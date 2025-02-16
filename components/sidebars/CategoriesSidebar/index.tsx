@@ -8,6 +8,7 @@ import { useDataCategories } from '~/hooks/useDataCategories'
 import WithSidebar from '~/components/hoc/WithSidebar'
 
 import SidebarMenuSection from '~/components/sidebars/SidebarMenuSection'
+import CategoriesSkeleton from './CategoriesSkeleton'
 
 const CategoriesSidebar = () => {
   const [categories] = useGlobalStore((state) => {
@@ -15,6 +16,7 @@ const CategoriesSidebar = () => {
   })
 
   const noItems = typeof categories === 'string'
+
   const displayedCategories = noItems ? [] : categories
 
   const dataCategoriesProps = useMemo(() => {
@@ -30,7 +32,7 @@ const CategoriesSidebar = () => {
 
   return (
     <WithSidebar label="Categories">
-      {!!displayedCategories?.length &&
+      {displayedCategories?.length > 0 ? (
         displayedCategories?.map((category) => {
           const isActive = params?.slug === category?.slug
 
@@ -41,7 +43,10 @@ const CategoriesSidebar = () => {
               isActive={isActive}
             />
           )
-        })}
+        })
+      ) : (
+        <CategoriesSkeleton />
+      )}
     </WithSidebar>
   )
 }

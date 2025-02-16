@@ -139,7 +139,7 @@ const FilesField = ({
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
-      'image/*': ECCEPTED_IMAGES_EXTENTIONS
+      'image/*': [...ECCEPTED_IMAGES_EXTENTIONS]
     },
     onDrop,
     onDropRejected: handleDropRejected,

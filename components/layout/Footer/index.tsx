@@ -1,5 +1,7 @@
 'use client'
 
+import { ChevronRightIcon } from 'lucide-react'
+
 import FooterSection from '~/components/layout/Footer/FooterSection'
 import { useCategoriesOptions } from '~/hooks/useCategoriesOptions'
 import {
@@ -15,12 +17,13 @@ export default function Footer() {
   const categoriesItems: INavLink[] = categoriesOptions?.map((catItem) => {
     return {
       label: catItem?.label,
+      icon: ChevronRightIcon,
       href: `${PATHS.category(catItem?.value)}`
     }
   })
 
   return (
-    <footer className="mt-auto rounded-t-lg bg-[hsl(var(--layout-background))] shadow-[0_0_10px_rgba(252,252,252,.4)_inset]">
+    <footer className="z-10 mt-auto rounded-t-lg bg-[hsl(var(--layout-background))] shadow-[0_0_10px_rgba(252,252,252,.4)_inset]">
       <div className="grid grid-cols-1 items-start justify-center gap-y-8 p-12 sm:grid-cols-2 md:grid-cols-3 ">
         <FooterSection
           title="Legal Information"
@@ -35,7 +38,6 @@ export default function Footer() {
         <FooterSection
           title="Contact Us"
           sectionItems={SOCIAL_NAV_LINKS}
-          withIcons
         />
       </div>
 

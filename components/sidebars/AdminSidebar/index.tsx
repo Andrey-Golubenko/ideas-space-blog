@@ -11,7 +11,7 @@ const AdminSidebar = () => {
 
   return (
     <WithSidebar label="Overview">
-      {!!adminDashboard?.length &&
+      {adminDashboard?.length > 0 &&
         adminDashboard?.map((item) => {
           const isActive = pathname === item?.path
 

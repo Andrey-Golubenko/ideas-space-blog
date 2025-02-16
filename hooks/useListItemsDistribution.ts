@@ -1,6 +1,6 @@
 import { type RefObject } from 'react'
 
-import { useContainerWidth } from '~/hooks/useContainerWidth'
+import { useContainer } from '~/hooks/useContainer'
 import { type Categories } from '@prisma/client'
 import {
   type TSkeletonItems,
@@ -37,7 +37,7 @@ export const useListItemsDistribution = ({
   containerRef
 }: IuseListItemsDistributionProps) => {
   const { isContainerBelowMobile, isContainerMedium } =
-    useContainerWidth(containerRef)
+    useContainer(containerRef)
 
   const { isCategory, isPost } = itemType
 
