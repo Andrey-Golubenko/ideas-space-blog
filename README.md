@@ -1,110 +1,188 @@
-<div align="center"><strong>Next.js Ideas Space Blog</strong></div>
-<div align="center">Built with the Next.js 14 App Router</div>
-<br />
+# Ideas Space Blog - A Blogging Platform
+
 <div align="center">
-<a href="https://">View Demo</a>
-<span>
+  <img src="https://img.shields.io/badge/Next.js-14-blue?logo=next.js" alt="Next.js 14">
+  <img src="https://img.shields.io/badge/TypeScript-5.2-blue?logo=typescript" alt="TypeScript">
+  <img src="https://img.shields.io/badge/TailwindCSS-3.3-blue?logo=tailwind-css" alt="Tailwind CSS">
 </div>
 
-## Overview
+## 🌍 Demo
 
-Ideas Space Blog is a modern blog platform built using Next.js 14, leveraging both server and client components for optimal performance and flexibility. This repository showcases how to effectively use the following stack:
+Explore the live demo of Ideas Space Blog to experience its features firsthand:
 
-- Framework - [Next.js 14](https://nextjs.org)
-- Language - [TypeScript](https://www.typescriptlang.org)
-- Styling - [Tailwind CSS](https://tailwindcss.com)
-- State Management - [Zustand](https://zustand-demo.pmnd.rs)
-- Auth - [Auth.js](https://authjs.dev/)
-- Forms - [React Hook Form](https://react-hook-form.com)
-- Linting - [ESLint](https://eslint.org)
-- Formatting - [Prettier](https://prettier.io)
+- **Live Demo**: [https://demo.ideas-space-blog.com](https://demo.ideas-space-blog.com)
 
-## Pages
+## 📌 Core Features
 
-| Pages                                                                                 | Specifications                                                                                                                                                 |
-| :------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Home](https:// )                                                    | Main page of the blog.                                                                                                                                         |
-| [Blog](https:// /blog)                                               | List of blog posts with pagination.                                                                                                                            |
-| [Post](https:// /blog/:postSlug)                                     | Detailed view of a single blog post.                                                                                                                           |
-| [New Post](https:// /blog/new-post)                                  | Form to create a new blog post.                                                                                                                                |
-| [Edit Post](https:// /blog/:postId/edit-post)                        | Form to edit an existing blog post.                                                                                                                            |
-| [Categories](https:// /categories)                                   | List of categories.                                                                                                                                            |
-| [Category](https:// /categories/:categorySlug)                       | Posts filtered by category.                                                                                                                                    |
-| [Profile](https:// /profile)                                         | User profile page.                                                                                                                                             |
-| [Settings](https:// /settings)                                       | User settings page.                                                                                                                                            |
-| [Admin Users](https:// /admin/admin-users)                           | Admin page to manage users.                                                                                                                                    |
-| [Admin Posts](https:// /admin/admin-posts)                           | Admin page to manage posts.                                                                                                                                    |
-| [Admin Categories](https:// /admin/admin-categories)                 | Admin page to manage categories.                                                                                                                               |
-| [Login](https:// /auth)                                              | Login page.                                                                                                                                                    |
-| [Register](https:// /auth/register)                                  | Registration page.                                                                                                                                             |
-| [Email Verification](https:// /auth/email-verification)              | Email verification page.                                                                                                                                       |
-| [Reset Password](https:// /auth/reset-password)                      | Password reset page.                                                                                                                                           |
-| [New Password](https:// /auth/new-password)                          | Page to set a new password.                                                                                                                                                                                                                                |
-| [Privacy Policy](https:// /privacy-policy)                           | Privacy policy page.                                                                                                                                           |
-| [Impressum](https:// /impressum)                                     | Impressum page.                                                                                                                                                |
+- **Multifunctional blogging platform**
+- **Comprehensive user authentication and management system**
+  - Email-based and OAuth provider authentication (e.g., GitHub, Google)
+  - Password recovery
+  - Profile management
+- **Flexible content management system**
+  - Create/edit posts
+  - Manage categories
+  - Upload and process images
+- **Admin panel**
+  - User management
+  - Post moderation
+  - Category management
+- **Analytics and statistics**
+  - Visit tracking
+  - User activity analytics
 
-## Organization
+## 🛠️ Project Features
 
-```plaintext
-app/ # Next.js App Router directory
-│ ├── (auth)/ # Auth route group
-│ │ ├── layout.tsx
-│ │ └── page.tsx
-│ └── api/ # API routes
-│
-├── components/ # Shared components
-│ ├── admin/ # Admin components
-│ │ ├── AdminPosts/
-│ │ └── AdminUsers/
-│ ├── shared/ # Shared components
-│ │ └── DeleteHandlers/
-│ ├── ui/ # UI components (buttons, inputs, etc.)
-│ └── layout/ # Layout components (header, sidebar, etc.)
-│
-├── hooks/ # Custom hooks
-│ └── usePostsFilters.ts
-│
-├── store/ # Zustand stores
-│ └── index.ts
-│
-├── types/ # TypeScript types
-│ └── index.ts
-│
-└── utils/ # Utility functions and constants
-  ├── constants/
-  │ ├── index.ts
-  │ └── routes.ts
-  └── helpers/
-```
+### Integration with External Services
 
-## Getting Started
+- **[Cloudinary](https://cloudinary.com/)** - for media storage and processing
+  - Automatic image optimization
+  - Format conversion
+  - Thumbnail generation
+- **[NEON](https://neon.tech/)** - as the primary database
+  - High performance
+  - Scalability
+  - PostgreSQL support
+- **[Resend](https://resend.com/)** - for email notifications
+  - Handles email delivery for user actions such as registration confirmations and password recovery
+  - Provides reliable and easy integration for sending transactional emails
 
-> [!NOTE]  
-> We are using **Next 14** with **React 18**, follow these steps:
+### Technology Stack
 
-Clone the repo:
+- **[Next.js 14](https://nextjs.org/)** - for SSR and static generation
+- **[TypeScript](https://www.typescriptlang.org/)** - for type safety and code reliability
+- **[Tailwind CSS](https://tailwindcss.com/)** - A utility-first CSS framework that streamlines web development by providing a set of pre-designed utility classes
+- **[Zustand](https://zustand-demo.pmnd.rs/)** - for state management
+- **[Auth.js (aka next-auth.js)](https://authjs.dev/)** - for authentication
+- **[React Hook Form](https://react-hook-form.com/)** - A library that helps you validate forms in React
+- **[ESLint](https://eslint.org/)** - Statically analyzes your code to quickly find problems. It is built into most text editors and you can run ESLint as part of your continuous integration pipeline
+- **[Prettier](https://prettier.io/)** - An opinionated code formatter. It enforces a consistent style by parsing your code and re-printing it with its own rules that take the maximum line length into account, wrapping code when necessary
+- **[Shadcn](https://ui.shadcn.com/)** - A collection of beautifully designed, accessible, and customizable React components that you can use to build modern web applications with Next.js
+- **[Zod](https://zod.dev/)** - Schema validation with static type inference
+- **[Prisma](https://www.prisma.io/)** - Next-generation TypeScript ORM
+- **[Nuqs](https://nuqs.47ng.com/)** - Search params state manager for Next.js applications
+- **[Tanstack Tables](https://tanstack.com/table/v8)** - Headless UI for building powerful tables and datagrids
+
+## 🔧 Required Environment Variables
+
+Create a `.env` file in the root directory with the following variables:
 
 ```bash
-git clone https://github.com/your-repo/ideas-space-blog.git
+DATABASE_URL="your_database_url"
+
+CLOUDINARY_URL="your_cloudinary_url"
+CLOUDINARY_CLOUD_NAME="your_cloudinary_cloud_name"
+CLOUDINARY_API_KEY="your_cloudinary_api_key"
+
+NEXTAUTH_SECRET="your_secret_key"
+NEXTAUTH_URL="http://localhost:3000"
+
+RESEND_API_KEY="your_resend_api_key"
 ```
 
-- `npm install`
-- Add the required environment variables to the `.env` file.
-- `npm run dev`
+## 🚀 Quick Start
 
-You should now be able to access the application at http://localhost:3000.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/ideas-space-blog.git
+   ```
 
-## Scripts
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn
+   # or
+   pnpm install
+   # or
+   bun install
+   ```
 
-- `prepare`: Sets up Husky for pre-commit hooks.
-- `dev`: Starts the development server.
-- `build`: Builds the application for production.
-- `start`: Starts the production server.
-- `lint`: Runs ESLint to check for linting errors.
-- `format`: Formats the code using Prettier.
+3. Set up environment variables (see above)
 
-## License
+4. Start the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   # or
+   pnpm dev
+   # or
+   bun dev
+   ```
 
-This project is licensed under the MIT license.
+5. Build for production:
+   ```bash
+   npm run build
+   # or
+   yarn build
+   # or
+   pnpm build
+   # or
+   bun build
+   ```
 
+6. Start the production server:
+   ```bash
+   npm run start
+   # or
+   yarn start
+   # or
+   pnpm start
+   # or
+   bun start
+   ```
+
+7. Lint and format code:
+   ```bash
+   npm run lint
+   npm run format
+   # or
+   yarn lint
+   yarn format
+   # or
+   pnpm lint
+   pnpm format
+   # or
+   bun lint
+   bun format
+   ```
+
+## 📂 Project Structure
+
+```plaintext
+ideas-space-blog/
+├── app/                  # Next.js App Router
+│   ├── (auth)/           # Authentication route group
+│   ├── (main)/           # Main routes
+│   ├── (protected)/      # Protected routes
+│   ├── api/              # API endpoints
+│   └── page.tsx          # Home page
+├── components/           # Components
+│   ├── admin/            # Admin components
+│   ├── auth/             # Authentication components
+│   ├── categories/       # Category components
+│   ├── layout/           # Layout components
+│   ├── navigation/       # Navigation components
+│   └── ui/               # UI elements
+├── hooks/                # Custom hooks
+├── libs/                 # Utility libraries
+│   ├── auth/             # Authentication logic
+│   └── cloudinary/       # Cloudinary integration
+├── prisma/               # Prisma ORM
+│   └── schema.prisma     # Database schema
+├── services/             # Business logic
+│   ├── account/          # Account management
+│   ├── categories/       # Categories
+│   ├── posts/            # Posts
+│   └── userVisits/       # Visit analytics
+├── store/                # Zustand stores
+├── types/                # TypeScript types
+└── utils/                # Utilities
 ```
+
+
+
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
