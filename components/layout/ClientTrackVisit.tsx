@@ -11,8 +11,11 @@ interface IClientTrackVisitProps {
 }
 
 const ClientTrackVisit = ({ session }: IClientTrackVisitProps) => {
-  const [cookiesConsent, setCookiesConsent] = useGlobalStore((state) => {
-    return [state.cookiesConsent, state.setCookiesConsent]
+  const { cookiesConsent, setCookiesConsent } = useGlobalStore((state) => {
+    return {
+      cookiesConsent: state.cookiesConsent,
+      setCookiesConsent: state.setCookiesConsent
+    }
   })
 
   useEffect(() => {

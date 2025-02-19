@@ -10,8 +10,10 @@ export const useDataCategories = ({
   limit,
   searchQuery
 }: IFetchDataFunctionProps) => {
-  const [getFilteredCategoriesWithPag] = useGlobalStore((state) => {
-    return [state.getFilteredCategoriesWithPag]
+  const { getFilteredCategoriesWithPag } = useGlobalStore((state) => {
+    return {
+      getFilteredCategoriesWithPag: state.getFilteredCategoriesWithPag
+    }
   })
 
   const [debouncedSearchQuery] = useDebounce(searchQuery, 700)

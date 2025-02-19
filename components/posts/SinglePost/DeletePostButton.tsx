@@ -17,8 +17,8 @@ const DeletePostButton = ({
   postId,
   imageUrls
 }: IPostDeleteButtonProps) => {
-  const [setSinglePost] = useGlobalStore((state) => {
-    return [state.setSinglePost]
+  const { setSinglePost } = useGlobalStore((state) => {
+    return { setSinglePost: state.setSinglePost }
   })
 
   const [open, setOpen] = useState(false)

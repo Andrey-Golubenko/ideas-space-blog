@@ -11,8 +11,8 @@ const AdminDashboardHeader = () => {
     to: undefined
   })
 
-  const [getUsersVisits] = useGlobalStore((state) => {
-    return [state.getUsersVisits]
+  const { getUsersVisits } = useGlobalStore((state) => {
+    return { getUsersVisits: state.getUsersVisits }
   })
 
   const handleClick = useCallback(async () => {

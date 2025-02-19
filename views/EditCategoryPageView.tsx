@@ -28,9 +28,12 @@ const EditCategoryPageView = () => {
 
   const [isPending, startTransition] = useTransition()
 
-  const [editableCategory, setEditableCategory] = useGlobalStore(
+  const { editableCategory, setEditableCategory } = useGlobalStore(
     (state) => {
-      return [state.editableCategory, state.setEditableCategory]
+      return {
+        editableCategory: state.editableCategory,
+        setEditableCategory: state.setEditableCategory
+      }
     }
   )
 

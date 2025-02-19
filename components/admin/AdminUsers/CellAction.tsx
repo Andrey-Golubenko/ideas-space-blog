@@ -26,8 +26,8 @@ interface ICellActionProps {
 }
 
 const CellAction = ({ userId }: ICellActionProps) => {
-  const [deleteSingleUser] = useGlobalStore((state) => {
-    return [state.deleteSingleUser]
+  const { deleteSingleUser } = useGlobalStore((state) => {
+    return { deleteSingleUser: state.deleteSingleUser }
   })
 
   const [open, setOpen] = useState(false)

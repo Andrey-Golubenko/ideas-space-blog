@@ -12,8 +12,8 @@ export const useDataPosts = ({
   authorFilter,
   searchQuery
 }: IFetchPostsFunctionProps) => {
-  const [getFilteredPostsWithPag] = useGlobalStore((state) => {
-    return [state.getFilteredPostsWithPag]
+  const { getFilteredPostsWithPag } = useGlobalStore((state) => {
+    return { getFilteredPostsWithPag: state.getFilteredPostsWithPag }
   })
 
   const [debouncedSearchQuery] = useDebounce(searchQuery, 700)

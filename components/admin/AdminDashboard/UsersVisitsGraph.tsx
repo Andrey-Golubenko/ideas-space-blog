@@ -36,8 +36,11 @@ const UsersVisitsGraph = () => {
   const [activeChart, setActiveChart] =
     useState<keyof typeof chartConfig>('desktop')
 
-  const [usersVisits, getUsersVisits] = useGlobalStore((state) => {
-    return [state.usersVisits, state.getUsersVisits]
+  const { usersVisits, getUsersVisits } = useGlobalStore((state) => {
+    return {
+      usersVisits: state.usersVisits,
+      getUsersVisits: state.getUsersVisits
+    }
   })
 
   useEffect(() => {

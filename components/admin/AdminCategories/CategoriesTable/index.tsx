@@ -16,9 +16,13 @@ import { type IRCWithSearchParamsKeyProps } from '~/types'
 const CategoriesTable = ({
   searchParamsKey
 }: IRCWithSearchParamsKeyProps) => {
-  const [categories, categoriesCount, isLoading] = useGlobalStore(
+  const { categories, categoriesCount, isLoading } = useGlobalStore(
     (state) => {
-      return [state.categories, state.categoriesCount, state.isLoading]
+      return {
+        categories: state.categories,
+        categoriesCount: state.categoriesCount,
+        isLoading: state.isLoading
+      }
     }
   )
 

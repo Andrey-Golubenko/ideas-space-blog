@@ -11,8 +11,8 @@ export const useDataUsers = ({
   providerFilter,
   searchQuery
 }: IFetchUsersFunctionProps) => {
-  const [getFilteredUsersWithPag] = useGlobalStore((state) => {
-    return [state.getFilteredUsersWithPag]
+  const { getFilteredUsersWithPag } = useGlobalStore((state) => {
+    return { getFilteredUsersWithPag: state.getFilteredUsersWithPag }
   })
 
   const [debouncedSearchQuery] = useDebounce(searchQuery, 700)

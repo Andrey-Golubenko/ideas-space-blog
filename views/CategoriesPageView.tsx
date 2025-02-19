@@ -10,9 +10,13 @@ import CategoriesList from '~/components/categories/CategoriesList'
 import { type Categories } from '@prisma/client'
 
 const CategoriesPageView = () => {
-  const [categories, categoriesCount, isLoading] = useGlobalStore(
+  const { categories, categoriesCount, isLoading } = useGlobalStore(
     (state) => {
-      return [state.categories, state.categoriesCount, state.isLoading]
+      return {
+        categories: state.categories,
+        categoriesCount: state.categoriesCount,
+        isLoading: state.isLoading
+      }
     }
   )
 

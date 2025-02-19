@@ -10,9 +10,13 @@ import ItemCard from '~/components/shared/ItemCard'
 import CardHeaderContent from '~/components/shared/CardWrapper/CardHeaderContent'
 
 const CategoriesSection = () => {
-  const [categories, categoriesCount, isLoading] = useGlobalStore(
+  const { categories, categoriesCount, isLoading } = useGlobalStore(
     (state) => {
-      return [state.categories, state.categoriesCount, state.isLoading]
+      return {
+        categories: state.categories,
+        categoriesCount: state.categoriesCount,
+        isLoading: state.isLoading
+      }
     }
   )
 

@@ -37,7 +37,6 @@ export const MultiSelect = forwardRef<
       placeholder = 'Select options',
       maxCount = 3,
       modalPopover = false,
-      asChild = false,
       className,
       ...props
     },

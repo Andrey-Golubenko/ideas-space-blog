@@ -28,8 +28,8 @@ const DeleteCategoryHandler = ({
   setIsOpen,
   onCategorytDeleteSuccess
 }: IDeleteCategoryHandlerProps) => {
-  const [deleteSingleCategory] = useGlobalStore((state) => {
-    return [state.deleteSingleCategory]
+  const { deleteSingleCategory } = useGlobalStore((state) => {
+    return { deleteSingleCategory: state.deleteSingleCategory }
   })
 
   const [complDelOpen, setComplDelOpen] = useState(false)

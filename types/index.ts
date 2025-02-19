@@ -19,41 +19,64 @@ import {
   SingleCategorySchema
 } from '~/schemas'
 
+/**
+ * Global store interfaces
+ */
+export interface IPostsSlice {
+  posts: TDeserializedPost[] | string
+  postsCount: number | null
+  singlePost: FullPost | null
+  recentPosts: TDeserializedPost[] | null | string
+
+  getFilteredPostsWithPag: (props: IFetchPostsFunctionProps) => void
+  getSinglePostById: (postId: string) => void
+  getRecentPosts: () => Promise<void>
+  setSinglePost: (post: FullPost | {} | TDeserializedPost) => void
+  deleteSinglePost: (postId: string) => void
+}
+
+export interface ICategoriesSlice {
+  categories: Categories[] | string
+  categoriesCount: number | null
+  editableCategory: Categories | {}
+
+  getFilteredCategoriesWithPag: (props: IFetchDataFunctionProps) => void
+  setEditableCategory: (category: Categories | {}) => void
+  deleteSingleCategory: (categoryId: string) => void
+}
+
+export interface IUsersSlice {
+  users: TDeserializedUser[] | string
+  usersCount: number | null
+
+  getFilteredUsersWithPag: (props: IFetchUsersFunctionProps) => void
+  deleteSingleUser: (userId: string) => void
+}
+
+export interface IVisitsSlice {
+  usersVisits: IUserVisit[] | null
+  browserStats: IBrowserStats[] | null
+
+  getUsersVisits: (startDate?: Date, endDate?: Date) => void
+}
+
+export interface ICookiesSlice {
+  cookiesConsent: boolean
+  isConsentModalOpen: boolean
+
+  setCookiesConsent: (cookiesConsent: boolean) => void
+  setIsConsentModalOpen: (open: boolean) => void
+}
+
 export interface ISlugPageParamsProps {
   params: {
     slug: string
   }
 }
 
-export interface INavLink {
-  href: string
-  label?: string
-  icon?: React.ElementType
-}
-
-export type TFileError = {
-  fileName?: string
-  message: string
-}
-
-export type TActionReturn = Promise<
-  | {
-      error: string
-      success?: undefined
-    }
-  | {
-      success: string
-      error?: undefined
-    }
-  | null
->
-
-export type PostsData =
-  | {
-      posts: TDeserializedPost[]
-      postsCount: number
-    }
-  | string
+/**
+ * Validations schemas types
+ */
 
 export type TManageLoginForm = z.infer<typeof LogInSchema>
 
@@ -68,33 +91,6 @@ export type TManagePostForm = z.infer<typeof ManagePostSchema>
 export type TManageCategoryForm = z.infer<typeof SingleCategorySchema>
 
 export type TManageUserForm = z.infer<typeof SettingsSchema>
-
-export type TListItem = TDeserializedPost | Categories | null
-
-export type TItemType = {
-  isPost?: boolean
-  isCategory?: boolean
-}
-
-export type TItemSize = {
-  isRegular?: boolean
-  isTruncated?: boolean
-}
-
-export type TSkeletonItems = {
-  firstItem?: TListItem
-  secondItem?: TListItem
-  thirdItem?: TListItem
-  fourthItem?: TListItem
-}
-
-export type OnDropType =
-  | (<T extends File>(
-      acceptedFiles: T[],
-      fileRejections: FileRejection[],
-      event: DropEvent
-    ) => void)
-  | undefined
 
 /**
  * Props for MultiSelect component
@@ -158,6 +154,67 @@ export interface IMultiSelectProps
    */
   className?: string
 }
+
+/**
+ * Common types and interfaces
+ */
+
+export interface INavLink {
+  href: string
+  label?: string
+  icon?: React.ElementType
+}
+
+export type TFileError = {
+  fileName?: string
+  message: string
+}
+
+export type TActionReturn = Promise<
+  | {
+      error: string
+      success?: undefined
+    }
+  | {
+      success: string
+      error?: undefined
+    }
+  | null
+>
+
+export type PostsData =
+  | {
+      posts: TDeserializedPost[]
+      postsCount: number
+    }
+  | string
+
+export type TListItem = TDeserializedPost | Categories | null
+
+export type TItemType = {
+  isPost?: boolean
+  isCategory?: boolean
+}
+
+export type TItemSize = {
+  isRegular?: boolean
+  isTruncated?: boolean
+}
+
+export type TSkeletonItems = {
+  firstItem?: TListItem
+  secondItem?: TListItem
+  thirdItem?: TListItem
+  fourthItem?: TListItem
+}
+
+export type OnDropType =
+  | (<T extends File>(
+      acceptedFiles: T[],
+      fileRejections: FileRejection[],
+      event: DropEvent
+    ) => void)
+  | undefined
 
 export interface IPageWithSearchParamsProps {
   searchParams: SearchParams

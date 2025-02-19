@@ -23,14 +23,14 @@ const SinglePostCard = ({
   user,
   serverSinglePost
 }: ISinglePostCardProps) => {
-  const [singlePost, getSinglePostById, setSinglePost, isLoading] =
+  const { singlePost, getSinglePostById, setSinglePost, isLoading } =
     useGlobalStore((state) => {
-      return [
-        state.singlePost,
-        state.getSinglePostById,
-        state.setSinglePost,
-        state.isLoading
-      ]
+      return {
+        singlePost: state.singlePost,
+        getSinglePostById: state.getSinglePostById,
+        setSinglePost: state.setSinglePost,
+        isLoading: state.isLoading
+      }
     })
 
   useEffect(() => {

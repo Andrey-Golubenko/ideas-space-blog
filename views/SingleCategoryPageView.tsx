@@ -19,8 +19,12 @@ interface ISingleCategoryPageViewProps {
 const SingleCategoryPageView = ({
   categorySlug
 }: ISingleCategoryPageViewProps) => {
-  const [posts, postsCount, isLoading] = useGlobalStore((state) => {
-    return [state.posts, state.postsCount, state.isLoading]
+  const { posts, postsCount, isLoading } = useGlobalStore((state) => {
+    return {
+      posts: state.posts,
+      postsCount: state.postsCount,
+      isLoading: state.isLoading
+    }
   })
 
   const { searchQuery, authorFilter, page, setPage } = usePostsFilters()

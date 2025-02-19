@@ -32,8 +32,11 @@ const EditPostPageView = ({ isLogged }: IEditPostViewProps) => {
 
   const router = useRouter()
 
-  const [singlePost, setSinglePost] = useGlobalStore((state) => {
-    return [state.singlePost, state.setSinglePost]
+  const { singlePost, setSinglePost } = useGlobalStore((state) => {
+    return {
+      singlePost: state.singlePost,
+      setSinglePost: state.setSinglePost
+    }
   })
 
   const {

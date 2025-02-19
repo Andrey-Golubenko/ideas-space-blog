@@ -13,8 +13,12 @@ import { DataTableSkeleton } from '~/components/ui/table/DataTableSkeleton'
 import { type IRCWithSearchParamsKeyProps } from '~/types'
 
 const UsersTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
-  const [users, usersCount, isLoading] = useGlobalStore((state) => {
-    return [state.users, state.usersCount, state.isLoading]
+  const { users, usersCount, isLoading } = useGlobalStore((state) => {
+    return {
+      users: state.users,
+      usersCount: state.usersCount,
+      isLoading: state.isLoading
+    }
   })
 
   const noItems = typeof users === 'string'

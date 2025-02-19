@@ -23,8 +23,8 @@ interface ICellActionProps {
 }
 
 const CellAction = ({ postId }: ICellActionProps) => {
-  const [posts, setSinglePost] = useGlobalStore((state) => {
-    return [state.posts, state.setSinglePost]
+  const { posts, setSinglePost } = useGlobalStore((state) => {
+    return { posts: state.posts, setSinglePost: state.setSinglePost }
   })
 
   const [open, setOpen] = useState(false)

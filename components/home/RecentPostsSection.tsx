@@ -12,9 +12,13 @@ import { isEmptyOrUnpublished } from '~/utils/helpers'
 import { type TDeserializedPost } from '~/types'
 
 const RecentPostsSection = () => {
-  const [recentPosts, getRecentPosts, isLoading] = useGlobalStore(
+  const { recentPosts, getRecentPosts, isLoading } = useGlobalStore(
     (state) => {
-      return [state.recentPosts, state.getRecentPosts, state.isLoading]
+      return {
+        recentPosts: state.recentPosts,
+        getRecentPosts: state.getRecentPosts,
+        isLoading: state.isLoading
+      }
     }
   )
 

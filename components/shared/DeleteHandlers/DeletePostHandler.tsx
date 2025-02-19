@@ -31,8 +31,8 @@ const DeletePostHandler = ({
   setIsOpen,
   onPostDeleteSuccess
 }: IDeletePostHandlerProps) => {
-  const [deleteSinglePost] = useGlobalStore((state) => {
-    return [state.deleteSinglePost]
+  const { deleteSinglePost } = useGlobalStore((state) => {
+    return { deleteSinglePost: state.deleteSinglePost }
   })
 
   const [complDelOpen, setComplDelOpen] = useState(false)

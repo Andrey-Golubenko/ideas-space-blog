@@ -43,8 +43,8 @@ const chartConfig = {
 } satisfies ChartConfig
 
 const UsersAgentsGraph = () => {
-  const [browserStats] = useGlobalStore((state) => {
-    return [state.browserStats]
+  const { browserStats } = useGlobalStore((state) => {
+    return { browserStats: state.browserStats }
   })
 
   const totalVisitors =

@@ -11,8 +11,8 @@ import SidebarMenuSection from '~/components/sidebars/SidebarMenuSection'
 import CategoriesSkeleton from './CategoriesSkeleton'
 
 const CategoriesSidebar = () => {
-  const [categories] = useGlobalStore((state) => {
-    return [state.categories, state.categoriesCount, state.isLoading]
+  const { categories } = useGlobalStore((state) => {
+    return { categories: state.categories }
   })
 
   const noItems = typeof categories === 'string'

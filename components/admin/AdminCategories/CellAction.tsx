@@ -24,8 +24,11 @@ interface ICellActionProps {
 }
 
 const CellAction = ({ categoryId }: ICellActionProps) => {
-  const [categories, setEditableCategory] = useGlobalStore((state) => {
-    return [state.categories, state.setEditableCategory]
+  const { categories, setEditableCategory } = useGlobalStore((state) => {
+    return {
+      categories: state.categories,
+      setEditableCategory: state.setEditableCategory
+    }
   })
 
   const [open, setOpen] = useState(false)

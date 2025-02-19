@@ -17,8 +17,8 @@ interface IManageCookiesTriggerProps {
 }
 
 const CookiesBannerTrigger = ({ tooltip }: IManageCookiesTriggerProps) => {
-  const [isConsentModalOpen] = useGlobalStore((state) => {
-    return [state.isConsentModalOpen]
+  const { isConsentModalOpen } = useGlobalStore((state) => {
+    return { isConsentModalOpen: state.isConsentModalOpen }
   })
 
   const [autoAnimateRef] = useAutoAnimate({ duration: 500 })
