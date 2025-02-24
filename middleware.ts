@@ -37,7 +37,9 @@ export default auth(async (request) => {
   const isAdmin = token?.role === UserRole.ADMIN
 
   const isApiAuthRoute = pathname.startsWith(API_AUTH_PREFIX)
-  const isAuthRoute = AUTH_ROUTES.includes(pathname)
+  const isAuthRoute = AUTH_ROUTES.includes(
+    pathname as (typeof AUTH_ROUTES)[number]
+  )
   const isAdminRoute = pathname.startsWith(ADMIN_ROUTS_PREFIX)
 
   let response = NextResponse.next()
