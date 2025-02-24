@@ -26,7 +26,9 @@ export const isPublicRoute = (pathname: string): boolean => {
   const isApiRoute = pathname.includes('/api/')
 
   const isPublic: boolean =
-    PUBLIC_ROUTES.includes(pathname) || isDynamicRoute || isApiRoute
+    PUBLIC_ROUTES.includes(pathname as (typeof PUBLIC_ROUTES)[number]) ||
+    isDynamicRoute ||
+    isApiRoute
 
   return isPublic
 }
