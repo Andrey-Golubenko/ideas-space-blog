@@ -18,7 +18,7 @@ const NoItemsCard = ({ itemName }: INoItemsCardProps) => {
       </CardHeader>
       <CardContent>
         <p className="text-center text-xl">
-          {`Unfartunatly, we did not find any ${itemName} yet.`}
+          {`Unfortunately, we did not find any ${itemName} yet.`}
         </p>
       </CardContent>
     </Card>

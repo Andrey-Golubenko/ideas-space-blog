@@ -1,7 +1,5 @@
 'use server'
 
-import { cache } from 'react'
-
 import { db } from '~/libs/db'
 import { DEFAULT_CATEGORY } from '~/utils/constants'
 import { type Categories } from '@prisma/client'
@@ -110,29 +108,27 @@ export const fetchAllCategoriesTruncated = async (): Promise<
   }
 }
 
-export const fetchSingleCategoryById = cache(
-  async (
-    categoryId: string
-  ): Promise<{
-    id: string
-    name: string
-    slug: string
-    imageUrl: string | null
-    description: string | null
-  } | null> => {
-    try {
-      const category = await db.categories.findUnique({
-        where: {
-          id: categoryId
-        }
-      })
+export const fetchSingleCategoryById = async (
+  categoryId: string
+): Promise<{
+  id: string
+  name: string
+  slug: string
+  imageUrl: string | null
+  description: string | null
+} | null> => {
+  try {
+    const category = await db.categories.findUnique({
+      where: {
+        id: categoryId
+      }
+    })
 
-      return category
-    } catch (error) {
-      throw new Error('Failed to fetch category!')
-    }
+    return category
+  } catch (error) {
+    throw new Error('Failed to fetch category!')
   }
-)
+}
 
 export const fetchUncategorizedCategory = async (): Promise<{
   id: string
@@ -154,27 +150,25 @@ export const fetchUncategorizedCategory = async (): Promise<{
   }
 }
 
-export const fetchPostsIdsInCategory = cache(
-  async (
-    categoryId: string
-  ): Promise<
-    {
-      postId: string
-    }[]
-  > => {
-    try {
-      const postsInCategory = await db.postCategories.findMany({
-        where: {
-          categoryId
-        },
-        select: {
-          postId: true
-        }
-      })
+export const fetchPostsIdsInCategory = async (
+  categoryId: string
+): Promise<
+  {
+    postId: string
+  }[]
+> => {
+  try {
+    const postsInCategory = await db.postCategories.findMany({
+      where: {
+        categoryId
+      },
+      select: {
+        postId: true
+      }
+    })
 
-      return postsInCategory
-    } catch (error) {
-      throw new Error('Failed to fetch post IDs for category!')
-    }
+    return postsInCategory
+  } catch (error) {
+    throw new Error('Failed to fetch post IDs for category!')
   }
-)
+}

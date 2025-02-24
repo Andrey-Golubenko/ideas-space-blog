@@ -10,7 +10,7 @@ const Greeting = () => {
           <h2
             className={`${fontPlayfairDisplay.className} text-outline-gray text-shadow-black bg-[url('/images/hero-banner.webp')] bg-cover bg-clip-text bg-center bg-no-repeat pt-8 text-center text-2xl font-bold !italic tracking-wider text-transparent brightness-200 grayscale sm:text-4xl md:text-6xl`}
           >
-            Welkome !
+            Welcome !
           </h2>
         </CardHeader>
         <CardContent className="grid place-items-center">

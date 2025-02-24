@@ -1,7 +1,5 @@
 'use server'
 
-import { cache } from 'react'
-
 import { db } from '~/libs/db'
 import {
   type IFetchPostsFunctionProps,
@@ -136,46 +134,46 @@ export const fetchFilteredPostsWithPag = async ({
   }
 }
 
-export const getSinglePost = cache(
-  async (slug: string): Promise<FullPost | null> => {
-    try {
-      const initPost = await db.post.findUnique({
-        where: { id: slug },
-        include: {
-          categories: {
-            select: {
-              category: {
-                select: {
-                  id: true,
-                  name: true,
-                  slug: true
-                }
+export const getSinglePost = async (
+  slug: string
+): Promise<FullPost | null> => {
+  try {
+    const initPost = await db.post.findUnique({
+      where: { id: slug },
+      include: {
+        categories: {
+          select: {
+            category: {
+              select: {
+                id: true,
+                name: true,
+                slug: true
               }
             }
           }
         }
-      })
+      }
+    })
 
-      if (!initPost) return null
+    if (!initPost) return null
 
-      const categories = initPost.categories.map((singleCategory) => {
-        return {
-          categoryId: singleCategory?.category?.id,
-          categoryName: singleCategory?.category?.name,
-          categorySlug: singleCategory?.category?.slug
-        }
-      })
+    const categories = initPost.categories.map((singleCategory) => {
+      return {
+        categoryId: singleCategory?.category?.id,
+        categoryName: singleCategory?.category?.name,
+        categorySlug: singleCategory?.category?.slug
+      }
+    })
 
-      const post: FullPost = { ...initPost, categories }
+    const post: FullPost = { ...initPost, categories }
 
-      return post
-    } catch (error) {
-      console.error('Error fetching single post:', error)
+    return post
+  } catch (error) {
+    console.error('Error fetching single post:', error)
 
-      return null
-    }
+    return null
   }
-)
+}
 
 export const fetchRecentPosts = async (): Promise<{
   recentPosts: TDeserializedPost[] | string

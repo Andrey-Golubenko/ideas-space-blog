@@ -8,5 +8,23 @@
     "typescript",
     "typescriptreact",
 ],
-"typescript.tsdk": "node_modules/typescript/lib"
+"typescript.tsdk": "node_modules/typescript/lib",
+"cSpell.words": [
+  "cmdk",
+  "cookieconsent",
+  "dcycixkgj",
+  "Fcexj",
+  "FNYTO",
+  "formkit",
+  "GOCSPX",
+  "googleusercontent",
+  "gvrncvk",
+  "httla",
+  "Mrga",
+  "nuqs",
+  "Playfair",
+  "sonner",
+  "sslmode",
+  "VNEZ"
+]
 }

@@ -33,7 +33,7 @@ Explore the live demo of Ideas Space Blog to experience its features firsthand:
 
 ## 🛠️ Project Features
 
-### Integration with External Services
+### ➤ Integration with External Services
 
 - **[Cloudinary](https://cloudinary.com/)** - for media storage and processing
   - Automatic image optimization
@@ -47,7 +47,7 @@ Explore the live demo of Ideas Space Blog to experience its features firsthand:
   - Handles email delivery for user actions such as registration confirmations and password recovery
   - Provides reliable and easy integration for sending transactional emails
 
-### Technology Stack
+### ➤ Technology Stack
 
 - **[Next.js 14](https://nextjs.org/)** - for SSR and static generation
 - **[TypeScript](https://www.typescriptlang.org/)** - for type safety and code reliability
