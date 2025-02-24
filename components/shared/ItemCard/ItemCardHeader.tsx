@@ -87,7 +87,7 @@ const ItemCardHeader = ({
         className={cn(
           'overflow-hidden',
           isCategory
-            ? 'mx-auto mt-6 h-[200px] w-[200px] rounded-full'
+            ? 'mx-auto mt-6 size-[200px] rounded-full'
             : 'w-full rounded-lg border-b'
         )}
       >
