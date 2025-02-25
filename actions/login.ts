@@ -1,7 +1,6 @@
 'use server'
 
 import { AuthError } from 'next-auth'
-import * as z from 'zod'
 
 import { signIn } from '~/libs/auth/auth'
 import {
@@ -19,9 +18,10 @@ import { LogInSchema } from '~/schemas'
 import { getTwoFactorTokenByEmail } from '~/services/twoFactorToken'
 import { getUserByEmail } from '~/services/user'
 import { getTwoFactorConfirmationByUserId } from '~/services/twoFactorConfirmation'
+import { TManageLoginForm } from '~/types'
 
 export const logIn = async (
-  values: z.infer<typeof LogInSchema>,
+  values: TManageLoginForm,
   callbackUrl?: string | null
 ) => {
   const validatedFields = LogInSchema.safeParse(values)
@@ -56,7 +56,7 @@ export const logIn = async (
       )
 
       if (!twoFactorToken) {
-        return { error: 'Ivalid code!' }
+        return { error: 'Invalid code!' }
       }
 
       if (twoFactorToken.token !== code) {

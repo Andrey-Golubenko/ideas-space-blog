@@ -8,8 +8,11 @@ import { getUserById } from '~/services/user'
 import { getTwoFactorConfirmationByUserId } from '~/services/twoFactorConfirmation'
 import { getAccountByUserId } from '~/services/account'
 import { PATHS } from '~/utils/constants'
+import { UserRole } from '@prisma/client'
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  ...authConfig,
+
   pages: {
     signIn: PATHS.logIn,
     error: PATHS.authError
@@ -67,6 +70,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (session.user) {
         session.user.name = token.name as string | null
         session.user.email = token.email as string
+        session.user.role = token.role as UserRole
         session.user.isOAuth = token.isOAuth
       }
 
@@ -96,7 +100,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }
   },
   adapter: PrismaAdapter(db),
-  session: { strategy: 'jwt' },
-
-  ...authConfig
+  session: { strategy: 'jwt' }
 })

@@ -18,6 +18,14 @@ const { auth } = NextAuth(authConfig)
 // Our Middleware
 export default auth(async (request) => {
   // User agent detection
+
+  const session = await auth()
+  console.log('session :>> ', session)
+
+  const userMiddleware = request?.auth?.user
+
+  console.log('userMiddleware :>> ', userMiddleware)
+
   const ua = userAgent(request)
 
   const isMobile = ua.device.type === 'mobile'
@@ -29,6 +37,8 @@ export default auth(async (request) => {
     req: request,
     secret: process.env.AUTH_SECRET as string
   })
+
+  console.log('token :>> ', token)
 
   // Authentication logic
   const { nextUrl } = request
