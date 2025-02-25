@@ -89,7 +89,7 @@ body {
   @apply grayscale-0 filter;
 }
 
-/* text-stroke black untility */
+/* text-stroke black utility */
 @layer utilities {
   .text-outline-black {
     text-shadow:
@@ -100,7 +100,7 @@ body {
   }
 }
 
-/* text-stroke gray untility */
+/* text-stroke gray utility */
 @layer utilities {
   .text-outline-gray {
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.3);
@@ -108,7 +108,7 @@ body {
   }
 }
 
-/* text-stroke white untility */
+/* text-stroke white utility */
 @layer utilities {
   .text-outline-white {
     -webkit-text-stroke: 1px rgba(255, 255, 255, 1);
@@ -116,7 +116,7 @@ body {
   }
 }
 
-/* text-shadow black untility */
+/* text-shadow black utility */
 @layer utilities {
   .text-shadow-black {
     text-shadow: 0 0 12px rgba(0, 0, 0, 0.6);

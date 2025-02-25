@@ -41,7 +41,7 @@ const ItemCard = ({
       ref={autoAnimateRef}
       className={cn(
         'flex min-h-max flex-col !border-0',
-        isPost && 'rounded-md shadow-md hover:rounded-t-md',
+        isPost && 'rounded-lg shadow-md hover:rounded-t-lg',
         isCategory && isTruncated && 'bg-transparent shadow-none'
       )}
     >

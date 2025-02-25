@@ -2,7 +2,7 @@
 
 import { db } from '~/libs/db'
 
-interface ICheckDailyVisitForGastArgs {
+interface ICheckDailyVisitForGuestArgs {
   ipAddress: string
   userAgent: string
   date: Date
@@ -36,11 +36,11 @@ export const checkDailyVisitForUser = async (
   }
 }
 
-export const checkDailyVisitForGast = async ({
+export const checkDailyVisitForGuest = async ({
   ipAddress,
   userAgent,
   date
-}: ICheckDailyVisitForGastArgs) => {
+}: ICheckDailyVisitForGuestArgs) => {
   try {
     if (ipAddress && userAgent && date) {
       const visit = await db.dailyVisit.findFirst({

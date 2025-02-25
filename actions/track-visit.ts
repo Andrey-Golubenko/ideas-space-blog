@@ -5,7 +5,7 @@ import { startOfDay } from 'date-fns'
 import { tz } from '@date-fns/tz'
 
 import {
-  checkDailyVisitForGast,
+  checkDailyVisitForGuest,
   checkDailyVisitForUser
 } from '~/services/userVisits/visitLog'
 import { createVisit } from '~/actions/create-visit'
@@ -56,15 +56,16 @@ export const trackVisit = async (
   }
 
   if (!session) {
-    const previousGestIpAdress = cookieStore.get('_prevGIA')?.value
+    const previousGestIpAddress = cookieStore.get('_prevGIA')?.value
 
     const previousUserAgent = cookieStore.get('_prevUA')?.value
 
-    const isNotPreviousGast: boolean =
-      previousGestIpAdress !== ipAddress && previousUserAgent !== userAgent
+    const isNotPreviousGuest: boolean =
+      previousGestIpAddress !== ipAddress &&
+      previousUserAgent !== userAgent
 
-    if (isNotPreviousGast) {
-      const visit = await checkDailyVisitForGast({
+    if (isNotPreviousGuest) {
+      const visit = await checkDailyVisitForGuest({
         ipAddress,
         userAgent,
         date: today

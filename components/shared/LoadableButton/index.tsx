@@ -30,7 +30,7 @@ const LoadableButton = ({
       {isDisabled ? (
         <div className="flex items-center">
           <ReloadIcon className="mr-4 h-5 w-5 animate-spin" />
-          <span>Plese wait</span>
+          <span>Please wait</span>
         </div>
       ) : (
         label

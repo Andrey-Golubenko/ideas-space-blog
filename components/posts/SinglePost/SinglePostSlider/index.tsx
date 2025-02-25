@@ -13,7 +13,7 @@ import MainSlider from '~/components/posts/SinglePost/SinglePostSlider/MainSlide
 import ThumbnailsSlider from '~/components/posts/SinglePost/SinglePostSlider/ThumbnailsSlider'
 import { cn } from '~/libs/utils'
 
-interface ISinglePostAliderProps {
+interface ISinglePostSliderProps {
   hasContent: boolean
   imageUrls: string[]
   isAdminPage: boolean
@@ -23,7 +23,7 @@ const SinglePostSlider = ({
   hasContent = false,
   imageUrls,
   isAdminPage
-}: ISinglePostAliderProps) => {
+}: ISinglePostSliderProps) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
 
   const { isMobile } = useScreen()
@@ -57,7 +57,7 @@ const SinglePostSlider = ({
   /** Set to true to enable continuous loop mode.
    * It is taken into account that the sum of the parameters 'slidesPerView' and 'slidesPerGroup' (1 - by default) for thumbnails should be no more than 3 (parameter 'slidesPerView' for thumbnails)
    */
-  const isThumsInLoop = imagesCount - 1 >= 3
+  const isThumbsInLoop = imagesCount - 1 >= 3
 
   /** Set to true to enable continuous loop mode.
    * It is taken into account that the sum of the parameters 'slidesPerView' and 'slidesPerGroup' (1 - by default) for thumbnails should be no more than 1 (parameter 'slidesPerView' for images)
@@ -78,7 +78,7 @@ const SinglePostSlider = ({
       <ThumbnailsSlider
         imageUrls={imageUrls}
         isMobile={isMobile}
-        isThumbsInLoop={isThumsInLoop}
+        isThumbsInLoop={isThumbsInLoop}
         setThumbsSwiper={setThumbsSwiper}
         thumbsHeight={thumbsHeight}
         thumbsPerView={thumbsPerView}

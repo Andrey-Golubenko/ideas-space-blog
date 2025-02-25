@@ -41,14 +41,14 @@ export const columns: ColumnDef<Categories>[] = [
     accessorKey: 'imageUrl',
     header: 'IMAGE',
     cell: ({ row }) => {
-      const categorieSlug = row?.original?.slug
+      const categorySlug = row?.original?.slug
 
       const imageUrl =
         row.getValue<string>('imageUrl') ?? IMAGES_PATHS.noImages
 
       return (
         <Link
-          href={`${PATHS.category(categorieSlug)}`}
+          href={`${PATHS.category(categorySlug)}`}
           className="hover:brightness-110"
         >
           <LoadableImage

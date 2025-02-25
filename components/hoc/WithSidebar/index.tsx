@@ -14,12 +14,12 @@ import {
 import SidebarHeaderSection from '~/components/hoc/WithSidebar/SidebarHeaderSection'
 import { cn } from '~/libs/utils'
 
-interface IWithSidebareProps {
+interface IWithSidebarProps {
   children: Readonly<React.ReactNode>
   label: string
 }
 
-const WithSidebar = ({ children, label }: IWithSidebareProps) => {
+const WithSidebar = ({ children, label }: IWithSidebarProps) => {
   const [autoAnimateRef] = useAutoAnimate()
 
   const { isAdminPage, isCategoriesPage } = usePage()

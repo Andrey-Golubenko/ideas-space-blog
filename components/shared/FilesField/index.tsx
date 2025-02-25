@@ -23,7 +23,7 @@ import NotificationError from '~/components/notifications/NotificationError'
 import DuplicatesFilesList from '~/components/shared/FilesField/DuplicatesFilesList'
 import FilesList from '~/components/shared/FilesField/FilesList'
 import {
-  ECCEPTED_IMAGES_EXTENTIONS,
+  ACCEPTED_IMAGES_EXTENSIONS,
   MAX_FILE_SIZE
 } from '~/utils/constants'
 import { cn } from '~/libs/utils'
@@ -139,7 +139,7 @@ const FilesField = ({
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
-      'image/*': [...ECCEPTED_IMAGES_EXTENTIONS]
+      'image/*': [...ACCEPTED_IMAGES_EXTENSIONS]
     },
     onDrop,
     onDropRejected: handleDropRejected,
@@ -161,7 +161,7 @@ const FilesField = ({
           name={name}
           type="file"
           multiple={multiple}
-          accept={`image/*,${ECCEPTED_IMAGES_EXTENTIONS.join(',')}`}
+          accept={`image/*,${ACCEPTED_IMAGES_EXTENSIONS.join(',')}`}
           disabled={isPending}
           {...getInputProps({ onChange })}
           {...props}
@@ -184,9 +184,9 @@ const FilesField = ({
         </p>
 
         <p className="text-center text-base font-light italic leading-7">
-          The image extention should be only{' '}
+          The image extension should be only{' '}
           <span className="text-red-700">
-            &quot;{ECCEPTED_IMAGES_EXTENTIONS.join(', ')}&ldquo;
+            &quot;{ACCEPTED_IMAGES_EXTENSIONS.join(', ')}&ldquo;
           </span>
           .
         </p>

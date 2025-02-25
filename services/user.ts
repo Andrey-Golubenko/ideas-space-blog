@@ -5,7 +5,7 @@ import { type User } from '@prisma/client'
 import {
   type TDeserializedUser,
   type IFetchUsersFunctionProps,
-  type TTRuncatedAuthors
+  type TTruncatedAuthors
 } from '~/types'
 
 /**
@@ -110,11 +110,11 @@ export const fetchFilteredUsersWithPag = async ({
  * This function retrieves all authors from the database, selecting only their `id` and `name`.
  * It filters out any authors with a `null` name before returning the data.
  *
- * @returns {Promise<TTRuncatedAuthors[] | null>}
+ * @returns {Promise<TTruncatedAuthors[] | null>}
  * Returns an array of truncated author objects. If an error occurs, returns `null`.
  */
 export const fetchAllAuthorsTruncated = async (): Promise<
-  TTRuncatedAuthors[] | null
+  TTruncatedAuthors[] | null
 > => {
   try {
     const dbAuthors = await db.user.findMany({
@@ -126,7 +126,7 @@ export const fetchAllAuthorsTruncated = async (): Promise<
 
     const authors = dbAuthors.filter((author) => {
       return author.name !== null
-    }) as TTRuncatedAuthors[]
+    }) as TTruncatedAuthors[]
 
     return authors
   } catch (error) {

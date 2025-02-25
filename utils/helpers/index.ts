@@ -1,36 +1,66 @@
 import {
   PUBLIC_ROUTES,
   PUBLIC_ROUTES_EXCEPTIONS,
-  PUBLIC_ROUTES_WITH_DYNAMIC_SEGMENT
+  ROUTES_WITH_DYNAMIC_SEGMENT
 } from '~/utils/constants/routes'
 import { type TDeserializedPost } from '~/types'
 
 /**
- * isPublicRoute - Function which checks if a given pathname corresponds to a public route.
+ * isPublicRoute - function which checks if a given pathname corresponds to a public route.
  *
- * This function evaluates the provided `pathname` against predefined constants and determines
- * whether the route is public based on exact matches, dynamic segments, or API routes.
+ * This function Determines whether the given route is public.
  *
- * @param {string} pathname - The pathname to check.
- * @returns {boolean} - `true` if the pathname matches a public route, otherwise `false`.
+ * The function evaluates if the provided pathname should be considered a public route
+ * based on the following criteria:
+ *
+ * 1. If the pathname exactly matches one of the routes in `PUBLIC_ROUTES_EXCEPTIONS`,
+ *    it is considered non-public (returns `false`).
+ * 2. If the pathname exactly matches one of the routes in `PUBLIC_ROUTES`,
+ *    it is considered public (returns `true`).
+ * 3. If the pathname includes the substring `/api/`, it is considered public.
+ * 4. If the pathname starts with any of the prefixes defined in `ROUTES_WITH_DYNAMIC_SEGMENT`,
+ *    it is considered public.
+ * 5. If none of the above conditions are met, the route is considered non-public.
+ *
+ * @param {string} pathname - The route path to check.
+ * @returns {boolean} Returns `true` if the route is public, otherwise returns `false`.
+ *
+ * @example
+ * Assuming:
+ * PUBLIC_ROUTES = ['/blog']
+ * PUBLIC_ROUTES_EXCEPTIONS = ['/blog/new-post']
+ * ROUTES_WITH_DYNAMIC_SEGMENT = ['/blog', '/profile/']
+ *
+ * isPublicRoute('/blog');            // Returns true.
+ * isPublicRoute('/blog/new-post');     // Returns false.
+ * isPublicRoute('/api/posts');         // Returns true.
+ * isPublicRoute('/profile/some-user'); // Returns true.
  */
 export const isPublicRoute = (pathname: string): boolean => {
-  const isDynamicRoute =
-    PUBLIC_ROUTES_WITH_DYNAMIC_SEGMENT.some((route) => {
-      return pathname.startsWith(route)
-    }) &&
-    PUBLIC_ROUTES_EXCEPTIONS.some((route) => {
-      return pathname !== route
-    })
+  // If the route exactly matches an exception, it is NOT public.
+  if (
+    PUBLIC_ROUTES_EXCEPTIONS.includes(
+      pathname as (typeof PUBLIC_ROUTES_EXCEPTIONS)[number]
+    )
+  ) {
+    return false
+  }
 
-  const isApiRoute = pathname.includes('/api/')
+  // If the route exactly matches a public route, it is public.
+  if (PUBLIC_ROUTES.includes(pathname as (typeof PUBLIC_ROUTES)[number])) {
+    return true
+  }
 
-  const isPublic: boolean =
-    PUBLIC_ROUTES.includes(pathname as (typeof PUBLIC_ROUTES)[number]) ||
-    isDynamicRoute ||
-    isApiRoute
+  // If it's an API route, consider it public.
+  if (pathname.includes('/api/')) {
+    return true
+  }
 
-  return isPublic
+  // If the route starts with any of the dynamic segment prefixes, consider it public.
+  const isDynamicRoute = ROUTES_WITH_DYNAMIC_SEGMENT.some((route) =>
+    pathname.startsWith(route)
+  )
+  return isDynamicRoute
 }
 
 /**

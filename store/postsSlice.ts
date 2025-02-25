@@ -85,7 +85,7 @@ export const postsSlice: StateCreator<IPostsSlice, [], [], IPostsSlice> = (
     })
   },
 
-  // After deliting one post
+  // After deleting one post
   deleteSinglePost: (postId: string) => {
     set((state) => {
       const posts = Array.isArray(state?.posts)

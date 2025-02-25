@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import {
   Table,
   TableBody,
@@ -23,29 +22,25 @@ export function DataTableSkeleton({
         <div className="flex w-full items-center justify-between space-x-2 overflow-auto p-1">
           <div className="flex flex-1 items-center space-x-2 space-y-4">
             {searchableColumnCount > 0
-              ? Array.from({ length: searchableColumnCount }).map(
-                  (_, i) => {
-                    return (
-                      <Skeleton
-                        key={i}
-                        className="h-10 w-[150px] lg:w-[250px]"
-                      />
-                    )
-                  }
-                )
+              ? Array.from({ length: searchableColumnCount }).map(() => {
+                  return (
+                    <Skeleton
+                      key={crypto.randomUUID()}
+                      className="h-10 w-[150px] lg:w-[250px]"
+                    />
+                  )
+                })
               : null}
 
             {filterableColumnCount > 0
-              ? Array.from({ length: filterableColumnCount }).map(
-                  (_, i) => {
-                    return (
-                      <Skeleton
-                        key={i}
-                        className="h-10 w-[70px] border-dashed"
-                      />
-                    )
-                  }
-                )
+              ? Array.from({ length: filterableColumnCount }).map(() => {
+                  return (
+                    <Skeleton
+                      key={crypto.randomUUID()}
+                      className="h-10 w-[70px] border-dashed"
+                    />
+                  )
+                })
               : null}
           </div>
 
@@ -59,42 +54,38 @@ export function DataTableSkeleton({
         <ScrollArea className="h-[calc(80vh-220px)] rounded-md border md:h-[calc(90dvh-220px)]">
           <Table>
             <TableHeader>
-              {Array.from({ length: 1 }).map((_, i) => {
+              {Array.from({ length: 1 }).map(() => {
                 return (
                   <TableRow
-                    key={i}
+                    key={crypto.randomUUID()}
                     className="hover:bg-transparent"
                   >
-                    {Array.from({ length: columnCount }).map(
-                      (__, index) => {
-                        return (
-                          <TableHead key={index}>
-                            <Skeleton className="h-8 w-full" />
-                          </TableHead>
-                        )
-                      }
-                    )}
+                    {Array.from({ length: columnCount }).map(() => {
+                      return (
+                        <TableHead key={crypto.randomUUID()}>
+                          <Skeleton className="h-8 w-full" />
+                        </TableHead>
+                      )
+                    })}
                   </TableRow>
                 )
               })}
             </TableHeader>
 
             <TableBody>
-              {Array.from({ length: rowCount }).map((_, i) => {
+              {Array.from({ length: rowCount }).map(() => {
                 return (
                   <TableRow
-                    key={i}
+                    key={crypto.randomUUID()}
                     className="hover:bg-transparent"
                   >
-                    {Array.from({ length: columnCount }).map(
-                      (__, index) => {
-                        return (
-                          <TableCell key={index}>
-                            <Skeleton className="h-8 w-full" />
-                          </TableCell>
-                        )
-                      }
-                    )}
+                    {Array.from({ length: columnCount }).map(() => {
+                      return (
+                        <TableCell key={crypto.randomUUID()}>
+                          <Skeleton className="h-8 w-full" />
+                        </TableCell>
+                      )
+                    })}
                   </TableRow>
                 )
               })}

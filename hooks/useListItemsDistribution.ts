@@ -8,7 +8,7 @@ import {
   type TItemType
 } from '~/types'
 
-interface IuseListItemsDistributionProps {
+interface IUseListItemsDistributionProps {
   itemType: TItemType
   items: TDeserializedPost[] | Categories[] | null | []
   itemsCount?: number | null
@@ -35,7 +35,7 @@ export const useListItemsDistribution = ({
   items,
   itemsCount,
   containerRef
-}: IuseListItemsDistributionProps) => {
+}: IUseListItemsDistributionProps) => {
   const { isContainerBelowMobile, isContainerMedium } =
     useContainer(containerRef)
 

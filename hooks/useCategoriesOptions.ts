@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { fetchAllCategoriesTruncated } from '~/services/categories'
 import { toUpperCaseFirstChar } from '~/utils/helpers'
-import { type IMultiSelectProps, type TTRuncatedCategories } from '~/types'
+import { type IMultiSelectProps, type TTruncatedCategories } from '~/types'
 
 /**
  * Fetches category options for selection.
@@ -29,7 +29,7 @@ export const useCategoriesOptions = (returnMode: 'id' | 'slug') => {
       if (categoriesOptions.length > 0) return
 
       try {
-        const truncatedCategories: TTRuncatedCategories[] =
+        const truncatedCategories: TTruncatedCategories[] =
           (await fetchAllCategoriesTruncated()) ?? []
 
         const options = truncatedCategories.map((category) => {

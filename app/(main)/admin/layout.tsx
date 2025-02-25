@@ -3,7 +3,7 @@ import { SidebarProvider, SidebarTrigger } from '~/components/ui/sidebar'
 import AdminSidebar from '~/components/sidebars/AdminSidebar'
 import WithRole from '~/components/hoc/WithRole'
 
-const AdminLayoute = ({
+const AdminLayout = ({
   children
 }: Readonly<{
   children: React.ReactNode
@@ -24,4 +24,4 @@ const AdminLayoute = ({
   )
 }
 
-export default AdminLayoute
+export default AdminLayout

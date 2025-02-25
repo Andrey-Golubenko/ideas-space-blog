@@ -35,7 +35,7 @@ const AppCardWrapper = ({
     <Card
       className={cn(
         'shadow-md',
-        isAdminPage ? 'mx-auto my-4 @5xl:w-3/5' : 'my-16'
+        isAdminPage ? 'mx-auto my-4 @5xl:w-3/5' : 'my-16 p-1 md:p-6'
       )}
       {...props}
     >

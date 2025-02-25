@@ -1,7 +1,7 @@
 import { SidebarProvider, SidebarTrigger } from '~/components/ui/sidebar'
 import CategoriesSidebar from '~/components/sidebars/CategoriesSidebar'
 
-const SingleCategoryLayoute = ({
+const SingleCategoryLayout = ({
   children
 }: Readonly<{
   children: React.ReactNode
@@ -22,4 +22,4 @@ const SingleCategoryLayoute = ({
   )
 }
 
-export default SingleCategoryLayoute
+export default SingleCategoryLayout

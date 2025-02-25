@@ -28,7 +28,7 @@ const ProfileInfo = ({
   const { canLogout } = useCanLogout(user)
 
   return (
-    <Card className="rouded-xl h-full pb-8 shadow-md">
+    <Card className="h-full rounded-xl pb-8 shadow-md">
       <CardHeader>
         <p className="text-center text-2xl font-semibold">{label}</p>
       </CardHeader>

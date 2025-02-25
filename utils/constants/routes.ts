@@ -30,7 +30,7 @@ export const PUBLIC_ROUTES_EXCEPTIONS = [PATHS.blogNewPost, PATHS.profile]
  * These routes DON'T require authentication.
  * @type {string []}
  */
-export const PUBLIC_ROUTES_WITH_DYNAMIC_SEGMENT = [
+export const ROUTES_WITH_DYNAMIC_SEGMENT = [
   PATHS.blog,
   PATHS.categories,
   PATHS.profilePrefix
@@ -38,7 +38,7 @@ export const PUBLIC_ROUTES_WITH_DYNAMIC_SEGMENT = [
 
 /**
  * An array of routes that are used for authentication.
- * These routes will redirect logged-in ussers to '/settings'.
+ * These routes will redirect logged-in users to '/settings'.
  * @type {string []}
  */
 export const AUTH_ROUTES = [
@@ -67,7 +67,7 @@ export const ADMIN_ROUTS_PREFIX = PATHS.adminRoutsPrefix
 export const API_AUTH_PREFIX = PATHS.authActionsPrefix
 
 /**
- * The default redirect path after loggin in.
+ * The default redirect path after login in.
  * @type {string}
  */
 export const DEFAULT_LOGIN_REDIRECT = PATHS.settings

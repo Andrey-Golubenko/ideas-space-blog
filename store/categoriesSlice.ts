@@ -56,7 +56,7 @@ export const categoriesSlice: StateCreator<
     })
   },
 
-  // After deliting one category
+  // After deleting one category
   deleteSingleCategory: (categoryId: string) => {
     set((state) => {
       const categories = Array.isArray(state?.categories)

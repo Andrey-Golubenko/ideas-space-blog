@@ -16,14 +16,14 @@ const NotFoundPageView = () => {
     <Card className="mb-10 mt-20 grid w-[95%] grid-cols-12 p-6 lg:w-[85%]">
       <CardHeader className="col-span-12">
         <CardHeaderContent
-          title="Page is not availaible"
+          title="Page is not available"
           label="The link you followed may be broken, or the page may have been removed!"
         />
       </CardHeader>
 
       <CardContent className="col-span-12 mb-6 border-b border-dashed border-b-slate-300 p-8 md:col-span-8 md:border-b-0 md:border-r md:border-r-slate-300 md:px-20 md:py-14">
         <Image
-          src={IMAGES_PATHS.notFoudBanner}
+          src={IMAGES_PATHS.notFoundBanner}
           alt="Not found"
           priority
           width={700}

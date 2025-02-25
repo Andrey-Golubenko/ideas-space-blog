@@ -51,17 +51,18 @@ Explore the live demo of Ideas Space Blog to experience its features firsthand:
 
 - **[Next.js 14](https://nextjs.org/)** - for SSR and static generation
 - **[TypeScript](https://www.typescriptlang.org/)** - for type safety and code reliability
+- **[ESLint](https://eslint.org/)** - Statically analyzes your code to quickly find problems. It is built into most text editors and you can run ESLint as part of your continuous integration pipeline
+- **[Prettier](https://prettier.io/)** - An opinionated code formatter. It enforces a consistent style by parsing your code and re-printing it with its own rules that take the maximum line length into account, wrapping code when necessary
+- [**Vitest**](https://vitest.dev/) : For unit and integration testing
 - **[Tailwind CSS](https://tailwindcss.com/)** - A utility-first CSS framework that streamlines web development by providing a set of pre-designed utility classes
 - **[Zustand](https://zustand-demo.pmnd.rs/)** - for state management
 - **[Auth.js (aka next-auth.js)](https://authjs.dev/)** - for authentication
 - **[React Hook Form](https://react-hook-form.com/)** - A library that helps you validate forms in React
-- **[ESLint](https://eslint.org/)** - Statically analyzes your code to quickly find problems. It is built into most text editors and you can run ESLint as part of your continuous integration pipeline
-- **[Prettier](https://prettier.io/)** - An opinionated code formatter. It enforces a consistent style by parsing your code and re-printing it with its own rules that take the maximum line length into account, wrapping code when necessary
 - **[Shadcn](https://ui.shadcn.com/)** - A collection of beautifully designed, accessible, and customizable React components that you can use to build modern web applications with Next.js
 - **[Zod](https://zod.dev/)** - Schema validation with static type inference
 - **[Prisma](https://www.prisma.io/)** - Next-generation TypeScript ORM
-- **[Nuqs](https://nuqs.47ng.com/)** - Search params state manager for Next.js applications
 - **[Tanstack Tables](https://tanstack.com/table/v8)** - Headless UI for building powerful tables and datagrids
+- **[Nuqs](https://nuqs.47ng.com/)** - Search params state manager for Next.js applications
 
 ## 🔧 Required Environment Variables
 

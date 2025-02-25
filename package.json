@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
-    "dev": "NODE_OPTIONS='--trace-warnings' next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

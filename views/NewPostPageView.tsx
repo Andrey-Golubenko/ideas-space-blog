@@ -43,7 +43,7 @@ const NewPostPageView = ({ isLogged }: INewPostPageViewProps) => {
     setSuccess('')
 
     startTransition(async () => {
-      const postid = uuidv4()
+      const postId = uuidv4()
 
       let imageUrls: string[] | null = []
 
@@ -52,7 +52,7 @@ const NewPostPageView = ({ isLogged }: INewPostPageViewProps) => {
       if (newImages?.length) {
         imageUrls = await saveImagesToCld(
           newImages,
-          `${CLOUDINARY_POSTS_IMAGES_FOLDER}/${postid}`,
+          `${CLOUDINARY_POSTS_IMAGES_FOLDER}/${postId}`,
           setError
         )
 
@@ -65,7 +65,7 @@ const NewPostPageView = ({ isLogged }: INewPostPageViewProps) => {
 
       const newPostValues = {
         ...restValues,
-        id: postid,
+        id: postId,
         imageUrls
       }
 

@@ -7,7 +7,7 @@ import { Checkbox } from '~/components/ui/checkbox'
 import CellAction from '~/components/admin/AdminPosts/CellAction'
 import LoadableImage from '~/components/shared/LoadableImage'
 import { IMAGES_PATHS, PATHS } from '~/utils/constants'
-import { type TTRuncatedAuthors, type TDeserializedPost } from '~/types'
+import { type TTruncatedAuthors, type TDeserializedPost } from '~/types'
 
 export const columns: ColumnDef<TDeserializedPost>[] = [
   {
@@ -116,7 +116,7 @@ export const columns: ColumnDef<TDeserializedPost>[] = [
     accessorKey: 'author',
     header: 'AUTHOR',
     cell: ({ row }) => {
-      const author = row.getValue<TTRuncatedAuthors | null>('author') ?? {
+      const author = row.getValue<TTruncatedAuthors | null>('author') ?? {
         id: '',
         name: ''
       }

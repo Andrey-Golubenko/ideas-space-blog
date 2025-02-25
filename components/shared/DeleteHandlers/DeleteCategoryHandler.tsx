@@ -18,7 +18,7 @@ interface IDeleteCategoryHandlerProps {
   imageUrl: string
   isOpen: boolean
   setIsOpen: Dispatch<SetStateAction<boolean>>
-  onCategorytDeleteSuccess: () => void
+  onCategoryDeleteSuccess: () => void
 }
 
 const DeleteCategoryHandler = ({
@@ -26,7 +26,7 @@ const DeleteCategoryHandler = ({
   imageUrl,
   isOpen,
   setIsOpen,
-  onCategorytDeleteSuccess
+  onCategoryDeleteSuccess
 }: IDeleteCategoryHandlerProps) => {
   const { deleteSingleCategory } = useGlobalStore((state) => {
     return { deleteSingleCategory: state.deleteSingleCategory }
@@ -49,7 +49,7 @@ const DeleteCategoryHandler = ({
             richColors: true,
             closeButton: true
           })
-          onCategorytDeleteSuccess()
+          onCategoryDeleteSuccess()
 
           // delete category from store
           deleteSingleCategory(categoryId)
@@ -65,7 +65,7 @@ const DeleteCategoryHandler = ({
         setComplDelOpen(false)
       }
     })
-  }, [onCategorytDeleteSuccess, categoryId])
+  }, [onCategoryDeleteSuccess, categoryId])
 
   const onConfirm = () => {
     startTransition(async () => {

@@ -14,11 +14,11 @@ const EmailVerificationPageView = () => {
   const [error, setError] = useState<string | undefined>()
   const [success, setSuccess] = useState<string | undefined>()
 
-  const searchParamms = useSearchParams()
+  const searchParams = useSearchParams()
 
   const router = useRouter()
 
-  const token = searchParamms.get('token')
+  const token = searchParams.get('token')
 
   const onCheck = async () => {
     if (!token) {
@@ -49,7 +49,7 @@ const EmailVerificationPageView = () => {
       backButtonLabel="Back to login!"
       backButtonHref={PATHS.logIn}
     >
-      <div className="flerx-col flex w-full items-center justify-center gap-4">
+      <div className="flex w-full flex-col items-center justify-center gap-4">
         {!success && !error && <BeatLoader className="h-8" />}
         <NotificationSuccess message={success} />
         <NotificationError message={error} />

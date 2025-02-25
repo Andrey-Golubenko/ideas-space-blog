@@ -277,18 +277,18 @@ export type TDeserializedUser = {
   provider: string
 }
 
-export type TTRuncatedCategories = {
+export type TTruncatedCategories = {
   id: string
   name: string
   slug: string
 }
 
-export type TTRuncatedAuthors = {
+export type TTruncatedAuthors = {
   id: string
   name: string
 }
 
 export type TDeserializedPost = Omit<Post, 'authorId' | 'updatedAt'> & {
-  author: TTRuncatedAuthors | string | null
+  author: TTruncatedAuthors | string | null
   categories: TCategoryOptions[] | null
 }

@@ -65,9 +65,9 @@ export const PATHS = {
 export const IMAGES_PATHS = {
   noImages: '/images/image-placeholder.svg',
   heroBanner: '/images/hero-banner.webp',
-  heroBannerMobil: '/images/hero-baner-mobile.webp',
+  heroBannerMobil: '/images/hero-banner-mobile.webp',
   errorBanner: '/images/error-banner.svg',
-  notFoudBanner: '/images/not-found-banner.svg'
+  notFoundBanner: '/images/not-found-banner.svg'
 } as const
 
 export const NAV_LINKS: INavLink[] = [
@@ -111,7 +111,7 @@ export const FIFTEEN_MINUTES = new Date(new Date().getTime() + 900 * 1000)
 
 export const FIVE_MINUTES = new Date(new Date().getTime() + 300 * 1000)
 
-export const ECCEPTED_IMAGES_EXTENTIONS = [
+export const ACCEPTED_IMAGES_EXTENSIONS = [
   '.jpeg',
   '.jpg',
   '.png',

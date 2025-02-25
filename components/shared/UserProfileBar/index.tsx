@@ -33,9 +33,9 @@ const UserProfileBar = () => {
     }
   }, [currentUser, userId])
 
-  const { isProfilePage } = usePage()
+  const { isProfilePage, isSubProfilePage } = usePage()
 
-  if (isProfilePage) {
+  if (isSubProfilePage || isProfilePage) {
     return (
       <div className="grid-col-1 mx-4 mt-12 grid w-[calc(100%-32px)] gap-x-4 md:grid-cols-3 lg:mx-10 lg:w-[calc(100%-80px)]">
         <div className="col-start-1 flex w-full flex-wrap items-center justify-center gap-x-2 gap-y-3 rounded-xl bg-secondary p-2.5 shadow-sm">

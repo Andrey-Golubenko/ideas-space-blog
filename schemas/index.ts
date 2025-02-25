@@ -46,7 +46,7 @@ export const SingleCategorySchema = z.object({
   )
 })
 
-export const SingleTrucatedCategorySchema = z.object({
+export const SingleTruncatedCategorySchema = z.object({
   id: z.string(),
   name: z.string(),
   slug: z.optional(z.string())
@@ -79,7 +79,7 @@ export const ManagePostSchema = z.object({
   ),
   imageUrls: z.optional(z.array(z.string())),
   categories: z.array(
-    z.union([z.optional(z.string()), SingleTrucatedCategorySchema])
+    z.union([z.optional(z.string()), SingleTruncatedCategorySchema])
   )
 })
 
@@ -192,5 +192,5 @@ export const RegisterSchema = z.object({
     .email({ message: 'Email is required field!' }),
   password: z
     .string()
-    .min(6, { message: 'Minimum 6 carachters required field!' })
+    .min(6, { message: 'Minimum 6 characters required field!' })
 })

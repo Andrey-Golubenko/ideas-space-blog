@@ -1,20 +1,23 @@
 import { usePathname } from 'next/navigation'
 import { PATHS } from '~/utils/constants'
 
-interface IusePageReturn {
+interface IUsePageReturn {
   isAdminPage: boolean
   isCategoriesPage: boolean
   isProfilePage: boolean
+  isSubProfilePage: boolean
 }
 
-export const usePage = (): IusePageReturn => {
+export const usePage = (): IUsePageReturn => {
   const pathname = usePathname()
 
   const isAdminPage: boolean = pathname.includes(PATHS.admin)
 
   const isCategoriesPage: boolean = pathname.includes(PATHS.categories)
 
-  const isProfilePage = pathname.includes(PATHS.profile)
+  const isProfilePage: boolean = pathname === PATHS.profile
 
-  return { isAdminPage, isCategoriesPage, isProfilePage }
+  const isSubProfilePage: boolean = pathname.includes(PATHS.profilePrefix)
+
+  return { isAdminPage, isCategoriesPage, isProfilePage, isSubProfilePage }
 }

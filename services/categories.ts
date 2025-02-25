@@ -5,7 +5,7 @@ import { DEFAULT_CATEGORY } from '~/utils/constants'
 import { type Categories } from '@prisma/client'
 import {
   type IFetchDataFunctionProps,
-  type TTRuncatedCategories
+  type TTruncatedCategories
 } from '~/types'
 
 /**
@@ -79,12 +79,12 @@ export const fetchFilteredCategoriesWithPag = async ({
  * This function retrieves all categories from the database, selecting only their `id`, `name`, and `slug`.
  * It excludes the default category from the results.
  *
- * @returns {Promise<TTRuncatedCategories[] | [] | null>}
+ * @returns {Promise<TTruncatedCategories[] | [] | null>}
  * Returns an array of truncated category objects. If no categories are found, returns an empty array.
  * If an error occurs, returns `null`.
  */
 export const fetchAllCategoriesTruncated = async (): Promise<
-  TTRuncatedCategories[] | [] | null
+  TTruncatedCategories[] | [] | null
 > => {
   try {
     const categories = await db.categories.findMany({

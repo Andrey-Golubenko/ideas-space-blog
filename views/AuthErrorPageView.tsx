@@ -5,7 +5,7 @@ import { PATHS } from '~/utils/constants'
 const AuthErrorPageView = () => {
   return (
     <AuthCardWrapper
-      headerLabel="Somthing went wrong!"
+      headerLabel="Something went wrong!"
       backButtonHref={PATHS.logIn}
       backButtonLabel="Back to login"
     >

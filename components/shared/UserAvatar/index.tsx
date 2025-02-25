@@ -24,7 +24,7 @@ const UserAvatar = ({
     >
       <AvatarImage
         src={userImageUrl || ''}
-        alt="Avatar of ther user"
+        alt="Avatar of the user"
       />
 
       <AvatarFallback className="bg-sky-500">

@@ -74,7 +74,7 @@ const CellAction = ({ categoryId }: ICellActionProps) => {
         imageUrl={imageUrl || ''}
         isOpen={open}
         setIsOpen={setOpen}
-        onCategorytDeleteSuccess={onCategoryDeleteSuccess}
+        onCategoryDeleteSuccess={onCategoryDeleteSuccess}
       />
 
       <DropdownMenu modal={false}>
