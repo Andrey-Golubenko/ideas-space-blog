@@ -12,7 +12,7 @@ declare global {
     emailVerified?: Date | null
     image?: string | null
     password: string | null
-    role?: UserRole
+    role: UserRole
     isTwoFactorEnabled: boolean
     isOAuth: boolean
 

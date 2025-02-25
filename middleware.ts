@@ -18,17 +18,21 @@ const { auth } = NextAuth(authConfig)
 // Our Middleware
 export default auth(async (request) => {
   // User agent detection
+
   const ua = userAgent(request)
 
   const isMobile = ua.device.type === 'mobile'
 
   const ipAddress = request.headers.get('x-forwarded-for') || 'localhost'
 
-  // @ts-ignore
   const token = await getToken({
     req: request,
-    secret: process.env.AUTH_SECRET as string
+    secret: process.env.AUTH_SECRET as string,
+    salt: 'authjs.session-token',
+    raw: false
   })
+
+  console.log('token :>> ', token)
 
   // Authentication logic
   const { nextUrl } = request

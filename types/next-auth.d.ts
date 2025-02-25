@@ -5,7 +5,7 @@ import { UserRole } from '@prisma/client'
 declare module 'next-auth/jwt' {
   interface JWT extends DefaultJWT {
     id: string
-    role?: UserRole
+    role: UserRole
     isTwoFactorEnabled: boolean
     isOAuth: boolean
     sessionId?: string

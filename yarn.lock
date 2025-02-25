@@ -31,19 +31,6 @@
     "@csstools/css-tokenizer" "^3.0.3"
     lru-cache "^10.4.3"
 
-"@auth/core@0.31.0":
-  version "0.31.0"
-  resolved "https://registry.npmjs.org/@auth/core/-/core-0.31.0.tgz"
-  integrity sha512-UKk3psvA1cRbk4/c9CkpWB8mdWrkKvzw0DmEYRsWolUQytQ2cRqx+hYuV6ZCsngw/xbj9hpmkZmAZEyq2g4fMg==
-  dependencies:
-    "@panva/hkdf" "^1.1.1"
-    "@types/cookie" "0.6.0"
-    cookie "0.6.0"
-    jose "^5.1.3"
-    oauth4webapi "^2.4.0"
-    preact "10.11.3"
-    preact-render-to-string "5.2.3"
-
 "@auth/core@0.32.0":
   version "0.32.0"
   resolved "https://registry.npmjs.org/@auth/core/-/core-0.32.0.tgz"
@@ -54,6 +41,19 @@
     cookie "0.6.0"
     jose "^5.1.3"
     oauth4webapi "^2.9.0"
+    preact "10.11.3"
+    preact-render-to-string "5.2.3"
+
+"@auth/core@0.37.2":
+  version "0.37.2"
+  resolved "https://registry.yarnpkg.com/@auth/core/-/core-0.37.2.tgz#0db8a94a076846bd88eb7f9273618513e2285cb2"
+  integrity sha512-kUvzyvkcd6h1vpeMAojK2y7+PAV5H+0Cc9+ZlKYDFhDY31AlvsB+GW5vNO4qE3Y07KeQgvNO9U0QUx/fN62kBw==
+  dependencies:
+    "@panva/hkdf" "^1.2.1"
+    "@types/cookie" "0.6.0"
+    cookie "0.7.1"
+    jose "^5.9.3"
+    oauth4webapi "^3.0.0"
     preact "10.11.3"
     preact-render-to-string "5.2.3"
 
@@ -1543,6 +1543,11 @@
   version "1.1.1"
   resolved "https://registry.npmjs.org/@panva/hkdf/-/hkdf-1.1.1.tgz"
   integrity sha512-dhPeilub1NuIG0X5Kvhh9lH4iW3ZsHlnzwgwbOlgwQ2wG1IqFzsgHqmKPk3WzsdWAeaxKJxgM0+W433RmN45GA==
+
+"@panva/hkdf@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@panva/hkdf/-/hkdf-1.2.1.tgz#cb0d111ef700136f4580349ff0226bf25c853f23"
+  integrity sha512-6oclG6Y3PiDFcoyk8srjLfVKyMfVCKJ27JwNPViuXziFpmdz+MZnZN/aKY0JGXgYuO/VghU0jcOAZgWXZ1Dmrw==
 
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
@@ -3595,6 +3600,11 @@ cookie@0.6.0:
   resolved "https://registry.npmjs.org/cookie/-/cookie-0.6.0.tgz"
   integrity sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==
 
+cookie@0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.7.1.tgz#2f73c42142d5d5cf71310a74fc4ae61670e5dbc9"
+  integrity sha512-6DnInpx7SJ2AK3+CTUE/ZM0vWTUboZCegxhC2xiIydHR9jNuTAASBrfEpHhiGOZw/nX51bHt6YQl8jsGo4y/0w==
+
 core-js-compat@^3.37.1, core-js-compat@^3.38.0:
   version "3.38.1"
   resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.38.1.tgz#2bc7a298746ca5a7bcb9c164bcb120f2ebc09a09"
@@ -5424,6 +5434,11 @@ jose@^5.1.3:
   resolved "https://registry.npmjs.org/jose/-/jose-5.3.0.tgz"
   integrity sha512-IChe9AtAE79ru084ow8jzkN2lNrG3Ntfiv65Cvj9uOCE2m5LNsdHG+9EbxWxAoWRF9TgDOqLN5jm08++owDVRg==
 
+jose@^5.9.3:
+  version "5.10.0"
+  resolved "https://registry.yarnpkg.com/jose/-/jose-5.10.0.tgz#c37346a099d6467c401351a9a0c2161e0f52c4be"
+  integrity sha512-s+3Al/p9g32Iq+oqXxkW//7jk2Vig6FF1CFqzVXoTUXt2qz89YWbL+OwS17NFYEvxC35n0FKeGO2LGYSxeM2Gg==
+
 js-beautify@^1.14.11:
   version "1.15.1"
   resolved "https://registry.npmjs.org/js-beautify/-/js-beautify-1.15.1.tgz"
@@ -5915,12 +5930,12 @@ natural-compare@^1.4.0:
   resolved "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
 
-next-auth@^5.0.0-beta.18:
-  version "5.0.0-beta.18"
-  resolved "https://registry.npmjs.org/next-auth/-/next-auth-5.0.0-beta.18.tgz"
-  integrity sha512-x55L8wZb8PcPGCYA3e/l9tdpd7YL3FDuhas4W8pxq3PjrWJ9OoDxNN0otK9axJamJBbBgjfzTJjVQB6hXoe0ZQ==
+next-auth@^5.0.0-beta.25:
+  version "5.0.0-beta.25"
+  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-5.0.0-beta.25.tgz#3a9f9734e1d8fa5ced545360f1afc24862cb92d5"
+  integrity sha512-2dJJw1sHQl2qxCrRk+KTQbeH+izFbGFPuJj5eGgBZFYyiYYtvlrBeUw1E/OJJxTRjuxbSYGnCTkUIRsIIW0bog==
   dependencies:
-    "@auth/core" "0.31.0"
+    "@auth/core" "0.37.2"
 
 next-svgr@^0.0.2:
   version "0.0.2"
@@ -6037,10 +6052,15 @@ nwsapi@^2.2.16:
   resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.16.tgz#177760bba02c351df1d2644e220c31dfec8cdb43"
   integrity sha512-F1I/bimDpj3ncaNDhfyMWuFqmQDBwDB0Fogc2qpL3BWvkQteFD/8BzWuIRl83rq0DXfm8SGt/HFhLXZyljTXcQ==
 
-oauth4webapi@^2.4.0, oauth4webapi@^2.9.0:
+oauth4webapi@^2.9.0:
   version "2.10.4"
   resolved "https://registry.npmjs.org/oauth4webapi/-/oauth4webapi-2.10.4.tgz"
   integrity sha512-DSoj8QoChzOCQlJkRmYxAJCIpnXFW32R0Uq7avyghIeB6iJq0XAblOD7pcq3mx4WEBDwMuKr0Y1qveCBleG2Xw==
+
+oauth4webapi@^3.0.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/oauth4webapi/-/oauth4webapi-3.3.0.tgz#44d64422dff63e195e34babaa64c2b8459b52059"
+  integrity sha512-ZlozhPlFfobzh3hB72gnBFLjXpugl/dljz1fJSRdqaV2r3D5dmi5lg2QWI0LmUYuazmE+b5exsloEv6toUtw9g==
 
 object-assign@^4.0.1, object-assign@^4.1.1:
   version "4.1.1"
