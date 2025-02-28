@@ -1,17 +1,14 @@
 import NextAuth from 'next-auth'
-import { getToken } from 'next-auth/jwt'
 import { NextResponse, userAgent } from 'next/server'
 
 import authConfig from '~/libs/auth/auth.config'
 import {
   AUTH_ROUTES,
   API_AUTH_PREFIX,
-  DEFAULT_LOGIN_REDIRECT,
-  ADMIN_ROUTS_PREFIX
+  DEFAULT_LOGIN_REDIRECT
 } from '~/utils/constants/routes'
 import { PATHS } from '~/utils/constants'
 import { isPublicRoute } from '~/utils/helpers'
-import { UserRole } from '@prisma/client'
 
 const { auth } = NextAuth(authConfig)
 
@@ -25,26 +22,15 @@ export default auth(async (request) => {
 
   const ipAddress = request.headers.get('x-forwarded-for') || 'localhost'
 
-  const token = await getToken({
-    req: request,
-    secret: process.env.AUTH_SECRET as string,
-    salt: 'authjs.session-token',
-    raw: false
-  })
-
-  console.log('token :>> ', token)
-
   // Authentication logic
   const { nextUrl } = request
   const { pathname } = nextUrl
   const isLoggedIn = !!request?.auth
-  const isAdmin = token?.role === UserRole.ADMIN
 
   const isApiAuthRoute = pathname.startsWith(API_AUTH_PREFIX)
   const isAuthRoute = AUTH_ROUTES.includes(
     pathname as (typeof AUTH_ROUTES)[number]
   )
-  const isAdminRoute = pathname.startsWith(ADMIN_ROUTS_PREFIX)
 
   let response = NextResponse.next()
 
@@ -80,12 +66,6 @@ export default auth(async (request) => {
     )
 
     return response
-  }
-
-  if (isLoggedIn && !isAdmin && isAdminRoute) {
-    response = NextResponse.redirect(
-      new URL(DEFAULT_LOGIN_REDIRECT, nextUrl)
-    )
   }
 
   return response

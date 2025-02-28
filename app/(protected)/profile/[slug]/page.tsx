@@ -10,7 +10,8 @@ const PublicProfilePage = async ({
   const user = await getUserById(slug)
   const currentUser = await getCurrentUser()
 
-  const hasFullAccess: boolean = currentUser?.role === UserRole.ADMIN
+  const hasFullAccess: boolean =
+    currentUser?.role === UserRole.ADMIN || user?.id === currentUser?.id
 
   return (
     <ProfilePageView

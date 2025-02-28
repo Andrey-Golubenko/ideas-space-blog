@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useTransition } from 'react'
-import { useRouter } from 'next/navigation'
+import { useEffect, useState, useTransition } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -26,6 +26,20 @@ interface IEditUserPageViewProps {
 
 const EditUserPageView = ({ user, label }: IEditUserPageViewProps) => {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const isRedirected = searchParams.get('redirected') === 'true'
+
+  useEffect(() => {
+    if (isRedirected) {
+      toast.info(
+        'You should change your role\nto Admin to visit this page',
+        {
+          richColors: true,
+          closeButton: true
+        }
+      )
+    }
+  }, [])
 
   const { data, update } = useSession()
   const currentUser = data?.user

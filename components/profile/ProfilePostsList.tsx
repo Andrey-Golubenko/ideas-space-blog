@@ -20,7 +20,7 @@ const ProfilePostsList = ({
   hasFullAccess,
   isLoading
 }: IProfilePostsListProps<TDeserializedPost>) => {
-  if (noItems) {
+  if (noItems && !hasFullAccess) {
     return <NoItemsCard itemName="posts" />
   }
 
