@@ -12,7 +12,8 @@ import DataTable from '~/components/ui/table/DataTable'
 import { DataTableSkeleton } from '~/components/ui/table/DataTableSkeleton'
 import {
   type TDeserializedPost,
-  type IRCWithSearchParamsKeyProps
+  type IRCWithSearchParamsKeyProps,
+  type IFetchPostsFunctionProps
 } from '~/types'
 
 const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
@@ -43,23 +44,14 @@ const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
     setPage
   } = usePostsFilters()
 
-  const dataTablePostsProps = useMemo(() => {
-    return {
-      page,
-      limit: pageSize,
-      categoriesFilter,
-      publishedFilter,
-      authorFilter,
-      searchQuery
-    }
-  }, [
+  const dataTablePostsProps: IFetchPostsFunctionProps = {
     page,
-    pageSize,
+    limit: pageSize,
     categoriesFilter,
-    publishedFilter,
+    publishedFilter: publishedFilter || 'published.draft',
     authorFilter,
     searchQuery
-  ])
+  }
 
   useDataPosts(dataTablePostsProps)
 

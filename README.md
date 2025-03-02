@@ -10,13 +10,13 @@
 
 Explore the live demo of Ideas Space Blog to experience its features firsthand:
 
-- **Live Demo**: [https://demo.ideas-space-blog.com](https://demo.ideas-space-blog.com)
+- **Live Demo**: [ideas-space-blog](https://ideas-space-blog.vercel.app)
 
 ## 📌 Core Features
 
 - **Multifunctional blogging platform**
 - **Comprehensive user authentication and management system**
-  - Email-based and OAuth provider authentication (e.g., GitHub, Google)
+  - Email-based or OAuth-provider authentication (e.g., GitHub, Google)
   - Password recovery
   - Profile management
 - **Flexible content management system**

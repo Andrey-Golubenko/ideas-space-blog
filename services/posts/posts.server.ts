@@ -50,7 +50,10 @@ export const fetchFilteredPostsWithPag = async ({
               }
             }
           : undefined,
-        published: publishedFilter ? isPublishFilter : undefined,
+        published:
+          publishedFilter !== 'published.draft'
+            ? isPublishFilter
+            : undefined,
         authorId: authorFilter ? { in: authFilters } : undefined
       },
       take: limit,
@@ -101,7 +104,11 @@ export const fetchFilteredPostsWithPag = async ({
               }
             }
           : undefined,
-        published: publishedFilter ? isPublishFilter : undefined
+        published:
+          publishedFilter !== 'published.draft'
+            ? isPublishFilter
+            : undefined,
+        authorId: authorFilter ? { in: authFilters } : undefined
       }
     })
 
@@ -112,7 +119,7 @@ export const fetchFilteredPostsWithPag = async ({
         ? { id: author.id, name: author.name || '' }
         : null
 
-      const formatedCategories = categories.map((singleCategory) => {
+      const formattedCategories = categories.map((singleCategory) => {
         return {
           categoryId: singleCategory?.category?.id,
           categoryName: singleCategory?.category?.name,
@@ -123,7 +130,7 @@ export const fetchFilteredPostsWithPag = async ({
       return {
         ...restValues,
         author: authorData,
-        categories: formatedCategories
+        categories: formattedCategories
       }
     })
 
@@ -180,6 +187,9 @@ export const fetchRecentPosts = async (): Promise<{
 }> => {
   try {
     const posts = await db.post.findMany({
+      where: {
+        published: true
+      },
       take: 3,
       select: {
         id: true,

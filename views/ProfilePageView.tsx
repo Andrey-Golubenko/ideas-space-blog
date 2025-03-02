@@ -1,7 +1,5 @@
 'use client'
 
-import { useMemo } from 'react'
-
 import useGlobalStore from '~/store'
 import { usePage } from '~/hooks/usePage'
 import { usePostsFilters } from '~/hooks/usePostsFilters'
@@ -12,7 +10,6 @@ import ProfilePostsHeader from '~/components/profile/ProfilePostsHeader'
 import ProfileFiltersBox from '~/components/profile/ProfileFiltersBox'
 import DataPagination from '~/components/shared/DataManagement/DataPagination'
 import { cn } from '~/libs/utils'
-import { isEmptyOrUnpublished } from '~/utils/helpers'
 import { PROFILE_POSTS_PER_PAGE } from '~/utils/constants'
 import {
   type IFetchPostsFunctionProps,
@@ -44,19 +41,18 @@ const ProfilePageView = ({
   const postsPerPage = PROFILE_POSTS_PER_PAGE
   const userId = user?.id
 
-  const dataPostsProps: IFetchPostsFunctionProps = useMemo(() => {
-    return {
-      page,
-      limit: postsPerPage,
-      categoriesFilter,
-      authorFilter: userId,
-      searchQuery
-    }
-  }, [page, categoriesFilter, userId, searchQuery])
+  const dataPostsProps: IFetchPostsFunctionProps = {
+    page,
+    limit: postsPerPage,
+    categoriesFilter,
+    authorFilter: userId,
+    searchQuery,
+    publishedFilter: 'published.draft'
+  }
 
   useDataPosts(dataPostsProps)
 
-  const noItems: boolean = isEmptyOrUnpublished(posts)
+  const noItems: boolean = typeof posts === 'string'
 
   return (
     <div

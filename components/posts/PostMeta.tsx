@@ -5,10 +5,12 @@ import Link from 'next/link'
 import { CalendarIcon } from '@radix-ui/react-icons'
 
 import { usePage } from '~/hooks/usePage'
+import { useCurrentUser } from '~/hooks/useCurrentUser'
 import { Skeleton } from '~/components/ui/skeleton'
 import UserAvatar from '~/components/shared/UserAvatar'
 import { getUserById } from '~/services/user'
 import { PATHS } from '~/utils/constants'
+import { UserRole } from '@prisma/client'
 
 interface IPostMetaProps {
   hasContent: boolean
@@ -25,6 +27,8 @@ const PostMeta = ({
 }: IPostMetaProps) => {
   const [postAuthor, setPostAuthor] = useState<UserDTO | null>(null)
 
+  const currentUser = useCurrentUser()
+
   useEffect(() => {
     if (authorId) {
       const author = async () => {
@@ -37,7 +41,7 @@ const PostMeta = ({
     }
   }, [authorId])
 
-  const { isProfilePage } = usePage()
+  const { isProfilePage, isSubProfilePage } = usePage()
 
   if (!hasContent) {
     return (
@@ -56,11 +60,18 @@ const PostMeta = ({
 
   const userImageUrl = postAuthor?.image ? postAuthor?.image : ''
 
+  const userLink =
+    currentUser?.id === postAuthor?.id
+      ? PATHS.profile
+      : PATHS.publicProfile(authorId)
+
+  const isAdmin = currentUser?.role === UserRole.ADMIN
+
   return (
     <div className="mb-2 w-full">
       <div className="mb-2 ">
         <Link
-          href={PATHS.publicProfile(authorId)}
+          href={userLink}
           className="group flex items-center hover:brightness-110"
         >
           <UserAvatar
@@ -88,7 +99,7 @@ const PostMeta = ({
         </time>
       </p>
 
-      {isProfilePage && (
+      {(isProfilePage || (isSubProfilePage && isAdmin)) && (
         <p className="flex items-center pl-3">
           <span className="mr-2">Status: </span>
           <span className="text-sm tracking-wider text-red-800">

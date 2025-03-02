@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDebounce } from 'use-debounce'
 
 import useGlobalStore from '~/store'
@@ -8,38 +8,40 @@ export const useDataPosts = ({
   page,
   limit,
   categoriesFilter,
-  publishedFilter,
+  publishedFilter = 'published',
   authorFilter,
   searchQuery
 }: IFetchPostsFunctionProps) => {
   const { getFilteredPostsWithPag } = useGlobalStore((state) => {
-    return { getFilteredPostsWithPag: state.getFilteredPostsWithPag }
+    return {
+      getFilteredPostsWithPag: state.getFilteredPostsWithPag
+    }
   })
 
   const [debouncedSearchQuery] = useDebounce(searchQuery, 700)
 
   const offset = page ? (page - 1) * limit : limit
 
-  const fetchPosts = useCallback(async () => {
-    await getFilteredPostsWithPag({
-      limit,
-      offset,
-      categoriesFilter,
-      publishedFilter,
-      authorFilter,
-      searchQuery: debouncedSearchQuery
-    })
+  useEffect(() => {
+    const fetchPosts = async () => {
+      getFilteredPostsWithPag({
+        limit,
+        offset,
+        categoriesFilter,
+        publishedFilter,
+        authorFilter,
+        searchQuery: debouncedSearchQuery
+      })
+    }
+
+    fetchPosts()
   }, [
-    getFilteredPostsWithPag,
+    authorFilter,
+    categoriesFilter,
+    debouncedSearchQuery,
     limit,
     offset,
-    categoriesFilter,
     publishedFilter,
-    authorFilter,
-    debouncedSearchQuery
+    getFilteredPostsWithPag
   ])
-
-  useEffect(() => {
-    fetchPosts()
-  }, [fetchPosts])
 }
