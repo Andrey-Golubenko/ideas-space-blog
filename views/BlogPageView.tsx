@@ -29,15 +29,13 @@ const BlogPageView = () => {
 
   const postsPerPage = DEFAULT_POSTS_PER_PAGE
 
-  const dataPostsProps: IFetchPostsFunctionProps = useMemo(() => {
-    return {
-      page,
-      limit: postsPerPage,
-      categoriesFilter,
-      authorFilter,
-      searchQuery
-    }
-  }, [page, categoriesFilter, authorFilter, searchQuery])
+  const dataPostsProps: IFetchPostsFunctionProps = {
+    page,
+    limit: postsPerPage,
+    categoriesFilter,
+    authorFilter,
+    searchQuery
+  }
 
   useDataPosts(dataPostsProps)
 

@@ -16,8 +16,8 @@ export const postsSlice: StateCreator<IPostsSlice, [], [], IPostsSlice> = (
 ) => ({
   posts: [],
   postsCount: null,
-  singlePost: null,
-  recentPosts: null,
+  singlePost: {},
+  recentPosts: [],
 
   getFilteredPostsWithPag: async ({
     limit,
@@ -46,6 +46,12 @@ export const postsSlice: StateCreator<IPostsSlice, [], [], IPostsSlice> = (
 
     set((state) => {
       return { ...state, posts, postsCount, isLoading: false }
+    })
+  },
+
+  setFilteredPostsWithPag: (posts: TDeserializedPost[] | []) => {
+    set((state) => {
+      return { ...state, posts }
     })
   },
 

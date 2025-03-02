@@ -10,13 +10,13 @@
 
 Explore the live demo of Ideas Space Blog to experience its features firsthand:
 
-- **Live Demo**: [https://demo.ideas-space-blog.com](https://demo.ideas-space-blog.com)
+- **Live Demo**: [ideas-space-blog](https://ideas-space-blog.vercel.app)
 
 ## 📌 Core Features
 
 - **Multifunctional blogging platform**
 - **Comprehensive user authentication and management system**
-  - Email-based and OAuth provider authentication (e.g., GitHub, Google)
+  - Email-based or OAuth-provider authentication (e.g., GitHub, Google)
   - Password recovery
   - Profile management
 - **Flexible content management system**
@@ -157,14 +157,25 @@ ideas-space-blog/
 │   ├── (auth)/           # Authentication route group
 │   ├── (main)/           # Main routes
 │   ├── (protected)/      # Protected routes
+│   ├── (slate)/          # Routes with different background
 │   ├── api/              # API endpoints
+│   ├── error.tsx         # Common error page
+│   ├── global.css        # Base and app-wide CSS rules
+│   ├── layout.tsx        # App layout
+│   ├── not-found.tsx     # 404 page
 │   └── page.tsx          # Home page
 ├── components/           # Components
 │   ├── admin/            # Admin components
 │   ├── auth/             # Authentication components
 │   ├── categories/       # Category components
+│   ├── hoc/              # Higher-Order components
+│   ├── home/             # Home-page components
 │   ├── layout/           # Layout components
 │   ├── navigation/       # Navigation components
+│   ├── notification/     # Notification components
+│   ├── posts/            # Posts components
+│   ├── profile/          # Profile components
+│   ├── shared/           # Shared components
 │   └── ui/               # UI elements
 ├── hooks/                # Custom hooks
 ├── libs/                 # Utility libraries
@@ -179,7 +190,8 @@ ideas-space-blog/
 │   └── userVisits/       # Visit analytics
 ├── store/                # Zustand stores
 ├── types/                # TypeScript types
-└── utils/                # Utilities
+├── utils/                # Utilities
+└── views/                # Page-level or screen components
 ```
 
 

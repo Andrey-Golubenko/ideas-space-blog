@@ -18,7 +18,7 @@ const SingleCategoryPostsList = ({
   noItems = false,
   isLoading
 }: ISingleCategoryPostsListProps<TDeserializedPost>) => {
-  if (noItems || typeof data === 'string') {
+  if (noItems) {
     return <NoItemsCard itemName="published posts" />
   }
 
@@ -30,7 +30,8 @@ const SingleCategoryPostsList = ({
       itemSize={{
         isRegular: true
       }}
-      items={data}
+      // the check occurs above according 'noItems', but TS don't see it, so we use 'as'
+      items={data as TDeserializedPost[]}
       itemsCount={totalItems}
       isLoading={isLoading}
       dataContainerClasses="!mb-0"

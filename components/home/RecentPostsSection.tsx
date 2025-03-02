@@ -47,7 +47,7 @@ const RecentPostsSection = () => {
             itemSize={{
               isTruncated: true
             }}
-            // The null and string checks are performed in the function isEmptyOrUnpublished()
+            // the check occurs above according 'noItems', but TS don't see it, so we use 'as'
             items={recentPosts as TDeserializedPost[]}
             itemsCount={3}
             isLoading={isLoading}

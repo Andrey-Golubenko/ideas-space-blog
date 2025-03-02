@@ -1,7 +1,5 @@
 'use client'
 
-import { useMemo } from 'react'
-
 import useGlobalStore from '~/store'
 import { usePostsFilters } from '~/hooks/usePostsFilters'
 import { useDataPosts } from '~/hooks/useDataPosts'
@@ -31,15 +29,13 @@ const SingleCategoryPageView = ({
 
   const postsPerPage = SINGLE_CAT_POSTS_PER_PAGE
 
-  const dataPostsProps: IFetchPostsFunctionProps = useMemo(() => {
-    return {
-      page,
-      limit: postsPerPage,
-      categoriesFilter: categorySlug,
-      authorFilter,
-      searchQuery
-    }
-  }, [authorFilter, categorySlug, page, searchQuery])
+  const dataPostsProps: IFetchPostsFunctionProps = {
+    page,
+    limit: postsPerPage,
+    categoriesFilter: categorySlug,
+    authorFilter,
+    searchQuery
+  }
 
   useDataPosts(dataPostsProps)
 

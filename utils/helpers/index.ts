@@ -172,28 +172,25 @@ export const getImageNames = (imageUrls: string[]) => {
 }
 
 /**
- * isEmptyOrUnpublished - Function which checks if a list of posts is either empty or contains unpublished posts.
+ * isEmptyOrUnpublished - Function which checks if a list of posts is either empty or contains only unpublished posts.
  *
- * This function checks if the provided list of posts is either empty or contains posts with a `published` value of `false`.
+ * This function checks if the provided list of posts is either empty or contains only posts with a `published` value of `false`.
  * It also handles the case when the input is a string.
  *
  * @param {Post[] | TDeserializedPost[] | string} posts - The posts to check.
- * @returns {boolean} - `true` if the posts list is empty or contains unpublished posts, otherwise `false`.
+ * @returns {boolean} - `true` if the posts list is empty or contains only unpublished posts, otherwise `false`.
  */
 export const isEmptyOrUnpublished = (
-  posts: TDeserializedPost[] | string | null
+  posts: TDeserializedPost[] | string
 ): boolean => {
   const noItems = typeof posts === 'string'
 
-  const oneUnpublished = Array.isArray(posts)
-    ? !!posts?.filter((post) => {
-        return !post.published
-      })?.length
-    : false
+  const areAllUnpublished =
+    Array.isArray(posts) && posts.length > 0
+      ? posts?.every((post) => !post.published)
+      : false
 
-  const isNotExist = posts === null
-
-  return oneUnpublished || noItems || isNotExist
+  return noItems || areAllUnpublished
 }
 
 /**

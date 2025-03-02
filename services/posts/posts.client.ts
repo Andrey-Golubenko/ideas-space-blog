@@ -13,7 +13,7 @@ export const fetchPosts = async ({
       `${process.env.NEXT_PUBLIC_APP_URL}/api/posts?limit=${limit}&offset=${offset}&categories=${categoriesFilter}&published=${publishedFilter}&authors=${authorFilter}&q=${searchQuery}`,
       {
         next: {
-          revalidate: 60 // sec
+          revalidate: 10 // sec
         }
       }
     )
@@ -42,7 +42,7 @@ export const fetchSinglePostById = async (
       `${process.env.NEXT_PUBLIC_APP_URL}/api/single-post?q=${postId}`,
       {
         next: {
-          revalidate: 600
+          revalidate: 10
         }
       }
     )
