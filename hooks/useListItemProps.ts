@@ -1,7 +1,7 @@
 import { useItemType } from '~/hooks/useItemType'
 import { IMAGES_PATHS } from '~/utils/constants'
 import { toUpperCaseFirstChar } from '~/utils/helpers'
-import { type Categories } from '@prisma/client'
+import { PostStatus, type Categories } from '@prisma/client'
 import { type TDeserializedPost, type TListItem } from '~/types'
 
 /**
@@ -15,7 +15,7 @@ import { type TDeserializedPost, type TListItem } from '~/types'
  * - `itemContent` (`string`): A truncated version of the item's content or description (up to 120 characters for posts).
  * - `itemSlug` (`string`): The slug or ID of the item.
  * - `authorId` (`string`): The author's ID (available only for posts).
- * - `isPublishes` (`boolean`): Indicates whether the post is published (available only for posts).
+ * - `itemStatus` (`string`): Indicates whether the post is published or draft(available only for posts).
  * - `itemCreatedAt` (`string`): The creation date of the item, formatted as a locale date string in German (only for posts).
  */
 export const useListItemProps = (item?: TListItem) => {
@@ -27,7 +27,7 @@ export const useListItemProps = (item?: TListItem) => {
   let itemSlug = ''
   let itemCreatedAt = ''
   let authorId = ''
-  let isPublishes = false
+  let itemStatus: PostStatus = PostStatus.DRAFT
 
   if (isPost) {
     const post = item as TDeserializedPost
@@ -46,7 +46,7 @@ export const useListItemProps = (item?: TListItem) => {
 
     authorId = (post?.author as { id: string; name: string })?.id ?? ''
 
-    isPublishes = post?.published ?? false
+    itemStatus = post?.status ?? PostStatus.DRAFT
 
     itemCreatedAt =
       new Date(post?.createdAt)?.toLocaleDateString('de') ?? ''
@@ -74,7 +74,7 @@ export const useListItemProps = (item?: TListItem) => {
     itemContent,
     itemSlug,
     authorId,
-    isPublishes,
+    itemStatus,
     itemCreatedAt
   }
 }

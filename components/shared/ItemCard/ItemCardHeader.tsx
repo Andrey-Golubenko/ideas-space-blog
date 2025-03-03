@@ -31,7 +31,7 @@ const ItemCardHeader = ({
     itemSlug,
     itemCreatedAt,
     authorId,
-    isPublishes
+    itemStatus
   } = useListItemProps(item)
 
   const { isPost, isCategory } = itemType
@@ -118,7 +118,7 @@ const ItemCardHeader = ({
               hasContent
               authorId={authorId}
               itemCreatedAt={itemCreatedAt}
-              isPublished={isPublishes}
+              itemStatus={itemStatus}
             />
           </div>
         )}

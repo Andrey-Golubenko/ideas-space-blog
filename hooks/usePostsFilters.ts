@@ -18,9 +18,9 @@ export const usePostsFilters = () => {
     searchParams.categories.withOptions({ shallow: false }).withDefault('')
   )
 
-  const [publishedFilter, setPublishedFilter] = useQueryState(
-    'published',
-    searchParams.published.withOptions({ shallow: false }).withDefault('')
+  const [statusFilter, setStatusFilter] = useQueryState(
+    'status',
+    searchParams.status.withOptions({ shallow: false }).withDefault('')
   )
 
   const [authorFilter, setAuthorFilter] = useQueryState(
@@ -38,14 +38,14 @@ export const usePostsFilters = () => {
   const resetFilters = useCallback(() => {
     setSearchQuery(null)
     setCategoriesFilter(null)
-    setPublishedFilter(null)
+    setStatusFilter(null)
     setAuthorFilter(null)
 
     setPage(1)
   }, [
     setSearchQuery,
     setCategoriesFilter,
-    setPublishedFilter,
+    setStatusFilter,
     setAuthorFilter,
     setPage
   ])
@@ -54,18 +54,18 @@ export const usePostsFilters = () => {
     return (
       !!searchQuery ||
       !!categoriesFilter ||
-      !!publishedFilter ||
+      !!statusFilter ||
       !!authorFilter
     )
-  }, [searchQuery, categoriesFilter, publishedFilter, authorFilter])
+  }, [searchQuery, categoriesFilter, statusFilter, authorFilter])
 
   return {
     searchQuery,
     setSearchQuery,
     categoriesFilter,
     setCategoriesFilter,
-    publishedFilter,
-    setPublishedFilter,
+    statusFilter,
+    setStatusFilter,
     authorFilter,
     setAuthorFilter,
     page,

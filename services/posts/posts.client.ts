@@ -4,13 +4,22 @@ export const fetchPosts = async ({
   limit,
   offset,
   categoriesFilter,
-  publishedFilter,
+  statusFilter,
   authorFilter,
   searchQuery
 }: IFetchPostsFunctionProps): Promise<PostsData> => {
   try {
+    const params = new URLSearchParams()
+
+    if (limit !== undefined) params.append('limit', String(limit))
+    if (offset !== undefined) params.append('offset', String(offset))
+    if (categoriesFilter) params.append('categories', categoriesFilter)
+    if (statusFilter) params.append('status', statusFilter)
+    if (authorFilter) params.append('authors', authorFilter)
+    if (searchQuery) params.append('q', searchQuery)
+
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/posts?limit=${limit}&offset=${offset}&categories=${categoriesFilter}&published=${publishedFilter}&authors=${authorFilter}&q=${searchQuery}`,
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/posts?${params.toString()}`,
       {
         next: {
           revalidate: 10 // sec
@@ -23,11 +32,9 @@ export const fetchPosts = async ({
     }
 
     const data: PostsData = await response.json()
-
     return data
   } catch (error) {
     console.error(error)
-
     throw new Error(
       (error as Error)?.message || 'An unknown error occurred!'
     )

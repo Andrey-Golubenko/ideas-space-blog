@@ -262,7 +262,7 @@ export interface IFetchDataFunctionProps {
 
 export interface IFetchPostsFunctionProps extends IFetchDataFunctionProps {
   categoriesFilter?: string | null
-  publishedFilter?: string | null
+  statusFilter?: string | null
   authorFilter?: string | null
 }
 

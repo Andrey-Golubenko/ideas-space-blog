@@ -3,6 +3,7 @@
 import WithDataList from '~/components/hoc/WithDataList'
 import ItemCard from '~/components/shared/ItemCard'
 import NoItemsCard from '~/components/posts/NoItemsCard'
+import { PostStatus } from '@prisma/client'
 import { type TDeserializedPost } from '~/types'
 
 interface IProfilePostsListProps<TData> {
@@ -26,7 +27,7 @@ const ProfilePostsList = ({
 
   const publishedPosts =
     data?.filter((post) => {
-      return post.published
+      return post?.status === PostStatus.PUBLISHED
     }) || []
 
   const displayedPosts = hasFullAccess ? data : publishedPosts

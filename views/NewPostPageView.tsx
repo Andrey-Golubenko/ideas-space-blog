@@ -12,6 +12,7 @@ import PostManageForm from '~/components/shared/PostManageForm'
 import { newPost } from '~/actions/new-post'
 import { CLOUDINARY_POSTS_IMAGES_FOLDER } from '~/utils/constants'
 import { saveImagesToCld } from '~/services/imagesProcessing'
+import { PostStatus } from '@prisma/client'
 import { ManagePostSchema } from '~/schemas'
 import { TManagePostForm } from '~/types'
 
@@ -30,7 +31,7 @@ const NewPostPageView = ({ isLogged }: INewPostPageViewProps) => {
       title: '',
       content: '',
       files: [],
-      published: false,
+      status: PostStatus.DRAFT,
       categories: []
     },
     resolver: zodResolver(ManagePostSchema)

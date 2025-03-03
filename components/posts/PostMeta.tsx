@@ -10,20 +10,20 @@ import { Skeleton } from '~/components/ui/skeleton'
 import UserAvatar from '~/components/shared/UserAvatar'
 import { getUserById } from '~/services/user'
 import { PATHS } from '~/utils/constants'
-import { UserRole } from '@prisma/client'
+import { UserRole, PostStatus } from '@prisma/client'
 
 interface IPostMetaProps {
   hasContent: boolean
   authorId: string
   itemCreatedAt: string
-  isPublished?: boolean
+  itemStatus: PostStatus
 }
 
 const PostMeta = ({
   hasContent,
   authorId,
   itemCreatedAt,
-  isPublished
+  itemStatus
 }: IPostMetaProps) => {
   const [postAuthor, setPostAuthor] = useState<UserDTO | null>(null)
 
@@ -67,6 +67,9 @@ const PostMeta = ({
 
   const isAdmin = currentUser?.role === UserRole.ADMIN
 
+  const formattedStatus =
+    itemStatus.charAt(0).toUpperCase() + itemStatus.slice(1).toLowerCase()
+
   return (
     <div className="mb-2 w-full">
       <div className="mb-2 ">
@@ -103,7 +106,7 @@ const PostMeta = ({
         <p className="flex items-center pl-3">
           <span className="mr-2">Status: </span>
           <span className="text-sm tracking-wider text-red-800">
-            {isPublished ? 'Published' : 'Draft'}
+            {formattedStatus}
           </span>
         </p>
       )}

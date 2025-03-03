@@ -11,7 +11,7 @@ export const searchParams = {
   q: parseAsString,
   authProvider: parseAsString,
   categories: parseAsString,
-  published: parseAsString,
+  status: parseAsString,
   author: parseAsString
 }
 

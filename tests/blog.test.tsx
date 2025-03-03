@@ -6,6 +6,7 @@ import { ParallaxProvider } from 'react-scroll-parallax'
 import BlogPageView from '~/views/BlogPageView'
 import useGlobalStore from '~/store'
 import { withNuqsTestingAdapter } from 'nuqs/adapters/testing'
+import { PostStatus } from '@prisma/client'
 
 describe('Blog Page Integration Tests', () => {
   beforeEach(() => {
@@ -15,8 +16,8 @@ describe('Blog Page Integration Tests', () => {
         setSearchQuery: vi.fn(),
         categoriesFilter: '',
         setCategoriesFilter: vi.fn(),
-        publishedFilter: '',
-        setPublishedFilter: vi.fn(),
+        statusFilter: '',
+        setStatusFilter: vi.fn(),
         authorFilter: null,
         setAuthorFilter: vi.fn(),
         page: 1,
@@ -69,7 +70,7 @@ describe('Blog Page Integration Tests', () => {
           id: '1',
           title: 'Test Post 1',
           content: 'Test content 1',
-          published: true
+          status: PostStatus.PUBLISHED
         }
       ]
 

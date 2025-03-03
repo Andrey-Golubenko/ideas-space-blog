@@ -4,6 +4,7 @@ import { Card } from '~/components/ui/card'
 import DataSearch from '~/components/shared/DataManagement/DataSearch'
 import DataResetFilter from '~/components/shared/DataManagement/DataResetFilter'
 import DataFilterBox from '~/components/shared/DataManagement/DataFilterBox'
+import { POST_STATUS_OPTIONS } from '~/utils/constants'
 
 const ProfileFiltersBox = () => {
   const { categoriesOptions } = useCategoriesOptions('slug')
@@ -13,6 +14,8 @@ const ProfileFiltersBox = () => {
     setSearchQuery,
     categoriesFilter,
     setCategoriesFilter,
+    statusFilter,
+    setStatusFilter,
     isAnyFilterActive,
     resetFilters,
     setPage
@@ -29,7 +32,7 @@ const ProfileFiltersBox = () => {
         />
       </div>
 
-      <div className="col-span-1 grid place-content-center max-[375px]:grid-cols-1 min-[375px]:place-content-start">
+      <div className="col-span-1 grid grid-cols-2 place-content-between gap-3 max-[375px]:grid-cols-1 min-[375px]:col-span-2">
         <DataFilterBox
           title="Category"
           options={categoriesOptions}
@@ -37,14 +40,24 @@ const ProfileFiltersBox = () => {
           setFilterValue={setCategoriesFilter}
           setPage={setPage}
         />
-      </div>
 
-      <div className="col-span-1 grid place-content-center max-[375px]:grid-cols-1 min-[375px]:place-content-end">
-        <DataResetFilter
-          isFilterActive={isAnyFilterActive}
-          onReset={resetFilters}
+        <DataFilterBox
+          title="Status"
+          options={POST_STATUS_OPTIONS}
+          filterValue={statusFilter}
+          setFilterValue={setStatusFilter}
+          setPage={setPage}
         />
       </div>
+
+      {isAnyFilterActive && (
+        <div className="col-span-1 grid grid-cols-2 place-content-between gap-3 max-[375px]:grid-cols-1 min-[375px]:col-span-2">
+          <DataResetFilter
+            isFilterActive={isAnyFilterActive}
+            onReset={resetFilters}
+          />
+        </div>
+      )}
     </Card>
   )
 }

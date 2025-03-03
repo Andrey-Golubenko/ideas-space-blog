@@ -82,7 +82,7 @@ const PostManageForm = ({
 
           <SwitchField
             control={form.control}
-            name="published"
+            name="status"
             label="Publish the post?"
             description="Enabled the ability for all users to view your post."
             isPending={isDisabled}

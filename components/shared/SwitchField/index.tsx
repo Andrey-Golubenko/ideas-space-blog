@@ -10,6 +10,7 @@ import {
   FormDescription
 } from '~/components/ui/form'
 import { Switch } from '~/components/ui/switch'
+import { PostStatus } from '@prisma/client'
 
 interface ISwitchFieldProps {
   name: string
@@ -34,6 +35,8 @@ const SwitchField = ({
       control={control}
       name={name}
       render={({ field }) => {
+        const isPublished = field.value === PostStatus.PUBLISHED
+
         return (
           <FormItem className="flex flex-row items-center justify-between rounded-lg p-3 shadow-sm">
             <div className="space-y-0.5">
@@ -44,8 +47,12 @@ const SwitchField = ({
             <FormControl>
               <Switch
                 disabled={isPending}
-                checked={field.value}
-                onCheckedChange={field.onChange}
+                checked={isPublished}
+                onCheckedChange={(checked) =>
+                  field.onChange(
+                    checked ? PostStatus.PUBLISHED : PostStatus.DRAFT
+                  )
+                }
                 {...props}
               />
             </FormControl>

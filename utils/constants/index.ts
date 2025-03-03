@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-cycle
 import {
   FaLinkedinIn,
   FaFacebookF,
@@ -149,7 +148,7 @@ export const AUTH_OPTIONS = [
   { value: 'local', label: 'Local provider' }
 ]
 
-export const PUBLISHED_OPTIONS = [
+export const POST_STATUS_OPTIONS = [
   { value: 'published', label: 'Published' },
   { value: 'draft', label: 'Draft' }
 ]

@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
   const limit = searchParams.get('limit')
   const offset = searchParams.get('offset')
   const categoriesFilter = searchParams.get('categories')
-  const publishedFilter = searchParams.get('published')
+  const statusFilter = searchParams.get('status')
   const authorFilter = searchParams.get('authors')
   const searchQuery = searchParams.get('q')
 
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     limit: Number(limit) ?? DEFAULT_POSTS_PER_PAGE,
     offset: Number(offset) ?? 0,
     categoriesFilter,
-    publishedFilter,
+    statusFilter,
     authorFilter,
     searchQuery
   }

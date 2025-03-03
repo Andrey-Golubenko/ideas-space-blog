@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useMemo } from 'react'
+import { Suspense } from 'react'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
 import useGlobalStore from '~/store'
@@ -37,7 +37,7 @@ const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
 
   const {
     categoriesFilter,
-    publishedFilter,
+    statusFilter,
     authorFilter,
     searchQuery,
     page,
@@ -48,7 +48,7 @@ const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
     page,
     limit: pageSize,
     categoriesFilter,
-    publishedFilter: publishedFilter || 'published.draft',
+    statusFilter,
     authorFilter,
     searchQuery
   }

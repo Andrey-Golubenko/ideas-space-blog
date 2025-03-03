@@ -8,7 +8,7 @@ export const useDataPosts = ({
   page,
   limit,
   categoriesFilter,
-  publishedFilter = 'published',
+  statusFilter,
   authorFilter,
   searchQuery
 }: IFetchPostsFunctionProps) => {
@@ -28,7 +28,7 @@ export const useDataPosts = ({
         limit,
         offset,
         categoriesFilter,
-        publishedFilter,
+        statusFilter,
         authorFilter,
         searchQuery: debouncedSearchQuery
       })
@@ -41,7 +41,7 @@ export const useDataPosts = ({
     debouncedSearchQuery,
     limit,
     offset,
-    publishedFilter,
+    statusFilter,
     getFilteredPostsWithPag
   ])
 }

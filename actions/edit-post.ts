@@ -50,7 +50,7 @@ export const editPost = async (
 
   const uncategorizedCategory = await fetchUncategorizedCategory()
 
-  const { title, content, imageUrls, published, categories } =
+  const { title, content, imageUrls, status, categories } =
     validatedFields.data
 
   const validCategories =
@@ -71,7 +71,7 @@ export const editPost = async (
         title,
         content,
         imageUrls,
-        published,
+        status,
         categories: {
           deleteMany: {
             postId

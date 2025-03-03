@@ -3,9 +3,11 @@
 import Link from 'next/link'
 import { type ColumnDef } from '@tanstack/react-table'
 
+import { PostStatus } from '@prisma/client'
 import { Checkbox } from '~/components/ui/checkbox'
 import CellAction from '~/components/admin/AdminPosts/CellAction'
 import LoadableImage from '~/components/shared/LoadableImage'
+import { cn } from '~/libs/utils'
 import { IMAGES_PATHS, PATHS } from '~/utils/constants'
 import { type TTruncatedAuthors, type TDeserializedPost } from '~/types'
 
@@ -136,12 +138,29 @@ export const columns: ColumnDef<TDeserializedPost>[] = [
     }
   },
   {
-    accessorKey: 'published',
-    header: 'PUBLISHED',
+    accessorKey: 'status',
+    header: 'STATUS',
     cell: ({ row }) => {
-      const isPublished = row?.original?.published ?? false
+      const status =
+        row.getValue<string | null>('status') ?? PostStatus.DRAFT
 
-      return <span>{isPublished ? '✅' : '❌'}</span>
+      const isPublished = status === PostStatus.PUBLISHED
+
+      const isDraft = status === PostStatus.DRAFT
+
+      const formattedStatus =
+        status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()
+
+      return (
+        <span
+          className={cn(
+            isPublished && 'text-green-600',
+            isDraft && 'text-red-700'
+          )}
+        >
+          {formattedStatus}
+        </span>
+      )
     }
   },
   {

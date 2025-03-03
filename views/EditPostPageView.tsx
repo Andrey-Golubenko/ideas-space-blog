@@ -17,6 +17,7 @@ import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
 import PostManageForm from '~/components/shared/PostManageForm'
 import { checkIfPostExist } from '~/utils/helpers'
 import { CLOUDINARY_POSTS_IMAGES_FOLDER } from '~/utils/constants'
+import { PostStatus } from '@prisma/client'
 import { ManagePostSchema } from '~/schemas'
 import { type TDeserializedPost, type TManagePostForm } from '~/types'
 
@@ -44,7 +45,7 @@ const EditPostPageView = ({ isLogged }: IEditPostViewProps) => {
     title,
     content,
     imageUrls,
-    published,
+    status,
     categories: editablePostCategories
   } = singlePost as FullPost
 
@@ -64,7 +65,7 @@ const EditPostPageView = ({ isLogged }: IEditPostViewProps) => {
       content: '',
       files: [],
       imageUrls: [],
-      published: false,
+      status: PostStatus.DRAFT,
       categories: []
     },
     resolver: zodResolver(ManagePostSchema)
@@ -76,7 +77,7 @@ const EditPostPageView = ({ isLogged }: IEditPostViewProps) => {
         title,
         content,
         imageUrls,
-        published: published || false,
+        status,
         categories: categoriesFieldValues
       })
     }

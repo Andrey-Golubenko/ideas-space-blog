@@ -32,7 +32,7 @@ export const newPost = async (
     return { error: 'Unauthorized!' }
   }
 
-  const { id, title, content, imageUrls, published, categories } =
+  const { id, title, content, imageUrls, status, categories } =
     validatedFields.data
 
   const postId = id || uuidv4()
@@ -50,7 +50,7 @@ export const newPost = async (
         title,
         content,
         imageUrls,
-        published,
+        status,
         authorId: dbUser?.id,
         categories: {
           create: postCategoryIds?.map((catId) => {

@@ -1,5 +1,5 @@
 import * as z from 'zod'
-import { UserRole } from '@prisma/client'
+import { PostStatus, UserRole } from '@prisma/client'
 
 // eslint-disable-next-line import/no-cycle
 import {
@@ -60,7 +60,7 @@ export const ManagePostSchema = z.object({
   content: z.string({
     message: 'Value must be a string!'
   }),
-  published: z.boolean(),
+  status: z.optional(z.enum([PostStatus.PUBLISHED, PostStatus.DRAFT])),
   files: z.optional(
     z
       .array(

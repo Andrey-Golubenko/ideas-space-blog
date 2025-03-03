@@ -104,5 +104,10 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5",
     "vitest": "^3.0.6"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
 }

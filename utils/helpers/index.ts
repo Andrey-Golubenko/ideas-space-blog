@@ -1,3 +1,4 @@
+import { PostStatus } from '@prisma/client'
 import {
   PUBLIC_ROUTES,
   PUBLIC_ROUTES_EXCEPTIONS,
@@ -6,7 +7,7 @@ import {
 import { type TDeserializedPost } from '~/types'
 
 /**
- * isPublicRoute - function which checks if a given pathname corresponds to a public route.
+ * @function isPublicRoute - a function which checks if a given pathname corresponds to a public route.
  *
  * This function Determines whether the given route is public.
  *
@@ -64,7 +65,7 @@ export const isPublicRoute = (pathname: string): boolean => {
 }
 
 /**
- * emptyStringToUndefined - Function which converts empty string values in an object to `undefined`.
+ * @function emptyStringToUndefined - a function which converts empty string values in an object to `undefined`.
  *
  * This function iterates over an object's values, replacing any empty string (`""`) with `undefined`.
  * The function preserves non-empty values as they are.
@@ -99,7 +100,7 @@ export const emptyStringToUndefined = (
 }
 
 /**
- * toUpperCaseFirstChar - Function which capitalizes the first character of a string.
+ * @function toUpperCaseFirstChar - a function which capitalizes the first character of a string.
  *
  * This function checks if the input string is defined and then returns the string with the first
  * character converted to uppercase. If the string is empty or undefined, it returns an empty string.
@@ -121,7 +122,7 @@ export const toUpperCaseFirstChar = (string?: string): string | '' => {
 }
 
 /**
- * urlToFile - Function which converts an image URL to a File object.
+ * @function urlToFile - a function which converts an image URL to a File object.
  *
  * This function fetches the image from the provided URL and creates a `File` object with the specified
  * filename. If the fetch operation fails, it returns an error message.
@@ -143,7 +144,7 @@ export const urlToFile = async (url: string, filename: string) => {
 }
 
 /**
- * getImageNameFromUrl - Function which extracts the image name (without extension) from a URL.
+ * @function getImageNameFromUrl - a function which extracts the image name (without extension) from a URL.
  *
  * This function splits the URL by `/` and `.` to retrieve the base name of the image file.
  *
@@ -155,7 +156,7 @@ export const getImageNameFromUrl = (url: string) => {
 }
 
 /**
- * getImageNames - Function which retrieves the names (without extensions) of multiple images from a list of URLs.
+ * @function getImageNames - a function which retrieves the names (without extensions) of multiple images from a list of URLs.
  *
  * This function maps over an array of image URLs and returns an array of image names (without extensions).
  *
@@ -172,9 +173,9 @@ export const getImageNames = (imageUrls: string[]) => {
 }
 
 /**
- * isEmptyOrUnpublished - Function which checks if a list of posts is either empty or contains only unpublished posts.
+ * @function isEmptyOrUnpublished - a function which checks if a list of posts is either empty or contains only unpublished posts.
  *
- * This function checks if the provided list of posts is either empty or contains only posts with a `published` value of `false`.
+ * This function checks if the provided list of posts is either empty or contains only posts with a `status` value of `DRAFT`.
  * It also handles the case when the input is a string.
  *
  * @param {Post[] | TDeserializedPost[] | string} posts - The posts to check.
@@ -187,14 +188,14 @@ export const isEmptyOrUnpublished = (
 
   const areAllUnpublished =
     Array.isArray(posts) && posts.length > 0
-      ? posts?.every((post) => !post.published)
+      ? posts?.every((post) => post.status === PostStatus.DRAFT)
       : false
 
   return noItems || areAllUnpublished
 }
 
 /**
- * Checks if the given post object exists and is not empty.
+ * @function checkIfPostExist  - a function, which checks if the given post object exists and is not empty.
  *
  * @param {object | null} [obj] - The object to check.
  * @returns {boolean} `true` if the object exists and is not empty, otherwise `false`.

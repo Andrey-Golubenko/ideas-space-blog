@@ -13,6 +13,11 @@ enum UserRole {
   USER
 }
 
+enum PostStatus {
+  PUBLISHED
+  DRAFT
+}
+
 model User {
   id                    String            @id @default(cuid())
   name                  String?
@@ -56,9 +61,9 @@ model Post {
   id                    String              @id
   title                 String              @db.VarChar(100) 
   content               String              @db.VarChar(1000) 
-  published             Boolean             @default(false)
   imageUrls             String[]
   authorId              String
+  status                PostStatus          @default(DRAFT)
 
   createdAt             DateTime            @default(now())
   updatedAt             DateTime            @updatedAt

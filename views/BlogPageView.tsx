@@ -1,7 +1,5 @@
 'use client'
 
-import { useMemo } from 'react'
-
 import useGlobalStore from '~/store'
 import { usePostsFilters } from '~/hooks/usePostsFilters'
 import { useDataPosts } from '~/hooks/useDataPosts'

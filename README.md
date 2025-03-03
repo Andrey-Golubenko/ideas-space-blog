@@ -157,7 +157,7 @@ ideas-space-blog/
 │   ├── (auth)/           # Authentication route group
 │   ├── (main)/           # Main routes
 │   ├── (protected)/      # Protected routes
-│   ├── (slate)/          # Routes with different background
+│   ├── (themed)/         # Routes with different styles
 │   ├── api/              # API endpoints
 │   ├── error.tsx         # Common error page
 │   ├── global.css        # Base and app-wide CSS rules

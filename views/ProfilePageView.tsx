@@ -35,7 +35,7 @@ const ProfilePageView = ({
 
   const { isAdminPage } = usePage()
 
-  const { searchQuery, categoriesFilter, page, setPage } =
+  const { searchQuery, categoriesFilter, statusFilter, page, setPage } =
     usePostsFilters()
 
   const postsPerPage = PROFILE_POSTS_PER_PAGE
@@ -47,7 +47,7 @@ const ProfilePageView = ({
     categoriesFilter,
     authorFilter: userId,
     searchQuery,
-    publishedFilter: 'published.draft'
+    statusFilter
   }
 
   useDataPosts(dataPostsProps)

@@ -1,5 +1,6 @@
 'use server'
 
+import { PostStatus } from '@prisma/client'
 import { db } from '~/libs/db'
 import {
   type IFetchPostsFunctionProps,
@@ -7,14 +8,14 @@ import {
 } from '~/types'
 
 /**
-Fetches paginated and filtered posts from the database for a post list and a post table.
+ * @function fetchFilteredPostsWithPag - the function which fetches paginated and filtered posts from the database for a post list and a post table.
  *
  * @param {Object} param - The function parameters.
  * @param {number} param.limit - The maximum number of posts to fetch.
  * @param {number} param.offset - The starting position for fetching posts (used for pagination).
  * @param {string} [param.categoriesFilter] - A dot-separated string of category IDs to filter posts by.
  * @param {string} [param.authFilter] - A dot-separated string of author IDs to filter posts by.
- * @param {string} [param.publishedFilter] - A string indicating the publish status filter (`"draft"` or `"published"`).
+ * @param {string} [param.statusFilter] - A string indicating the publish status filter (`"draft"` or `"published"`).
  * @param {string} [param.searchQuery] - A search query to filter posts by title (case insensitive).
  * @returns {Promise<{posts: TDeserializedPost[], postsCount: number} | null>}
  * A promise that resolves to an object containing the filtered posts and their total count,
@@ -24,7 +25,7 @@ export const fetchFilteredPostsWithPag = async ({
   limit,
   offset,
   categoriesFilter,
-  publishedFilter,
+  statusFilter,
   authorFilter,
   searchQuery
 }: IFetchPostsFunctionProps): Promise<{
@@ -33,7 +34,9 @@ export const fetchFilteredPostsWithPag = async ({
 } | null> => {
   const catFilters = categoriesFilter?.split('.')
   const authFilters = authorFilter?.split('.')
-  const isPublishFilter = publishedFilter !== 'draft'
+  const statFilters = statusFilter
+    ?.split('.')
+    .map((filter) => filter.toUpperCase())
 
   try {
     const dbPosts = await db.post.findMany({
@@ -50,10 +53,9 @@ export const fetchFilteredPostsWithPag = async ({
               }
             }
           : undefined,
-        published:
-          publishedFilter !== 'published.draft'
-            ? isPublishFilter
-            : undefined,
+        status: statusFilter
+          ? { in: statFilters as [PostStatus] }
+          : undefined,
         authorId: authorFilter ? { in: authFilters } : undefined
       },
       take: limit,
@@ -64,7 +66,7 @@ export const fetchFilteredPostsWithPag = async ({
         title: true,
         content: true,
         imageUrls: true,
-        published: true,
+        status: true,
         createdAt: true,
         author: {
           select: {
@@ -104,10 +106,9 @@ export const fetchFilteredPostsWithPag = async ({
               }
             }
           : undefined,
-        published:
-          publishedFilter !== 'published.draft'
-            ? isPublishFilter
-            : undefined,
+        status: statusFilter
+          ? { in: statFilters as [PostStatus] }
+          : undefined,
         authorId: authorFilter ? { in: authFilters } : undefined
       }
     })
@@ -188,7 +189,7 @@ export const fetchRecentPosts = async (): Promise<{
   try {
     const posts = await db.post.findMany({
       where: {
-        published: true
+        status: PostStatus.PUBLISHED
       },
       take: 3,
       select: {
@@ -196,7 +197,7 @@ export const fetchRecentPosts = async (): Promise<{
         title: true,
         content: true,
         imageUrls: true,
-        published: true,
+        status: true,
         createdAt: true,
         author: {
           select: {

@@ -23,7 +23,7 @@ export const postsSlice: StateCreator<IPostsSlice, [], [], IPostsSlice> = (
     limit,
     offset,
     categoriesFilter,
-    publishedFilter,
+    statusFilter,
     authorFilter,
     searchQuery
   }: IFetchPostsFunctionProps) => {
@@ -35,7 +35,7 @@ export const postsSlice: StateCreator<IPostsSlice, [], [], IPostsSlice> = (
       limit,
       offset,
       categoriesFilter,
-      publishedFilter,
+      statusFilter,
       authorFilter,
       searchQuery
     })

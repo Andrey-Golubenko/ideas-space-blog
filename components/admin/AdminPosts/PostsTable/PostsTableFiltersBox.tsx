@@ -4,7 +4,7 @@ import { useAuthorsFilterOptions } from '~/hooks/useAuthorsFilterOption'
 import DataSearch from '~/components/shared/DataManagement/DataSearch'
 import DataFilterBox from '~/components/shared/DataManagement/DataFilterBox'
 import DataResetFilter from '~/components/shared/DataManagement/DataResetFilter'
-import { PUBLISHED_OPTIONS } from '~/utils/constants'
+import { POST_STATUS_OPTIONS } from '~/utils/constants'
 
 const PostsTableFiltersBox = () => {
   const { categoriesOptions } = useCategoriesOptions('slug')
@@ -14,8 +14,8 @@ const PostsTableFiltersBox = () => {
   const {
     categoriesFilter,
     setCategoriesFilter,
-    publishedFilter,
-    setPublishedFilter,
+    statusFilter,
+    setStatusFilter,
     authorFilter,
     setAuthorFilter,
     searchQuery,
@@ -43,10 +43,10 @@ const PostsTableFiltersBox = () => {
       />
 
       <DataFilterBox
-        title="Published"
-        options={PUBLISHED_OPTIONS}
-        filterValue={publishedFilter}
-        setFilterValue={setPublishedFilter}
+        title="Status"
+        options={POST_STATUS_OPTIONS}
+        filterValue={statusFilter}
+        setFilterValue={setStatusFilter}
         setPage={setPage}
       />
 
