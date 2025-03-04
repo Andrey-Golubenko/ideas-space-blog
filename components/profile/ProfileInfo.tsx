@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { ExitIcon } from '@radix-ui/react-icons'
 
+import { UserRole } from '@prisma/client'
+import { usePage } from '~/hooks/usePage'
 import { useCanLogout } from '~/hooks/useCanLogout'
 import {
   Card,
@@ -25,7 +27,15 @@ const ProfileInfo = ({
   user,
   hasFullAccess = false
 }: IProfileInfoProps) => {
-  const { canLogout } = useCanLogout(user)
+  const { canLogout, currentUser } = useCanLogout(user)
+  const { isSubProfilePage } = usePage()
+
+  const isAdmin = currentUser?.role === UserRole.ADMIN
+
+  const editProfilePath =
+    isAdmin && isSubProfilePage && user
+      ? PATHS.adminEditUser(user?.id)
+      : PATHS.settings
 
   return (
     <Card className="h-full rounded-xl pb-8 shadow-md">
@@ -79,7 +89,7 @@ const ProfileInfo = ({
             variant="outline"
             className="w-full border border-black/20 bg-blue-200 hover:bg-blue-200/70"
           >
-            <Link href={PATHS.settings}>Edit profile</Link>
+            <Link href={editProfilePath}>Edit profile</Link>
           </Button>
 
           {canLogout && (
