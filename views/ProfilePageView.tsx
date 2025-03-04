@@ -15,6 +15,7 @@ import {
   type IFetchPostsFunctionProps,
   type TDeserializedPost
 } from '~/types'
+import { PostStatus } from '@prisma/client'
 
 interface IProfilePageViewProps {
   user?: UserDTO | null
@@ -35,6 +36,8 @@ const ProfilePageView = ({
 
   const { isAdminPage } = usePage()
 
+  const withAnyStatus = `${PostStatus.PUBLISHED}.${PostStatus.DRAFT}`
+
   const { searchQuery, categoriesFilter, statusFilter, page, setPage } =
     usePostsFilters()
 
@@ -47,7 +50,7 @@ const ProfilePageView = ({
     categoriesFilter,
     authorFilter: userId,
     searchQuery,
-    statusFilter
+    statusFilter: statusFilter || withAnyStatus
   }
 
   useDataPosts(dataPostsProps)

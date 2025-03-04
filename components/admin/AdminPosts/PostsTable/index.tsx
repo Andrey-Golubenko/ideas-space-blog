@@ -4,6 +4,7 @@ import { Suspense } from 'react'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
 import useGlobalStore from '~/store'
+import { PostStatus } from '@prisma/client'
 import { useDataPosts } from '~/hooks/useDataPosts'
 import { usePostsFilters } from '~/hooks/usePostsFilters'
 import { columns } from '~/components/admin/AdminPosts/columns'
@@ -26,7 +27,10 @@ const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
   })
 
   const noItem = typeof posts === 'string'
+
   const displayedPosts = noItem ? [] : posts
+
+  const withAnyStatus = `${PostStatus.PUBLISHED}.${PostStatus.DRAFT}`
 
   const [pageSize, setPageSize] = useQueryState(
     'limit',
@@ -48,7 +52,7 @@ const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
     page,
     limit: pageSize,
     categoriesFilter,
-    statusFilter,
+    statusFilter: statusFilter || withAnyStatus,
     authorFilter,
     searchQuery
   }

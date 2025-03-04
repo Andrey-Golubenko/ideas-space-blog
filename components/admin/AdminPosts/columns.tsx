@@ -7,7 +7,8 @@ import { PostStatus } from '@prisma/client'
 import { Checkbox } from '~/components/ui/checkbox'
 import CellAction from '~/components/admin/AdminPosts/CellAction'
 import LoadableImage from '~/components/shared/LoadableImage'
-import { cn } from '~/libs/utils'
+import PostMetaStatus from '~/components/posts/PostMeta/PostMetaStatus'
+import { toUpperCaseFirstChar } from '~/utils/helpers'
 import { IMAGES_PATHS, PATHS } from '~/utils/constants'
 import { type TTruncatedAuthors, type TDeserializedPost } from '~/types'
 
@@ -127,9 +128,7 @@ export const columns: ColumnDef<TDeserializedPost>[] = [
         ? author?.name
             ?.split(' ')
             .map((word) => {
-              return (
-                word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-              )
+              return toUpperCaseFirstChar(word)
             })
             .join(' ')
         : 'Anonymous'
@@ -142,25 +141,9 @@ export const columns: ColumnDef<TDeserializedPost>[] = [
     header: 'STATUS',
     cell: ({ row }) => {
       const status =
-        row.getValue<string | null>('status') ?? PostStatus.DRAFT
+        row.getValue<PostStatus | null>('status') ?? PostStatus.DRAFT
 
-      const isPublished = status === PostStatus.PUBLISHED
-
-      const isDraft = status === PostStatus.DRAFT
-
-      const formattedStatus =
-        status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()
-
-      return (
-        <span
-          className={cn(
-            isPublished && 'text-green-600',
-            isDraft && 'text-red-700'
-          )}
-        >
-          {formattedStatus}
-        </span>
-      )
+      return <PostMetaStatus status={status} />
     }
   },
   {

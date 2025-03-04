@@ -6,6 +6,7 @@ import { type ColumnDef } from '@tanstack/react-table'
 import { Checkbox } from '~/components/ui/checkbox'
 import CellAction from '~/components/admin/AdminUsers/CellAction'
 import UserAvatar from '~/components/shared/UserAvatar'
+import { toUpperCaseFirstChar } from '~/utils/helpers'
 import { PATHS } from '~/utils/constants'
 import { type TDeserializedUser } from '~/types'
 
@@ -70,8 +71,7 @@ export const columns: ColumnDef<TDeserializedUser>[] = [
       const provider = row.getValue<string | null>('provider') ?? ''
 
       const formattedProvider = provider
-        ? provider.charAt(0).toUpperCase() +
-          provider.slice(1).toLowerCase()
+        ? toUpperCaseFirstChar(provider)
         : 'Local'
 
       return <span>{formattedProvider}</span>

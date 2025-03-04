@@ -8,7 +8,8 @@ import {
 } from '~/types'
 
 /**
- * @function fetchFilteredPostsWithPag - the function which fetches paginated and filtered posts from the database for a post list and a post table.
+ * @function fetchFilteredPostsWithPag
+ * @description Fetches paginated and filtered posts from the database for a post list and a post table.
  *
  * @param {Object} param - The function parameters.
  * @param {number} param.limit - The maximum number of posts to fetch.
@@ -55,7 +56,7 @@ export const fetchFilteredPostsWithPag = async ({
           : undefined,
         status: statusFilter
           ? { in: statFilters as [PostStatus] }
-          : undefined,
+          : PostStatus.PUBLISHED,
         authorId: authorFilter ? { in: authFilters } : undefined
       },
       take: limit,
@@ -108,7 +109,7 @@ export const fetchFilteredPostsWithPag = async ({
           : undefined,
         status: statusFilter
           ? { in: statFilters as [PostStatus] }
-          : undefined,
+          : PostStatus.PUBLISHED,
         authorId: authorFilter ? { in: authFilters } : undefined
       }
     })

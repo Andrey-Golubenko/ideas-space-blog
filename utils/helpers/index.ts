@@ -7,7 +7,8 @@ import {
 import { type TDeserializedPost } from '~/types'
 
 /**
- * @function isPublicRoute - a function which checks if a given pathname corresponds to a public route.
+ * @function isPublicRoute
+ * @description checks if a given pathname corresponds to a public route.
  *
  * This function Determines whether the given route is public.
  *
@@ -65,7 +66,8 @@ export const isPublicRoute = (pathname: string): boolean => {
 }
 
 /**
- * @function emptyStringToUndefined - a function which converts empty string values in an object to `undefined`.
+ * @function emptyStringToUndefined
+ * @description Converts empty string values in an object to `undefined`.
  *
  * This function iterates over an object's values, replacing any empty string (`""`) with `undefined`.
  * The function preserves non-empty values as they are.
@@ -100,20 +102,25 @@ export const emptyStringToUndefined = (
 }
 
 /**
- * @function toUpperCaseFirstChar - a function which capitalizes the first character of a string.
+ * @function toUpperCaseFirstChar
+ * @description Capitalizes the first character of a string.
  *
  * This function checks if the input string is defined and then returns the string with the first
  * character converted to uppercase. If the string is empty or undefined, it returns an empty string.
  *
  * @param {string} [string] - The string to process.
- * @returns {string} - The string with the first character capitalized, or an empty string if the input is undefined.
+ * @returns {string} The string with the first character capitalized, or an empty string if the input is undefined.
  */
 export const toUpperCaseFirstChar = (string?: string): string | '' => {
   if (string) {
-    const processedString = string
+    const [firstWord, ...restWords] = string.split(' ')
+
+    const processedWord = firstWord
       .charAt(0)
       .toUpperCase()
-      .concat(string.slice(1))
+      .concat(firstWord.slice(1).toLowerCase())
+
+    const processedString = [processedWord, ...restWords].join(' ')
 
     return processedString
   }
@@ -122,7 +129,8 @@ export const toUpperCaseFirstChar = (string?: string): string | '' => {
 }
 
 /**
- * @function urlToFile - a function which converts an image URL to a File object.
+ * @function urlToFile
+ * @description Converts an image URL to a File object.
  *
  * This function fetches the image from the provided URL and creates a `File` object with the specified
  * filename. If the fetch operation fails, it returns an error message.
@@ -144,7 +152,8 @@ export const urlToFile = async (url: string, filename: string) => {
 }
 
 /**
- * @function getImageNameFromUrl - a function which extracts the image name (without extension) from a URL.
+ * @function getImageNameFromUrl
+ * @description Extracts the image name (without extension) from a URL.
  *
  * This function splits the URL by `/` and `.` to retrieve the base name of the image file.
  *
@@ -156,7 +165,8 @@ export const getImageNameFromUrl = (url: string) => {
 }
 
 /**
- * @function getImageNames - a function which retrieves the names (without extensions) of multiple images from a list of URLs.
+ * @function getImageNames
+ * @description Retrieves the names (without extensions) of multiple images from a list of URLs.
  *
  * This function maps over an array of image URLs and returns an array of image names (without extensions).
  *
@@ -173,7 +183,8 @@ export const getImageNames = (imageUrls: string[]) => {
 }
 
 /**
- * @function isEmptyOrUnpublished - a function which checks if a list of posts is either empty or contains only unpublished posts.
+ * @function isEmptyOrUnpublished
+ * @description Checks if a list of posts is either empty or contains only unpublished posts.
  *
  * This function checks if the provided list of posts is either empty or contains only posts with a `status` value of `DRAFT`.
  * It also handles the case when the input is a string.
@@ -195,7 +206,8 @@ export const isEmptyOrUnpublished = (
 }
 
 /**
- * @function checkIfPostExist  - a function, which checks if the given post object exists and is not empty.
+ * @function checkIfPostExist
+ * @description Checks if the given post object exists and is not empty.
  *
  * @param {object | null} [obj] - The object to check.
  * @returns {boolean} `true` if the object exists and is not empty, otherwise `false`.

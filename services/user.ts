@@ -9,7 +9,8 @@ import {
 } from '~/types'
 
 /**
- * Fetches filtered users with pagination.
+ * @function fetchFilteredUsersWithPag
+ * @description Fetches filtered users with pagination.
  *
  * This function retrieves a list of users from the database, applying optional search filtering,
  * provider-based filtering, and pagination constraints. It also selects relevant user details.
@@ -30,14 +31,42 @@ export const fetchFilteredUsersWithPag = async ({
   searchQuery,
   offset
 }: IFetchUsersFunctionProps): Promise<
-  | {
-      users: TDeserializedUser[]
-      usersCount: number
-    }
-  | null
-  | string
+  { users: TDeserializedUser[]; usersCount: number } | null | string
 > => {
-  const providerFilters = providerFilter?.split('.') || []
+  const providerFilters: string[] = providerFilter
+    ? providerFilter.split('.').filter(Boolean)
+    : []
+
+  const hasLocal = providerFilters.includes('local')
+
+  const externalProviders = providerFilters.filter(
+    (provider) => provider !== 'local'
+  )
+
+  let accountFilter = {}
+
+  if (!providerFilters.length) {
+    accountFilter = {}
+  }
+
+  if (hasLocal && externalProviders.length) {
+    accountFilter = {
+      OR: [
+        { accounts: { none: {} } },
+        { accounts: { some: { provider: { in: externalProviders } } } }
+      ]
+    }
+  }
+
+  if (hasLocal && !externalProviders.length) {
+    accountFilter = { accounts: { none: {} } }
+  }
+
+  if (providerFilters.length && !hasLocal) {
+    accountFilter = {
+      accounts: { some: { provider: { in: providerFilters } } }
+    }
+  }
 
   try {
     const dbUsers = await db.user.findMany({
@@ -45,13 +74,7 @@ export const fetchFilteredUsersWithPag = async ({
         name: searchQuery
           ? { contains: searchQuery, mode: 'insensitive' }
           : undefined,
-        accounts: providerFilter
-          ? {
-              some: {
-                provider: { in: providerFilters }
-              }
-            }
-          : undefined
+        ...accountFilter
       },
       take: limit,
       skip: offset as number,
@@ -79,20 +102,14 @@ export const fetchFilteredUsersWithPag = async ({
         name: searchQuery
           ? { contains: searchQuery, mode: 'insensitive' }
           : undefined,
-        accounts: providerFilter
-          ? {
-              some: {
-                provider: { in: providerFilters }
-              }
-            }
-          : undefined
+        ...accountFilter
       }
     })
 
     const users: TDeserializedUser[] = dbUsers.map((user) => {
-      const { accounts, ...restValues } = user
+      const { accounts, ...rest } = user
       return {
-        ...restValues,
+        ...rest,
         provider: user.accounts[0]?.provider ?? 'local'
       }
     })
@@ -105,7 +122,8 @@ export const fetchFilteredUsersWithPag = async ({
 }
 
 /**
- * Fetches a list of all authors with truncated details.
+ * @function fetchAllAuthorsTruncated
+ * @description Fetches a list of all authors with truncated details.
  *
  * This function retrieves all authors from the database, selecting only their `id` and `name`.
  * It filters out any authors with a `null` name before returning the data.
