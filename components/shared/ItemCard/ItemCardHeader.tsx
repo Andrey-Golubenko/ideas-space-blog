@@ -99,6 +99,7 @@ const ItemCardHeader = ({
           imageClassNames="object-cover rounded-md"
           containerClassNames={`duration-700 hover:scale-110 ${isCategory ? 'rounded-full' : 'rounded-md'}`}
         />
+        <span className="sr-only">{itemTitle}</span>
       </Link>
 
       <CardHeader className="pb-4">

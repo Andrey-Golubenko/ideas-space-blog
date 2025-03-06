@@ -15,7 +15,7 @@ const FooterSection = ({ title, sectionItems }: IFooterSectionProps) => {
 
   return (
     <section className="w-full">
-      <h4 className="mb-5 text-xl text-white">{title}</h4>
+      <h3 className="mb-5 text-xl text-white">{title}</h3>
 
       <nav>
         <ul

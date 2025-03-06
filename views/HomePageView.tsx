@@ -17,11 +17,11 @@ const HomePageView = () => {
         <Greeting />
       </section>
 
-      <section className="z-10 h-full w-full bg-slate-100">
+      <section className="z-20 h-full w-full bg-slate-100">
         <CategoriesSection />
       </section>
 
-      <section className="z-10 -mt-3 h-full w-full rounded-xl bg-custom-gradient px-6 py-20 shadow-[0_0_20px_rgba(252,252,252,.5)_inset] md:px-16">
+      <section className="z-20 -mt-3 h-full w-full rounded-xl bg-custom-gradient px-6 py-20 shadow-[0_0_20px_rgba(252,252,252,.5)_inset] md:px-16">
         <RecentPostsSection />
       </section>
     </>

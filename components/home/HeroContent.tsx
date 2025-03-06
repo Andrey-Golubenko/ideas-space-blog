@@ -13,7 +13,7 @@ const HeroContent = () => {
 
   return (
     <div
-      className="absolute"
+      className="absolute z-10"
       ref={ref}
     >
       <p

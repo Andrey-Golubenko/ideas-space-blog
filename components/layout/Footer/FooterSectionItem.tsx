@@ -14,6 +14,8 @@ const FooterSectionItem = ({
   href,
   withIconsLabels
 }: IFooterSectionItemProps) => {
+  const linkName = Icon ? href.split('.')?.[1] : 'link'
+
   return (
     <li
       className={cn(
@@ -27,6 +29,7 @@ const FooterSectionItem = ({
       <div>
         <Link href={href}>
           {label || (Icon && <Icon className="size-5" />)}
+          {Icon && <span className="sr-only">{linkName}</span>}
         </Link>
 
         {label && <NavLinkUnderlining isActive />}
