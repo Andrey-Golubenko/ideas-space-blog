@@ -37,7 +37,7 @@ export interface IPostsSlice {
 }
 
 export interface ICategoriesSlice {
-  categories: Categories[] | string
+  categories: Categories[] | string | []
   categoriesCount: number | null
   editableCategory: Categories | {}
 

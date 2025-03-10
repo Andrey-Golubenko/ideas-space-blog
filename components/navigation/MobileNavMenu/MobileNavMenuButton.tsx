@@ -92,6 +92,7 @@ const MobileNavMenuButton = ({
       ) : (
         <IconClose className="h-8 w-8" />
       )}
+      <span className="sr-only">Nav-menu button</span>
     </Button>
   )
 }

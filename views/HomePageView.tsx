@@ -13,7 +13,7 @@ const HomePageView = () => {
         <HeroContent />
       </section>
 
-      <section className="z-10 -mb-3 mt-[550px] bg-gradient-to-b from-transparent to-slate-100">
+      <section className="z-10 -mb-3 mt-[600px] bg-gradient-to-b from-transparent to-slate-100">
         <Greeting />
       </section>
 
