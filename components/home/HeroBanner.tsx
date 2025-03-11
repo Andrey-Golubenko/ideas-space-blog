@@ -28,7 +28,7 @@ const HeroBanner = () => {
         placeholder="blur"
         priority
         blurDataURL="data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAQAgCdASoKAAoAAgA0JZgCdAEXp3lylhIAAP7KsKWv42ehK4gexFd/mMp9P1D29jHuXh7uTzoyMaHVtroI2lnQUWH8f7cgHo8BG4bw+535jIhdKCEGpKUAAAA="
-        onLoad={() => setTimeout(() => setIsLoaded(true), 700)}
+        onLoad={() => setTimeout(() => setIsLoaded(true), 500)}
       />
     </div>
   )

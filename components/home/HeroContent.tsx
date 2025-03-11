@@ -16,12 +16,10 @@ const HeroContent = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setIsReady(true)
-    }, 700)
+    }, 300)
 
     return () => clearTimeout(timeout)
   }, [])
-
-  console.log('isReady :>> ', isReady)
 
   return (
     <div

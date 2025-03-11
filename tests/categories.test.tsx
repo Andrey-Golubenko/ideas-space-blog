@@ -3,7 +3,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import CategoriesPageView from '~/views/CategoriesPageView'
 import useGlobalStore from '~/store'
 
-import { ParallaxProvider } from 'react-scroll-parallax'
 import { withNuqsTestingAdapter } from 'nuqs/adapters/testing'
 
 describe('CategoriesPageView Integration Tests', () => {

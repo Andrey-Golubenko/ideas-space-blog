@@ -18,7 +18,8 @@ export default defineConfig({
     },
     server: {
       deps: {
-        fallbackCJS: true
+        fallbackCJS: true,
+        inline: ['next-auth']
       }
     },
     setupFiles: ['./tests/setup.ts'],

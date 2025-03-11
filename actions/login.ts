@@ -107,6 +107,8 @@ export const logIn = async (
       password,
       redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT
     })
+
+    return { success: 'Login successful!' }
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
