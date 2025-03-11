@@ -7,12 +7,14 @@ import { cookiesSlice } from '~/store/cookiesSlice'
 import { postsSlice } from '~/store/postsSlice'
 import { usersSlice } from '~/store/usersSlice'
 import { visitsSlice } from '~/store/visitsSlice'
+import { sessionSlice } from '~/store/sessionSlice'
 import {
   type ICategoriesSlice,
   type ICookiesSlice,
   type IPostsSlice,
   type IUsersSlice,
-  type IVisitsSlice
+  type IVisitsSlice,
+  type ISessionSlice
 } from '~/types'
 
 interface IUseGlobalStore
@@ -20,7 +22,8 @@ interface IUseGlobalStore
     ICategoriesSlice,
     IUsersSlice,
     IVisitsSlice,
-    ICookiesSlice {
+    ICookiesSlice,
+    ISessionSlice {
   isLoading: boolean
 }
 
@@ -33,7 +36,8 @@ const useGlobalStore = createWithEqualityFn<IUseGlobalStore>()(
         ...categoriesSlice(set, get, replace),
         ...usersSlice(set, get, replace),
         ...visitsSlice(set, get, replace),
-        ...cookiesSlice(set, get, replace)
+        ...cookiesSlice(set, get, replace),
+        ...sessionSlice(set, get, replace)
       }),
       {
         name: 'storage',

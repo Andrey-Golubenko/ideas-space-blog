@@ -11,12 +11,20 @@ interface IClientTrackVisitProps {
 }
 
 const ClientTrackVisit = ({ session }: IClientTrackVisitProps) => {
-  const { cookiesConsent, setCookiesConsent } = useGlobalStore((state) => {
-    return {
-      cookiesConsent: state.cookiesConsent,
-      setCookiesConsent: state.setCookiesConsent
+  const { cookiesConsent, setCookiesConsent, setCurrentSession } =
+    useGlobalStore((state) => {
+      return {
+        cookiesConsent: state.cookiesConsent,
+        setCookiesConsent: state.setCookiesConsent,
+        setCurrentSession: state.setCurrentSession
+      }
+    })
+
+  useEffect(() => {
+    if (session) {
+      setCurrentSession(session)
     }
-  })
+  }, [session, setCurrentSession])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {

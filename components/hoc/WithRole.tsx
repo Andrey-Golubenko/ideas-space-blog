@@ -48,9 +48,9 @@ interface IWithRoleProps {
  * - This component simplifies role-based access control in client-side rendered applications.
  */
 const WithRole = ({ children, allowedRole }: IWithRoleProps) => {
-  const user = useCurrentUser()
+  const currentUser = useCurrentUser()
 
-  const userRole = user?.role
+  const userRole = currentUser?.role
 
   if (!userRole) {
     return (

@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 
 import useGlobalStore from '~/store'
 import { usePage } from '~/hooks/usePage'
+import { useCurrentUser } from '~/hooks/useCurrentUser'
 import { useSingleItemProps } from '~/hooks/useSingleItemProps'
 import { Card } from '~/components/ui/card'
 import SinglePostHeader from '~/components/posts/SinglePost/SinglePostHeader'
@@ -14,13 +15,11 @@ import { cn } from '~/libs/utils'
 
 interface ISinglePostCardProps {
   postId: string
-  user: UserDTO
   serverSinglePost: FullPost | null
 }
 
 const SinglePostCard = ({
   postId,
-  user,
   serverSinglePost
 }: ISinglePostCardProps) => {
   const { singlePost, getSinglePostById, setSinglePost, isLoading } =
@@ -32,6 +31,8 @@ const SinglePostCard = ({
         isLoading: state.isLoading
       }
     })
+
+  const currentUser = useCurrentUser()
 
   useEffect(() => {
     if (!serverSinglePost && postId) {
@@ -51,7 +52,7 @@ const SinglePostCard = ({
     singlePostCategories,
     singlePostCreatedAt,
     singlePostContent
-  } = useSingleItemProps({ post: singlePost, user })
+  } = useSingleItemProps({ post: singlePost, user: currentUser })
 
   const hasContent = isPostExist && !isLoading
 

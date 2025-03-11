@@ -9,6 +9,7 @@ import { toast } from 'sonner'
 import { UserRole } from '@prisma/client'
 
 import { usePage } from '~/hooks/usePage'
+import { useCurrentUser } from '~/hooks/useCurrentUser'
 import { Card, CardHeader, CardContent } from '~/components/ui/card'
 import WithRole from '~/components/hoc/WithRole'
 import UserManageForm from '~/components/shared/UserManageForm'
@@ -25,8 +26,12 @@ interface IEditUserPageViewProps {
 }
 
 const EditUserPageView = ({ user, label }: IEditUserPageViewProps) => {
+  const currentUser = useCurrentUser()
+
   const router = useRouter()
+
   const searchParams = useSearchParams()
+
   const isRedirected = searchParams.get('redirected') === 'true'
 
   useEffect(() => {
@@ -41,8 +46,7 @@ const EditUserPageView = ({ user, label }: IEditUserPageViewProps) => {
     }
   }, [])
 
-  const { data, update } = useSession()
-  const currentUser = data?.user
+  const { update } = useSession()
 
   const [error, setError] = useState<string | undefined>()
   const [success, setSuccess] = useState<string | undefined>()

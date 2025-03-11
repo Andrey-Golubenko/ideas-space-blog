@@ -23,7 +23,7 @@ const UserAvatar = ({
       {...props}
     >
       <AvatarImage
-        src={userImageUrl || ''}
+        src={userImageUrl}
         alt="Avatar of the user"
       />
 

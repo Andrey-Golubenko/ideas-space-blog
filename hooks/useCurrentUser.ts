@@ -1,9 +1,13 @@
-import { useSession } from 'next-auth/react'
+import useGlobalStore from '~/store'
 
 export const useCurrentUser = () => {
-  const { data } = useSession()
+  const { currentSession } = useGlobalStore((state) => {
+    return {
+      currentSession: state.currentSession
+    }
+  })
 
-  const user = data?.user
+  const currentUser = currentSession?.user
 
-  return user
+  return currentUser
 }

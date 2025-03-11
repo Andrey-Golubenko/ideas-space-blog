@@ -2,6 +2,7 @@ import { type ForwardRefExoticComponent, type RefAttributes } from 'react'
 import * as z from 'zod'
 import { type LucideProps } from 'lucide-react'
 import { type SearchParams } from 'nuqs'
+import { type Session } from 'next-auth'
 
 import { multiSelectVariants } from '~/components/ui/multi-select/multiSelectVariants'
 import { type FileRejection, type DropEvent } from 'react-dropzone'
@@ -67,6 +68,12 @@ export interface ICookiesSlice {
 
   setCookiesConsent: (cookiesConsent: boolean) => void
   setIsConsentModalOpen: (open: boolean) => void
+}
+
+export interface ISessionSlice {
+  currentSession: Session | null
+
+  setCurrentSession: (session: Session) => void
 }
 
 export interface ISlugPageParamsProps {
