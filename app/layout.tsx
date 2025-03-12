@@ -48,7 +48,7 @@ export default async function RootLayout({
         <Providers>
           <CookiesBanner />
 
-          <CookiesBannerTrigger tooltip="Manage cookies preferences" />
+          <CookiesBannerTrigger />
 
           <div className="relative flex h-screen flex-col">
             <Header />

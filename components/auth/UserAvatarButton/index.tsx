@@ -21,7 +21,6 @@ const UserAvatarButton = ({ displayedUser }: IUserAvatarButtonProps) => {
       <AvatarButtonTrigger
         userImageUrl={userImageUrl}
         canLogout={canLogout}
-        tooltip="Logout"
       />
 
       {canLogout && <AvatarButtonContent />}
