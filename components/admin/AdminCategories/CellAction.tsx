@@ -46,7 +46,7 @@ const CellAction = ({ categoryId }: ICellActionProps) => {
     setPage(1)
   }, [])
 
-  const handleOnUpdate = useCallback(() => {
+  const handleOnUpdate = () => {
     if (categoryToProcessing) {
       setEditableCategory(categoryToProcessing)
 
@@ -57,7 +57,7 @@ const CellAction = ({ categoryId }: ICellActionProps) => {
         closeButton: true
       })
     }
-  }, [categoryId])
+  }
 
   const handleOnDelete = useCallback(() => {
     setOpen(true)

@@ -121,6 +121,4 @@ export const logIn = async (
 
     throw error
   }
-
-  return null
 }

@@ -1,5 +1,7 @@
-import { render, screen } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { render, screen } from '@testing-library/react'
+
+import { cleanup } from '~/tests/test-utils'
 import CategoriesPageView from '~/views/CategoriesPageView'
 import useGlobalStore from '~/store'
 
@@ -7,6 +9,9 @@ import { withNuqsTestingAdapter } from 'nuqs/adapters/testing'
 
 describe('CategoriesPageView Integration Tests', () => {
   beforeEach(() => {
+    vi.resetModules()
+    cleanup()
+
     vi.mock('~/hooks/useCategoriesFilters', () => ({
       useCategoriesFilters: () => ({
         searchQuery: '',
@@ -69,7 +74,7 @@ describe('CategoriesPageView Integration Tests', () => {
     expect(container).toBeInTheDocument()
   })
 
-  it('renders the blog page without throwing an error', () => {
+  it('renders the categories page without throwing an error', () => {
     expect(() =>
       render(<CategoriesPageView />, {
         wrapper: withNuqsTestingAdapter({ searchParams: '?page=1' })
@@ -97,9 +102,7 @@ describe('CategoriesPageView Integration Tests', () => {
       wrapper: withNuqsTestingAdapter({ searchParams: 'q=""' })
     })
 
-    expect(
-      screen.getAllByText(/Categories Filters/i)[0]
-    ).toBeInTheDocument()
+    expect(screen.getByText(/Categories Filters/i)).toBeInTheDocument()
   })
 
   it('displays loading state', () => {
@@ -122,7 +125,7 @@ describe('CategoriesPageView Integration Tests', () => {
       wrapper: withNuqsTestingAdapter({ searchParams: 'q=""' })
     })
 
-    expect(screen.getAllByText(/Loading.../i)[0]).toBeInTheDocument()
+    expect(screen.getByText(/Loading.../i)).toBeInTheDocument()
   })
 
   it('displays no items message when there are no categories', () => {
@@ -139,9 +142,9 @@ describe('CategoriesPageView Integration Tests', () => {
     })
 
     expect(
-      screen.getAllByText(
+      screen.getByText(
         /unfortunately, we did not find any categories yet/i
-      )[0]
+      )
     ).toBeInTheDocument()
   })
 

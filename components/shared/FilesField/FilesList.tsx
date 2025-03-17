@@ -67,15 +67,20 @@ const FilesList = ({
                 imageClassNames={`border object-cover ${isPending ? 'grayscale' : ''}`}
               />
               {!isPending && (
-                <CrossCircledIcon
+                <span
+                  data-testid="delete-image"
                   className={cn(
                     'absolute inset-0 h-6 w-6 -translate-x-2/4 -translate-y-2/4 rounded-full bg-white',
                     isPending ? 'cursor-default' : 'cursor-pointer'
                   )}
-                  onClick={() => {
-                    return handleOnImageUrlDelete(imageName)
-                  }}
-                />
+                >
+                  <CrossCircledIcon
+                    className="h-6 w-6"
+                    onClick={() => {
+                      return handleOnImageUrlDelete(imageName)
+                    }}
+                  />
+                </span>
               )}
             </div>
           )

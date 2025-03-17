@@ -15,6 +15,7 @@ import {
 import { useCleaningItem } from '~/hooks/useCleaningItem'
 import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
 import PostManageForm from '~/components/shared/PostManageForm'
+import NotificationInfo from '~/components/notifications/NotificationInfo'
 import { checkIfPostExist } from '~/utils/helpers'
 import { CLOUDINARY_POSTS_IMAGES_FOLDER } from '~/utils/constants'
 import { PostStatus } from '@prisma/client'
@@ -84,6 +85,12 @@ const EditPostPageView = ({ isLogged }: IEditPostViewProps) => {
   }, [isPostExist])
 
   useCleaningItem(setSinglePost)
+
+  if (!isLogged) {
+    return (
+      <NotificationInfo message="You should login to visit this page!" />
+    )
+  }
 
   const handleOnSubmit = (values: TManagePostForm) => {
     setError('')

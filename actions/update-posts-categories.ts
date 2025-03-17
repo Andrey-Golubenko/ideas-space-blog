@@ -41,7 +41,7 @@ export const updatePostsCategories = async ({
 
     await Promise.all(updatePromises)
 
-    return { success: 'Posts categories were successfuly updated!' }
+    return { success: 'Posts categories were successfully updated!' }
   } catch (error) {
     console.error('Failed to update posts categories:', error)
 

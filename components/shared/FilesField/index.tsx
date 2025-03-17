@@ -159,6 +159,7 @@ const FilesField = ({
       >
         <input
           name={name}
+          data-testid={name}
           type="file"
           multiple={multiple}
           accept={`image/*,${ACCEPTED_IMAGES_EXTENSIONS.join(',')}`}

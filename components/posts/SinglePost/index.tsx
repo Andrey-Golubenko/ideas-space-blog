@@ -15,7 +15,7 @@ import { cn } from '~/libs/utils'
 
 interface ISinglePostCardProps {
   postId: string
-  serverSinglePost: FullPost | null
+  serverSinglePost?: FullPost | null
 }
 
 const SinglePostCard = ({

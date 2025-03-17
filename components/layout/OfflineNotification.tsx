@@ -12,7 +12,7 @@ const OfflineNotification = () => {
 
   useEffect(() => {
     if (isOffline && !toastId.current) {
-      toastId.current = toast.error(
+      toastId.current = toast.warning(
         <div className="flex items-center gap-x-4">
           <span className="size-6">
             <CircleAlert className="size-6" />

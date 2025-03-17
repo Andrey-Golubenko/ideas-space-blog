@@ -28,6 +28,7 @@ const Social = () => {
         }}
       >
         <FcGoogle className="h-5 w-5" />
+        <span className="sr-only">Continue with Google</span>
       </Button>
       <Button
         size="lg"
@@ -38,6 +39,7 @@ const Social = () => {
         }}
       >
         <FaGithub className="h-5 w-5" />
+        <span className="sr-only">Continue with Github</span>
       </Button>
     </div>
   )

@@ -11,8 +11,7 @@ import { PATHS } from '~/utils/constants'
 import { type TManageCategoryForm, type TActionReturn } from '~/types'
 
 export const editCategory = async (
-  values: Omit<TManageCategoryForm, 'file'>,
-  categoryId: string
+  values: Omit<TManageCategoryForm, 'file'>
 ): TActionReturn => {
   const validatedFields = SingleCategorySchema.safeParse(values)
 
@@ -38,12 +37,12 @@ export const editCategory = async (
     return { error: 'Unauthorized!' }
   }
 
-  const { name, slug, description, imageUrl } = validatedFields.data
+  const { id, name, slug, description, imageUrl } = validatedFields.data
 
   try {
     await db.categories.update({
       where: {
-        id: categoryId
+        id
       },
       data: {
         name,

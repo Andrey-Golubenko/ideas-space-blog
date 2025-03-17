@@ -19,7 +19,14 @@ export async function generateMetadata({
 const SinglePostPage = async ({
   params: { slug }
 }: ISlugPageParamsProps) => {
-  return <SinglePostPageView postId={slug} />
+  const serverSinglePost = await getSinglePost(slug)
+
+  return (
+    <SinglePostPageView
+      postId={slug}
+      serverSinglePost={serverSinglePost}
+    />
+  )
 }
 
 export default SinglePostPage

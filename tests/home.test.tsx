@@ -1,6 +1,7 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { ParallaxProvider } from 'react-scroll-parallax'
+import { cleanup } from '~/tests/test-utils'
 
 import HomePage from '~/app/page'
 import CategoriesSection from '~/components/home/CategoriesSection'
@@ -10,6 +11,11 @@ import HeroContent from '~/components/home/HeroContent'
 import RecentPostsSection from '~/components/home/RecentPostsSection'
 
 describe('Home Page Integration Tests', () => {
+  beforeEach(() => {
+    vi.resetModules()
+    cleanup()
+  })
+
   it('renders the home page without crashing', () => {
     render(
       <ParallaxProvider>
@@ -27,7 +33,7 @@ describe('Home Page Integration Tests', () => {
         </ParallaxProvider>
       )
       expect(
-        screen.getAllByRole('heading', { name: /topic highlights/i })[0]
+        screen.getByRole('heading', { name: /topic highlights/i })
       ).toBeInTheDocument()
     })
 
@@ -38,7 +44,7 @@ describe('Home Page Integration Tests', () => {
         </ParallaxProvider>
       )
       expect(
-        screen.getAllByRole('heading', { name: /welcome !/i })[0]
+        screen.getByRole('heading', { name: /welcome !/i })
       ).toBeInTheDocument()
     })
 
@@ -48,7 +54,7 @@ describe('Home Page Integration Tests', () => {
           <HeroBanner />
         </ParallaxProvider>
       )
-      expect(screen.getAllByAltText(/hero banner/i)[0]).toBeInTheDocument()
+      expect(screen.getByAltText(/hero banner/i)).toBeInTheDocument()
     })
 
     it('renders the HeroContent component', () => {
@@ -57,7 +63,7 @@ describe('Home Page Integration Tests', () => {
           <HeroContent />
         </ParallaxProvider>
       )
-      expect(screen.getAllByText(/be inspired/i)[0]).toBeInTheDocument()
+      expect(screen.getByText(/be inspired/i)).toBeInTheDocument()
     })
 
     it('renders the RecentPostsSection component', () => {
@@ -67,7 +73,7 @@ describe('Home Page Integration Tests', () => {
         </ParallaxProvider>
       )
       expect(
-        screen.getAllByRole('heading', { name: /recent posts/i })[0]
+        screen.getByRole('heading', { name: /recent posts/i })
       ).toBeInTheDocument()
     })
   })

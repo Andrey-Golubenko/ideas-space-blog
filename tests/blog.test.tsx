@@ -3,12 +3,16 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { withNuqsTestingAdapter } from 'nuqs/adapters/testing'
 
+import { cleanup } from '~/tests/test-utils'
 import { PostStatus } from '@prisma/client'
 import useGlobalStore from '~/store'
 import BlogPageView from '~/views/BlogPageView'
 
 describe('Blog Page Integration Tests', () => {
   beforeEach(() => {
+    vi.resetModules()
+    cleanup()
+
     vi.mock('~/hooks/usePostsFilters', () => ({
       usePostsFilters: () => ({
         searchQuery: '',
@@ -50,9 +54,7 @@ describe('Blog Page Integration Tests', () => {
           return <div>Loading...</div>
         }
         if (data.length === 0) {
-          return (
-            <div>Unfortunately, we did not find any categories yet.</div>
-          )
+          return <div>Unfortunately, we did not find any posts yet.</div>
         }
         return <div>{data[0].title}</div>
       }
@@ -89,9 +91,6 @@ describe('Blog Page Integration Tests', () => {
         isLoading: false
       })
     })
-
-    // Reset all mocks before each test
-    vi.clearAllMocks()
   })
 
   it('renders the blog page without crashing', () => {
@@ -107,8 +106,8 @@ describe('Blog Page Integration Tests', () => {
       wrapper: withNuqsTestingAdapter({ searchParams: '?page=1' })
     })
 
-    expect(screen.getAllByText('Blog Filters')[0]).toBeInTheDocument()
-    expect(screen.getAllByText('Pagination')[0]).toBeInTheDocument()
+    expect(screen.getByText('Blog Filters')).toBeInTheDocument()
+    expect(screen.getByText('Pagination')).toBeInTheDocument()
   })
 
   it('renders the blog page without throwing an error', () => {
@@ -124,7 +123,7 @@ describe('Blog Page Integration Tests', () => {
       wrapper: withNuqsTestingAdapter({ searchParams: '?page=1' })
     })
 
-    expect(screen.getAllByText('Test Post 1')[0]).toBeInTheDocument()
+    expect(screen.getByText('Test Post 1')).toBeInTheDocument()
     expect(
       screen.queryByText(/no posts available/i)
     ).not.toBeInTheDocument()
@@ -135,7 +134,7 @@ describe('Blog Page Integration Tests', () => {
       wrapper: withNuqsTestingAdapter({ searchParams: '?page=1' })
     })
 
-    expect(screen.getAllByText('Pagination')[0]).toBeInTheDocument()
+    expect(screen.getByText('Pagination')).toBeInTheDocument()
   })
 
   it('shows loading state when data is loading', () => {
@@ -170,9 +169,7 @@ describe('Blog Page Integration Tests', () => {
     })
 
     expect(
-      screen.getByText(
-        /unfortunately, we did not find any categories yet/i
-      )
+      screen.getByText(/unfortunately, we did not find any posts yet/i)
     ).toBeInTheDocument()
   })
 })

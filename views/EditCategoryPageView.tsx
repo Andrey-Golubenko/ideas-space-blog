@@ -38,7 +38,7 @@ const EditCategoryPageView = () => {
   )
 
   const {
-    id: editableCategoryId,
+    id,
     name,
     slug,
     imageUrl: editableImageUrl,
@@ -49,6 +49,7 @@ const EditCategoryPageView = () => {
 
   const form = useForm<TManageCategoryForm>({
     defaultValues: {
+      id: '',
       name: '',
       slug: '',
       description: '',
@@ -61,6 +62,7 @@ const EditCategoryPageView = () => {
   useEffect(() => {
     if (Object.values(editableCategory)?.length) {
       form.reset({
+        id,
         name,
         slug,
         imageUrl: editableImageUrl as string,
@@ -68,8 +70,6 @@ const EditCategoryPageView = () => {
       })
     }
   }, [isEditableCategoryExist])
-
-  useCleaningItem(setEditableCategory)
 
   const handleOnSubmit = (values: TManageCategoryForm) => {
     setError('')
@@ -94,7 +94,7 @@ const EditCategoryPageView = () => {
         }
       }
 
-      let newImageUrl: string | null = ''
+      let newImageUrl: string | null = initialImageUrl
 
       const newImage = values?.file || []
 
@@ -121,10 +121,7 @@ const EditCategoryPageView = () => {
         imageUrl: newImageUrl
       }
 
-      const data = await editCategory(
-        newCategoryValues,
-        editableCategoryId
-      )
+      const data = await editCategory(newCategoryValues)
 
       if (data?.success) {
         setSuccess(data?.success)
