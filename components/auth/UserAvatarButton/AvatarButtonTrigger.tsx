@@ -15,7 +15,7 @@ const AvatarButtonTrigger = ({
   return (
     <WithTooltip
       tooltip="Logout"
-      contentClasses="border border-black/30 bg-slate-100 py-1 text-black"
+      contentClasses="border border-black/30 bg-slate-100 px-1 py-0.5 !text-xs text-black"
       tooltipClasses="bg-slate-100 text-black"
     >
       <DropdownMenuTrigger

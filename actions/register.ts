@@ -43,7 +43,9 @@ export const register = async (
       verificationToken.token
     )
 
-    return { success: 'Confirmation Email has been sent!' }
+    return {
+      success: 'Confirmation Email has been sent. Check your Email!'
+    }
   } catch {
     return { error: 'Failed to sent a confirmation Email!' }
   }

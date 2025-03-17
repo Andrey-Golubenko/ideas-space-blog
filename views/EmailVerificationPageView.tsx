@@ -9,6 +9,7 @@ import NotificationSuccess from '~/components/notifications/NotificationSuccess'
 import NotificationError from '~/components/notifications/NotificationError'
 import AuthCardWrapper from '~/components/shared/CardWrapper/AuthCardWrapper'
 import { PATHS } from '~/utils/constants'
+import { toast } from 'sonner'
 
 const EmailVerificationPageView = () => {
   const [error, setError] = useState<string | undefined>()
@@ -31,7 +32,15 @@ const EmailVerificationPageView = () => {
     if (data?.success) {
       setSuccess(data?.success)
 
-      router.push(PATHS.home)
+      router.push(PATHS.logIn)
+
+      toast.success(
+        'You have successfully created an account, and now you can log in!',
+        {
+          richColors: true,
+          closeButton: true
+        }
+      )
     }
 
     if (data?.error) {

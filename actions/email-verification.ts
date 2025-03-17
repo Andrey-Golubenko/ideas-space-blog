@@ -1,8 +1,11 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
+
 import { db } from '~/libs/db'
 import { getUserByEmail } from '~/services/user'
 import { getVerificationTokenByToken } from '~/services/verificationToken'
+import { PATHS } from '~/utils/constants'
 import { type TActionReturn } from '~/types'
 
 export const emailVerification = async (token: string): TActionReturn => {
@@ -24,17 +27,24 @@ export const emailVerification = async (token: string): TActionReturn => {
     return { error: 'The user does not exist!' }
   }
 
-  await db.user.update({
-    where: { id: existingUser.id },
-    data: {
-      emailVerified: new Date(),
-      email: existingToken.email
-    }
-  })
+  try {
+    await db.user.update({
+      where: { id: existingUser.id },
+      data: {
+        emailVerified: new Date(),
+        email: existingToken.email
+      }
+    })
 
-  await db.verificationToken.delete({
-    where: { id: existingToken.id }
-  })
+    revalidatePath(PATHS.home)
+    revalidatePath(PATHS.logIn)
 
-  return { success: 'Email verified!' }
+    return { success: 'Email verified!' }
+  } catch (error) {
+    return { error: 'Something went wrong! Try again later' }
+  } finally {
+    await db.verificationToken.delete({
+      where: { id: existingToken.id }
+    })
+  }
 }
