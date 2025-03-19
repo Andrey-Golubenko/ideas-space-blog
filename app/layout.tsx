@@ -1,6 +1,6 @@
 import './globals.css'
 import dynamic from 'next/dynamic'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 
 import { auth } from '~/libs/auth/auth'
@@ -11,6 +11,7 @@ import Footer from '~/components/layout/Footer'
 import CookiesBanner from '~/components/layout/CookiesBanner'
 import ClientTrackVisit from '~/components/layout/ClientTrackVisit'
 import CookiesBannerTrigger from '~/components/layout/CookiesBanner/CookiesBannerTrigger'
+import { APPLE_SPLASH_IMAGES } from '~/utils/constants/apple-splash-images'
 
 const OfflineNotification = dynamic(
   () => import('~/components/layout/OfflineNotification'),
@@ -22,17 +23,28 @@ const OfflineNotification = dynamic(
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Ideas space',
+  title: 'Ideas space blog',
   description:
     'Blog is designed to inspire and share knowledge on a wide range of topics, from technology to art',
+  robots: { index: true, follow: true },
   icons: {
     icon: '/icons/favicon.ico',
-    apple: '/icons/apple-touch-icon.png',
+    apple: [{ url: '/icons/apple-touch-icon-180.png', sizes: '180x180' }],
     other: [
       { rel: 'mask-icon', url: '/icons/favicon.svg', color: '#5bbad5' }
     ]
   },
-  robots: { index: true, follow: true }
+  appleWebApp: {
+    title: 'Ideas space blog',
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    startupImage: APPLE_SPLASH_IMAGES
+  }
+}
+
+export const viewport: Viewport = {
+  maximumScale: 1,
+  userScalable: false
 }
 
 export default async function RootLayout({
@@ -43,7 +55,11 @@ export default async function RootLayout({
   const session = await auth()
 
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className="overscroll-contain scroll-smooth"
+      suppressHydrationWarning
+    >
       <body className={inter.className}>
         <Providers>
           <CookiesBanner />
