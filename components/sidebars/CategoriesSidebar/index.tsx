@@ -8,7 +8,8 @@ import { useDataCategories } from '~/hooks/useDataCategories'
 import WithSidebar from '~/components/hoc/WithSidebar'
 
 import SidebarMenuSection from '~/components/sidebars/SidebarMenuSection'
-import CategoriesSkeleton from './CategoriesSkeleton'
+import CategoriesSkeleton from '~/components/sidebars/CategoriesSidebar/CategoriesSkeleton'
+import { DEFAULT_CATEGORIES_PER_PAGE } from '~/utils/constants'
 
 const CategoriesSidebar = () => {
   const { categories } = useGlobalStore((state) => {
@@ -22,7 +23,7 @@ const CategoriesSidebar = () => {
   const dataCategoriesProps = useMemo(() => {
     return {
       page: 1,
-      limit: 12
+      limit: DEFAULT_CATEGORIES_PER_PAGE
     }
   }, [])
 

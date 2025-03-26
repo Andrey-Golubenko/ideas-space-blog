@@ -1,6 +1,9 @@
 import { type StateCreator } from 'zustand/vanilla'
 
-import { fetchFilteredCategoriesWithPag } from '~/services/categories'
+import {
+  fetchCategories,
+  fetchCategoriesTruncated
+} from '~/services/categories/categories.client'
 import { type Categories } from '@prisma/client'
 import {
   type ICategoriesSlice,
@@ -15,6 +18,7 @@ export const categoriesSlice: StateCreator<
 > = (set) => ({
   categories: [],
   categoriesCount: null,
+  truncatedCategories: [],
   editableCategory: {},
 
   getFilteredCategoriesWithPag: async ({
@@ -27,7 +31,7 @@ export const categoriesSlice: StateCreator<
     })
 
     try {
-      const data = await fetchFilteredCategoriesWithPag({
+      const data = await fetchCategories({
         limit,
         offset,
         searchQuery
@@ -40,6 +44,26 @@ export const categoriesSlice: StateCreator<
 
       set((state) => {
         return { ...state, categories, categoriesCount }
+      })
+    } catch (error) {
+      console.error('Error fetching categories:', error)
+    } finally {
+      set((state) => {
+        return { ...state, isLoading: false }
+      })
+    }
+  },
+
+  getTruncatedCategories: async () => {
+    set((state) => {
+      return { ...state, isLoading: true }
+    })
+
+    try {
+      const truncatedCategories = await fetchCategoriesTruncated()
+
+      set((state) => {
+        return { ...state, truncatedCategories }
       })
     } catch (error) {
       console.error('Error fetching categories:', error)

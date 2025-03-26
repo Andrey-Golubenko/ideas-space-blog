@@ -5,10 +5,10 @@ import { revalidatePath } from 'next/cache'
 import { db } from '~/libs/db'
 import { UserRole } from '@prisma/client'
 import {
-  fetchPostsIdsInCategory,
+  fetchCategoryPostsIds,
   fetchSingleCategoryById,
   fetchUncategorizedCategory
-} from '~/services/categories'
+} from '~/services/categories/categories.server'
 import { getUserById } from '~/services/user'
 import { updatePostsCategories } from '~/actions/update-posts-categories'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
@@ -55,10 +55,16 @@ export const deleteCategory = async (
       }
     }
 
-    const postsInCategory = await fetchPostsIdsInCategory(categoryId)
+    const categoryPostsIds = await fetchCategoryPostsIds(categoryId)
+
+    if (!categoryPostsIds?.length) {
+      return {
+        error: 'Failed to update post categories before deleting category!'
+      }
+    }
 
     const postsCategoriesUpdating = await updatePostsCategories({
-      postsInCategory,
+      categoryPostsIds,
       categoryId,
       uncategorizedCategoryId: uncategorizedCategory?.id
     })

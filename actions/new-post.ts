@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { db } from '~/libs/db'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
 import { getUserById } from '~/services/user'
-import { fetchUncategorizedCategory } from '~/services/categories'
+import { fetchUncategorizedCategory } from '~/services/categories/categories.server'
 import { ManagePostSchema } from '~/schemas'
 import { PATHS } from '~/utils/constants'
 import { type TManagePostForm, type TActionReturn } from '~/types'
@@ -67,9 +67,11 @@ export const newPost = async (
       }
     })
 
-    revalidatePath(PATHS.home)
-    revalidatePath(PATHS.blog)
-    revalidatePath(PATHS.adminPosts)
+    revalidatePath(PATHS.home, 'layout')
+    revalidatePath(PATHS.blog, 'layout')
+    revalidatePath(PATHS.adminPosts, 'layout')
+    revalidatePath(PATHS.profile, 'layout')
+    revalidatePath(PATHS.publicProfile(dbUser?.id), 'layout')
 
     return { success: 'New post has been successfully created!' }
   } catch (error) {

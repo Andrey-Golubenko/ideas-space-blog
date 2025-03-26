@@ -91,6 +91,7 @@ const DeletePostHandler = ({
             setIsOpen(false)
           }
         }
+
         await onPostDelete()
       }
     })

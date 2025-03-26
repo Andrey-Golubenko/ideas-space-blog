@@ -42,6 +42,7 @@ const CategoryManageForm = ({
           <TextField
             control={form.control}
             name="name"
+            autoComplete="name"
             label="Category name"
             placeholder="Unique name for the category"
             isPending={isDisabled}
@@ -50,6 +51,7 @@ const CategoryManageForm = ({
           <TextField
             control={form.control}
             name="slug"
+            autoComplete="off"
             label="Category slug"
             placeholder="The URL of the category page, in lowercase only, separated by a dash"
             isPending={isDisabled}
@@ -57,6 +59,7 @@ const CategoryManageForm = ({
 
           <FilesField
             name="file"
+            autoComplete="off"
             additionalName="imageUrl"
             isWithSingleImage
             validateErrors={form.formState.errors.file}
@@ -66,6 +69,7 @@ const CategoryManageForm = ({
           <TextAreaField
             control={form.control}
             name="description"
+            autoComplete="off"
             label="Category description"
             placeholder="A short description of the category"
             isPending={isDisabled}

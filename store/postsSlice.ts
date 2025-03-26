@@ -31,22 +31,30 @@ export const postsSlice: StateCreator<IPostsSlice, [], [], IPostsSlice> = (
       return { ...state, isLoading: true }
     })
 
-    const data = await fetchPosts({
-      limit,
-      offset,
-      categoriesFilter,
-      statusFilter,
-      authorFilter,
-      searchQuery
-    })
+    try {
+      const data = await fetchPosts({
+        limit,
+        offset,
+        categoriesFilter,
+        statusFilter,
+        authorFilter,
+        searchQuery
+      })
 
-    const posts = typeof data === 'string' ? data : data?.posts
+      const posts = typeof data === 'string' ? data : data?.posts
 
-    const postsCount = typeof data === 'string' ? null : data?.postsCount
+      const postsCount = typeof data === 'string' ? null : data?.postsCount
 
-    set((state) => {
-      return { ...state, posts, postsCount, isLoading: false }
-    })
+      set((state) => {
+        return { ...state, posts, postsCount }
+      })
+    } catch (error) {
+      console.error('Error fetching posts:', error)
+    } finally {
+      set((state) => {
+        return { ...state, isLoading: false }
+      })
+    }
   },
 
   setFilteredPostsWithPag: (posts: TDeserializedPost[] | []) => {
@@ -78,11 +86,19 @@ export const postsSlice: StateCreator<IPostsSlice, [], [], IPostsSlice> = (
       return { ...state, isLoading: true }
     })
 
-    const singlePost = await fetchSinglePostById(postId)
+    try {
+      const singlePost = await fetchSinglePostById(postId)
 
-    set((state) => {
-      return { ...state, singlePost, isLoading: false }
-    })
+      set((state) => {
+        return { ...state, singlePost }
+      })
+    } catch (error) {
+      console.error('error :>> ', error)
+    } finally {
+      set((state) => {
+        return { ...state, isLoading: false }
+      })
+    }
   },
 
   setSinglePost: (post: FullPost | {}) => {

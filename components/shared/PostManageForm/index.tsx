@@ -49,12 +49,14 @@ const PostManageForm = ({
           <TextField
             control={form.control}
             name="title"
+            autoComplete="off"
             label="Title"
             isPending={isDisabled}
           />
 
           <FilesField
             name="files"
+            autoComplete="off"
             additionalName="imageUrls"
             multiple
             filesDuplicates={filesDuplicates}
@@ -66,6 +68,7 @@ const PostManageForm = ({
           <TextAreaField
             control={form.control}
             name="content"
+            autoComplete="off"
             label="Post content"
             isPending={isDisabled}
             rows={7}
@@ -75,6 +78,7 @@ const PostManageForm = ({
             options={categoriesOptions}
             control={form.control}
             name="categories"
+            autoComplete="off"
             label="Post categories"
             isPending={isDisabled}
             placeholder="Select category or categories"
@@ -83,6 +87,7 @@ const PostManageForm = ({
           <SwitchField
             control={form.control}
             name="status"
+            autoComplete="off"
             label="Publish the post?"
             description="Enabled the ability for all users to view your post."
             isPending={isDisabled}

@@ -18,25 +18,20 @@ import {
  * @param {number} params.limit - The number of categories to retrieve.
  * @param {number} params.offset - The offset for pagination.
  * @param {string} [params.searchQuery] - An optional search query to filter categories by name.
- * @returns {Promise<{ categories: Categories[], categoriesCount: number } | string | null>}
- * Returns an object containing the filtered categories and their total count. If no categories are found,
- * returns a message string. If an error occurs, returns `null`.
+ * @returns {Promise<{ categories: Categories[], categoriesCount: number } | null>}
+ * Returns an object containing the filtered categories and their total count. If an error occurs, returns `null`.
  */
 export const fetchFilteredCategoriesWithPag = async ({
   limit,
   offset,
   searchQuery
-}: IFetchDataFunctionProps): Promise<
-  | {
-      categories: Categories[]
-      categoriesCount: number
-    }
-  | string
-  | null
-> => {
+}: IFetchDataFunctionProps): Promise<{
+  categories: Categories[]
+  categoriesCount: number
+} | null> => {
   try {
-    const categories: Categories[] =
-      (await db.categories.findMany({
+    const dbCategories: Categories[] | null = await db.categories.findMany(
+      {
         where: {
           slug: {
             not: `${DEFAULT_CATEGORY.slug}`
@@ -47,10 +42,11 @@ export const fetchFilteredCategoriesWithPag = async ({
         },
         take: limit,
         skip: offset as number
-      })) ?? []
+      }
+    )
 
-    if (categories?.length <= 0) {
-      return 'It seems there are no categories yet.'
+    if (!dbCategories || dbCategories?.length <= 0) {
+      return { categories: [], categoriesCount: 0 }
     }
 
     const categoriesCount: number = await db.categories.count({
@@ -66,7 +62,7 @@ export const fetchFilteredCategoriesWithPag = async ({
       skip: offset as number
     })
 
-    return { categories, categoriesCount }
+    return { categories: dbCategories, categoriesCount }
   } catch (error) {
     console.error('Failed to fetch categories:', error)
     return null
@@ -83,7 +79,7 @@ export const fetchFilteredCategoriesWithPag = async ({
  * Returns an array of truncated category objects. If no categories are found, returns an empty array.
  * If an error occurs, returns `null`.
  */
-export const fetchAllCategoriesTruncated = async (): Promise<
+export const fetchCategoriesTruncated = async (): Promise<
   TTruncatedCategories[] | [] | null
 > => {
   try {
@@ -108,6 +104,13 @@ export const fetchAllCategoriesTruncated = async (): Promise<
   }
 }
 
+/**
+ * Fetches a single category by its unique identifier.
+ *
+ * @param {string} categoryId - The unique ID of the category to fetch.
+ * @returns {Promise<{ id: string, name: string, slug: string, imageUrl: string | null, description: string | null } | null>}
+ *   A promise that resolves to the category object if found, or null if not found or an error occurs.
+ */
 export const fetchSingleCategoryById = async (
   categoryId: string
 ): Promise<{
@@ -126,10 +129,34 @@ export const fetchSingleCategoryById = async (
 
     return category
   } catch (error) {
-    throw new Error('Failed to fetch category!')
+    return null
   }
 }
 
+/**
+ * Checks whether a category with the given slug exists in the database.
+ *
+ * @param {string} slug - The slug of the category to check.
+ * @returns {Promise<boolean>} A promise that resolves to true if the category exists, false otherwise.
+ */
+export const categoryExists = async (slug: string): Promise<boolean> => {
+  try {
+    const count = await db.categories.count({
+      where: { slug }
+    })
+
+    return count > 0
+  } catch (error) {
+    return false
+  }
+}
+
+/**
+ * Fetches the "Uncategorized" category based on a default slug.
+ *
+ * @returns {Promise<{ id: string, name: string, slug: string, imageUrl: string | null, description: string | null } | null>}
+ *   A promise that resolves to the Uncategorized category if found, or null if not found or an error occurs.
+ */
 export const fetchUncategorizedCategory = async (): Promise<{
   id: string
   name: string
@@ -146,16 +173,24 @@ export const fetchUncategorizedCategory = async (): Promise<{
 
     return uncategorizedCategory
   } catch (error) {
-    throw new Error(`Failed to fetch '${DEFAULT_CATEGORY.name}' category!`)
+    return null
   }
 }
 
-export const fetchPostsIdsInCategory = async (
+/**
+ * Fetches the IDs of all posts associated with the specified category.
+ *
+ * @param {string} categoryId - The unique identifier of the category.
+ * @returns {Promise<Array<{ postId: string }> | null>}
+ *   A promise that resolves to an array of objects containing the post IDs, or null if an error occurs.
+ */
+export const fetchCategoryPostsIds = async (
   categoryId: string
 ): Promise<
-  {
-    postId: string
-  }[]
+  | {
+      postId: string
+    }[]
+  | null
 > => {
   try {
     const postsInCategory = await db.postCategories.findMany({
@@ -169,6 +204,6 @@ export const fetchPostsIdsInCategory = async (
 
     return postsInCategory
   } catch (error) {
-    throw new Error('Failed to fetch post IDs for category!')
+    return null
   }
 }

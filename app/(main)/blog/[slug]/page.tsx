@@ -3,6 +3,7 @@ import { type Metadata } from 'next'
 import SinglePostPageView from '~/views/SinglePostPageView'
 import { getSinglePost } from '~/services/posts/posts.server'
 import { type ISlugPageParamsProps } from '~/types'
+import { notFound } from 'next/navigation'
 
 export async function generateMetadata({
   params: { slug }
@@ -20,6 +21,10 @@ const SinglePostPage = async ({
   params: { slug }
 }: ISlugPageParamsProps) => {
   const serverSinglePost = await getSinglePost(slug)
+
+  if (!serverSinglePost) {
+    notFound()
+  }
 
   return (
     <SinglePostPageView

@@ -1,24 +1,52 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { usePathname, useSearchParams } from 'next/navigation'
 
 import useGlobalStore from '~/store'
 import { trackVisit } from '~/actions/track-visit'
-import { type Session } from 'next-auth'
+import type { Session } from 'next-auth'
 
 interface IClientTrackVisitProps {
   session: Session | null
 }
 
 const ClientTrackVisit = ({ session }: IClientTrackVisitProps) => {
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const [isNotFoundPage, setIsNotFoundPage] = useState(false)
+
   const { cookiesConsent, setCookiesConsent, setCurrentSession } =
-    useGlobalStore((state) => {
-      return {
-        cookiesConsent: state.cookiesConsent,
-        setCookiesConsent: state.setCookiesConsent,
-        setCurrentSession: state.setCurrentSession
-      }
-    })
+    useGlobalStore((state) => ({
+      cookiesConsent: state.cookiesConsent,
+      setCookiesConsent: state.setCookiesConsent,
+      setCurrentSession: state.setCurrentSession
+    }))
+
+  // Determining if we are on page 404
+  useEffect(() => {
+    // Checking whether the current DOM contains elements specific to page 404
+    const checkFor404Elements = () => {
+      // Checking for elements specific to the 404 page
+      const has404Title =
+        document.title.includes('404') ||
+        document.title.includes('Not Found')
+
+      // Checking for specific elements in the DOM
+      const has404Elements =
+        document.querySelector('[data-not-found-page]') !== null
+
+      setIsNotFoundPage(has404Title || has404Elements)
+    }
+
+    // Start checking after the page is fully loaded
+    if (document.readyState === 'complete') {
+      checkFor404Elements()
+      return undefined
+    }
+    window.addEventListener('load', checkFor404Elements)
+    return () => window.removeEventListener('load', checkFor404Elements)
+  }, [pathname, searchParams])
 
   useEffect(() => {
     if (session) {
@@ -43,6 +71,11 @@ const ClientTrackVisit = ({ session }: IClientTrackVisitProps) => {
       try {
         if (!cookiesConsent) return
 
+        if (isNotFoundPage) {
+          console.log('Skipping visit tracking for 404 page')
+          return
+        }
+
         const timeZone = Intl.DateTimeFormat()?.resolvedOptions()?.timeZone
         await trackVisit(session, timeZone)
       } catch (error) {
@@ -51,7 +84,7 @@ const ClientTrackVisit = ({ session }: IClientTrackVisitProps) => {
     }
 
     runTrackVisit()
-  }, [session, setCookiesConsent, cookiesConsent])
+  }, [pathname, searchParams, session, cookiesConsent, isNotFoundPage])
 
   return null
 }

@@ -6,7 +6,7 @@ import { UserRole } from '@prisma/client'
 
 import { getSinglePost } from '~/services/posts/posts.server'
 import { getUserById } from '~/services/user'
-import { fetchUncategorizedCategory } from '~/services/categories'
+import { fetchUncategorizedCategory } from '~/services/categories/categories.server'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
 import { PATHS } from '~/utils/constants'
 import { ManagePostSchema } from '~/schemas'

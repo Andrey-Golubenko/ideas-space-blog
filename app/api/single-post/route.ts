@@ -18,13 +18,6 @@ export async function GET(request: NextRequest) {
     try {
       const singlePost: FullPost | null = await getSinglePost(query)
 
-      if (!singlePost) {
-        return NextResponse.json(
-          { error: 'Post not found' },
-          { status: 404 }
-        )
-      }
-
       return NextResponse.json(singlePost)
     } catch (error) {
       console.error('Error :', error)

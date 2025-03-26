@@ -147,7 +147,7 @@ export const getSinglePost = async (
   slug: string
 ): Promise<FullPost | null> => {
   try {
-    const initPost = await db.post.findUnique({
+    const dbPost = await db.post.findUnique({
       where: { id: slug },
       include: {
         categories: {
@@ -164,9 +164,9 @@ export const getSinglePost = async (
       }
     })
 
-    if (!initPost) return null
+    if (!dbPost) return null
 
-    const categories = initPost.categories.map((singleCategory) => {
+    const categories = dbPost.categories.map((singleCategory) => {
       return {
         categoryId: singleCategory?.category?.id,
         categoryName: singleCategory?.category?.name,
@@ -174,7 +174,7 @@ export const getSinglePost = async (
       }
     })
 
-    const post: FullPost = { ...initPost, categories }
+    const post: FullPost = { ...dbPost, categories }
 
     return post
   } catch (error) {
@@ -188,7 +188,7 @@ export const fetchRecentPosts = async (): Promise<{
   recentPosts: TDeserializedPost[] | string
 }> => {
   try {
-    const posts = await db.post.findMany({
+    const dbPosts = await db.post.findMany({
       where: {
         status: PostStatus.PUBLISHED
       },
@@ -221,11 +221,11 @@ export const fetchRecentPosts = async (): Promise<{
       orderBy: { createdAt: 'desc' }
     })
 
-    if (!posts || !posts.length) {
+    if (!dbPosts || !dbPosts.length) {
       return { recentPosts: 'It seems there are no posts yet.' }
     }
 
-    const deserializedPosts: TDeserializedPost[] = posts.map((post) => {
+    const deserializedPosts: TDeserializedPost[] = dbPosts.map((post) => {
       return {
         ...post,
         author: post.author

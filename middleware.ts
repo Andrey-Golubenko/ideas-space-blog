@@ -36,7 +36,6 @@ export default auth(async (request) => {
 
   response.headers.set('x-device-type', isMobile ? 'mobile' : 'desktop')
   response.headers.set('x-forwarded-for', ipAddress)
-  response.headers.set('Cache-Control', 'public, max-age=2592000')
 
   if (isApiAuthRoute) {
     return response

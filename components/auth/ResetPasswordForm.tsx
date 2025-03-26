@@ -59,6 +59,7 @@ const ResetPasswordForm = () => {
           <div className="space-y-4">
             <TextField
               name="email"
+              autoComplete="email"
               type="email"
               placeholder="email@example.com"
               label="Email"

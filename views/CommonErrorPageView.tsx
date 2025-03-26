@@ -42,7 +42,7 @@ const CommonErrorPageView = () => {
         </p>
 
         <p className="mb-8 text-center text-muted-foreground md:text-base">
-          Please try again later or go to Homepage!
+          Please try again later!
         </p>
 
         <div className="flex w-full flex-wrap items-center justify-between gap-2 md:w-9/12">

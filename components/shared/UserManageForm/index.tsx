@@ -42,6 +42,7 @@ const UserManageForm = ({
         <div className="space-y-4">
           <TextField
             name="name"
+            autoComplete="name"
             type="text"
             placeholder="John Doe"
             label="Name"
@@ -53,6 +54,7 @@ const UserManageForm = ({
             <>
               <TextField
                 name="email"
+                autoComplete="email"
                 type="email"
                 placeholder="email@example.com"
                 label="Email"
@@ -62,6 +64,7 @@ const UserManageForm = ({
 
               <PasswordField
                 name="password"
+                autoComplete="current-password"
                 label="Password"
                 control={form.control}
                 isPending={isDisabled}
@@ -69,6 +72,7 @@ const UserManageForm = ({
 
               <PasswordField
                 name="newPassword"
+                autoComplete="new-password"
                 label="New password"
                 control={form.control}
                 isPending={isDisabled}
@@ -80,6 +84,7 @@ const UserManageForm = ({
 
           <SelectField
             name="role"
+            autoComplete="off"
             label="Role"
             placeholder="Select a Role"
             control={form.control}
@@ -89,6 +94,7 @@ const UserManageForm = ({
           {!isUserOAuth && (
             <SwitchField
               name="isTwoFactorEnabled"
+              autoComplete="off"
               label="Two Factor Authentication"
               description="Enabled two factor authentication for your account"
               control={form.control}

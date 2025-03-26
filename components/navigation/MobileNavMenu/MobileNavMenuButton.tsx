@@ -3,6 +3,7 @@
 import {
   useCallback,
   useEffect,
+  type ButtonHTMLAttributes,
   type Dispatch,
   type SetStateAction
 } from 'react'
@@ -13,7 +14,8 @@ import { cn } from '~/libs/utils'
 import IconOpen from '~/public/icons/icon-open.svg'
 import IconClose from '~/public/icons/icon-close.svg'
 
-interface IMobileNavMenuButtonProps {
+interface IMobileNavMenuButtonProps
+  extends ButtonHTMLAttributes<HTMLButtonElement> {
   isOpen: boolean
   setIsOpen: Dispatch<SetStateAction<boolean>>
   buttonClassNames?: string
@@ -21,7 +23,8 @@ interface IMobileNavMenuButtonProps {
 const MobileNavMenuButton = ({
   isOpen,
   setIsOpen,
-  buttonClassNames
+  buttonClassNames,
+  ...props
 }: IMobileNavMenuButtonProps) => {
   const [autoAnimateRef] = useAutoAnimate()
 
@@ -86,6 +89,7 @@ const MobileNavMenuButton = ({
       variant="outline"
       onClick={handleClick}
       ref={autoAnimateRef}
+      {...props}
     >
       {isOpen ? (
         <IconOpen className="h-8 w-8" />

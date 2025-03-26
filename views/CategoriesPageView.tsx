@@ -7,6 +7,7 @@ import { useCategoriesFilters } from '~/hooks/useCategoriesFilters'
 import { useDataCategories } from '~/hooks/useDataCategories'
 import CategoriesFiltersBox from '~/components/categories/CategoriesFiltersBox'
 import CategoriesList from '~/components/categories/CategoriesList'
+import { DEFAULT_CATEGORIES_PER_PAGE } from '~/utils/constants'
 import { type Categories } from '@prisma/client'
 
 const CategoriesPageView = () => {
@@ -28,7 +29,7 @@ const CategoriesPageView = () => {
   const dataCategoriesProps = useMemo(() => {
     return {
       page,
-      limit: 12,
+      limit: DEFAULT_CATEGORIES_PER_PAGE,
       searchQuery
     }
   }, [page, searchQuery])

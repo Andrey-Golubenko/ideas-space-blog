@@ -8,6 +8,7 @@ import { Card, CardHeader, CardContent } from '~/components/ui/card'
 import WithDataList from '~/components/hoc/WithDataList'
 import ItemCard from '~/components/shared/ItemCard'
 import CardHeaderContent from '~/components/shared/CardWrapper/CardHeaderContent'
+import { DEFAULT_CATEGORIES_PER_PAGE } from '~/utils/constants'
 
 const CategoriesSection = () => {
   const { categories, categoriesCount, isLoading } = useGlobalStore(
@@ -26,7 +27,7 @@ const CategoriesSection = () => {
   const dataCategoriesProps = useMemo(() => {
     return {
       page: 1,
-      limit: 12
+      limit: DEFAULT_CATEGORIES_PER_PAGE
     }
   }, [])
 

@@ -2,7 +2,7 @@ import { db } from '~/libs/db'
 import { type TActionReturn } from '~/types'
 
 interface IUpdatePostsCategoriesProps {
-  postsInCategory: {
+  categoryPostsIds: {
     postId: string
   }[]
   categoryId: string
@@ -10,12 +10,12 @@ interface IUpdatePostsCategoriesProps {
 }
 
 export const updatePostsCategories = async ({
-  postsInCategory,
+  categoryPostsIds,
   categoryId,
   uncategorizedCategoryId
 }: IUpdatePostsCategoriesProps): TActionReturn => {
   try {
-    const updatePromises = postsInCategory.map(async (postCategory) => {
+    const updatePromises = categoryPostsIds.map(async (postCategory) => {
       const { postId } = postCategory
 
       const categoryCount = await db.postCategories.count({

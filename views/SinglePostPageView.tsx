@@ -1,4 +1,4 @@
-import SinglePostCard from '~/components/posts/SinglePost'
+import SinglePost from '~/components/posts/SinglePost'
 
 interface ISinglePostProps {
   postId: string
@@ -10,7 +10,7 @@ const SinglePostPageView = ({
   serverSinglePost
 }: ISinglePostProps) => {
   return (
-    <SinglePostCard
+    <SinglePost
       postId={postId}
       serverSinglePost={serverSinglePost}
     />

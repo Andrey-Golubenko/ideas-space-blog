@@ -63,6 +63,7 @@ const RegisterForm = () => {
           <div className="space-y-4">
             <TextField
               name="name"
+              autoComplete="name"
               placeholder="John Doe"
               label="Name"
               control={form.control}
@@ -70,6 +71,7 @@ const RegisterForm = () => {
             />
             <TextField
               name="email"
+              autoComplete="email"
               type="email"
               placeholder="email@example.com"
               label="Email"
@@ -78,6 +80,7 @@ const RegisterForm = () => {
             />
             <PasswordField
               name="password"
+              autoComplete="current-password"
               label="Password"
               control={form.control}
               isPending={isPending}

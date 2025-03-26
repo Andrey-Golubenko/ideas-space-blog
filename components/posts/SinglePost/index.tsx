@@ -18,29 +18,24 @@ interface ISinglePostCardProps {
   serverSinglePost?: FullPost | null
 }
 
-const SinglePostCard = ({
+const SinglePost = ({
   postId,
   serverSinglePost
 }: ISinglePostCardProps) => {
-  const { singlePost, getSinglePostById, setSinglePost, isLoading } =
-    useGlobalStore((state) => {
-      return {
-        singlePost: state.singlePost,
-        getSinglePostById: state.getSinglePostById,
-        setSinglePost: state.setSinglePost,
-        isLoading: state.isLoading
-      }
-    })
+  const { singlePost, setSinglePost } = useGlobalStore((state) => {
+    return {
+      singlePost: state.singlePost,
+      setSinglePost: state.setSinglePost
+    }
+  })
 
   const currentUser = useCurrentUser()
 
   useEffect(() => {
-    if (!serverSinglePost && postId) {
-      getSinglePostById(postId)
-    } else {
+    if (serverSinglePost) {
       setSinglePost(serverSinglePost as FullPost)
     }
-  }, [serverSinglePost, postId, getSinglePostById, setSinglePost])
+  }, [serverSinglePost, setSinglePost])
 
   const { isAdminPage } = usePage()
 
@@ -54,7 +49,7 @@ const SinglePostCard = ({
     singlePostContent
   } = useSingleItemProps({ post: singlePost, user: currentUser })
 
-  const hasContent = isPostExist && !isLoading
+  const hasContent = isPostExist
 
   return (
     <Card
@@ -91,4 +86,4 @@ const SinglePostCard = ({
   )
 }
 
-export default SinglePostCard
+export default SinglePost

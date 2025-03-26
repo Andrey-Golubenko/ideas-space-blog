@@ -28,6 +28,7 @@ const NotFoundPageView = () => {
           priority
           width={700}
           height={300}
+          style={{ height: 'auto' }}
           className="h-auto w-full rounded-lg lg:h-[300px]"
         />
       </CardContent>

@@ -39,6 +39,7 @@ const LoginForm = ({
           {showTwoFactor && (
             <TextField
               name="code"
+              autoComplete="off"
               label="Two Factor Code"
               placeholder="123456"
               control={form.control}
@@ -50,6 +51,7 @@ const LoginForm = ({
             <>
               <TextField
                 name="email"
+                autoComplete="email"
                 type="email"
                 placeholder="email@example.com"
                 label="Email"
@@ -59,6 +61,7 @@ const LoginForm = ({
 
               <PasswordField
                 name="password"
+                autoComplete="current-password"
                 label="Password"
                 control={form.control}
                 isPending={isPending}

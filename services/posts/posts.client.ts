@@ -1,4 +1,5 @@
-import { IFetchPostsFunctionProps, type PostsData } from '~/types'
+import { notFound } from 'next/navigation'
+import { IFetchPostsFunctionProps, type TPostsData } from '~/types'
 
 export const fetchPosts = async ({
   limit,
@@ -7,7 +8,7 @@ export const fetchPosts = async ({
   statusFilter,
   authorFilter,
   searchQuery
-}: IFetchPostsFunctionProps): Promise<PostsData> => {
+}: IFetchPostsFunctionProps): Promise<TPostsData> => {
   try {
     const params = new URLSearchParams()
 
@@ -31,7 +32,7 @@ export const fetchPosts = async ({
       throw new Error('Unable fetch posts!')
     }
 
-    const data: PostsData = await response.json()
+    const data: TPostsData = await response.json()
     return data
   } catch (error) {
     console.error(error)
@@ -43,7 +44,7 @@ export const fetchPosts = async ({
 
 export const fetchSinglePostById = async (
   postId: string
-): Promise<FullPost> => {
+): Promise<FullPost | null> => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/single-post?q=${postId}`,
@@ -54,24 +55,11 @@ export const fetchSinglePostById = async (
       }
     )
 
-    if (!response?.ok) {
-      throw new Error(
-        'Failed to fetch the post!  An unexpected error has occurred!'
-      )
-    }
-
     const post: FullPost = await response.json()
-
-    if (!post || !post?.id) {
-      throw new Error('Invalid post data received!')
-    }
 
     return post
   } catch (error) {
     console.error(error)
-
-    throw new Error(
-      (error as Error)?.message || 'An unknown error occurred!'
-    )
+    return null
   }
 }

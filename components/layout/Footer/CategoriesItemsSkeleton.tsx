@@ -8,8 +8,8 @@ const CategoriesItemsSkeleton = () => {
           key={crypto.randomUUID()}
           className="inline-flex w-fit items-center gap-2"
         >
-          <Skeleton className="size-2 bg-[hsl(var(--layout-button))]" />
-          <Skeleton className="h-3 w-32 bg-[hsl(var(--layout-button))]" />
+          <Skeleton className="size-3 bg-[hsl(var(--layout-button))]" />
+          <Skeleton className="h-2 w-36 bg-[hsl(var(--layout-button))]" />
         </li>
       ))}
     </>

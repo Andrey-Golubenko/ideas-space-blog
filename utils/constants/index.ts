@@ -46,6 +46,8 @@ export const PATHS = {
   resetPassword: '/auth/reset-password',
   newPassword: '/auth/new-password',
 
+  notFound: '/not-found',
+
   commonError: '/error',
   authError: '/auth/error',
 
@@ -158,6 +160,8 @@ export const DEFAULT_POSTS_PER_PAGE = 9 as const
 export const PROFILE_POSTS_PER_PAGE = 3 as const
 export const SINGLE_CAT_POSTS_PER_PAGE = 4 as const
 export const DEFAULT_TABLE_ITEMS_PER_PAGE = 10 as const
+
+export const DEFAULT_CATEGORIES_PER_PAGE = 12 as const
 
 // TODO: For storage as an example
 enum InitCategoriesName {

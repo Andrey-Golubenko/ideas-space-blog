@@ -15,7 +15,8 @@ export const PUBLIC_ROUTES = [
   PATHS.emailVerification,
   PATHS.commonError,
   PATHS.impressum,
-  PATHS.privacyPolicy
+  PATHS.privacyPolicy,
+  PATHS.notFound
 ]
 
 /**

@@ -26,7 +26,7 @@ import {
 export interface IPostsSlice {
   posts: TDeserializedPost[] | string
   postsCount: number | null
-  singlePost: FullPost | null
+  singlePost: FullPost | null | {}
   recentPosts: TDeserializedPost[] | string
 
   getFilteredPostsWithPag: (props: IFetchPostsFunctionProps) => void
@@ -40,9 +40,11 @@ export interface IPostsSlice {
 export interface ICategoriesSlice {
   categories: Categories[] | string | []
   categoriesCount: number | null
+  truncatedCategories: TTruncatedCategories[] | []
   editableCategory: Categories | {}
 
   getFilteredCategoriesWithPag: (props: IFetchDataFunctionProps) => void
+  getTruncatedCategories: () => void
   setEditableCategory: (category: Categories | {}) => void
   deleteSingleCategory: (categoryId: string) => void
 }
@@ -190,10 +192,17 @@ export type TActionReturn = Promise<
   | null
 >
 
-export type PostsData =
+export type TPostsData =
   | {
       posts: TDeserializedPost[]
       postsCount: number
+    }
+  | string
+
+export type TCategoriesData =
+  | {
+      categories: Categories[]
+      categoriesCount: number
     }
   | string
 

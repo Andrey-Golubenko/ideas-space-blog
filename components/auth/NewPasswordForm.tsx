@@ -63,6 +63,7 @@ const NewPasswordForm = () => {
           <div className="space-y-4">
             <PasswordField
               name="password"
+              autoComplete="new-password"
               label="New password"
               control={form.control}
               isPending={isPending}

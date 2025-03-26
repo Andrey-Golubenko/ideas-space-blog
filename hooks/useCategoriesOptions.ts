@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 
-import { fetchAllCategoriesTruncated } from '~/services/categories'
+import useGlobalStore from '~/store'
 import { toUpperCaseFirstChar } from '~/utils/helpers'
-import { type IMultiSelectProps, type TTruncatedCategories } from '~/types'
+import { type IMultiSelectProps } from '~/types'
 
 /**
  * Fetches category options for selection.
@@ -18,6 +18,13 @@ import { type IMultiSelectProps, type TTruncatedCategories } from '~/types'
  * }} Object containing an array of category options.
  */
 export const useCategoriesOptions = (returnMode: 'id' | 'slug') => {
+  const { truncatedCategories, getTruncatedCategories } = useGlobalStore(
+    (state) => ({
+      truncatedCategories: state.truncatedCategories,
+      getTruncatedCategories: state.getTruncatedCategories
+    })
+  )
+
   const [categoriesOptions, setCategoriesOptions] = useState<
     IMultiSelectProps['options']
   >([])
@@ -25,30 +32,19 @@ export const useCategoriesOptions = (returnMode: 'id' | 'slug') => {
   const returnCatId: boolean = returnMode === 'id'
 
   useEffect(() => {
-    const runFetchCategories = async () => {
-      if (categoriesOptions.length > 0) return
-
-      try {
-        const truncatedCategories: TTruncatedCategories[] =
-          (await fetchAllCategoriesTruncated()) ?? []
-
-        const options = truncatedCategories.map((category) => {
-          const categoryName = toUpperCaseFirstChar(category?.name)
-
-          return {
-            label: categoryName,
-            value: returnCatId ? category?.id : category?.slug
-          }
-        })
-
-        setCategoriesOptions(options)
-      } catch (error) {
-        console.error('Error fetching categories:', error)
-      }
+    if (truncatedCategories.length === 0) {
+      getTruncatedCategories()
     }
+  }, [truncatedCategories.length, getTruncatedCategories])
 
-    runFetchCategories()
-  }, [returnMode])
+  useEffect(() => {
+    const options = truncatedCategories.map((category) => ({
+      label: toUpperCaseFirstChar(category?.name),
+      value: returnCatId ? category?.id : category?.slug
+    }))
+
+    setCategoriesOptions(options)
+  }, [truncatedCategories, returnCatId])
 
   return { categoriesOptions }
 }
