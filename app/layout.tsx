@@ -11,6 +11,7 @@ import Footer from '~/components/layout/Footer'
 import CookiesBanner from '~/components/layout/CookiesBanner'
 import ClientTrackVisit from '~/components/layout/ClientTrackVisit'
 import CookiesBannerTrigger from '~/components/layout/CookiesBanner/CookiesBannerTrigger'
+import ServiceWorkerRegistration from '~/components/layout/ServiceWorkerRegistration'
 import { APPLE_SPLASH_IMAGES } from '~/utils/constants/apple-splash-images'
 
 const OfflineNotification = dynamic(
@@ -23,13 +24,16 @@ const OfflineNotification = dynamic(
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Ideas space blog',
+  title: {
+    template: '%s | Ideas space blog',
+    default: 'Ideas space blog'
+  },
   description:
     'Blog is designed to inspire and share knowledge on a wide range of topics, from technology to art',
   robots: { index: true, follow: true },
   icons: {
     icon: '/icons/favicon.ico',
-    apple: [{ url: '/icons/apple-touch-icon-180.png', sizes: '180x180' }],
+    apple: [{ url: '/icons/apple-icon-180.png', sizes: '180x180' }],
     other: [
       { rel: 'mask-icon', url: '/icons/favicon.svg', color: '#5bbad5' }
     ]
@@ -89,6 +93,8 @@ export default async function RootLayout({
           <ClientTrackVisit session={session} />
 
           <OfflineNotification />
+
+          <ServiceWorkerRegistration />
         </Providers>
       </body>
     </html>

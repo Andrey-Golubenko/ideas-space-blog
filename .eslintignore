@@ -6,4 +6,5 @@
 jest.setup.ts
 jest.config.js
 /test/__mocks__/fileMock.js
+/public
 commitlint.config.js

@@ -1,9 +1,28 @@
 import withSvgr from 'next-svgr'
+import crypto from 'crypto'
+import fs from 'fs'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async headers() {
     return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY'
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin'
+          }
+        ]
+      },
       {
         // Cache all static assets
         source:
@@ -17,12 +36,15 @@ const nextConfig = {
         ]
       },
       {
-        // Cache other routes
-        source: '/(.*)',
+        source: '/service-worker.js',
         headers: [
           {
+            key: 'Content-Type',
+            value: 'application/javascript; charset=utf-8'
+          },
+          {
             key: 'Cache-Control',
-            value: 'public, max-age=2592000, stale-while-revalidate'
+            value: 'no-cache, no-store, must-revalidate'
           }
         ]
       }
@@ -66,6 +88,27 @@ const nextConfig = {
 
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production'
+  },
+
+  generateBuildId: async () => {
+    // Generating a unique hash for the cache version
+    const timestamp = new Date().toISOString()
+    const buildHash = crypto
+      .createHash('md5')
+      .update(timestamp)
+      .digest('hex')
+      .slice(0, 8)
+
+    // Creating the contents of the file cache-version.js
+    const cacheVersionContent = `
+      // This file is auto-generated during build
+      self.__CACHE_VERSION = '${buildHash}';
+    `.trim()
+
+    // Writing the file to the public directory
+    fs.writeFileSync('./public/cache-version.js', cacheVersionContent)
+
+    return buildHash
   }
 }
 
