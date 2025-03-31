@@ -2,13 +2,13 @@ import NextAuth from 'next-auth'
 import { v4 as uuidv4 } from 'uuid'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 
+import { UserRole } from '@prisma/client'
 import { db } from '~/libs/db'
 import authConfig from '~/libs/auth/auth.config'
 import { getUserById } from '~/services/user'
 import { getTwoFactorConfirmationByUserId } from '~/services/twoFactorConfirmation'
 import { getAccountByUserId } from '~/services/account'
 import { PATHS } from '~/utils/constants'
-import { UserRole } from '@prisma/client'
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,

@@ -49,6 +49,7 @@ const DeleteCategoryHandler = ({
             richColors: true,
             closeButton: true
           })
+
           onCategoryDeleteSuccess()
 
           // delete category from store

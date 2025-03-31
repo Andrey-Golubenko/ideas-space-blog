@@ -8,7 +8,6 @@ import { toast } from 'sonner'
 import { UserRole, type Categories } from '@prisma/client'
 
 import useGlobalStore from '~/store'
-import { useCleaningItem } from '~/hooks/useCleaningItem'
 import { Card, CardHeader, CardContent } from '~/components/ui/card'
 import CategoryManageForm from '~/components/shared/CategoryManageForm'
 import WithRole from '~/components/hoc/WithRole'
@@ -17,7 +16,10 @@ import {
   destroyImagesInCld,
   saveImagesToCld
 } from '~/services/imagesProcessing'
-import { CLOUDINARY_CATEGORIES_IMAGES_FOLDER } from '~/utils/constants'
+import {
+  CLOUDINARY_CATEGORIES_IMAGES_FOLDER,
+  PATHS
+} from '~/utils/constants'
 import { SingleCategorySchema } from '~/schemas'
 import { type TManageCategoryForm } from '~/types'
 
@@ -134,7 +136,7 @@ const EditCategoryPageView = () => {
 
         setEditableCategory({})
 
-        router.back()
+        router.replace(PATHS.adminCategories)
       }
 
       if (data?.error) {

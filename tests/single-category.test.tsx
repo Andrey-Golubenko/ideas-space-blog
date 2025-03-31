@@ -2,8 +2,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { cleanup, render, screen } from '@testing-library/react'
 import { withNuqsTestingAdapter } from 'nuqs/adapters/testing'
 
-import useGlobalStore from '~/store'
 import { PostStatus } from '@prisma/client'
+import useGlobalStore from '~/store'
 import SingleCategoryPageView from '~/views/SingleCategoryPageView'
 
 describe('SingleCategoryPageView Integration Tests', () => {

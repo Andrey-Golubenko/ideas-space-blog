@@ -2,8 +2,8 @@
 
 import { revalidatePath } from 'next/cache'
 
-import { db } from '~/libs/db'
 import { UserRole } from '@prisma/client'
+import { db } from '~/libs/db'
 import { getSinglePost } from '~/services/posts/posts.server'
 import { getUserById } from '~/services/user'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'

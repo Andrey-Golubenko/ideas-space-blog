@@ -7,13 +7,25 @@ function ServiceWorkerRegistration() {
     const registerSW = async () => {
       try {
         if ('serviceWorker' in navigator) {
-          console.log(
-            '[Service Worker] ServiceWorker registration starting...'
-          )
+          if (!navigator.onLine) {
+            console.log('Browser is offline, skipping SW registration')
+            return
+          }
 
-          // Unregister any existing service workers first
           const registrations =
             await navigator.serviceWorker.getRegistrations()
+
+          const activeServiceWorker = registrations.find(
+            (registration) => registration.active
+          )
+
+          if (activeServiceWorker && !navigator.onLine) {
+            console.log(
+              'Active SW exists and browser is offline, skipping registration'
+            )
+            return
+          }
+
           await Promise.all(
             Array.from(registrations).map((registration) =>
               registration.unregister()
@@ -28,21 +40,27 @@ function ServiceWorkerRegistration() {
           )
 
           console.log(
-            '[Service Worker] ServiceWorker registration successful with scope:',
+            'ServiceWorker registration successful with scope:',
             registration.scope
           )
-        } else {
-          console.log('[Service Worker] Service workers are not supported')
         }
       } catch (error) {
-        console.error(
-          '[Service Worker] ServiceWorker registration failed:',
-          error
-        )
+        console.error('ServiceWorker registration failed:', error)
       }
     }
 
     registerSW()
+
+    const handleOnline = () => {
+      console.log('Browser is online, re-registering SW')
+      registerSW()
+    }
+
+    window.addEventListener('online', handleOnline)
+
+    return () => {
+      window.removeEventListener('online', handleOnline)
+    }
   }, [])
 
   return null

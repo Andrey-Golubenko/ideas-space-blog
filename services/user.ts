@@ -1,7 +1,7 @@
 'use server'
 
-import { db } from '~/libs/db'
 import { type User } from '@prisma/client'
+import { db } from '~/libs/db'
 import {
   type TDeserializedUser,
   type IFetchUsersFunctionProps,

@@ -55,7 +55,7 @@ const SinglePost = ({
     <Card
       className={cn(
         'flex min-h-[70svh] w-full flex-col items-center justify-between rounded-md border-none shadow-md',
-        !isAdminPage && 'md:my-12'
+        !isAdminPage && 'xs:mt-10 md:mb-6 md:mt-16'
       )}
     >
       <SinglePostSlider

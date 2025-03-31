@@ -1,20 +1,21 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import { v4 as uuidv4 } from 'uuid'
 
+import { PostStatus } from '@prisma/client'
+import { newPost } from '~/actions/new-post'
+import { saveImagesToCld } from '~/services/imagesProcessing'
 import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
 import PostManageForm from '~/components/shared/PostManageForm'
-import { newPost } from '~/actions/new-post'
 import { CLOUDINARY_POSTS_IMAGES_FOLDER } from '~/utils/constants'
-import { saveImagesToCld } from '~/services/imagesProcessing'
-import { PostStatus } from '@prisma/client'
+import { isPostListPage } from '~/utils/helpers'
 import { ManagePostSchema } from '~/schemas'
-import { TManagePostForm } from '~/types'
+import { type TManagePostForm } from '~/types'
 
 interface INewPostPageViewProps {
   isLogged: boolean
@@ -38,6 +39,8 @@ const NewPostPageView = ({ isLogged }: INewPostPageViewProps) => {
   })
 
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const referrer = searchParams.get('from')
 
   const handleOnSubmit = (values: TManagePostForm) => {
     setError('')
@@ -81,7 +84,15 @@ const NewPostPageView = ({ isLogged }: INewPostPageViewProps) => {
           duration: 5000
         })
 
-        router.back()
+        if (referrer && isPostListPage(referrer)) {
+          const path = `${referrer}?refresh-posts=${Date.now()}`
+
+          router.refresh()
+
+          router.replace(path)
+        } else {
+          router.back()
+        }
       }
 
       if (data?.error) {

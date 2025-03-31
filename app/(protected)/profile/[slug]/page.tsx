@@ -1,7 +1,7 @@
+import { UserRole } from '@prisma/client'
 import ProfilePageView from '~/views/ProfilePageView'
 import { getUserById } from '~/services/user'
 import { getCurrentUser } from '~/utils/helpers/server.helpers'
-import { UserRole } from '@prisma/client'
 import { type ISlugPageParamsProps } from '~/types'
 
 const PublicProfilePage = async ({

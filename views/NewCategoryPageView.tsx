@@ -5,16 +5,19 @@ import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import { UserRole } from '@prisma/client'
 
+import { UserRole } from '@prisma/client'
 import { Card, CardHeader, CardContent } from '~/components/ui/card'
 import WithRole from '~/components/hoc/WithRole'
 import CategoryManageForm from '~/components/shared/CategoryManageForm'
 import { newCategory } from '~/actions/new-category'
 import { saveImagesToCld } from '~/services/imagesProcessing'
 import { SingleCategorySchema } from '~/schemas'
+import {
+  CLOUDINARY_CATEGORIES_IMAGES_FOLDER,
+  PATHS
+} from '~/utils/constants'
 import { type TManageCategoryForm } from '~/types'
-import { CLOUDINARY_CATEGORIES_IMAGES_FOLDER } from '~/utils/constants'
 
 const NewCategoryPageView = () => {
   const router = useRouter()
@@ -77,7 +80,11 @@ const NewCategoryPageView = () => {
           duration: 5000
         })
 
-        router.back()
+        const path = `${PATHS.adminCategories}?refresh-categories=${Date.now()}`
+
+        router.refresh()
+
+        router.replace(path)
       }
 
       if (data?.error) {

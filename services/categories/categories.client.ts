@@ -53,15 +53,16 @@ export const fetchCategoriesTruncated = async (): Promise<
     )
 
     if (!response.ok) {
-      throw new Error('Unable fetch categories!')
+      console.error('Unable fetch categories!')
+
+      return []
     }
 
     const data: TTruncatedCategories[] = await response.json()
     return data
   } catch (error) {
     console.error(error)
-    throw new Error(
-      (error as Error)?.message || 'An unknown error occurred!'
-    )
+
+    return []
   }
 }

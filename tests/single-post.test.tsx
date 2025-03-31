@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { cleanup, render, screen, waitFor } from '@testing-library/react'
 
-import SinglePostPageView from '~/views/SinglePostPageView'
 import { PostStatus } from '@prisma/client'
-import { customRender } from './test-utils'
+import SinglePostPageView from '~/views/SinglePostPageView'
+import { customRender } from '~/tests/test-utils'
 
 describe('Single Post Page Integration Tests', () => {
   const mockPost = {

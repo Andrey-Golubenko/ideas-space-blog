@@ -30,6 +30,10 @@ Explore the live demo of Ideas Space Blog to experience its features firsthand:
 - **Analytics and statistics**
   - Visit tracking
   - User activity analytics
+- **Progressive Web App (PWA) Capabilities**
+  - **Offline Support:** Access content even without an active internet connection.
+  - **Installable:** Users can add the app to their home screen for a native-like experience.
+  - **Improved Performance:** Faster loading times and seamless navigation using client-side caching.
 
 ## 🛠️ Project Features
 
@@ -153,6 +157,14 @@ RESEND_API_KEY="your_resend_api_key"
 
 ```plaintext
 ideas-space-blog/
+├── public/                  # Static assets
+│   ├── service-worker.js    # Main service worker file
+│   ├── cache-version.js     # Cache version file
+│   └── sw-modules/          # Service worker modules directory
+│       ├── cache-config.js      # Cache configuration
+│       ├── helper-functions.js  # Helper functions
+│       ├── cache-strategies.js  # Caching strategies
+│       └── maintenance.js       # Cache maintenance functions
 ├── app/                  # Next.js App Router
 │   ├── (auth)/           # Authentication route group
 │   ├── (main)/           # Main routes
@@ -193,8 +205,6 @@ ideas-space-blog/
 ├── utils/                # Utilities
 └── views/                # Page-level or screen components
 ```
-
-
 
 ## 📜 License
 

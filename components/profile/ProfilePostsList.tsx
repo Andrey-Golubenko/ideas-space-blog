@@ -1,9 +1,9 @@
 'use client'
 
+import { PostStatus } from '@prisma/client'
 import WithDataList from '~/components/hoc/WithDataList'
 import ItemCard from '~/components/shared/ItemCard'
 import NoItemsCard from '~/components/posts/NoItemsCard'
-import { PostStatus } from '@prisma/client'
 import { type TDeserializedPost } from '~/types'
 
 interface IProfilePostsListProps<TData> {

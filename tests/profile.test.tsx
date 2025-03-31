@@ -1,7 +1,8 @@
 import { describe, beforeEach, it, expect, vi } from 'vitest'
 import { screen, cleanup } from '@testing-library/react'
-import { UserRole, PostStatus } from '@prisma/client'
 import { withNuqsTestingAdapter } from 'nuqs/adapters/testing'
+import { UserRole, PostStatus } from '@prisma/client'
+
 import useGlobalStore from '~/store'
 import { customRender } from '~/tests/test-utils'
 import ProfilePageView from '~/views/ProfilePageView'

@@ -1,10 +1,10 @@
 'use client'
 
-import { Suspense } from 'react'
+import { Suspense, useMemo } from 'react'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
-import useGlobalStore from '~/store'
 import { PostStatus } from '@prisma/client'
+import useGlobalStore from '~/store'
 import { useDataPosts } from '~/hooks/useDataPosts'
 import { usePostsFilters } from '~/hooks/usePostsFilters'
 import { columns } from '~/components/admin/AdminPosts/columns'
@@ -16,6 +16,7 @@ import {
   type IRCWithSearchParamsKeyProps,
   type IFetchPostsFunctionProps
 } from '~/types'
+import { useSearchParams } from 'next/navigation'
 
 const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
   const { posts, postsCount, isLoading } = useGlobalStore((state) => {
@@ -25,6 +26,13 @@ const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
       isLoading: state.isLoading
     }
   })
+
+  const searchParams = useSearchParams()
+
+  const refreshParam = useMemo(
+    () => searchParams.get('refresh-posts'),
+    [searchParams]
+  )
 
   const noItem = typeof posts === 'string'
 
@@ -57,7 +65,7 @@ const PostsTable = ({ searchParamsKey }: IRCWithSearchParamsKeyProps) => {
     searchQuery
   }
 
-  useDataPosts(dataTablePostsProps)
+  useDataPosts({ ...dataTablePostsProps, refreshParam })
 
   return (
     <div className="space-y-4">

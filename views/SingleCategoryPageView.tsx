@@ -1,5 +1,8 @@
 'use client'
 
+import { useMemo } from 'react'
+import { useSearchParams } from 'next/navigation'
+
 import useGlobalStore from '~/store'
 import { usePostsFilters } from '~/hooks/usePostsFilters'
 import { useDataPosts } from '~/hooks/useDataPosts'
@@ -25,6 +28,13 @@ const SingleCategoryPageView = ({
     }
   })
 
+  const searchParams = useSearchParams()
+
+  const refreshParam = useMemo(
+    () => searchParams.get('refresh-posts'),
+    [searchParams]
+  )
+
   const { searchQuery, authorFilter, page, setPage } = usePostsFilters()
 
   const postsPerPage = SINGLE_CAT_POSTS_PER_PAGE
@@ -37,7 +47,7 @@ const SingleCategoryPageView = ({
     searchQuery
   }
 
-  useDataPosts(dataPostsProps)
+  useDataPosts({ ...dataPostsProps, refreshParam })
 
   const noItems: boolean = isEmptyOrUnpublished(posts)
 

@@ -50,7 +50,7 @@ const CellAction = ({ categoryId }: ICellActionProps) => {
     if (categoryToProcessing) {
       setEditableCategory(categoryToProcessing)
 
-      router.push(`${PATHS.adminEditCategory}`)
+      router.push(PATHS.adminEditCategory)
     } else {
       toast.info('Failed to find category for edit', {
         richColors: true,

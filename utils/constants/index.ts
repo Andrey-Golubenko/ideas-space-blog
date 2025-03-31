@@ -63,6 +63,22 @@ export const PATHS = {
   libSignIn: '/api/auth/signin'
 } as const
 
+export const STATIC_POST_LIST_PATHS = [
+  PATHS.blog,
+  PATHS.profile,
+  PATHS.adminPosts
+]
+
+export const DYNAMIC_POST_LIST_PATH_PREFIXES = [
+  PATHS.categoryPrefix, // For paths like /categories/[slug]
+  PATHS.profilePrefix // For paths like /categories/[slug]
+]
+
+export const POST_LIST_PATH_PATTERNS = [
+  /^\/categories\/[\w-]+$/, // Matches /categories/any-slug
+  /^\/profile\/[\w-]+$/ // Corresponds to /profile/any-id
+]
+
 export const IMAGES_PATHS = {
   noImages: '/images/image-placeholder.svg',
   heroBanner: '/images/hero-banner.webp',

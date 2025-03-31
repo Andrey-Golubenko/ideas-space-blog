@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 
+import { PostStatus } from '@prisma/client'
 import useGlobalStore from '~/store'
 import { editPost } from '~/actions/edit-post'
 import {
@@ -18,7 +19,6 @@ import PostManageForm from '~/components/shared/PostManageForm'
 import NotificationInfo from '~/components/notifications/NotificationInfo'
 import { checkIfPostExist } from '~/utils/helpers'
 import { CLOUDINARY_POSTS_IMAGES_FOLDER } from '~/utils/constants'
-import { PostStatus } from '@prisma/client'
 import { ManagePostSchema } from '~/schemas'
 import { type TDeserializedPost, type TManagePostForm } from '~/types'
 

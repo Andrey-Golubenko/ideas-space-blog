@@ -5,6 +5,11 @@ import {
   ROUTES_WITH_DYNAMIC_SEGMENT
 } from '~/utils/constants/routes'
 import { type TDeserializedPost } from '~/types'
+import {
+  DYNAMIC_POST_LIST_PATH_PREFIXES,
+  POST_LIST_PATH_PATTERNS,
+  STATIC_POST_LIST_PATHS
+} from '~/utils/constants'
 
 /**
  * @function isPublicRoute
@@ -63,6 +68,41 @@ export const isPublicRoute = (pathname: string): boolean => {
     pathname.startsWith(route)
   )
   return isDynamicRoute
+}
+
+/**
+ * @function isPostListPage
+ * @description determines whether the given pathname corresponds to a post list page.
+ *
+ * This function checks the pathname against three criteria:
+ * 1. Exact match with known static post list paths.
+ * 2. Starts with one of the predefined dynamic post list path prefixes.
+ * 3. Matches any of the complex regular expression patterns representing post list routes.
+ *
+ * @param {string} pathname - The URL pathname to evaluate (e.g., "/blog", "/category/tech").
+ * @returns {boolean} Returns `true` if the pathname is recognized as a post list page; otherwise, `false`.
+ */
+export const isPostListPage = (pathname: string): boolean => {
+  // Checking static paths
+  if (STATIC_POST_LIST_PATHS.some((path) => pathname === path)) {
+    return true
+  }
+
+  // Checking dynamic prefixes
+  if (
+    DYNAMIC_POST_LIST_PATH_PREFIXES.some((prefix) =>
+      pathname.startsWith(prefix)
+    )
+  ) {
+    return true
+  }
+
+  // Regular expression validation for more complex cases
+  if (POST_LIST_PATH_PATTERNS.some((pattern) => pattern.test(pathname))) {
+    return true
+  }
+
+  return false
 }
 
 /**

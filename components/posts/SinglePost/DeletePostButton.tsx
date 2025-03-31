@@ -28,7 +28,7 @@ const DeletePostButton = ({
   const router = useRouter()
 
   const onPostDeleteSuccess = useCallback(() => {
-    router.push(PATHS.blog)
+    router.replace(PATHS.blog)
     setSinglePost({})
   }, [])
 

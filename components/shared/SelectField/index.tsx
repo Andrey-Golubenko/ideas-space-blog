@@ -1,6 +1,6 @@
 import { type FormHTMLAttributes } from 'react'
-import { type SelectProps } from '@radix-ui/react-select'
 import { UserRole } from '@prisma/client'
+import { type SelectProps } from '@radix-ui/react-select'
 
 import {
   FormField,

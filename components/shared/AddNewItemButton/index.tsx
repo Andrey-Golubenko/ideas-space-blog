@@ -1,6 +1,5 @@
-import Link from 'next/link'
-import { Plus } from 'lucide-react'
 import { Button, ButtonProps } from '~/components/ui/button'
+import LinkWithReferrer from '~/components/shared/LinkWithReferrer'
 
 interface IAddNewItemButtonProps
   extends ButtonProps,
@@ -14,17 +13,22 @@ const AddNewItemButton = ({
   label,
   path,
   withIcon = false,
+  className,
   ...props
 }: IAddNewItemButtonProps) => {
   return (
     <Button
       size="sm"
       asChild
+      className={className}
       {...props}
     >
-      <Link href={path}>
-        {withIcon && <Plus className="mr-2 h-4 w-4" />} {label}
-      </Link>
+      <LinkWithReferrer
+        path={path}
+        label={label}
+        withIcon={withIcon}
+        className={className}
+      />
     </Button>
   )
 }

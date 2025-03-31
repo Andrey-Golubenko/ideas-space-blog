@@ -10,7 +10,8 @@ export const useDataPosts = ({
   categoriesFilter,
   statusFilter,
   authorFilter,
-  searchQuery
+  searchQuery,
+  refreshParam
 }: IFetchPostsFunctionProps) => {
   const { getFilteredPostsWithPag } = useGlobalStore((state) => {
     return {
@@ -42,6 +43,7 @@ export const useDataPosts = ({
     limit,
     offset,
     statusFilter,
-    getFilteredPostsWithPag
+    getFilteredPostsWithPag,
+    refreshParam
   ])
 }

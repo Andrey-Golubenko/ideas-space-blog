@@ -6,7 +6,7 @@ import {
   type IFetchDataFunctionProps,
   type TCategoriesData
 } from '~/types'
-import { Categories } from '@prisma/client'
+import { type Categories } from '@prisma/client'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)

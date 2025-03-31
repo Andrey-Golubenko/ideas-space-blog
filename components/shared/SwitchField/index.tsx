@@ -1,6 +1,7 @@
 import { type FormHTMLAttributes } from 'react'
 import { type SwitchProps } from '@radix-ui/react-switch'
 
+import { PostStatus } from '@prisma/client'
 import {
   FormField,
   FormItem,
@@ -10,7 +11,6 @@ import {
   FormDescription
 } from '~/components/ui/form'
 import { Switch } from '~/components/ui/switch'
-import { PostStatus } from '@prisma/client'
 
 interface ISwitchFieldProps {
   name: string

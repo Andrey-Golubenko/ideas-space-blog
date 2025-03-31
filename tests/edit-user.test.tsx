@@ -1,10 +1,11 @@
 import { describe, beforeEach, it, expect, vi } from 'vitest'
 import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { UserRole } from '@prisma/client'
+
 import { customRender, cleanup, spies } from '~/tests/test-utils'
 import EditUserPageView from '~/views/EditUserPageView'
-import { UserRole } from '@prisma/client'
-import { mockUsePathname } from './mocks/nextNavigation'
+import { mockUsePathname } from '~/tests/mocks/nextNavigation'
 
 // Define mock functions first
 const mockEditUser = vi.hoisted(() => vi.fn())

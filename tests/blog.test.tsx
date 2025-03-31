@@ -3,8 +3,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { withNuqsTestingAdapter } from 'nuqs/adapters/testing'
 
-import { cleanup } from '~/tests/test-utils'
 import { PostStatus } from '@prisma/client'
+import { cleanup } from '~/tests/test-utils'
 import useGlobalStore from '~/store'
 import BlogPageView from '~/views/BlogPageView'
 

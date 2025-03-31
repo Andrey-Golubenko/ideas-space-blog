@@ -244,6 +244,6 @@ export const fetchRecentPosts = async (): Promise<{
   } catch (error) {
     console.error('Error fetching recent posts:', error)
 
-    throw new Error('Failed to fetch recent posts')
+    return { recentPosts: 'It seems there are no posts yet.' }
   }
 }

@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { CalendarIcon } from '@radix-ui/react-icons'
 
+import { UserRole, PostStatus } from '@prisma/client'
 import { usePage } from '~/hooks/usePage'
 import { useCurrentUser } from '~/hooks/useCurrentUser'
+import { getUserById } from '~/services/user'
 import { Skeleton } from '~/components/ui/skeleton'
 import UserAvatar from '~/components/shared/UserAvatar'
 import PostMetaStatus from '~/components/posts/PostMeta/PostMetaStatus'
-import { getUserById } from '~/services/user'
 import { PATHS } from '~/utils/constants'
-import { UserRole, PostStatus } from '@prisma/client'
 
 interface IPostMetaProps {
   hasContent: boolean

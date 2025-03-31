@@ -1,7 +1,7 @@
+import { PostStatus, type Categories } from '@prisma/client'
 import { useItemType } from '~/hooks/useItemType'
 import { IMAGES_PATHS } from '~/utils/constants'
 import { toUpperCaseFirstChar } from '~/utils/helpers'
-import { PostStatus, type Categories } from '@prisma/client'
 import { type TDeserializedPost, type TListItem } from '~/types'
 
 /**

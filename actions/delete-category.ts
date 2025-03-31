@@ -2,8 +2,8 @@
 
 import { revalidatePath } from 'next/cache'
 
-import { db } from '~/libs/db'
 import { UserRole } from '@prisma/client'
+import { db } from '~/libs/db'
 import {
   fetchCategoryPostsIds,
   fetchSingleCategoryById,
