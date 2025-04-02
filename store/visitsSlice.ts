@@ -1,6 +1,6 @@
 import { type StateCreator } from 'zustand/vanilla'
 
-import { fetchUsersVisits } from '~/services/userVisits/visitsData'
+import { fetchUsersVisits } from '~/services/user-visits/visits-data'
 import { type IVisitsSlice } from '~/types'
 
 export const visitsSlice: StateCreator<

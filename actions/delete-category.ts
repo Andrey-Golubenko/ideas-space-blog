@@ -57,21 +57,18 @@ export const deleteCategory = async (
 
     const categoryPostsIds = await fetchCategoryPostsIds(categoryId)
 
-    if (!categoryPostsIds?.length) {
-      return {
-        error: 'Failed to update post categories before deleting category!'
-      }
-    }
+    if (categoryPostsIds?.length) {
+      const postsCategoriesUpdating = await updatePostsCategories({
+        categoryPostsIds,
+        categoryId,
+        uncategorizedCategoryId: uncategorizedCategory?.id
+      })
 
-    const postsCategoriesUpdating = await updatePostsCategories({
-      categoryPostsIds,
-      categoryId,
-      uncategorizedCategoryId: uncategorizedCategory?.id
-    })
-
-    if (postsCategoriesUpdating?.error) {
-      return {
-        error: 'Failed to update post categories before deleting category!'
+      if (postsCategoriesUpdating?.error) {
+        return {
+          error:
+            'Failed to update post categories before deleting category!'
+        }
       }
     }
 

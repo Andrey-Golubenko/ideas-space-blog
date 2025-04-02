@@ -15,9 +15,9 @@ import { db } from '~/libs/db'
 
 import { DEFAULT_LOGIN_REDIRECT } from '~/utils/constants/routes'
 import { LogInSchema } from '~/schemas'
-import { getTwoFactorTokenByEmail } from '~/services/twoFactorToken'
+import { getTwoFactorTokenByEmail } from '~/services/auth/two-factor-token'
 import { getUserByEmail } from '~/services/user'
-import { getTwoFactorConfirmationByUserId } from '~/services/twoFactorConfirmation'
+import { getTwoFactorConfirmationByUserId } from '~/services/auth/two-factor-confirmation'
 import { TManageLoginForm } from '~/types'
 
 export const logIn = async (

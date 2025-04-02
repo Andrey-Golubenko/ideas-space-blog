@@ -6,9 +6,11 @@ import {
   type TDeserializedUser,
   type IFetchUsersFunctionProps
 } from '~/types'
+import { withNetworkCheck } from '~/utils/helpers/network'
 
 export const usersSlice: StateCreator<IUsersSlice, [], [], IUsersSlice> = (
-  set
+  set,
+  get
 ) => ({
   users: [],
   usersCount: null,
@@ -24,20 +26,74 @@ export const usersSlice: StateCreator<IUsersSlice, [], [], IUsersSlice> = (
     })
 
     try {
-      const data = await fetchFilteredUsersWithPag({
-        limit,
-        offset,
-        searchQuery,
-        providerFilter
-      })
+      await withNetworkCheck(
+        // Online action
+        async () => {
+          const data = await fetchFilteredUsersWithPag({
+            limit,
+            offset,
+            searchQuery,
+            providerFilter
+          })
 
-      const users = typeof data === 'string' ? data : data?.users
+          const users = typeof data === 'string' ? data : data?.users
+          const usersCount =
+            typeof data === 'string' ? null : data?.usersCount
 
-      const usersCount = typeof data === 'string' ? null : data?.usersCount
+          set((state) => {
+            return { ...state, users, usersCount }
+          })
+        },
+        // Offline action - we use cached data
+        () => {
+          // If we already have data in the store, we use it
+          const currentUsers = get().users
 
-      set((state) => {
-        return { ...state, users, usersCount }
-      })
+          if (
+            currentUsers &&
+            Array.isArray(currentUsers) &&
+            currentUsers.length > 0
+          ) {
+            // Applying filtering
+            let filteredUsers = [...currentUsers]
+
+            if (searchQuery) {
+              const query = searchQuery.toLowerCase()
+              filteredUsers = filteredUsers.filter(
+                (user) =>
+                  user.name?.toLowerCase().includes(query) ||
+                  user.email?.toLowerCase().includes(query)
+              )
+            }
+
+            if (providerFilter) {
+              filteredUsers = filteredUsers.filter(
+                (user) => user.provider === providerFilter
+              )
+            }
+
+            // Apply pagination
+            const paginatedUsers = filteredUsers.slice(
+              offset,
+              offset! + limit
+            )
+
+            set((state) => {
+              return {
+                ...state,
+                users: paginatedUsers,
+                usersCount: filteredUsers.length
+              }
+            })
+
+            console.info('Cached data is used for offline users.')
+          } else {
+            console.warn(
+              'There is no cached data to display users offline.'
+            )
+          }
+        }
+      )
     } catch (error) {
       console.error('Error fetching users:', error)
     } finally {

@@ -9,7 +9,7 @@ import { toast } from 'sonner'
 
 import useGlobalStore from '~/store'
 import { deleteCategory } from '~/actions/delete-category'
-import { destroyImagesInCld } from '~/services/imagesProcessing'
+import { destroyImagesInCld } from '~/services/images/images.client'
 import AlertModal from '~/components/shared/Modal/AlertModal'
 import { CLOUDINARY_CATEGORIES_IMAGES_FOLDER } from '~/utils/constants'
 

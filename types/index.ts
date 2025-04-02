@@ -29,7 +29,9 @@ export interface IPostsSlice {
   singlePost: FullPost | null | {}
   recentPosts: TDeserializedPost[] | string
 
-  getFilteredPostsWithPag: (props: IFetchPostsFunctionProps) => void
+  getFilteredPostsWithPag:
+    | ((props: IFetchPostsFunctionProps) => void)
+    | (() => void)
   setFilteredPostsWithPag: (posts: TDeserializedPost[] | []) => void
   getSinglePostById: (postId: string) => void
   getRecentPosts: () => Promise<void>

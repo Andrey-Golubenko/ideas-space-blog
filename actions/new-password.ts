@@ -3,7 +3,7 @@
 import bcrypt from 'bcryptjs'
 
 import { db } from '~/libs/db'
-import { getPasswordResetTokenByToken } from '~/services/passwordResetToken'
+import { getPasswordResetTokenByToken } from '~/services/auth/password-reset-token'
 import { getUserByEmail } from '~/services/user'
 import { NewPasswordSchema } from '~/schemas'
 import { type TManagePasswordForm, type TActionReturn } from '~/types'

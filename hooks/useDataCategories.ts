@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDebounce } from 'use-debounce'
 
 import useGlobalStore from '~/store'
@@ -20,15 +20,11 @@ export const useDataCategories = ({
 
   const offset = page ? (page - 1) * limit : DEFAULT_CATEGORIES_PER_PAGE
 
-  const fetchCategories = useCallback(async () => {
-    await getFilteredCategoriesWithPag({
+  useEffect(() => {
+    getFilteredCategoriesWithPag({
       limit,
       offset,
       searchQuery: debouncedSearchQuery
     })
-  }, [getFilteredCategoriesWithPag, limit, offset, debouncedSearchQuery])
-
-  useEffect(() => {
-    fetchCategories()
-  }, [fetchCategories])
+  }, [limit, offset, debouncedSearchQuery])
 }

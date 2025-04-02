@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { fetchAllAuthorsTruncated } from '~/services/user'
 import { toUpperCaseFirstChar } from '~/utils/helpers'
+import { withOfflineHandler } from '~/utils/helpers/network'
 import { type TTruncatedAuthors, type IMultiSelectProps } from '~/types'
 
 export const useAuthorsFilterOptions = () => {
@@ -15,9 +16,9 @@ export const useAuthorsFilterOptions = () => {
 
       try {
         const truncatedAuthors: TTruncatedAuthors[] =
-          (await fetchAllAuthorsTruncated()) ?? []
+          (await withOfflineHandler(fetchAllAuthorsTruncated)()) ?? []
 
-        const options = truncatedAuthors.map((author) => {
+        const options = truncatedAuthors?.map((author) => {
           const authorName = toUpperCaseFirstChar(author?.name)
 
           return {

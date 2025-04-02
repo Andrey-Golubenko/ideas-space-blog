@@ -3,7 +3,7 @@
 import { cookies } from 'next/headers'
 import { endOfDay } from 'date-fns'
 import { tz } from '@date-fns/tz'
-import { isWebKitDetermine } from '~/services/userAgent'
+import { isWebKitDetermine } from '~/services/user-agent'
 import { type TFullTZDate } from '~/types'
 
 export const setCookieWithExpiry = async (

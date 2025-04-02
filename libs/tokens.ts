@@ -1,9 +1,9 @@
 import crypto from 'crypto'
 import { v4 as uuidv4 } from 'uuid'
 import { db } from '~/libs/db'
-import { getVerificationTokenByEmail } from '~/services/verificationToken'
-import { getPasswordResetTokenByEmail } from '~/services/passwordResetToken'
-import { getTwoFactorTokenByEmail } from '~/services/twoFactorToken'
+import { getVerificationTokenByEmail } from '~/services/auth/verification-token'
+import { getPasswordResetTokenByEmail } from '~/services/auth/password-reset-token'
+import { getTwoFactorTokenByEmail } from '~/services/auth/two-factor-token'
 import { FIFTEEN_MINUTES, ONE_HOUR } from '~/utils/constants'
 
 export const generateTwoFactorToken = async (email: string) => {

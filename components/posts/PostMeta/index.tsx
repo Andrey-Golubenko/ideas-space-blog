@@ -11,6 +11,7 @@ import { getUserById } from '~/services/user'
 import { Skeleton } from '~/components/ui/skeleton'
 import UserAvatar from '~/components/shared/UserAvatar'
 import PostMetaStatus from '~/components/posts/PostMeta/PostMetaStatus'
+import { withOfflineHandler } from '~/utils/helpers/network'
 import { PATHS } from '~/utils/constants'
 
 interface IPostMetaProps {
@@ -33,7 +34,7 @@ const PostMeta = ({
   useEffect(() => {
     if (authorId) {
       const author = async () => {
-        const postCreator = await getUserById(authorId)
+        const postCreator = await withOfflineHandler(getUserById)(authorId)
 
         return setPostAuthor(postCreator)
       }

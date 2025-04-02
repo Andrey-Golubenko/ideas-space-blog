@@ -6,7 +6,7 @@ import { UserRole } from '@prisma/client'
 import { db } from '~/libs/db'
 import authConfig from '~/libs/auth/auth.config'
 import { getUserById } from '~/services/user'
-import { getTwoFactorConfirmationByUserId } from '~/services/twoFactorConfirmation'
+import { getTwoFactorConfirmationByUserId } from '~/services/auth/two-factor-confirmation'
 import { getAccountByUserId } from '~/services/account'
 import { PATHS } from '~/utils/constants'
 

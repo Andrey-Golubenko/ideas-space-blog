@@ -5,6 +5,7 @@ import { usePathname, useSearchParams } from 'next/navigation'
 
 import useGlobalStore from '~/store'
 import { trackVisit } from '~/actions/track-visit'
+import { isOffline } from '~/utils/helpers/network'
 import type { Session } from 'next-auth'
 
 interface IClientTrackVisitProps {
@@ -83,7 +84,9 @@ const ClientTrackVisit = ({ session }: IClientTrackVisitProps) => {
       }
     }
 
-    runTrackVisit()
+    if (!isOffline()) {
+      runTrackVisit()
+    }
   }, [pathname, searchParams, session, cookiesConsent, isNotFoundPage])
 
   return null

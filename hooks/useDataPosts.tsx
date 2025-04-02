@@ -24,7 +24,7 @@ export const useDataPosts = ({
   const offset = page ? (page - 1) * limit : limit
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchPosts = () => {
       getFilteredPostsWithPag({
         limit,
         offset,
@@ -36,6 +36,7 @@ export const useDataPosts = ({
     }
 
     fetchPosts()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     authorFilter,
     categoriesFilter,
@@ -43,7 +44,6 @@ export const useDataPosts = ({
     limit,
     offset,
     statusFilter,
-    getFilteredPostsWithPag,
     refreshParam
   ])
 }

@@ -3,8 +3,8 @@
 import { endOfDay, startOfMonth } from 'date-fns'
 import { tz } from '@date-fns/tz'
 import { db } from '~/libs/db'
-import { getVisitsByDate } from '~/services/userVisits/visitsByDate'
-import { getBrowserStats } from '~/services/userVisits/browserStats'
+import { getVisitsByDate } from '~/services/user-visits/visits-by-date'
+import { getBrowserStats } from '~/services/user-visits/browser-stats'
 
 export const fetchUsersVisits = async (
   startDate?: Date,

@@ -7,13 +7,13 @@ import RecentPostsSection from '~/components/home/RecentPostsSection'
 const HomePageView = () => {
   return (
     <>
-      <section className="fixed left-0 top-0 flex h-[600px] w-full items-center justify-center rounded-md">
+      <section className="fixed left-0 top-0 flex h-[570px] w-full items-center justify-center rounded-md">
         <HeroBanner />
 
         <HeroContent />
       </section>
 
-      <section className="z-10 -mb-3 mt-[600px] bg-gradient-to-b from-transparent to-slate-100">
+      <section className="z-10 -mb-3 mt-[570px] bg-gradient-to-b from-transparent to-slate-100">
         <Greeting />
       </section>
 

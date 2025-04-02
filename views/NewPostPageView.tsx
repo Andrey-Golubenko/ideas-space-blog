@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { PostStatus } from '@prisma/client'
 import { newPost } from '~/actions/new-post'
-import { saveImagesToCld } from '~/services/imagesProcessing'
+import { saveImagesToCld } from '~/services/images/images.client'
 import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
 import PostManageForm from '~/components/shared/PostManageForm'
 import { CLOUDINARY_POSTS_IMAGES_FOLDER } from '~/utils/constants'

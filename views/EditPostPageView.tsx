@@ -12,7 +12,7 @@ import { editPost } from '~/actions/edit-post'
 import {
   destroyImagesInCld,
   saveImagesToCld
-} from '~/services/imagesProcessing'
+} from '~/services/images/images.client'
 import { useCleaningItem } from '~/hooks/useCleaningItem'
 import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
 import PostManageForm from '~/components/shared/PostManageForm'

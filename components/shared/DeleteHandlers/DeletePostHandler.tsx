@@ -11,8 +11,8 @@ import { toast } from 'sonner'
 
 import useGlobalStore from '~/store'
 import { deletePost } from '~/actions/delete-post'
-import { destroyImagesInCld } from '~/services/imagesProcessing'
-import { deletePostFolderInCld } from '~/services/images'
+import { destroyImagesInCld } from '~/services/images/images.client'
+import { deletePostFolderInCld } from '~/services/images/images.server'
 import AlertModal from '~/components/shared/Modal/AlertModal'
 import { CLOUDINARY_POSTS_IMAGES_FOLDER } from '~/utils/constants'
 

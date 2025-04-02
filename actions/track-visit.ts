@@ -7,7 +7,7 @@ import { tz } from '@date-fns/tz'
 import {
   checkDailyVisitForGuest,
   checkDailyVisitForUser
-} from '~/services/userVisits/visitLog'
+} from '~/services/user-visits/visit-log'
 import { createVisit } from '~/actions/create-visit'
 import { setCookieWithExpiry } from '~/actions/set-cookie'
 import { type Session } from 'next-auth'

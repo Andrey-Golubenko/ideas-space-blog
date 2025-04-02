@@ -15,7 +15,7 @@ import { editCategory } from '~/actions/edit-category'
 import {
   destroyImagesInCld,
   saveImagesToCld
-} from '~/services/imagesProcessing'
+} from '~/services/images/images.client'
 import {
   CLOUDINARY_CATEGORIES_IMAGES_FOLDER,
   PATHS

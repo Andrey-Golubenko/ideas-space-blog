@@ -1,6 +1,11 @@
 import withSvgr from 'next-svgr'
-import crypto from 'crypto'
-import fs from 'fs'
+import withSerwistInit from '@serwist/next'
+
+const withSerwist = withSerwistInit({
+  swSrc: 'app/sw.ts',
+  swDest: 'public/sw.js',
+  cacheOnNavigation: true
+})
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -88,28 +93,7 @@ const nextConfig = {
 
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production'
-  },
-
-  generateBuildId: async () => {
-    // Generating a unique hash for the cache version
-    const timestamp = new Date().toISOString()
-    const buildHash = crypto
-      .createHash('md5')
-      .update(timestamp)
-      .digest('hex')
-      .slice(0, 8)
-
-    // Creating the contents of the file cache-version.js
-    const cacheVersionContent = `
-      // This file is auto-generated during build
-      self.__CACHE_VERSION = '${buildHash}';
-    `.trim()
-
-    // Writing the file to the public directory
-    fs.writeFileSync('./public/cache-version.js', cacheVersionContent)
-
-    return buildHash
   }
 }
 
-export default withSvgr(nextConfig)
+export default withSerwist(withSvgr(nextConfig))

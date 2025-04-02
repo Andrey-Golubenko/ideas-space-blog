@@ -1,11 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 
-const useNetwork = (): { isOffline: boolean; onClose: () => void } => {
+const useNetwork = (): { isOffline: boolean } => {
   const [isOffline, setNetworkStatus] = useState(false)
-
-  const onClose = useCallback(() => {
-    setNetworkStatus(false)
-  }, [setNetworkStatus])
 
   const handleNetworkChange = useCallback(() => {
     if (!navigator.onLine) {
@@ -26,7 +22,7 @@ const useNetwork = (): { isOffline: boolean; onClose: () => void } => {
     }
   }, [handleNetworkChange])
 
-  return { isOffline, onClose }
+  return { isOffline }
 }
 
 export default useNetwork

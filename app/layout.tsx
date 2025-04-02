@@ -11,7 +11,6 @@ import Footer from '~/components/layout/Footer'
 import CookiesBanner from '~/components/layout/CookiesBanner'
 import ClientTrackVisit from '~/components/layout/ClientTrackVisit'
 import CookiesBannerTrigger from '~/components/layout/CookiesBanner/CookiesBannerTrigger'
-import ServiceWorkerRegistration from '~/components/layout/ServiceWorkerRegistration'
 import { APPLE_SPLASH_IMAGES } from '~/utils/constants/apple-splash-images'
 
 const OfflineNotification = dynamic(
@@ -25,7 +24,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Ideas space blog',
+    template: '%s',
     default: 'Ideas space blog'
   },
   description:
@@ -93,8 +92,6 @@ export default async function RootLayout({
           <ClientTrackVisit session={session} />
 
           <OfflineNotification />
-
-          <ServiceWorkerRegistration />
         </Providers>
       </body>
     </html>

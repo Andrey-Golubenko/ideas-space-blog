@@ -1,6 +1,9 @@
 import { type Dispatch, type SetStateAction } from 'react'
 
-import { uploadImageToCld, deleteImagesFromCld } from '~/services/images'
+import {
+  uploadImageToCld,
+  deleteImagesFromCld
+} from '~/services/images/images.server'
 import { getImageNameFromUrl } from '~/utils/helpers'
 
 /**

@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 
 import { db } from '~/libs/db'
 import { getUserByEmail } from '~/services/user'
-import { getVerificationTokenByToken } from '~/services/verificationToken'
+import { getVerificationTokenByToken } from '~/services/auth/verification-token'
 import { PATHS } from '~/utils/constants'
 import { type TActionReturn } from '~/types'
 

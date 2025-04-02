@@ -1,6 +1,6 @@
 'use server'
 
-import { getBrowserName } from '~/services/userAgent'
+import { getBrowserName } from '~/services/user-agent'
 import { type DailyVisit } from '@prisma/client'
 import { type IBrowserStats } from '~/types'
 

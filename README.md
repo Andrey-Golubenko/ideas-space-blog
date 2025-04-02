@@ -157,14 +157,6 @@ RESEND_API_KEY="your_resend_api_key"
 
 ```plaintext
 ideas-space-blog/
-├── public/                  # Static assets
-│   ├── service-worker.js    # Main service worker file
-│   ├── cache-version.js     # Cache version file
-│   └── sw-modules/          # Service worker modules directory
-│       ├── cache-config.js      # Cache configuration
-│       ├── helper-functions.js  # Helper functions
-│       ├── cache-strategies.js  # Caching strategies
-│       └── maintenance.js       # Cache maintenance functions
 ├── app/                  # Next.js App Router
 │   ├── (auth)/           # Authentication route group
 │   ├── (main)/           # Main routes
@@ -175,7 +167,9 @@ ideas-space-blog/
 │   ├── global.css        # Base and app-wide CSS rules
 │   ├── layout.tsx        # App layout
 │   ├── not-found.tsx     # 404 page
+│   ├── sw.ts             # Service worker file
 │   └── page.tsx          # Home page
+├── public/               # Static assets
 ├── components/           # Components
 │   ├── admin/            # Admin components
 │   ├── auth/             # Authentication components
@@ -196,9 +190,13 @@ ideas-space-blog/
 ├── prisma/               # Prisma ORM
 │   └── schema.prisma     # Database schema
 ├── services/             # Business logic
-│   ├── account/          # Account management
-│   ├── categories/       # Categories
+│   ├── account.ts        # Account management
+│   ├── user-agent.ts     # User agent detection
+│   ├── user.ts           # Users management
+│   ├── auth/             # Authentication management
 │   ├── posts/            # Posts
+│   ├── categories/       # Categories
+│   ├── images/           # Images management
 │   └── userVisits/       # Visit analytics
 ├── store/                # Zustand stores
 ├── types/                # TypeScript types

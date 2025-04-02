@@ -11,7 +11,7 @@ import { Card, CardHeader, CardContent } from '~/components/ui/card'
 import WithRole from '~/components/hoc/WithRole'
 import CategoryManageForm from '~/components/shared/CategoryManageForm'
 import { newCategory } from '~/actions/new-category'
-import { saveImagesToCld } from '~/services/imagesProcessing'
+import { saveImagesToCld } from '~/services/images/images.client'
 import { SingleCategorySchema } from '~/schemas'
 import {
   CLOUDINARY_CATEGORIES_IMAGES_FOLDER,

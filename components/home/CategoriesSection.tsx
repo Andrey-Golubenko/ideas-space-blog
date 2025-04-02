@@ -24,12 +24,10 @@ const CategoriesSection = () => {
   const noItems = typeof categories === 'string'
   const displayedCategories = noItems ? [] : categories
 
-  const dataCategoriesProps = useMemo(() => {
-    return {
-      page: 1,
-      limit: DEFAULT_CATEGORIES_PER_PAGE
-    }
-  }, [])
+  const dataCategoriesProps = {
+    page: 1,
+    limit: DEFAULT_CATEGORIES_PER_PAGE
+  }
 
   useDataCategories(dataCategoriesProps)
 
