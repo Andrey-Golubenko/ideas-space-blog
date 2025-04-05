@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation'
 import { IFetchPostsFunctionProps, type TPostsData } from '~/types'
 
 export const fetchPosts = async ({

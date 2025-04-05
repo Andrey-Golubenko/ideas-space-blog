@@ -8,8 +8,7 @@ import { withNetworkCheck } from '~/utils/helpers/network'
 import {
   type IPostsSlice,
   type TDeserializedPost,
-  type IFetchPostsFunctionProps,
-  type TTruncatedAuthors
+  type IFetchPostsFunctionProps
 } from '~/types'
 
 export const postsSlice: StateCreator<IPostsSlice, [], [], IPostsSlice> = (
@@ -34,93 +33,21 @@ export const postsSlice: StateCreator<IPostsSlice, [], [], IPostsSlice> = (
     })
 
     try {
-      await withNetworkCheck(
-        // Online action
-        async () => {
-          const data = await fetchPosts({
-            limit,
-            offset,
-            categoriesFilter,
-            statusFilter,
-            authorFilter,
-            searchQuery
-          })
+      const data = await fetchPosts({
+        limit,
+        offset,
+        categoriesFilter,
+        statusFilter,
+        authorFilter,
+        searchQuery
+      })
 
-          const posts = typeof data === 'string' ? data : data?.posts
-          const postsCount =
-            typeof data === 'string' ? null : data?.postsCount
+      const posts = typeof data === 'string' ? data : data?.posts
+      const postsCount = typeof data === 'string' ? null : data?.postsCount
 
-          set((state) => {
-            return { ...state, posts, postsCount }
-          })
-        },
-        // Offline action - use cached data
-        () => {
-          // If we already have data in the store, we use it.
-          const currentPosts = get().posts
-
-          if (
-            currentPosts &&
-            Array.isArray(currentPosts) &&
-            currentPosts.length > 0
-          ) {
-            // Filtering logic
-            const catFilters = categoriesFilter?.split('.') ?? []
-
-            const filteredPosts = currentPosts.filter((post) => {
-              let matches = true
-
-              if (categoriesFilter && catFilters.length > 0) {
-                matches =
-                  matches &&
-                  catFilters.some((cat) =>
-                    post.categories?.some(
-                      (postCat) => postCat?.categorySlug === cat
-                    )
-                  )
-              }
-
-              if (statusFilter) {
-                matches = matches && post.status === statusFilter
-              }
-
-              if (authorFilter) {
-                matches =
-                  matches &&
-                  (post.author as TTruncatedAuthors)?.id === authorFilter
-              }
-
-              if (searchQuery) {
-                const query = searchQuery.toLowerCase()
-                matches =
-                  matches &&
-                  (post.title.toLowerCase().includes(query) ||
-                    post.content.toLowerCase().includes(query))
-              }
-
-              return matches
-            })
-
-            // Apply pagination
-            const paginatedPosts = filteredPosts.slice(
-              offset,
-              offset! + limit
-            )
-
-            set((state) => {
-              return {
-                ...state,
-                posts: paginatedPosts,
-                postsCount: filteredPosts.length
-              }
-            })
-          } else {
-            console.warn(
-              'There is no cached data to display in offline mode.'
-            )
-          }
-        }
-      )
+      set((state) => {
+        return { ...state, posts, postsCount }
+      })
     } catch (error) {
       console.error('Error fetching posts:', error)
     } finally {

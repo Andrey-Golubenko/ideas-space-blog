@@ -1,10 +1,19 @@
 import withSvgr from 'next-svgr'
 import withSerwistInit from '@serwist/next'
 
+const revision = crypto.randomUUID()
+
 const withSerwist = withSerwistInit({
   swSrc: 'app/sw.ts',
   swDest: 'public/sw.js',
-  cacheOnNavigation: true
+  cacheOnNavigation: true,
+  reloadOnOnline: true,
+  additionalPrecacheEntries: [
+    { url: '/~offline', revision },
+    { url: '/', revision },
+    { url: '/blog', revision },
+    { url: '/categories', revision }
+  ]
 })
 
 /** @type {import('next').NextConfig} */

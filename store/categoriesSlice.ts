@@ -31,71 +31,19 @@ export const categoriesSlice: StateCreator<
     })
 
     try {
-      await withNetworkCheck(
-        // Online action
-        async () => {
-          const data = await fetchCategories({
-            limit,
-            offset,
-            searchQuery
-          })
+      const data = await fetchCategories({
+        limit,
+        offset,
+        searchQuery
+      })
 
-          const categories =
-            typeof data === 'string' ? data : data?.categories
-          const categoriesCount =
-            typeof data === 'string' ? null : data?.categoriesCount
+      const categories = typeof data === 'string' ? data : data?.categories
+      const categoriesCount =
+        typeof data === 'string' ? null : data?.categoriesCount
 
-          set((state) => {
-            return { ...state, categories, categoriesCount }
-          })
-        },
-        // Offline action - use cached data
-        () => {
-          // If we already have data in the store, we use it
-          const currentCategories = get().categories
-
-          if (
-            currentCategories &&
-            Array.isArray(currentCategories) &&
-            currentCategories.length > 0
-          ) {
-            // Filtering logic
-            let filteredCategories = [...currentCategories]
-
-            if (searchQuery) {
-              const query = searchQuery.toLowerCase()
-              filteredCategories = filteredCategories.filter(
-                (category) =>
-                  category.name.toLowerCase().includes(query) ||
-                  (category.description &&
-                    category.description.toLowerCase().includes(query))
-              )
-            }
-
-            // Apply pagination
-            const paginatedCategories = filteredCategories.slice(
-              offset,
-              offset! + limit
-            )
-
-            set((state) => {
-              return {
-                ...state,
-                categories: paginatedCategories,
-                categoriesCount: filteredCategories.length
-              }
-            })
-
-            console.info(
-              'Cached data is used for categories in offline mode.'
-            )
-          } else {
-            console.warn(
-              'There is no cached data to display categories offline.'
-            )
-          }
-        }
-      )
+      set((state) => {
+        return { ...state, categories, categoriesCount }
+      })
     } catch (error) {
       console.error('Error fetching categories:', error)
     } finally {

@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
     description: 'Ideas Space Blog - A Blogging Platform',
     start_url: '/',
     display: 'standalone',
-    background_color: '#ffffff',
+    background_color: 'radial-gradient(ellipse at top, #3b82f6, #1e3a8a)',
     theme_color: '#0ea5e9',
     icons: [
       {
