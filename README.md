@@ -99,8 +99,6 @@ RESEND_API_KEY="your_resend_api_key"
    yarn
    # or
    pnpm install
-   # or
-   bun install
    ```
 
 3. Set up environment variables (see above)
@@ -112,8 +110,6 @@ RESEND_API_KEY="your_resend_api_key"
    yarn dev
    # or
    pnpm dev
-   # or
-   bun dev
    ```
 
 5. Build for production:
@@ -121,10 +117,6 @@ RESEND_API_KEY="your_resend_api_key"
    npm run build
    # or
    yarn build
-   # or
-   pnpm build
-   # or
-   bun build
    ```
 
 6. Start the production server:
@@ -134,8 +126,6 @@ RESEND_API_KEY="your_resend_api_key"
    yarn start
    # or
    pnpm start
-   # or
-   bun start
    ```
 
 7. Lint and format code:
@@ -148,9 +138,6 @@ RESEND_API_KEY="your_resend_api_key"
    # or
    pnpm lint
    pnpm format
-   # or
-   bun lint
-   bun format
    ```
 
 ## 📂 Project Structure

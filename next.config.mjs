@@ -10,10 +10,10 @@ const withSerwist = withSerwistInit({
   cacheOnNavigation: true,
   reloadOnOnline: true,
   additionalPrecacheEntries: [
-    { url: '/~offline', revision, registerRoute: true },
-    { url: '/', revision, registerRoute: true },
-    { url: '/blog', revision, registerRoute: true },
-    { url: '/categories', revision, registerRoute: true }
+    { url: '/~offline', revision },
+    { url: '/', revision },
+    { url: '/blog', revision },
+    { url: '/categories', revision }
   ]
 })
 
