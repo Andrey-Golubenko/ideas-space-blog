@@ -8,8 +8,7 @@ import {
 } from '~/types'
 
 /**
- * @function fetchFilteredPostsWithPag
- * @description Fetches paginated and filtered posts from the database for a post list and a post table.
+ * @server-function - Fetches paginated and filtered posts from the database for a post list and a post table.
  *
  * @param {Object} param - The function parameters.
  * @param {number} param.limit - The maximum number of posts to fetch.

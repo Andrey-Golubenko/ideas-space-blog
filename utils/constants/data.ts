@@ -10,9 +10,9 @@ import { TAdminSidebarItem } from '~/types'
 
 export const adminDashboard: TAdminSidebarItem[] = [
   {
-    title: 'Dashboard',
+    title: 'Statistics',
     icon: LayoutDashboard,
-    path: PATHS.admin
+    path: PATHS.adminStatistics
   },
   {
     title: 'Users',

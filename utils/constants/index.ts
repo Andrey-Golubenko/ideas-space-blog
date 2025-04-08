@@ -24,21 +24,20 @@ export const PATHS = {
 
   settings: '/settings',
 
-  admin: '/admin',
-  adminUsers: '/admin/admin-users',
-  adminUser: (userId: string) => `/admin/admin-users/${userId}`,
-  adminEditUser: (userId: string) =>
-    `/admin/admin-users/${userId}/edit-user`,
+  adminStatistics: '/admin-statistics',
 
-  adminPosts: '/admin/admin-posts',
-  adminPost: (postId: string) => `/admin/admin-posts/${postId}`,
-  adminNewPost: '/admin/admin-posts/new-post',
-  adminEditPost: (postId: string) =>
-    `/admin/admin-posts/${postId}/edit-post`,
+  adminUsers: '/admin-users',
+  adminUser: (userId: string) => `/admin-users/${userId}`,
+  adminEditUser: (userId: string) => `/admin-users/${userId}/edit-user`,
 
-  adminCategories: '/admin/admin-categories',
-  adminNewCategory: '/admin/admin-categories/new-category',
-  adminEditCategory: '/admin/admin-categories/edit-category',
+  adminPosts: '/admin-posts',
+  adminPost: (postId: string) => `/admin-posts/${postId}`,
+  adminNewPost: '/admin-posts/new-post',
+  adminEditPost: (postId: string) => `/admin-posts/${postId}/edit-post`,
+
+  adminCategories: '/admin-categories',
+  adminNewCategory: '/admin-categories/new-category',
+  adminEditCategory: '/admin-categories/edit-category',
 
   logIn: '/auth',
   register: '/auth/register',
@@ -47,6 +46,7 @@ export const PATHS = {
   newPassword: '/auth/new-password',
 
   notFound: '/not-found',
+  offline: '/~offline',
 
   commonError: '/error',
   authError: '/auth/error',
@@ -56,7 +56,8 @@ export const PATHS = {
 
   categoryPrefix: '/categories/',
   profilePrefix: '/profile/',
-  adminRoutsPrefix: '/admin',
+  adminRoutsPrefix: '/admin-',
+
   authActionsPrefix: '/api/auth',
 
   libSession: '/api/auth/session',
@@ -71,7 +72,7 @@ export const STATIC_POST_LIST_PATHS = [
 
 export const DYNAMIC_POST_LIST_PATH_PREFIXES = [
   PATHS.categoryPrefix, // For paths like /categories/[slug]
-  PATHS.profilePrefix // For paths like /categories/[slug]
+  PATHS.profilePrefix // For paths like /profile/[slug]
 ]
 
 export const POST_LIST_PATH_PATTERNS = [
@@ -96,6 +97,13 @@ export const NAV_LINKS: INavLink[] = [
 export const PRIVATE_NAV_LINKS: INavLink[] = [
   { label: 'Profile', href: PATHS.profile },
   { label: 'Settings', href: PATHS.settings }
+] as const
+
+export const ADMIN_NAV_LINKS: INavLink[] = [
+  { label: 'Statistics', href: PATHS.adminStatistics },
+  { label: 'Users', href: PATHS.adminUsers },
+  { label: 'Posts', href: PATHS.adminPosts },
+  { label: 'Categories', href: PATHS.adminCategories }
 ] as const
 
 export const FOOTER_NAV_LINKS_LEGAL: INavLink[] = [

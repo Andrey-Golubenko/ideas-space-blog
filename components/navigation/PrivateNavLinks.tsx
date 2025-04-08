@@ -2,7 +2,8 @@
 
 import NavLinksItem from '~/components/navigation/NavLinksItem'
 import NavLinksAvatarItem from '~/components/navigation/NavLinksAvatarItem'
-import { PATHS, PRIVATE_NAV_LINKS } from '~/utils/constants'
+import SubMenu from '~/components/navigation/SubMenu'
+import { PRIVATE_NAV_LINKS } from '~/utils/constants'
 
 interface IPrivateNavLinksProps {
   isMobile: boolean
@@ -25,9 +26,8 @@ const PrivateNavLinks = ({ isMobile, isAdmin }: IPrivateNavLinksProps) => {
         )
       })}
       {isAdmin && (
-        <NavLinksItem
-          label="Admin"
-          href={PATHS.admin}
+        <SubMenu
+          title="Admin"
           isMobile={isMobile}
         />
       )}

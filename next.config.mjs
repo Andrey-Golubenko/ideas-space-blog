@@ -4,15 +4,16 @@ import withSerwistInit from '@serwist/next'
 const revision = crypto.randomUUID()
 
 const withSerwist = withSerwistInit({
+  // disable: process.env.NODE_ENV === 'development',
   swSrc: 'app/sw.ts',
   swDest: 'public/sw.js',
   cacheOnNavigation: true,
   reloadOnOnline: true,
   additionalPrecacheEntries: [
-    { url: '/~offline', revision },
-    { url: '/', revision },
-    { url: '/blog', revision },
-    { url: '/categories', revision }
+    { url: '/~offline', revision, registerRoute: true },
+    { url: '/', revision, registerRoute: true },
+    { url: '/blog', revision, registerRoute: true },
+    { url: '/categories', revision, registerRoute: true }
   ]
 })
 

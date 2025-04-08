@@ -32,7 +32,12 @@ const FooterSectionItem = ({
           {Icon && <span className="sr-only">{linkName}</span>}
         </Link>
 
-        {label && <NavLinkUnderlining isActive />}
+        {label && (
+          <NavLinkUnderlining
+            triggerClass="group-hover:scale-x-100"
+            isActive
+          />
+        )}
       </div>
     </li>
   )

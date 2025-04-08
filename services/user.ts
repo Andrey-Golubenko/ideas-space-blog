@@ -9,8 +9,7 @@ import {
 } from '~/types'
 
 /**
- * @function fetchFilteredUsersWithPag
- * @description Fetches filtered users with pagination.
+ * @server-function - Fetches filtered users with pagination.
  *
  * This function retrieves a list of users from the database, applying optional search filtering,
  * provider-based filtering, and pagination constraints. It also selects relevant user details.
@@ -122,8 +121,7 @@ export const fetchFilteredUsersWithPag = async ({
 }
 
 /**
- * @function fetchAllAuthorsTruncated
- * @description Fetches a list of all authors with truncated details.
+ * @server-function - Fetches a list of all authors with truncated details.
  *
  * This function retrieves all authors from the database, selecting only their `id` and `name`.
  * It filters out any authors with a `null` name before returning the data.

@@ -5,7 +5,7 @@ import cloudinary from '~/libs/cloudinary/cloudinary.config'
 import { type TActionReturn } from '~/types'
 
 /**
- * Function to upload an image to the cloud-based service (Cloudinary).
+ * @server-function - Function to upload an image to the cloud-based service (Cloudinary).
  * @param formData - A FormData object containing the file to be uploaded.
  * @param storageFolder - The name of the folder on Cloudinary where the image will be stored.
  * @returns Promise<{ url: string } | { error: string }> - A promise that resolves to an object containing the URL of the uploaded image or an error message in case of failure.
@@ -55,7 +55,7 @@ export const uploadImageToCld = async (
 }
 
 /**
- * Function to delete an image from the cloud-based service (Cloudinary).
+ * @server-function - Function to delete an image from the cloud-based service (Cloudinary).
  * @param imageName - The name of the image to be deleted.
  * @param storageFolder - The name of the folder on Cloudinary where the image is stored.
  * @returns TActionReturn - An object containing a success message if the deletion was successful or an error message in case of failure.
@@ -90,7 +90,7 @@ export const deleteImagesFromCld = async (
 }
 
 /**
- * Function to delete a folder from the cloud-based service (Cloudinary).
+ * @server-function - Function to delete a folder from the cloud-based service (Cloudinary).
  * @param pathToFolder - The path to the folder to be deleted on Cloudinary.
  * @returns TActionReturn - An object containing a success message if the folder was successfully deleted or an error message in case of failure.
  */

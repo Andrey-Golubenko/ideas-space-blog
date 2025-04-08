@@ -53,6 +53,10 @@ export default auth(async (request) => {
   }
 
   if (!isLoggedIn && !isPublicRoute(pathname)) {
+    if (pathname === PATHS.offline) {
+      return NextResponse.next()
+    }
+
     let callbackUrl = pathname
 
     if (nextUrl.search) {

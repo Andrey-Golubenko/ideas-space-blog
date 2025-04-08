@@ -15,11 +15,7 @@ export const useIsActive = () => {
   const pathName = usePathname()
 
   const checkIsActive = (href: string) => {
-    if (href === PATHS.home) {
-      return pathName === href
-    }
-
-    return pathName.startsWith(href) && pathName !== PATHS.home
+    return pathName === href
   }
 
   return { checkIsActive }

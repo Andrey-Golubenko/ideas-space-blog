@@ -568,11 +568,15 @@ const SidebarMenuItem = React.forwardRef<
   HTMLLIElement,
   React.ComponentProps<'li'>
 >(({ className, ...props }, ref) => {
+  const { isMobile, toggleSidebar } = useSidebar()
+
   return (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
     <li
       ref={ref}
       data-sidebar="menu-item"
       className={cn('group/menu-item relative', className)}
+      onClick={isMobile ? () => toggleSidebar() : undefined}
       {...props}
     />
   )

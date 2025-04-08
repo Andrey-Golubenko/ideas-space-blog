@@ -21,7 +21,7 @@ body {
 }
 
 .navigation-link {
-  @apply border-b-2 border-transparent px-1 py-0 pb-2 text-[15px] text-white;
+  @apply px-1 py-0 text-[15px] text-white;
 }
 
 @layer components {

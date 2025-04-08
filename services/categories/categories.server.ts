@@ -9,7 +9,7 @@ import {
 } from '~/types'
 
 /**
- * Fetches filtered categories with pagination.
+ * @server-function - Fetches filtered categories with pagination.
  *
  * This function retrieves a list of categories from the database, applying optional search filtering
  * and pagination constraints. It excludes the default category from the results.
@@ -70,7 +70,7 @@ export const fetchFilteredCategoriesWithPag = async ({
 }
 
 /**
- * Fetches a list of all categories with truncated details.
+ * @server-function - Fetches a list of all categories with truncated details.
  *
  * This function retrieves all categories from the database, selecting only their `id`, `name`, and `slug`.
  * It excludes the default category from the results.
@@ -105,7 +105,7 @@ export const fetchCategoriesTruncated = async (): Promise<
 }
 
 /**
- * Fetches a single category by its unique identifier.
+ * @server-function - Fetches a single category by its unique identifier.
  *
  * @param {string} categoryId - The unique ID of the category to fetch.
  * @returns {Promise<{ id: string, name: string, slug: string, imageUrl: string | null, description: string | null } | null>}
@@ -134,7 +134,7 @@ export const fetchSingleCategoryById = async (
 }
 
 /**
- * Checks whether a category with the given slug exists in the database.
+ * @server-function - Checks whether a category with the given slug exists in the database.
  *
  * @param {string} slug - The slug of the category to check.
  * @returns {Promise<boolean>} A promise that resolves to true if the category exists, false otherwise.
@@ -152,7 +152,7 @@ export const categoryExists = async (slug: string): Promise<boolean> => {
 }
 
 /**
- * Fetches the "Uncategorized" category based on a default slug.
+ * @server-function - Fetches the "Uncategorized" category based on a default slug.
  *
  * @returns {Promise<{ id: string, name: string, slug: string, imageUrl: string | null, description: string | null } | null>}
  *   A promise that resolves to the Uncategorized category if found, or null if not found or an error occurs.
@@ -178,7 +178,7 @@ export const fetchUncategorizedCategory = async (): Promise<{
 }
 
 /**
- * Fetches the IDs of all posts associated with the specified category.
+ * @server-function - Fetches the IDs of all posts associated with the specified category.
  *
  * @param {string} categoryId - The unique identifier of the category.
  * @returns {Promise<Array<{ postId: string }> | null>}

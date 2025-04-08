@@ -1,6 +1,6 @@
 'use client'
 
-import { type ComponentType, useMemo } from 'react'
+import { type ComponentType, useMemo, useState } from 'react'
 import { PlusCircledIcon } from '@radix-ui/react-icons'
 import { CheckIcon } from 'lucide-react'
 import { type Options } from 'nuqs'
@@ -51,6 +51,8 @@ const DataFilterBox = ({
   setFilterValue,
   setPage
 }: IDataFilterBoxProps) => {
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false)
+
   const selectedValuesSet = useMemo(() => {
     if (!filterValue) return new Set<string>()
     const values = filterValue.split('.')
@@ -77,7 +79,10 @@ const DataFilterBox = ({
   }
 
   return (
-    <Popover>
+    <Popover
+      open={isPopoverOpen}
+      onOpenChange={setIsPopoverOpen}
+    >
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -135,6 +140,7 @@ const DataFilterBox = ({
       <PopoverContent
         className="w-[200px] p-0"
         align="start"
+        onEscapeKeyDown={() => setIsPopoverOpen(false)}
       >
         <Command>
           <CommandInput placeholder={title} />
@@ -178,20 +184,38 @@ const DataFilterBox = ({
               })}
             </CommandGroup>
 
-            {selectedValuesSet.size > 0 && (
-              <>
-                <CommandSeparator />
+            <>
+              <CommandSeparator />
 
-                <CommandGroup>
+              <CommandGroup>
+                <div className="flex items-center justify-between">
+                  {selectedValuesSet.size > 0 && (
+                    <>
+                      <CommandItem
+                        onSelect={resetFilter}
+                        className="flex-1 cursor-pointer justify-center"
+                      >
+                        Clear
+                      </CommandItem>
+
+                      <Separator
+                        orientation="vertical"
+                        className="flex h-full min-h-6"
+                      />
+                    </>
+                  )}
+
                   <CommandItem
-                    onSelect={resetFilter}
-                    className="justify-center text-center"
+                    onSelect={() => {
+                      return setIsPopoverOpen(false)
+                    }}
+                    className="max-w-full flex-1 cursor-pointer justify-center"
                   >
-                    Clear filters
+                    Close
                   </CommandItem>
-                </CommandGroup>
-              </>
-            )}
+                </div>
+              </CommandGroup>
+            </>
           </CommandList>
         </Command>
       </PopoverContent>

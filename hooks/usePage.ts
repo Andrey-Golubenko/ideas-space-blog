@@ -11,7 +11,7 @@ interface IUsePageReturn {
 export const usePage = (): IUsePageReturn => {
   const pathname = usePathname()
 
-  const isAdminPage: boolean = pathname.includes(PATHS.admin)
+  const isAdminPage: boolean = pathname.includes(PATHS.adminRoutsPrefix)
 
   const isCategoriesPage: boolean = pathname.includes(PATHS.categories)
 

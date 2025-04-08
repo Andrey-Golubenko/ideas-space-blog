@@ -3,7 +3,7 @@
 import { headers } from 'next/headers'
 
 /**
- * Function to determine if the browser is based on the WebKit engine.
+ * @server-function - Function to determine if the browser is based on the WebKit engine.
  * Safari and other WebKit-based browsers sometimes interpret the `Expires` value of cookies as local time.
  * Chrome and other Blink-based browsers, however, always use UTC.
  * @returns Promise<boolean> - Returns `true` if the browser is based on the WebKit engine, otherwise `false`.
@@ -33,7 +33,7 @@ export const isWebKitDetermine = async (): Promise<boolean> => {
 }
 
 /**
- * Function to determine the name of the browser based on the user agent string.
+ * @server-function - Function to determine the name of the browser based on the user agent string.
  * @param userAgent - A string representing the user agent of the browser. If `null`, the function returns 'other'.
  * @returns Promise<string> - Returns the name of the browser: 'chrome', 'safari', 'firefox', 'edge', or 'other'.
  */

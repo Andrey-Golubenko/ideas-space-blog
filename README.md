@@ -157,51 +157,61 @@ RESEND_API_KEY="your_resend_api_key"
 
 ```plaintext
 ideas-space-blog/
-├── app/                  # Next.js App Router
-│   ├── (auth)/           # Authentication route group
-│   ├── (main)/           # Main routes
-│   ├── (protected)/      # Protected routes
-│   ├── (themed)/         # Routes with different styles
-│   ├── api/              # API endpoints
-│   ├── error.tsx         # Common error page
-│   ├── global.css        # Base and app-wide CSS rules
-│   ├── layout.tsx        # App layout
-│   ├── not-found.tsx     # 404 page
-│   ├── sw.ts             # Service worker file
-│   └── page.tsx          # Home page
-├── public/               # Static assets
-├── components/           # Components
-│   ├── admin/            # Admin components
-│   ├── auth/             # Authentication components
-│   ├── categories/       # Category components
-│   ├── hoc/              # Higher-Order components
-│   ├── home/             # Home-page components
-│   ├── layout/           # Layout components
-│   ├── navigation/       # Navigation components
-│   ├── notification/     # Notification components
-│   ├── posts/            # Posts components
-│   ├── profile/          # Profile components
-│   ├── shared/           # Shared components
-│   └── ui/               # UI elements
-├── hooks/                # Custom hooks
-├── libs/                 # Utility libraries
-│   ├── auth/             # Authentication logic
-│   └── cloudinary/       # Cloudinary integration
-├── prisma/               # Prisma ORM
-│   └── schema.prisma     # Database schema
-├── services/             # Business logic
-│   ├── account.ts        # Account management
-│   ├── user-agent.ts     # User agent detection
-│   ├── user.ts           # Users management
-│   ├── auth/             # Authentication management
-│   ├── posts/            # Posts
-│   ├── categories/       # Categories
-│   ├── images/           # Images management
-│   └── userVisits/       # Visit analytics
-├── store/                # Zustand stores
-├── types/                # TypeScript types
-├── utils/                # Utilities
-└── views/                # Page-level or screen components
+├── app/                    # Next.js App Router
+│   ├── (auth)/             # Authentication routes (login, register, etc.)
+│   ├── (main)/             # Main application routes
+│   │   ├── (admin)/        # Admin panel routes (statistics, users, posts, categories)
+│   │   ├── blog/           # Blog related pages (single-post, new-post, edit-post)
+│   │   ├── privacy-policy/ # Privacy-policy page
+│   │   └── impressum/      # Impressum page
+│   ├── (protected)/        # Protected user routes (profile, settings)
+│   ├── (themed)/           # Themed routes with specific layouts
+│   │   ├── categories/     # Category pages (single-category)
+│   │   └── ~offline/       # Offline page
+│   ├── api/                # API routes
+│   ├── error.tsx           # Global error boundary
+│   ├── not-found.tsx       # Global 404-page
+│   ├── globals.css         # Global styles
+│   ├── layout.tsx          # Root layout
+│   ├── manifest.ts         # PWA manifest
+│   ├── page.ts             # Home page
+│   └── sw.ts               # Service-workers
+├── actions/                # Server actions
+├── components/             # React components
+│   ├── admin/              # Admin panel components
+│   ├── auth/               # Authentication related components
+│   ├── hoc/                # Higher-order components
+│   ├── home/               # Home page components
+│   ├── layout/             # Layout components
+│   ├── posts/              # Post related components
+│   ├── profile/            # User profile components
+│   ├── shared/             # Shared/common components
+│   ├── sidebars/           # Sidebar components
+│   └── ui/                 # UI component library
+├── hooks/                  # Custom React hooks
+├── libs/                   # Core libraries and configurations
+│   ├── auth/               # Authentication setup
+│   ├── cloudinary/         # Cloudinary integration
+│   ├── db.ts               # Database configuration
+│   └── searchparams.ts     # Search params utilities
+├── prisma/                 # Database schema and migrations
+├── public/                 # Static assets
+│   ├── icons/              # App icons and favicons
+│   └── images/             # Static images
+├── schemas/                # Validation schemas
+├── services/               # Business logic services
+│   ├── auth/               # Auth services
+│   ├── categories/         # Category services
+│   ├── images/             # Image handling services
+│   ├── posts/              # Post services
+│   └── userVisits/         # Analytics services
+├── store/                  # Global state management
+├── tests/                  # Test files and configurations
+├── types/                  # TypeScript type definitions
+├── utils/                  # Utility functions
+│   ├── constants/          # Application constants
+│   └── helpers/            # Helper functions
+└── views/                  # Page-level components
 ```
 
 ## 📜 License

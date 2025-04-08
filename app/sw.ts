@@ -30,7 +30,8 @@ const serwist = new Serwist({
     {
       matcher: ({ url: { pathname } }) =>
         pathname.startsWith('/api/posts') ||
-        pathname.startsWith('/api/categories'),
+        pathname.startsWith('/api/categories') ||
+        pathname.startsWith('/api/truncated-categories'),
       handler: new NetworkFirst({
         cacheName: 'api-dynamic-cache',
         plugins: [
@@ -92,8 +93,15 @@ const serwist = new Serwist({
     entries: [
       {
         url: '/~offline',
-        matcher({ request }) {
-          return request.destination === 'document'
+        matcher({ request }: { request: Request }) {
+          const url = new URL(request.url)
+          const sameOrigin = url.origin === self.location.origin
+
+          return (
+            request.destination === 'document' &&
+            sameOrigin &&
+            request.mode === 'navigate'
+          )
         }
       }
     ]
@@ -103,7 +111,8 @@ const serwist = new Serwist({
 
 const urlsToPrecache = [
   '/api/posts?limit=9&offset=0',
-  '/api/categories?limit=12&offset=0'
+  '/api/categories?limit=12&offset=0',
+  '/api/truncated-categories'
 ]
 
 self.addEventListener('install', (event) => {
