@@ -40,7 +40,8 @@ vi.mock('~/services/imagesProcessing', () => ({
 vi.mock('~/store', () => ({
   default: () => ({
     categories: [],
-    isLoading: false
+    isLoading: false,
+    getTruncatedCategories: () => []
   })
 }))
 

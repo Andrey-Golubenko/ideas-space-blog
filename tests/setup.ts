@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   expect,
   beforeEach,
@@ -8,14 +9,13 @@ import {
 } from 'vitest'
 import * as matchers from '@testing-library/jest-dom/matchers'
 import '@testing-library/jest-dom'
-import React from 'react'
-import { MockDataTransfer } from './mocks/dataTransfer'
-import { MockResizeObserver } from './mocks/resizeObserver'
 import {
   mockNextNavigation,
   mockUsePathname
-} from './mocks/nextNavigation'
-import { server } from './mocks/server'
+} from '~/tests/mocks/nextNavigation'
+import { MockDataTransfer } from '~/tests/mocks/dataTransfer'
+import { MockResizeObserver } from '~/tests/mocks/resizeObserver'
+import { server } from '~/tests/mocks/server'
 
 // Extend vitest's expect with jest-dom matchers
 expect.extend(matchers)

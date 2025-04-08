@@ -52,7 +52,8 @@ vi.mock('~/store', () => ({
         createdAt: new Date(),
         updatedAt: new Date()
       },
-      setSinglePost: (...args: any[]) => mockSetSinglePost(...args)
+      setSinglePost: (...args: any[]) => mockSetSinglePost(...args),
+      getTruncatedCategories: () => []
     }
     return selector(state)
   }

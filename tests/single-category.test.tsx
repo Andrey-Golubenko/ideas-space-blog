@@ -62,6 +62,14 @@ describe('SingleCategoryPageView Integration Tests', () => {
       isEmptyOrUnpublished: vi.fn().mockReturnValue(false)
     }))
 
+    // Mock useSearchParams
+    vi.mock('next/navigation', () => ({
+      useSearchParams: () => new URLSearchParams('page=1'),
+      useRouter: () => ({
+        push: vi.fn()
+      })
+    }))
+
     // Mock the global store
     vi.mock('~/store', () => ({
       default: vi.fn()
