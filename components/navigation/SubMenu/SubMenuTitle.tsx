@@ -33,10 +33,12 @@ const SubMenuTitle = ({
         />
       </div>
 
-      <NavLinkUnderlining
-        triggerClass="group-hover/menu:scale-x-100"
-        isActive={isActive}
-      />
+      {!isMobile && (
+        <NavLinkUnderlining
+          triggerClass="group-hover/menu:scale-x-100"
+          isActive={isActive}
+        />
+      )}
     </div>
   )
 }

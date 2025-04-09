@@ -186,17 +186,3 @@ export const SINGLE_CAT_POSTS_PER_PAGE = 4 as const
 export const DEFAULT_TABLE_ITEMS_PER_PAGE = 10 as const
 
 export const DEFAULT_CATEGORIES_PER_PAGE = 12 as const
-
-// TODO: For storage as an example
-enum InitCategoriesName {
-  Finance,
-  Travel,
-  Home_and_Garden,
-  Cooking,
-  Sports_and_Health,
-  Uncategorized,
-  Nature,
-  Technology,
-  Technic,
-  Economy
-}

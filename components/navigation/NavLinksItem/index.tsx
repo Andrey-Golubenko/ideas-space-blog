@@ -31,10 +31,12 @@ const NavLinksItem = ({ label, href, isMobile }: INavLinksItemProps) => {
 
       {isMobile && <div className="h-[1px] w-full bg-white" />}
 
-      <NavLinkUnderlining
-        triggerClass="group-hover:scale-x-100"
-        isActive={isActive}
-      />
+      {!isMobile && (
+        <NavLinkUnderlining
+          triggerClass="group-hover:scale-x-100"
+          isActive={isActive}
+        />
+      )}
     </li>
   )
 }

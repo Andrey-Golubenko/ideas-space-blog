@@ -4,7 +4,7 @@ import withSerwistInit from '@serwist/next'
 const revision = crypto.randomUUID()
 
 const withSerwist = withSerwistInit({
-  // disable: process.env.NODE_ENV === 'development',
+  disable: process.env.NODE_ENV === 'development',
   swSrc: 'app/sw.ts',
   swDest: 'public/sw.js',
   cacheOnNavigation: true,

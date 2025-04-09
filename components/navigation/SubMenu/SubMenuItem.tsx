@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import Link from 'next/link'
 
 import { useIsActive } from '~/hooks/useIsActive'
@@ -9,21 +8,11 @@ interface ISubMenuItemProps {
   label: string
   href: string
   isMobile: boolean
-  onActiveCheck?: (href: string, isActive: boolean) => void
 }
 
-const SubMenuItem = ({
-  label,
-  href,
-  isMobile,
-  onActiveCheck
-}: ISubMenuItemProps) => {
+const SubMenuItem = ({ label, href, isMobile }: ISubMenuItemProps) => {
   const { checkIsActive } = useIsActive()
   const isActive = checkIsActive(href)
-
-  useEffect(() => {
-    onActiveCheck?.(href, isActive)
-  }, [href, isActive, onActiveCheck])
 
   return (
     <li
@@ -45,10 +34,13 @@ const SubMenuItem = ({
         >
           {label}
         </Link>
-        <NavLinkUnderlining
-          triggerClass="group-hover:scale-x-100"
-          isActive={isActive}
-        />
+
+        {!isMobile && (
+          <NavLinkUnderlining
+            triggerClass="group-hover:scale-x-100"
+            isActive={isActive}
+          />
+        )}
       </div>
     </li>
   )

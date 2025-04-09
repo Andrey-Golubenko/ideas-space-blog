@@ -59,7 +59,7 @@ const MobileNavMenu = ({ user, isMobile, isAdmin }: INavMenuProps) => {
       <nav
         id="nav-menu"
         className={cn(
-          'fixed inset-y-0 -right-1 z-[9999999999] flex h-full w-[60%] transform flex-col items-center rounded-none  border-l-[3px] border-white bg-[#2C2C32] shadow-[-2px_0_0_0_#000] transition-transform duration-500 ease-in-out',
+          'fixed inset-y-0 -right-1 z-[9999999999] flex h-full w-[65%] transform flex-col items-center rounded-none  border-l-[3px] border-white bg-[#2C2C32] shadow-[-2px_0_0_0_#000] transition-transform duration-500 ease-in-out',
           isOpen ? '-translate-x-0' : 'translate-x-full'
         )}
       >
