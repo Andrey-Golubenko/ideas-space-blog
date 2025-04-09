@@ -34,10 +34,11 @@ const SubMenuItem = ({
         isMobile && 'w-full border-b border-b-white'
       )}
     >
-      <div className="group">
+      <div className="group cursor-pointer">
         <Link
           href={href}
           className={cn(
+            'cursor-pointer',
             isActive ? 'navigation-link-active' : 'navigation-link',
             isMobile && 'border-none'
           )}

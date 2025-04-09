@@ -34,9 +34,10 @@ const SubMenu = ({ title, isMobile }: SubMenuProps) => {
 
       <div
         className={cn(
-          'pointer-events-none absolute top-[30%] -translate-x-1/2 translate-y-2 cursor-pointer opacity-0',
-          'transition-all duration-500 ease-in-out',
-          'group-hover/menu:pointer-events-auto   group-hover/menu:cursor-pointer group-hover/menu:opacity-100',
+          'absolute top-[30%] -translate-x-1/2 translate-y-2',
+          'h-0 overflow-hidden opacity-0',
+          'transition-[height,opacity] duration-700 ease-in-out',
+          'group-hover/menu:h-max group-hover/menu:opacity-100 group-hover/menu:[&_*]:cursor-pointer',
           isMobile
             ? 'left-[41%] w-[95%]'
             : 'left-1/2 w-max group-hover/menu:translate-y-4'
@@ -44,10 +45,11 @@ const SubMenu = ({ title, isMobile }: SubMenuProps) => {
       >
         <ul
           className={cn(
-            'mt-[15%] cursor-pointer rounded-lg',
-            'flex list-disc flex-col items-start bg-[hsl(var(--layout-background))]  shadow-[0_0_10px_rgba(252,252,252,.3)_inset]',
-            'group-hover/menu:cursor-pointer',
-            isMobile ? 'gap-4 p-7' : 'gap-3 p-4'
+            'h-0 rounded-lg group-hover/menu:mt-[15%] group-hover/menu:h-auto group-hover/menu:[&_*]:cursor-pointer',
+            'flex list-disc flex-col items-start bg-[hsl(var(--layout-background))] shadow-[0_0_10px_rgba(252,252,252,.3)_inset]',
+            isMobile
+              ? 'group-hover/menu:gap-4 group-hover/menu:p-7'
+              : 'group-hover/menu:gap-3 group-hover/menu:p-4'
           )}
         >
           {ADMIN_NAV_LINKS.map(({ label, href }) => {
