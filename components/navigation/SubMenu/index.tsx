@@ -23,7 +23,7 @@ const SubMenu = ({ title, isMobile }: SubMenuProps) => {
     <li
       className={cn(
         'group/menu relative cursor-pointer',
-        isMobile && 'w-full border-b border-b-white'
+        isMobile && 'w-full'
       )}
     >
       <SubMenuTitle
@@ -32,24 +32,26 @@ const SubMenu = ({ title, isMobile }: SubMenuProps) => {
         isActive={isAnyChildActive}
       />
 
+      {isMobile && <div className="h-[1px] w-full bg-white" />}
+
       <div
         className={cn(
-          'absolute top-[30%] -translate-x-1/2 translate-y-2',
+          ' -translate-x-1/2 translate-y-2',
           'h-0 overflow-hidden opacity-0',
           'transition-[height,opacity] duration-700 ease-in-out',
           'group-hover/menu:h-max group-hover/menu:opacity-100 group-hover/menu:[&_*]:cursor-pointer',
           isMobile
-            ? 'left-[41%] w-[95%]'
-            : 'left-1/2 w-max group-hover/menu:translate-y-4'
+            ? 'relative left-[41%] top-0 mb-9 w-[95%]'
+            : 'absolute left-1/2 top-[30%] w-max group-hover/menu:translate-y-4'
         )}
       >
         <ul
           className={cn(
-            'h-0 rounded-lg group-hover/menu:mt-[15%] group-hover/menu:h-auto group-hover/menu:[&_*]:cursor-pointer',
+            'h-0 rounded-lg  group-hover/menu:h-auto group-hover/menu:[&_*]:cursor-pointer',
             'flex list-disc flex-col items-start bg-[hsl(var(--layout-background))] shadow-[0_0_10px_rgba(252,252,252,.3)_inset]',
             isMobile
-              ? 'group-hover/menu:gap-4 group-hover/menu:p-7'
-              : 'group-hover/menu:gap-3 group-hover/menu:p-4'
+              ? 'group-hover/menu:mt-[5%] group-hover/menu:gap-4 group-hover/menu:p-7'
+              : 'group-hover/menu:mt-[15%] group-hover/menu:gap-3 group-hover/menu:p-4'
           )}
         >
           {ADMIN_NAV_LINKS.map(({ label, href }) => {

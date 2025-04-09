@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
+import { ScrollArea } from '~/components/ui/scroll-area'
 import NavLinks from '~/components/navigation/NavLinks'
 import MobileNavMenuButton from '~/components/navigation/MobileNavMenu/MobileNavMenuButton'
 import LogoItem from '~/components/navigation/LogoItem'
@@ -66,13 +67,15 @@ const MobileNavMenu = ({ user, isMobile, isAdmin }: INavMenuProps) => {
 
         <Separator className="w-full" />
 
-        <ul className=" flex h-screen w-[60vw] flex-col items-start space-y-10 pl-10 pt-10 text-[15px]">
-          <NavLinks
-            isLoggedIn={!!user}
-            isMobile={isMobile}
-            isAdmin={isAdmin}
-          />
-        </ul>
+        <ScrollArea className="h-screen">
+          <ul className="flex h-screen w-[60vw] flex-col items-start space-y-10 pl-10 pt-10 text-[15px]">
+            <NavLinks
+              isLoggedIn={!!user}
+              isMobile={isMobile}
+              isAdmin={isAdmin}
+            />
+          </ul>
+        </ScrollArea>
       </nav>
     </div>
   )

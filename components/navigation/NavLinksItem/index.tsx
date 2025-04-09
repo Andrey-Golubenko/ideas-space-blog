@@ -17,21 +17,19 @@ const NavLinksItem = ({ label, href, isMobile }: INavLinksItemProps) => {
   return (
     <li
       key={href}
-      className={cn(
-        'min-[1085px]:pl-4',
-        isMobile && 'w-full border-b border-b-white',
-        'group'
-      )}
+      className={cn('min-[1085px]:pl-4', isMobile && 'w-full', 'group')}
     >
       <Link
         href={href}
         className={cn(
           isActive ? 'navigation-link-active' : 'navigation-link',
-          isMobile && 'border-none'
+          isMobile && 'ml-1 border-none'
         )}
       >
         {label}
       </Link>
+
+      {isMobile && <div className="h-[1px] w-full bg-white" />}
 
       <NavLinkUnderlining
         triggerClass="group-hover:scale-x-100"

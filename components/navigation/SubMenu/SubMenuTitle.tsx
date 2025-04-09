@@ -16,7 +16,7 @@ const SubMenuTitle = ({
 }: ISubMenuTitleProps) => {
   return (
     <div className="block gap-1">
-      <div className="flex items-center">
+      <div className={cn('flex items-center', isMobile && 'ml-1')}>
         <span
           className={cn(
             isActive ? 'navigation-link-active' : 'navigation-link',
