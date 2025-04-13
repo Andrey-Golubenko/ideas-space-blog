@@ -1,7 +1,5 @@
 'use client'
 
-import { useMemo } from 'react'
-
 import useGlobalStore from '~/store'
 import { useDataCategories } from '~/hooks/useDataCategories'
 import { Card, CardHeader, CardContent } from '~/components/ui/card'

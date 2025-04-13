@@ -26,6 +26,10 @@ export const useSingleItemProps = ({
     ? new Date(post?.createdAt)?.toLocaleDateString('de')
     : ''
 
+  const singlePostAuthorId = post?.authorId ?? ''
+
+  const singlePostStatus = post?.status ?? 'DRAFT'
+
   const singlePostContent = post?.content ?? ''
 
   return {
@@ -35,6 +39,8 @@ export const useSingleItemProps = ({
     singlePostImageUrls,
     singlePostCategories,
     singlePostCreatedAt,
+    singlePostAuthorId,
+    singlePostStatus,
     singlePostContent
   }
 }

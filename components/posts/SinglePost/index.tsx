@@ -12,6 +12,7 @@ import SinglePostContent from '~/components/posts/SinglePost/SinglePostContent'
 import SinglePostFooter from '~/components/posts/SinglePost/SinglePostFooter'
 import SinglePostSlider from '~/components/posts/SinglePost/SinglePostSlider'
 import { cn } from '~/libs/utils'
+import { PostStatus } from '@prisma/client'
 
 interface ISinglePostCardProps {
   postId: string
@@ -46,6 +47,8 @@ const SinglePost = ({
     singlePostImageUrls,
     singlePostCategories,
     singlePostCreatedAt,
+    singlePostAuthorId,
+    singlePostStatus,
     singlePostContent
   } = useSingleItemProps({ post: singlePost, user: currentUser })
 
@@ -73,6 +76,8 @@ const SinglePost = ({
         hasContent={hasContent}
         singlePostCategories={singlePostCategories}
         singlePostCreatedAt={singlePostCreatedAt}
+        singlePostAuthorId={singlePostAuthorId}
+        singlePostStatus={singlePostStatus}
         singlePostContent={singlePostContent}
       />
 

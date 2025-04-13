@@ -1,14 +1,18 @@
 import Link from 'next/link'
-import { FileTextIcon, CalendarIcon } from 'lucide-react'
+import { FileTextIcon } from 'lucide-react'
 
 import { CardContent } from '~/components/ui/card'
 import { Skeleton } from '~/components/ui/skeleton'
+import PostMeta from '~/components/posts/PostMeta'
+import { PostStatus } from '@prisma/client'
 import { DEFAULT_CATEGORY, PATHS } from '~/utils/constants'
 
 interface ISinglePostContentProps {
   hasContent: boolean
   singlePostCategories: TCategoryOptions[]
   singlePostCreatedAt: string
+  singlePostAuthorId: string
+  singlePostStatus: PostStatus
   singlePostContent: string
 }
 
@@ -16,6 +20,8 @@ const SinglePostContent = ({
   hasContent,
   singlePostCategories,
   singlePostCreatedAt,
+  singlePostAuthorId,
+  singlePostStatus,
   singlePostContent
 }: ISinglePostContentProps) => {
   if (!hasContent) {
@@ -76,21 +82,12 @@ const SinglePostContent = ({
           </p>
         </div>
 
-        <p className="flex items-center">
-          <span className="mr-2 h-[17px] w-[17px]">
-            <CalendarIcon
-              height="17px"
-              width="17px"
-            />
-          </span>
-
-          <time
-            className="text-sm italic tracking-wider text-slate-500"
-            suppressHydrationWarning
-          >
-            {singlePostCreatedAt}
-          </time>
-        </p>
+        <PostMeta
+          hasContent
+          authorId={singlePostAuthorId}
+          itemCreatedAt={singlePostCreatedAt}
+          itemStatus={singlePostStatus}
+        />
       </div>
 
       <div className="rounded-lg bg-slate-100 px-2 text-justify">

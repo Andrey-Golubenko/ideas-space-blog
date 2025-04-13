@@ -39,7 +39,7 @@ export const useCategoriesOptions = (
   }, [refreshParam, returnCatId])
 
   useEffect(() => {
-    const options = (truncatedCategories || [])?.map((category) => ({
+    const options = truncatedCategories?.map((category) => ({
       label: toUpperCaseFirstChar(category?.name),
       value: returnCatId ? category?.id : category?.slug
     }))
