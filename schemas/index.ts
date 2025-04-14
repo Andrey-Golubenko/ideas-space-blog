@@ -54,12 +54,16 @@ export const SingleTruncatedCategorySchema = z.object({
 
 export const ManagePostSchema = z.object({
   id: z.optional(z.string()),
-  title: z.string({
-    message: 'Value must be a string!'
+  title: z.string({ message: 'Title is required field!' }).max(100, {
+    message: 'The title should be up to 100 characters'
   }),
-  content: z.string({
-    message: 'Value must be a string!'
-  }),
+  content: z
+    .string({
+      message: 'Value must be a string!'
+    })
+    .max(5000, {
+      message: 'The content should be up to 5000 characters'
+    }),
   status: z.optional(z.enum([PostStatus.PUBLISHED, PostStatus.DRAFT])),
   files: z.optional(
     z

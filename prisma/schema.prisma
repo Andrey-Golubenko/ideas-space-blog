@@ -60,7 +60,7 @@ model Account {
 model Post {
   id                    String              @id
   title                 String              @db.VarChar(100) 
-  content               String              @db.VarChar(1000) 
+  content               String              @db.Text
   imageUrls             String[]
   authorId              String
   status                PostStatus          @default(DRAFT)

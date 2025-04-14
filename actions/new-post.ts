@@ -35,8 +35,6 @@ export const newPost = async (
   const { id, title, content, imageUrls, status, categories } =
     validatedFields.data
 
-  console.log('validatedFields.data :>> ', validatedFields.data)
-
   const postId = id || uuidv4()
 
   const uncategorizedCategory = await fetchUncategorizedCategory()
@@ -44,9 +42,6 @@ export const newPost = async (
   const postCategoryIds = categories?.length
     ? (categories as string[])
     : [uncategorizedCategory?.id]
-
-  console.log('postCategoryIds :>> ', postCategoryIds)
-  console.log('dbUser?.id :>> ', dbUser?.id)
 
   try {
     await db.post.create({
