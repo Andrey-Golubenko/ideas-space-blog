@@ -12,7 +12,6 @@ import SinglePostContent from '~/components/posts/SinglePost/SinglePostContent'
 import SinglePostFooter from '~/components/posts/SinglePost/SinglePostFooter'
 import SinglePostSlider from '~/components/posts/SinglePost/SinglePostSlider'
 import { cn } from '~/libs/utils'
-import { PostStatus } from '@prisma/client'
 
 interface ISinglePostCardProps {
   postId: string
@@ -79,6 +78,7 @@ const SinglePost = ({
         singlePostAuthorId={singlePostAuthorId}
         singlePostStatus={singlePostStatus}
         singlePostContent={singlePostContent}
+        isAdminPage={isAdminPage}
       />
 
       <SinglePostFooter

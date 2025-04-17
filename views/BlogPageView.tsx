@@ -1,8 +1,5 @@
 'use client'
 
-import { useMemo } from 'react'
-import { useSearchParams } from 'next/navigation'
-
 import useGlobalStore from '~/store'
 import { usePostsFilters } from '~/hooks/usePostsFilters'
 import { useDataPosts } from '~/hooks/useDataPosts'
@@ -25,13 +22,6 @@ const BlogPageView = () => {
     }
   })
 
-  const searchParams = useSearchParams()
-
-  const refreshParam = useMemo(
-    () => searchParams.get('refresh-posts'),
-    [searchParams]
-  )
-
   const { searchQuery, categoriesFilter, authorFilter, page, setPage } =
     usePostsFilters()
 
@@ -45,7 +35,7 @@ const BlogPageView = () => {
     searchQuery
   }
 
-  useDataPosts({ ...dataPostsProps, refreshParam })
+  useDataPosts(dataPostsProps)
 
   const noItems: boolean = isEmptyOrUnpublished(posts)
 

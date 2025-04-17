@@ -1,11 +1,12 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import { v4 as uuidv4 } from 'uuid'
+import DOMPurify from 'dompurify'
 
 import { PostStatus } from '@prisma/client'
 import { newPost } from '~/actions/new-post'
@@ -13,7 +14,6 @@ import { saveImagesToCld } from '~/services/images/images.client'
 import AppCardWrapper from '~/components/shared/CardWrapper/AppCardWrapper'
 import PostManageForm from '~/components/shared/PostManageForm'
 import { CLOUDINARY_POSTS_IMAGES_FOLDER } from '~/utils/constants'
-import { isPostListPage } from '~/utils/helpers'
 import { ManagePostSchema } from '~/schemas'
 import { type TManagePostForm } from '~/types'
 
@@ -39,8 +39,6 @@ const NewPostPageView = ({ isLogged }: INewPostPageViewProps) => {
   })
 
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const referrer = searchParams.get('from')
 
   const handleOnSubmit = (values: TManagePostForm) => {
     setError('')
@@ -65,12 +63,17 @@ const NewPostPageView = ({ isLogged }: INewPostPageViewProps) => {
         }
       }
 
-      const { files, ...restValues } = values
+      const { files, content, ...restValues } = values
+
+      const cleanContent = DOMPurify.sanitize(content, {
+        USE_PROFILES: { html: true }
+      })
 
       const newPostValues = {
         ...restValues,
         id: postId,
-        imageUrls
+        imageUrls,
+        content: cleanContent
       }
 
       const data = await newPost(newPostValues)
@@ -84,15 +87,7 @@ const NewPostPageView = ({ isLogged }: INewPostPageViewProps) => {
           duration: 5000
         })
 
-        if (referrer && isPostListPage(referrer)) {
-          const path = `${referrer}?refresh-posts=${Date.now()}`
-
-          router.refresh()
-
-          router.replace(path)
-        } else {
-          router.back()
-        }
+        router.back()
       }
 
       if (data?.error) {

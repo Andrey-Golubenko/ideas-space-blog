@@ -1,5 +1,7 @@
 'use client'
 
+import parse from 'html-react-parser'
+
 import { CardContent } from '~/components/ui/card'
 import { Skeleton } from '~/components/ui/skeleton'
 import { cn } from '~/libs/utils'
@@ -38,7 +40,7 @@ const ItemCardContent = ({
           !isCategory && 'bg-slate-100 px-4'
         )}
       >
-        {itemContent}
+        {parse(itemContent)}
       </div>
     </CardContent>
   )

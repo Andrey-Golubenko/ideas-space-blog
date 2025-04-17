@@ -6,7 +6,7 @@ import { type UseFormReturn } from 'react-hook-form'
 import { useCategoriesOptions } from '~/hooks/useCategoriesOptions'
 import { Form } from '~/components/ui/form'
 import TextField from '~/components/shared/TextField'
-import TextAreaField from '~/components/shared/TextAreaField'
+import EditorField from '~/components/shared//EditorField'
 import FilesField from '~/components/shared/FilesField'
 import SwitchField from '~/components/shared/SwitchField'
 import MultiSelectField from '~/components/shared/MultiSelectField'
@@ -65,13 +65,11 @@ const PostManageForm = ({
             isPending={isDisabled}
           />
 
-          <TextAreaField
+          <EditorField
             control={form.control}
             name="content"
-            autoComplete="off"
             label="Post content"
             isPending={isDisabled}
-            rows={7}
           />
 
           <MultiSelectField

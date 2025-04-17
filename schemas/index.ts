@@ -58,12 +58,17 @@ export const ManagePostSchema = z.object({
     message: 'The title should be up to 100 characters'
   }),
   content: z
-    .string({
-      message: 'Value must be a string!'
-    })
-    .max(5000, {
-      message: 'The content should be up to 5000 characters'
-    }),
+    .string()
+    .max(5000, { message: 'The content should be up to 5000 characters' })
+    .refine(
+      (val) => {
+        const textOnly = val.replace(/<[^>]*>/g, '').trim()
+        return textOnly.length > 0
+      },
+      {
+        message: 'Content must include text'
+      }
+    ),
   status: z.optional(z.enum([PostStatus.PUBLISHED, PostStatus.DRAFT])),
   files: z.optional(
     z

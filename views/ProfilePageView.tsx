@@ -1,8 +1,5 @@
 'use client'
 
-import { useMemo } from 'react'
-import { useSearchParams } from 'next/navigation'
-
 import { PostStatus } from '@prisma/client'
 import useGlobalStore from '~/store'
 import { usePage } from '~/hooks/usePage'
@@ -37,13 +34,6 @@ const ProfilePageView = ({
     }
   })
 
-  const searchParams = useSearchParams()
-
-  const refreshParam = useMemo(
-    () => searchParams.get('refresh-posts'),
-    [searchParams]
-  )
-
   const { isAdminPage } = usePage()
 
   const withAnyStatus = `${PostStatus.PUBLISHED}.${PostStatus.DRAFT}`
@@ -63,7 +53,7 @@ const ProfilePageView = ({
     statusFilter: statusFilter || withAnyStatus
   }
 
-  useDataPosts({ ...dataPostsProps, refreshParam })
+  useDataPosts(dataPostsProps)
 
   const noItems: boolean = typeof posts === 'string'
 

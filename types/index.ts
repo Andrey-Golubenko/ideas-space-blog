@@ -282,7 +282,6 @@ export interface IFetchPostsFunctionProps extends IFetchDataFunctionProps {
   categoriesFilter?: string | null
   statusFilter?: string | null
   authorFilter?: string | null
-  refreshParam?: string | null
 }
 
 export interface IFetchUsersFunctionProps extends IFetchDataFunctionProps {

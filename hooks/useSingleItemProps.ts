@@ -1,3 +1,5 @@
+import createDOMPurify from 'dompurify'
+
 import { toUpperCaseFirstChar, checkIfPostExist } from '~/utils/helpers'
 
 interface IUseSingleItemProps {
@@ -9,6 +11,9 @@ export const useSingleItemProps = ({
   post,
   user
 }: IUseSingleItemProps) => {
+  const DOMPurify =
+    typeof window !== 'undefined' ? createDOMPurify(window) : null
+
   const isPostExist = checkIfPostExist(post)
 
   const isPostManageable =
@@ -30,7 +35,11 @@ export const useSingleItemProps = ({
 
   const singlePostStatus = post?.status ?? 'DRAFT'
 
-  const singlePostContent = post?.content ?? ''
+  const cleanHTML = DOMPurify
+    ? DOMPurify.sanitize(post?.content ?? '')
+    : post?.content ?? ''
+
+  const singlePostContent = cleanHTML
 
   return {
     isPostExist,

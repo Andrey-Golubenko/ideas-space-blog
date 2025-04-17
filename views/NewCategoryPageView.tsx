@@ -80,11 +80,7 @@ const NewCategoryPageView = () => {
           duration: 5000
         })
 
-        const path = `${PATHS.adminCategories}?refresh-categories=${Date.now()}`
-
-        router.refresh()
-
-        router.replace(path)
+        router.replace(PATHS.adminCategories)
       }
 
       if (data?.error) {

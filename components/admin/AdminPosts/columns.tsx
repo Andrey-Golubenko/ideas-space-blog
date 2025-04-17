@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import DOMPurify from 'dompurify'
+import parse from 'html-react-parser'
 import { type ColumnDef } from '@tanstack/react-table'
 
 import { PostStatus } from '@prisma/client'
@@ -112,7 +114,9 @@ export const columns: ColumnDef<TDeserializedPost>[] = [
     cell: ({ row }) => {
       const content = row.getValue<string | null>('content') ?? ''
 
-      return <span className="line-clamp-2">{content}</span>
+      const cleanContent = DOMPurify.sanitize(content)
+
+      return <span className="line-clamp-2">{parse(cleanContent)}</span>
     }
   },
   {

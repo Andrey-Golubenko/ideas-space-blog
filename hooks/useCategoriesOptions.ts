@@ -17,10 +17,7 @@ import { type IMultiSelectProps } from '~/types'
  *   categoriesOptions: IMultiSelectProps['options']
  * }} Object containing an array of category options.
  */
-export const useCategoriesOptions = (
-  returnMode: 'id' | 'slug',
-  refreshParam?: string | null
-) => {
+export const useCategoriesOptions = (returnMode: 'id' | 'slug') => {
   const { truncatedCategories, getTruncatedCategories } = useGlobalStore(
     (state) => ({
       truncatedCategories: state.truncatedCategories,
@@ -36,7 +33,7 @@ export const useCategoriesOptions = (
 
   useEffect(() => {
     getTruncatedCategories()
-  }, [refreshParam, returnCatId])
+  }, [returnCatId])
 
   useEffect(() => {
     const options = truncatedCategories?.map((category) => ({

@@ -1,7 +1,9 @@
+import DOMPurify from 'dompurify'
+
 import { PostStatus, type Categories } from '@prisma/client'
 import { useItemType } from '~/hooks/useItemType'
 import { IMAGES_PATHS } from '~/utils/constants'
-import { toUpperCaseFirstChar } from '~/utils/helpers'
+import { extractTextFromHTML, toUpperCaseFirstChar } from '~/utils/helpers'
 import { type TDeserializedPost, type TListItem } from '~/types'
 
 /**
@@ -38,9 +40,16 @@ export const useListItemProps = (item?: TListItem) => {
 
     itemTitle = toUpperCaseFirstChar(post?.title) ?? ''
 
-    itemContent = post?.content
-      ? `${toUpperCaseFirstChar(post?.content.slice(0, 120))}...`
-      : ''
+    const cleanHTML = DOMPurify.sanitize(post?.content) ?? ''
+
+    // Extracting text from HTML to crop it without taking into account tags
+    const textContent = extractTextFromHTML(cleanHTML)
+
+    // Truncate the text to 120 characters if it is longer
+    itemContent =
+      textContent.length > 120
+        ? `${toUpperCaseFirstChar(textContent.slice(0, 120))} ...`
+        : textContent
 
     itemSlug = post?.id ?? ''
 

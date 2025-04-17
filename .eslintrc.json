@@ -38,6 +38,7 @@
     }
   },
   "rules": {
+    "consistent-return": "off",
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
     "arrow-body-style": "off",
     "no-param-reassign": "warn",

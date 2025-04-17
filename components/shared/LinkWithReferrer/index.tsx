@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { Plus } from 'lucide-react'
-import { usePathname } from 'next/navigation'
 import { cn } from '~/libs/utils'
 
 interface ILinkWithReferrerProps {
@@ -18,11 +17,9 @@ const LinkWithReferrer = ({
   withIcon,
   className
 }: ILinkWithReferrerProps) => {
-  const pathname = usePathname()
-
   return (
     <Link
-      href={`${path}?from=${pathname}`}
+      href={path}
       className={cn(className)}
     >
       {withIcon && <Plus className="mr-2 h-4 w-4" />} {label}

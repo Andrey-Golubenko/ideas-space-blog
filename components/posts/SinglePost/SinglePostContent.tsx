@@ -1,10 +1,12 @@
 import Link from 'next/link'
+import parse from 'html-react-parser'
 import { FileTextIcon } from 'lucide-react'
 
 import { CardContent } from '~/components/ui/card'
 import { Skeleton } from '~/components/ui/skeleton'
 import PostMeta from '~/components/posts/PostMeta'
 import { PostStatus } from '@prisma/client'
+import { cn } from '~/libs/utils'
 import { DEFAULT_CATEGORY, PATHS } from '~/utils/constants'
 
 interface ISinglePostContentProps {
@@ -14,6 +16,7 @@ interface ISinglePostContentProps {
   singlePostAuthorId: string
   singlePostStatus: PostStatus
   singlePostContent: string
+  isAdminPage: boolean
 }
 
 const SinglePostContent = ({
@@ -22,7 +25,8 @@ const SinglePostContent = ({
   singlePostCreatedAt,
   singlePostAuthorId,
   singlePostStatus,
-  singlePostContent
+  singlePostContent,
+  isAdminPage
 }: ISinglePostContentProps) => {
   if (!hasContent) {
     return (
@@ -39,7 +43,9 @@ const SinglePostContent = ({
   }
 
   return (
-    <CardContent className="w-full px-5 pb-12 lg:px-24">
+    <CardContent
+      className={cn('w-full  pb-12', !isAdminPage && '!px-5 lg:!px-24')}
+    >
       <div className="mb-5 pl-2">
         <div className="mb-2 flex items-center">
           <span className="mr-2 h-[17px] w-[17px]">
@@ -90,8 +96,8 @@ const SinglePostContent = ({
         />
       </div>
 
-      <div className="rounded-lg bg-slate-100 px-2 text-justify">
-        {singlePostContent}
+      <div className="prose max-w-full rounded-lg bg-slate-100 px-2 text-justify">
+        {parse(singlePostContent)}
       </div>
     </CardContent>
   )

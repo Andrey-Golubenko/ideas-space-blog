@@ -1,7 +1,5 @@
 'use client'
 
-import { useMemo } from 'react'
-import { useSearchParams } from 'next/navigation'
 import { ChevronRightIcon } from 'lucide-react'
 
 import FooterSection from '~/components/layout/Footer/FooterSection'
@@ -14,13 +12,7 @@ import {
 import { type INavLink } from '~/types'
 
 export default function Footer() {
-  const searchParams = useSearchParams()
-
-  const refreshParam = useMemo(
-    () => searchParams.get('refresh-categories'),
-    [searchParams]
-  )
-  const { categoriesOptions } = useCategoriesOptions('slug', refreshParam)
+  const { categoriesOptions } = useCategoriesOptions('slug')
 
   const categoriesItems: INavLink[] = categoriesOptions?.map((catItem) => {
     return {

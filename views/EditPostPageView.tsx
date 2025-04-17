@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
+import DOMPurify from 'dompurify'
 
 import { PostStatus } from '@prisma/client'
 import useGlobalStore from '~/store'
@@ -135,10 +136,15 @@ const EditPostPageView = ({ isLogged }: IEditPostViewProps) => {
         if (error) return
       }
 
-      const { files, ...restValues } = values
+      const { files, content: dirtyContent, ...restValues } = values
+
+      const cleanContent = DOMPurify.sanitize(dirtyContent, {
+        USE_PROFILES: { html: true }
+      })
 
       const newPostValues: TManagePostForm = {
         ...restValues,
+        content: cleanContent,
         imageUrls: [...newImageUrlsFromFiles, ...newImageUrls]
       }
 
