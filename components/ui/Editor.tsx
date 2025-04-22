@@ -100,6 +100,7 @@ const Editor = forwardRef<
         className="
           [_&_.ql-container]:rounded-b-lg
           [_&_.ql-editor]:min-h-[7.5rem]
+          [_&_.ql-editor]:text-base
           [_&_.ql-toolbar]:rounded-t-lg
         "
       />
