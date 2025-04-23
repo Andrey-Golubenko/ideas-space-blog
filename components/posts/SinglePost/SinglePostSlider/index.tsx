@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 
 import 'swiper/css'
 import 'swiper/css/free-mode'
@@ -12,6 +13,7 @@ import { Skeleton } from '~/components/ui/skeleton'
 import MainSlider from '~/components/posts/SinglePost/SinglePostSlider/MainSlider'
 import ThumbnailsSlider from '~/components/posts/SinglePost/SinglePostSlider/ThumbnailsSlider'
 import { cn } from '~/libs/utils'
+import { IMAGES_PATHS } from '~/utils/constants'
 
 interface ISinglePostSliderProps {
   hasContent: boolean
@@ -28,6 +30,9 @@ const SinglePostSlider = ({
 
   const { isMobile } = useScreen()
 
+  const hasImages =
+    hasContent && Array.isArray(imageUrls) && imageUrls.length > 0
+
   if (!hasContent) {
     return (
       <>
@@ -43,6 +48,26 @@ const SinglePostSlider = ({
           <Skeleton className="h-[100px] w-1/4" />
         </div>
       </>
+    )
+  }
+
+  if (!hasImages) {
+    return (
+      <div
+        className={cn(
+          'flex w-full justify-center',
+          !isAdminPage && 'xl:w-[80%] xl:pt-10'
+        )}
+      >
+        <Image
+          src={IMAGES_PATHS.noImages}
+          alt="Category image"
+          sizes="100%"
+          width={500}
+          height={400}
+          className="size-full rounded-md xl:h-[400px] xl:w-[500px]"
+        />
+      </div>
     )
   }
 
